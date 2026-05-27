@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Атлас систем самопознания человечества — Solir</title>
+<meta name="description" content="Честная карта систем самопознания: от вавилонской астрологии до Big Five. Кто, когда и из чего на самом деле собрал каждую — без мифов о «древности». Исследование проекта Solir.">
+<!-- ——— OG / шеринг ——— -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Solir">
+<meta property="og:title" content="Атлас систем самопознания человечества">
+<meta property="og:description" content="От вавилонского неба до Big Five: кто, когда и из чего собрал каждую систему. Без мифов о «древности». Исследование Solir.">
+<meta property="og:url" content="https://atlas.solir.ru">
+<!-- TODO: добавить превью 1200×630 — <meta property="og:image" content="https://atlas.solir.ru/preview.png"> -->
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='88'%3E%F0%9F%8C%A4%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,200..400,0..100&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style id="solir-tokens">
+/* GENERATED от solir-tokens.json · node build-tokens.js. Не редактировать вручную. */
+:root {
+  /* paper */
+  --paper: #FFF1DD;
+
+  /* sand */
+  --sand: #FAEAD0;
+  --sand-warm: #F5DBB3;
+
+  /* sun */
+  --sun-highlight: #FFE9C2;
+  --sun-light: #E8B47D;
+  --sun: #DC9658;
+  --sun-deep: #C8642E;
+
+  /* earth */
+  --earth: #8B4513;
+
+  /* ink */
+  --ink: #2A1810;
+  --ink-deep: #1F1610;
+  --ink-darker: #0F0805;
+  --ink-soft: rgba(42,24,16,0.74);
+  --ink-muted: rgba(42,24,16,0.50);
+
+  /* glow */
+  --glow: #FFE48A;
+
+  /* text */
+  --text-accent: #A8451C;
+  --text-h1-size: 52px;
+  --text-h1-size-mobile: 36px;
+  --text-h1-family: var(--font-display);
+  --text-h1-weight: 500;
+  --text-h1-line: 1.1;
+  --text-h1-tracking: -0.01em;
+  --text-h2-size: 38px;
+  --text-h2-size-mobile: 28px;
+  --text-h2-family: var(--font-display);
+  --text-h2-weight: 500;
+  --text-h2-line: 1.15;
+  --text-h2-tracking: 0;
+  --text-h3-size: 26px;
+  --text-h3-size-mobile: 22px;
+  --text-h3-family: var(--font-display);
+  --text-h3-weight: 500;
+  --text-h3-line: 1.2;
+  --text-h3-tracking: 0;
+  --text-lead-size: 24px;
+  --text-lead-size-mobile: 20px;
+  --text-lead-family: var(--font-display);
+  --text-lead-weight: 400;
+  --text-lead-line: 1.5;
+  --text-lead-style: italic;
+  --text-body-size: 16px;
+  --text-body-family: var(--font-body);
+  --text-body-weight: 400;
+  --text-body-line: 1.7;
+  --text-small-size: 14px;
+  --text-small-family: var(--font-body);
+  --text-small-weight: 400;
+  --text-small-line: 1.6;
+  --text-eyebrow-size: 13px;
+  --text-eyebrow-family: var(--font-body);
+  --text-eyebrow-weight: 500;
+  --text-eyebrow-line: 1.2;
+  --text-eyebrow-tracking: 0.26em;
+  --text-eyebrow-transform: uppercase;
+  --text-eyebrow-color: var(--text-accent);
+  --text-data-size: 13px;
+  --text-data-family: var(--font-body);
+  --text-data-weight: 400;
+  --text-data-line: 1.4;
+  --text-data-tracking: 0.02em;
+  --text-data-feature: tabular-nums;
+
+  /* line */
+  --line: rgba(139,69,19,0.18);
+  --line-soft: rgba(139,69,19,0.10);
+
+  /* success */
+  --success: #5E6B33;
+
+  /* warning */
+  --warning: #C8642E;
+
+  /* error */
+  --error: #A8321A;
+
+  /* info */
+  --info: #8B4513;
+
+  /* grad */
+  --grad-sunrise: linear-gradient(90deg, #E8B47D, #DC9658, #C8642E);
+  --grad-sun-disc: radial-gradient(circle at 35% 30%, #FFE9C2 0%, #DC9658 65%, #C8642E 100%);
+  --grad-dark-radial: radial-gradient(ellipse at center, #2A1810 0%, #1F1610 42%, #0F0805 100%);
+
+  /* font */
+  --font-logo: 'Fraunces', Georgia, serif;
+  --font-display: Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+
+  /* space */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+  --space-4xl: 128px;
+
+  /* grid */
+  --grid-columns: 12;
+  --grid-gutter: 24px;
+  --grid-margin-desktop: 32px;
+  --grid-margin-mobile: 20px;
+
+  /* container */
+  --container-landing: 1280px;
+  --container-document: 1000px;
+  --container-reading: 720px;
+  --container-map: 580px;
+
+  /* radius */
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-pill: 999px;
+  --radius-full: 50%;
+
+  /* elevation */
+  --elevation-0: none;
+  --elevation-1: 0 2px 14px rgba(139,69,19,0.07), 0 1px 3px rgba(139,69,19,0.05);
+  --elevation-2: 0 10px 30px rgba(139,69,19,0.14), 0 3px 8px rgba(139,69,19,0.08);
+  --elevation-3: 0 24px 60px rgba(139,69,19,0.20), 0 8px 20px rgba(139,69,19,0.10);
+  --elevation-cta: 0 6px 22px rgba(220,150,88,0.28);
+
+  /* opacity */
+  --opacity-hairline: 0.18;
+  --opacity-hairline-soft: 0.1;
+  --opacity-muted: 0.5;
+  --opacity-soft: 0.74;
+  --opacity-disabled: 0.4;
+
+  /* ease */
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* duration */
+  --duration-micro: 240ms;
+  --duration-enter: 700ms;
+  --duration-scene: 2000ms;
+
+  /* pause */
+  --pause-soma: 10000ms;
+  --pause-body: 8000ms;
+
+  /* cta */
+  --cta-breath: 3200ms;
+
+  /* z */
+  --z-base: 0;
+  --z-sticky: 50;
+  --z-dropdown: 100;
+  --z-modal-overlay: 200;
+  --z-modal: 210;
+  --z-toast: 300;
+  --z-tooltip: 400;
+
+  /* bp */
+  --bp-mobile: 0px;
+  --bp-tablet: 720px;
+  --bp-desktop: 1024px;
+
+}
+</style>
+<style>
+:root{
+  /* — «ночной» Solir: имена атласа ← канонические токены (solir-tokens.json) — */
+  --void:var(--ink-darker);
+  --void-2:var(--ink-deep);
+  --ink:#2A1810;              /* подложка панелей (= канонический --ink) */
+  --ink-line:rgba(255,241,221,.10); /* тёплая волосяная линия */
+  --parch:var(--paper);
+  --parch-dim:#D2BE9F;        /* dim-вариант paper для тёмного фона */
+  --parch-faint:#A08B6E;      /* faint-вариант paper */
+  --gold:var(--sun);
+  --gold-bright:var(--sun-highlight);
+  --gold-deep:var(--sun-deep);
+  --copper:var(--sun-deep);
+  --jade:#6fae8f;             /* data-viz: см. solir-style-guardrails.md */
+  --azure:#6f93c8;
+  --violet:#9a7fc0;
+  --crimson:#c0617a;
+  --white:var(--sun-highlight);
+
+  /* семантика происхождения (континенты) */
+  --c-meso:#d99a4e;   /* Месопотамия-Александрия */
+  --c-china:#c0617a;  /* Китай */
+  --c-india:#6fae8f;  /* Индия */
+  --c-hebrew:#6f93c8; /* Иудейская мистика */
+  --c-greek:#9a7fc0;  /* Греция */
+  --c-sci:#7fcfd4;    /* Научная психология */
+
+  /* оригинальность */
+  --orig-indep:#6fae8f;
+  --orig-hybrid:#DC9658;
+  --orig-compil:#c0617a;
+  --orig-market:#8a8170;
+
+  --shadow-deep:0 24px 60px -20px rgba(0,0,0,.8);
+  --glow-gold:0 0 28px -4px rgba(220,150,88,.45);
+  --ff-display:Georgia,'Times New Roman',serif;
+  --ff-body:'Inter',-apple-system,sans-serif;
+  --ff-mono:'Inter',-apple-system,sans-serif;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--void);
+  color:var(--parch);
+  font-family:var(--ff-body);
+  font-weight:300;
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ——— звёздный/нейронный фон ——— */
+.starfield{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -10%, rgba(220,150,88,.07), transparent 60%),
+    radial-gradient(ellipse 80% 60% at 85% 110%, rgba(232,180,125,.06), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 10% 90%, rgba(200,100,46,.05), transparent 55%),
+    var(--void);
+}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.04;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+#stars-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ——— оболочка ——— */
+.wrap{position:relative;z-index:2;max-width:1320px;margin:0 auto;padding:0 28px}
+
+/* ——— шапка ——— */
+header.masthead{padding:78px 0 34px;text-align:center;position:relative}
+.eyebrow{font-family:var(--ff-mono);font-size:.72rem;letter-spacing:.42em;text-transform:uppercase;
+  color:var(--gold);opacity:.85;margin-bottom:24px}
+h1.atlas-title{font-family:var(--ff-display);font-weight:500;line-height:.98;
+  font-size:clamp(2.6rem,6.5vw,5.4rem);color:var(--white);letter-spacing:.01em;
+  text-shadow:0 0 50px rgba(220,150,88,.18)}
+h1.atlas-title em{font-style:italic;color:var(--gold-bright);font-weight:500}
+.subtitle{font-family:var(--ff-body);font-style:italic;font-size:clamp(1rem,2vw,1.32rem);
+  color:var(--parch-dim);margin-top:22px;max-width:660px;margin-left:auto;margin-right:auto;font-weight:300}
+.masthead-rule{width:120px;height:1px;margin:34px auto 0;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.masthead-meta{display:flex;gap:34px;justify-content:center;flex-wrap:wrap;margin-top:26px;
+  font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.18em;color:var(--parch-faint);text-transform:uppercase}
+.masthead-meta b{color:var(--gold);font-weight:500}
+
+/* ——— легенда континентов ——— */
+.continents-legend{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:38px auto 0;max-width:980px}
+.cont-chip{display:flex;align-items:center;gap:8px;padding:7px 15px;border-radius:30px;
+  border:1px solid var(--ink-line);background:rgba(42,24,16,.5);font-size:.78rem;color:var(--parch-dim);
+  font-family:var(--ff-mono);letter-spacing:.04em}
+.cont-chip .dot{width:9px;height:9px;border-radius:50%;box-shadow:0 0 10px currentColor}
+
+/* ——— навигация по слоям ——— */
+nav.layer-nav{position:sticky;top:0;z-index:40;margin-top:46px;
+  background:linear-gradient(180deg,rgba(15,8,5,.96),rgba(15,8,5,.82));
+  backdrop-filter:blur(14px);border-top:1px solid var(--ink-line);border-bottom:1px solid var(--ink-line)}
+.layer-nav-inner{max-width:1320px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;padding:9px 18px;scrollbar-width:thin}
+.layer-nav-inner::-webkit-scrollbar{height:5px}
+.layer-nav-inner::-webkit-scrollbar-thumb{background:var(--gold-deep);border-radius:3px}
+.nav-btn{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:9px 15px;border-radius:8px;
+  background:transparent;border:1px solid transparent;color:var(--parch-faint);cursor:pointer;
+  font-family:var(--ff-mono);font-size:.72rem;letter-spacing:.06em;transition:.25s;white-space:nowrap}
+.nav-btn .num{font-size:.66rem;color:var(--gold-deep);font-weight:500}
+.nav-btn:hover{color:var(--parch);background:rgba(220,150,88,.06)}
+.nav-btn.active{color:var(--white);background:rgba(220,150,88,.12);border-color:var(--gold-deep)}
+.nav-btn.active .num{color:var(--gold-bright)}
+
+/* ——— секции слоёв ——— */
+.layer{display:none;padding:54px 0 40px;animation:fadeLayer .6s ease}
+.layer.active{display:block}
+@keyframes fadeLayer{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.layer-head{margin-bottom:38px;max-width:860px}
+.layer-kicker{font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--gold);display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.layer-kicker::before{content:"";width:30px;height:1px;background:var(--gold)}
+.layer-title{font-family:var(--ff-display);font-weight:500;font-size:clamp(1.9rem,4vw,3rem);
+  color:var(--white);line-height:1.05}
+.layer-lede{font-size:1.04rem;color:var(--parch-dim);margin-top:16px;font-style:italic;font-weight:300}
+
+/* ——— общие карточки/панели ——— */
+.panel{background:linear-gradient(160deg,rgba(42,24,16,.72),rgba(31,22,16,.5));
+  border:1px solid var(--ink-line);border-radius:14px;padding:26px;position:relative;overflow:hidden}
+.panel::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(220,150,88,.4),transparent)}
+
+footer.atlas-foot{padding:60px 0 80px;text-align:center;border-top:1px solid var(--ink-line);margin-top:60px}
+.atlas-foot p{font-family:var(--ff-mono);font-size:.72rem;letter-spacing:.1em;color:var(--parch-faint);line-height:2}
+.atlas-foot b{color:var(--gold)}
+
+/* utility */
+.tag{display:inline-block;font-family:var(--ff-mono);font-size:.62rem;letter-spacing:.08em;
+  padding:3px 9px;border-radius:5px;text-transform:uppercase;border:1px solid currentColor}
+.scroll-hint{font-family:var(--ff-mono);font-size:.66rem;color:var(--parch-faint);letter-spacing:.1em;
+  text-align:center;margin-top:8px;opacity:.6}
+@media(max-width:640px){
+  .wrap{padding:0 16px}
+  header.masthead{padding:50px 0 24px}
+}
+
+/* ——— брендинг Solir ——— */
+.solir-logo{display:inline-block;margin-bottom:22px;line-height:0;opacity:.96;transition:.25s}
+.solir-logo:hover{opacity:1;filter:drop-shadow(0 0 14px rgba(220,150,88,.4))}
+.solir-mark{font-family:var(--ff-mono);font-size:.72rem;letter-spacing:.5em;text-transform:uppercase;
+  color:var(--gold-bright);margin-bottom:20px;display:inline-flex;align-items:center;gap:12px}
+.solir-mark::before,.solir-mark::after{content:"";width:24px;height:1px;background:var(--gold-deep)}
+.solir-intro{max-width:760px;margin:42px auto 0;padding:24px 30px;border-radius:14px;text-align:left;
+  background:linear-gradient(160deg,rgba(220,150,88,.08),rgba(31,22,16,.42));
+  border:1px solid var(--gold-deep);position:relative;overflow:hidden}
+.solir-intro::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-bright),transparent)}
+.solir-intro .si-kicker{font-family:var(--ff-mono);font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:13px}
+.solir-intro p{font-family:var(--ff-body);font-size:1.04rem;line-height:1.72;color:var(--parch);
+  font-style:italic;font-weight:300}
+.solir-intro .si-sign{font-style:normal;font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.12em;
+  color:var(--parch-faint);margin-top:16px}
+.solir-cta{margin-top:34px;display:flex;flex-direction:column;align-items:center;gap:16px}
+.solir-cta-lede{font-family:var(--ff-body)!important;font-size:.92rem!important;color:var(--parch-dim)!important;
+  letter-spacing:.02em!important;font-style:italic;max-width:520px;line-height:1.6!important;text-transform:none!important}
+.solir-cta-row{display:flex;gap:13px;flex-wrap:wrap;justify-content:center}
+.solir-btn{font-family:var(--ff-mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:11px 22px;border-radius:8px;border:1px solid var(--gold-deep);color:var(--gold-bright);
+  text-decoration:none;transition:.25s;background:rgba(220,150,88,.05)}
+.solir-btn:hover{background:rgba(220,150,88,.14);border-color:var(--gold);color:var(--white)}
+.solir-btn.primary{background:linear-gradient(180deg,rgba(220,150,88,.22),rgba(220,150,88,.08));
+  border-color:var(--gold);color:var(--white)}
+</style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+<div class="starfield"></div>
+<div class="grain"></div>
+
+<div class="wrap">
+  <header class="masthead">
+    <a class="solir-logo" href="https://solir.ru" target="_blank" rel="noopener" aria-label="Solir"><svg viewBox="0 0 350 120" width="148" height="51" role="img" aria-label="Solir"><defs><radialGradient id="sR" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="65%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient></defs><circle cx="59.4" cy="60" r="52.2" fill="url(#sR)"/><path transform="translate(123.60 94.82) scale(0.04928 -0.04928)" d="M545 -22Q457 -22 399.5 -5.5Q342 11 307.5 32.5Q273 54 253.5 71.0Q234 88 222 88Q211 88 197.0 72.5Q183 57 167.5 37.0Q152 17 136.0 1.5Q120 -14 105 -14Q81 -14 69.5 -1.0Q58 12 61 39L103 385Q105 413 118.5 427.5Q132 442 151 442Q171 442 183.5 428.5Q196 415 205 389L219 302Q232 183 310.5 120.5Q389 58 502 58Q577 58 634.5 85.5Q692 113 727.0 162.0Q762 211 772 277Q788 367 743.5 443.0Q699 519 565 605Q417 702 353.5 798.5Q290 895 306 1025Q318 1129 380.5 1220.0Q443 1311 555.0 1367.5Q667 1424 825 1424Q959 1424 1051.5 1381.0Q1144 1338 1190.5 1269.5Q1237 1201 1235 1125Q1233 1079 1209.5 1049.0Q1186 1019 1146 1019Q1111 1019 1090.0 1038.5Q1069 1058 1055 1099L1038 1167Q1015 1260 956.0 1305.0Q897 1350 810 1350Q724 1350 659.5 1317.0Q595 1284 556.5 1229.0Q518 1174 510 1106Q497 1008 547.0 929.0Q597 850 727 759Q840 683 901.0 616.0Q962 549 982.5 480.5Q1003 412 994 333Q984 226 924.0 146.0Q864 66 766.5 22.0Q669 -22 545 -22Z" fill="#FFF1DD"/><path transform="translate(180.03 94.82) scale(0.04928 -0.04928)" d="M634 936Q757 933 844.0 876.0Q931 819 968.5 715.0Q1006 611 980 466Q960 357 908.5 266.0Q857 175 781.5 109.5Q706 44 613.0 10.0Q520 -24 417 -21Q296 -17 210.5 39.5Q125 96 88.5 200.0Q52 304 77 449Q98 559 148.5 649.5Q199 740 273.5 805.5Q348 871 439.5 905.0Q531 939 634 936ZM421 62Q464 58 506.0 73.5Q548 89 586.0 122.0Q624 155 657.0 205.5Q690 256 715.5 322.0Q741 388 757 469Q783 594 774.0 677.0Q765 760 728.0 803.5Q691 847 630 853Q587 857 546.5 841.5Q506 826 468.5 793.0Q431 760 398.5 710.0Q366 660 341.0 593.5Q316 527 300 446Q274 321 282.5 238.0Q291 155 327.0 111.5Q363 68 421 62Z" fill="#FFF1DD"/><path transform="translate(231.97 94.82) scale(0.04928 -0.04928)" d="M735 1437Q816 1437 854.5 1404.5Q893 1372 893 1328Q893 1286 868.0 1259.0Q843 1232 793 1232Q764 1232 742.0 1242.5Q720 1253 701.5 1266.5Q683 1280 662.5 1290.5Q642 1301 614 1301Q584 1301 559.0 1284.5Q534 1268 519.0 1240.5Q504 1213 500 1179Q499 1156 504.0 1133.5Q509 1111 516.5 1088.0Q524 1065 529.5 1039.0Q535 1013 534.0 982.5Q533 952 522 915L324 279Q296 184 304.5 152.0Q313 120 348 120Q378 120 411.5 137.5Q445 155 473 189Q486 202 495.0 205.5Q504 209 513 206Q525 202 528.0 187.5Q531 173 520 150Q502 103 456.0 64.0Q410 25 348.5 2.0Q287 -21 218 -21Q153 -21 120.5 6.5Q88 34 86.5 90.0Q85 146 112 233L394 1145Q441 1296 527.5 1366.5Q614 1437 735 1437Z" fill="#FFF1DD"/><path transform="translate(262.82 94.82) scale(0.04928 -0.04928)" d="M346 260Q318 181 325.5 149.5Q333 118 360 118Q377 118 395.5 128.5Q414 139 441 165Q457 180 468.0 184.0Q479 188 489 183Q501 177 500.5 162.0Q500 147 488 124Q452 58 385.0 19.0Q318 -20 237 -20Q175 -20 143.5 8.0Q112 36 111.0 90.0Q110 144 138 221L299 654Q328 733 320.5 765.0Q313 797 285 797Q270 797 250.5 786.5Q231 776 204 749Q188 735 177.0 731.0Q166 727 156 731Q145 737 145.0 752.0Q145 767 157 790Q193 856 259.5 895.5Q326 935 406 935Q464 935 495.5 907.0Q527 879 530.5 824.0Q534 769 504 688ZM480 1125Q416 1125 382.0 1160.0Q348 1195 354 1245Q358 1284 383.0 1317.5Q408 1351 448.5 1371.0Q489 1391 541 1391Q608 1391 639.0 1356.0Q670 1321 664 1270Q660 1230 635.0 1197.0Q610 1164 570.0 1144.5Q530 1125 480 1125Z" fill="#FFF1DD"/><path transform="translate(293.87 94.82) scale(0.04928 -0.04928)" d="M145 731Q133 737 133.5 752.0Q134 767 146 790Q170 834 208.5 866.5Q247 899 295.5 917.0Q344 935 396 935Q447 935 475.5 910.0Q504 885 504 837Q504 795 486.5 740.0Q469 685 445.5 625.0Q422 565 403.0 510.5Q384 456 381 416L365 418Q397 536 446.0 631.5Q495 727 554.0 794.5Q613 862 676.0 898.5Q739 935 801 935Q876 935 914.0 892.5Q952 850 951 781Q949 728 930.0 690.5Q911 653 881.5 633.0Q852 613 817 613Q779 613 761.0 631.0Q743 649 743 672Q743 694 749.5 713.5Q756 733 756 755Q756 780 744.5 795.0Q733 810 707 810Q664 810 607.5 757.5Q551 705 493.5 602.5Q436 500 387 348Q364 279 353.5 237.5Q343 196 343 163Q343 139 352.5 125.5Q362 112 372.0 99.5Q382 87 382 64Q382 41 360.5 21.0Q339 1 298.0 -10.0Q257 -21 196 -21Q150 -21 128.0 -0.5Q106 20 107.0 62.5Q108 105 130 169L290 654Q317 733 309.0 765.0Q301 797 274 797Q258 797 239.0 786.5Q220 776 193 749Q177 735 166.0 731.0Q155 727 145 731Z" fill="#FFF1DD"/></svg></a>
+    <div class="eyebrow">Cartographia Cognitionis · Атлас цивилизационного знания</div>
+    <h1 class="atlas-title">Atlas of Human<br><em>Self-Knowledge</em> Systems</h1>
+    <p class="subtitle">Карта происхождения, эволюции и взаимовлияний систем самопознания — от вавилонского неба до квантовой риторики Нью-Эйджа</p>
+    <div class="masthead-rule"></div>
+    <div class="masthead-meta">
+      <span><b>40+</b> систем</span>
+      <span><b>6</b> континентов происхождения</span>
+      <span><b>~4000</b> лет хронологии</span>
+      <span><b>11</b> слоёв карты</span>
+    </div>
+    <div class="continents-legend" id="continents-legend"></div>
+  </header>
+  <div class="solir-intro">
+    <div class="si-kicker">От издателя</div>
+    <p>«Solir стоит на нескольких из этих систем. Мы не прячем их происхождение и не торгуем "древностью". Для нас это инструменты саморефлексии — способ увидеть себя, а не научно подтверждённые данные.»</p>
+    <div class="si-sign">— Solir · solir.ru</div>
+  </div>
+</div>
+
+<nav class="layer-nav">
+  <div class="layer-nav-inner" id="layer-nav"></div>
+</nav>
+
+<div class="wrap" id="layers-root"></div>
+
+<div class="wrap">
+  <footer class="atlas-foot">
+    <p><b>Atlas of Human Self-Knowledge Systems</b> · обзорная карта первого приближения</p>
+    <p>Источник данных — исследовательский атлас (17 разделов). Различает документированную историю и маркетинговую «древность».</p>
+    <p>Эпистемический принцип: универсалия — не структура психики, а <b>потребность в её схеме</b>.</p>
+    <div class="solir-cta">
+      <p class="solir-cta-lede">Этот атлас — часть исследования <b style="color:var(--gold)">Solir</b>: карты самопознания на пересечении систем, как инструмента рефлексии — не предсказания.</p>
+      <div class="solir-cta-row">
+        <a class="solir-btn primary" href="https://t.me/solir_ru" target="_blank" rel="noopener">Канал → @solir_ru</a>
+        <a class="solir-btn" href="https://solir.ru" target="_blank" rel="noopener">Сайт → solir.ru</a>
+        <a class="solir-btn" href="https://t.me/vanzhuralev" target="_blank" rel="noopener">Автор → @vanzhuralev</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   ATLAS DATA — единая база знаний (из исследовательского атласа)
+   ============================================================ */
+
+const CONTINENTS = {
+  meso:   {name:"Месопотамия → Александрия", short:"Астрологический", color:"var(--c-meso)",  hex:"#d99a4e"},
+  china:  {name:"Чжоуский Китай",            short:"Комбинаторный",   color:"var(--c-china)", hex:"#c0617a"},
+  india:  {name:"Ведическо-тантрическая Индия", short:"Соматический", color:"var(--c-india)", hex:"#6fae8f"},
+  hebrew: {name:"Иудейская мистика",         short:"Каббалистический",color:"var(--c-hebrew)",hex:"#6f93c8"},
+  greek:  {name:"Греческая школа",            short:"Числовой/герметический",color:"var(--c-greek)",hex:"#9a7fc0"},
+  sci:    {name:"Научная психология",        short:"Эмпирический",    color:"var(--c-sci)",   hex:"#7fcfd4"},
+};
+
+const ORIG = {
+  indep:  {label:"Независимая",   color:"#6fae8f"},
+  hybrid: {label:"Гибридная",     color:"#DC9658"},
+  compil: {label:"Компилятивная", color:"#c0617a"},
+  market: {label:"Маркетинговая адаптация", color:"#8a8170"},
+  science:{label:"Эмпирическая",  color:"#7fcfd4"},
+};
+
+/* — статус: epist = эпистемический статус — */
+/* depth: философ / символ / психолог / структура / культура / влияние (0..5) */
+const SYSTEMS = [
+  // id, name, cont, year(числовой якорь для шкалы), era, author, orig, epist, sources[], depth{}, note
+  {id:"babylon", name:"Вавилонская астрология", cont:"meso", year:-2000, era:"III–II тыс. до н.э.", author:"анонимная", orig:"indep", epist:"Донаучная, исторически фундаментальная", depth:{phil:3,sym:5,psy:1,str:3,cult:5,infl:5}, note:"Древнейший корень всей астрологической традиции."},
+  {id:"iching", name:"И-Цзин", cont:"china", year:-1000, era:"Чжоу 1046–256 до н.э.", author:"анонимная / «Десять крыльев» III в. до н.э.", orig:"indep", epist:"Глубокая философско-комбинаторная система", depth:{phil:5,sym:5,psy:3,str:5,cult:5,infl:5}, note:"64 гексаграммы. Источник Ба-Цзы, Human Design, Gene Keys."},
+  {id:"jyotish", name:"Джйотиш (ведическая)", cont:"india", year:-1400, era:"~1400 до н.э., классич. ~V в.", author:"Лагадха; Парашара, Варахамихира", orig:"indep", epist:"Псевдонаука; культурно значима", depth:{phil:4,sym:4,psy:2,str:5,cult:5,infl:4}, note:"Веданга-джйотиша; эллинистическое влияние с V в."},
+  {id:"pythag", name:"Пифагорейская нумерология", cont:"greek", year:-530, era:"VI в. до н.э.", author:"Пифагор", orig:"indep", epist:"Эзотерика; родитель западной нумерологии", depth:{phil:4,sym:4,psy:1,str:3,cult:4,infl:5}, note:"Число как первоначало."},
+  {id:"chaldean", name:"Халдейская нумерология", cont:"meso", year:-700, era:"I тыс. до н.э.", author:"вавилонское жречество", orig:"indep", epist:"Эзотерика", depth:{phil:2,sym:4,psy:1,str:2,cult:3,infl:3}, note:"Звуковые соответствия + астрология."},
+  {id:"hellenistic", name:"Эллинистическая астрология", cont:"meso", year:-150, era:"III в. до н.э. – II в. н.э.", author:"Птолемей (Тетрабиблос)", orig:"hybrid", epist:"Псевдонаука; культурный артефакт", depth:{phil:4,sym:5,psy:2,str:5,cult:5,infl:5}, note:"Вавилонская + египетские деканы + греческая философия. Александрийский синтез."},
+  {id:"hermetism", name:"Герметизм", cont:"greek", year:200, era:"II–III вв., Александрия", author:"Corpus Hermeticum", orig:"indep", epist:"Религиозно-философский", depth:{phil:5,sym:5,psy:2,str:4,cult:5,infl:5}, note:"Платонизм + стоицизм + египетская мудрость. Фундамент алхимии и магизма."},
+  {id:"sefer", name:"Сефер Йецира", cont:"hebrew", year:400, era:"III–VI вв.", author:"анонимная", orig:"indep", epist:"Религиозный текст", depth:{phil:5,sym:5,psy:1,str:5,cult:4,infl:5}, note:"Творение через буквы и числа. Корень всей каббалы."},
+  {id:"alchemy", name:"Алхимия", cont:"greek", year:300, era:"I–XVIII вв.", author:"греко-египетская традиция", orig:"indep", epist:"Предтеча химии и психологии (Юнг)", depth:{phil:4,sym:5,psy:3,str:4,cult:5,infl:5}, note:"Nigredo → Albedo → Rubedo. Великая работа."},
+  {id:"sufi", name:"Суфийские латаиф", cont:"india", year:900, era:"IX–XVII вв.", author:"Кубра, Сирхинди", orig:"indep", epist:"Религиозная", depth:{phil:5,sym:4,psy:3,str:4,cult:4,infl:3}, note:"Шесть тонких центров. Коран + Ибн Араби.", _altcont:"hebrew"},
+  {id:"bazi", name:"Ба-Цзы / китайский зодиак", cont:"china", year:800, era:"Тан–Сун", author:"Ли Сюйчжун, Сюй Цзыпин", orig:"hybrid", epist:"Псевдонаука; философски ценна", depth:{phil:3,sym:4,psy:2,str:5,cult:5,infl:3}, note:"И-Цзин + Инь-Ян + У-Син + лунный календарь."},
+  {id:"bahir", name:"Сефер ха-Бахир", cont:"hebrew", year:1180, era:"XII в., Прованс", author:"анонимная", orig:"hybrid", epist:"Религиозная", depth:{phil:4,sym:5,psy:1,str:4,cult:3,infl:4}, note:"Раннее каббалистическое звено."},
+  {id:"zohar", name:"Зогар", cont:"hebrew", year:1280, era:"1280-е, Кастилия", author:"Моше де Леон (псевдоэпиграф: Шимон бар Йохай)", orig:"compil", epist:"Религиозно-философская", depth:{phil:5,sym:5,psy:2,str:5,cult:5,infl:5}, note:"Сефер Йецира + Бахир + неоплатонизм + гностицизм."},
+  {id:"chakra1577", name:"Шат-чакра-нирупана", cont:"india", year:1577, era:"1577", author:"Пурнананда Свами", orig:"indep", epist:"Религиозно-психотехническая", depth:{phil:4,sym:5,psy:3,str:4,cult:4,infl:5}, note:"Классическая 6+1 чакровая система. Тантра + упанишады."},
+  {id:"luria", name:"Лурианская каббала", cont:"hebrew", year:1572, era:"Цфат, 1570-е", author:"Исаак Лурия", orig:"hybrid", epist:"Религиозная", depth:{phil:5,sym:5,psy:2,str:5,cult:4,infl:4}, note:"Цимцум, швират ха-келим, тиккун. Развитие Зогара."},
+  {id:"tarot-game", name:"Таро (как игра)", cont:"greek", year:1440, era:"~1440, Сев. Италия", author:"Висконти-Сфорца", orig:"indep", epist:"Игровая колода", depth:{phil:1,sym:4,psy:1,str:3,cult:4,infl:4}, note:"Мамлюкские карты + ренессансные аллегории.", _altcont:"meso"},
+  {id:"goldendawn", name:"Золотая Заря", cont:"hebrew", year:1888, era:"1888, Лондон", author:"Уэсткотт, Мазерс, Вудман", orig:"compil", epist:"Эзотерика; шаблон зап. оккультизма", depth:{phil:4,sym:5,psy:3,str:5,cult:5,infl:5}, note:"Каббала + Таро + герметизм + алхимия + Енохиана + масонство.", _altcont:"greek"},
+  {id:"esoteric-tarot", name:"Эзотерическое Таро", cont:"greek", year:1850, era:"1781 → 1909 → 1944", author:"Кур де Жебелен, Леви, Уэйт, Кроули", orig:"compil", epist:"Псевдоэзотерика на фальшивой древности", depth:{phil:3,sym:5,psy:3,str:4,cult:5,infl:5}, note:"Придуманная «египетская» (1781) и каббалистическая (1850-е) родословные."},
+  {id:"theosophy", name:"Теософия", cont:"india", year:1875, era:"1875, Нью-Йорк", author:"Блаватская, Олкотт", orig:"compil", epist:"Псевдонаука (Hodgson Report 1885)", depth:{phil:3,sym:4,psy:2,str:4,cult:5,infl:5}, note:"Индуизм + буддизм + оккультизм + «Учителя». Главный мост Восток→Запад.", _altcont:"hebrew"},
+  {id:"jung-types", name:"Юнгианская типология", cont:"sci", year:1921, era:"1921", author:"К. Г. Юнг", orig:"indep", epist:"Клиническая теория; влиятельна", depth:{phil:5,sym:4,psy:5,str:4,cult:5,infl:5}, note:"Psychologische Typen. E/I + 4 функции. Родитель всех 16-типных систем.", _altcont:"greek"},
+  {id:"jung-arch", name:"Архетипы Юнга", cont:"sci", year:1919, era:"1919", author:"К. Г. Юнг", orig:"indep", epist:"Гуманитарно-психологическая ценность", depth:{phil:5,sym:5,psy:5,str:3,cult:5,infl:5}, note:"Гностицизм + мифология + клиника. Коллективное бессознательное, индивидуация.", _altcont:"greek"},
+  {id:"anthroposophy", name:"Антропософия", cont:"india", year:1912, era:"1912", author:"Р. Штайнер", orig:"hybrid", epist:"Эзотерика", depth:{phil:4,sym:3,psy:2,str:4,cult:4,infl:3}, note:"Отколовшаяся ветвь теософии + христология + Гёте."},
+  {id:"chakra-rainbow", name:"«7 чакр радуги» (запад)", cont:"india", year:1927, era:"1927 → 1977", author:"Ледбитер; Хиллс", orig:"hybrid", epist:"Эзотерика; западное изобретение", depth:{phil:2,sym:5,psy:3,str:4,cult:5,infl:5}, note:"ROYGBIV-схема — конструкция 1927/1977, не древняя индийская традиция."},
+  {id:"enneagram-symbol", name:"Эннеаграмма (символ)", cont:"greek", year:1915, era:"~1915", author:"Г. И. Гурджиев", orig:"indep", epist:"Символ универсального процесса", depth:{phil:4,sym:5,psy:2,str:5,cult:4,infl:5}, note:"Не личностная типология — символ процесса."},
+  {id:"enneagram-pers", name:"Эннеаграмма личности", cont:"greek", year:1968, era:"1968 → 1970", author:"О. Ичазо; К. Наранхо", orig:"compil", epist:"Слабая надёжность; ложная «древность»", depth:{phil:3,sym:5,psy:4,str:5,cult:5,infl:4}, note:"Символ Гурджиева + 8 помыслов Эвагрия + сфирот + автоматическое письмо."},
+  {id:"mbti", name:"MBTI", cont:"sci", year:1962, era:"1942 / 1962", author:"К. Бриггс, И. Бриггс-Майерс", orig:"hybrid", epist:"Псевдонаука по консенсусу психологии", depth:{phil:2,sym:2,psy:4,str:4,cult:5,infl:5}, note:"Юнг + добавленная J/P-шкала. 16 типов."},
+  {id:"socionics", name:"Соционика", cont:"sci", year:1975, era:"1970-е, Вильнюс", author:"А. Аугустинавичюте", orig:"hybrid", epist:"Не признана академической психологией", depth:{phil:3,sym:3,psy:4,str:5,cult:3,infl:3}, note:"Юнг + Кемпинский (информационный метаболизм) + кибернетика."},
+  {id:"psychosophy", name:"Психософия (Афанасьев)", cont:"sci", year:1991, era:"1991", author:"А. Афанасьев", orig:"hybrid", epist:"Маргинальная", depth:{phil:2,sym:2,psy:3,str:4,cult:2,infl:2}, note:"Синтаксис любви. Воля/Эмоция/Логика/Физика. Юнг + соционика."},
+  {id:"bigfive", name:"Big Five / FFM", cont:"sci", year:1985, era:"1981 → 1992", author:"Goldberg; Costa & McCrae", orig:"science", epist:"ЕДИНСТВЕННЫЙ научный стандарт", depth:{phil:2,sym:1,psy:5,str:5,cult:4,infl:5}, note:"Лексическая гипотеза (Allport & Odbert 1936) → Tupes & Christal 1961. Наследуемость 40–60%."},
+  {id:"transpersonal", name:"Трансперсональная психология", cont:"sci", year:1969, era:"1969", author:"Сутич, Маслоу, Гроф", orig:"compil", epist:"На границе академической психологии", depth:{phil:4,sym:3,psy:4,str:3,cult:4,infl:3}, note:"Юнг + восточные практики + психоделика."},
+  {id:"human-design", name:"Human Design", cont:"china", year:1987, era:"январь 1987, Ибица", author:"Ра Уру Ху / Алан Краковер", orig:"compil", epist:"Псевдонаука (мистически санкционированная)", depth:{phil:2,sym:5,psy:3,str:5,cult:4,infl:4}, note:"«Голос» + И-Цзин + астрология + Древо Сфирот + чакры + псевдо-физика нейтрино.", featured:true},
+  {id:"gene-keys", name:"Gene Keys", cont:"china", year:2009, era:"~2003–2009", author:"Ричард Радд", orig:"market", epist:"Эзотерика; прямое производное HD", depth:{phil:3,sym:4,psy:3,str:4,cult:3,infl:2}, note:"Human Design + язык «тень/дар/сиддхи». 64 ключа = 64 ворот = 64 гексаграммы.", featured:true},
+  {id:"matrix-destiny", name:"Матрица Судьбы (22 кода)", cont:"greek", year:2006, era:"2006, Москва", author:"Наталья Ладини", orig:"market", epist:"Псевдонаука; маркетингово агрессивная", depth:{phil:1,sym:4,psy:2,str:4,cult:4,infl:3}, note:"22 старших аркана Таро + 7-чакральная вертикаль + пифагорейская нумерология + октаграмма.", featured:true},
+  {id:"16p", name:"16Personalities", cont:"sci", year:2013, era:"2013", author:"NERIS Analytics", orig:"market", epist:"MBTI-вывеска на Big-Five-основе", depth:{phil:1,sym:2,psy:3,str:4,cult:5,infl:3}, note:"4 буквы MBTI + 5-й параметр Assertiveness ≈ Neuroticism."},
+  {id:"insta", name:"Инста-«авторские» системы", cont:"greek", year:2018, era:"2015 →", author:"индивидуальные «авторы»", orig:"market", epist:"Псевдонаука; «духовный рынок»", depth:{phil:1,sym:2,psy:1,str:2,cult:3,infl:1}, note:"Ремиксы Human Design / Матрицы Судьбы / эннеаграммы.", _altcont:"china"},
+];
+
+/* связи: from → to, type, label
+   типы: borrow (прямое заимствование), influence (историческое влияние),
+         concept (концептуальное сходство), symbol (символическое пересечение),
+         compile (современная компиляция) */
+const LINKS = [
+  // астрологический континент
+  {f:"babylon", t:"hellenistic", type:"influence"},
+  {f:"babylon", t:"chaldean", type:"influence"},
+  {f:"hellenistic", t:"esoteric-tarot", type:"symbol"},
+  // числовой
+  {f:"pythag", t:"chaldean", type:"concept"},
+  {f:"pythag", t:"sefer", type:"concept", label:"число↔буква"},
+  {f:"pythag", t:"matrix-destiny", type:"borrow", label:"нумерология"},
+  // китайский
+  {f:"iching", t:"bazi", type:"influence"},
+  {f:"iching", t:"human-design", type:"borrow", label:"64 ворот"},
+  {f:"iching", t:"gene-keys", type:"borrow", label:"64 ключа"},
+  {f:"human-design", t:"gene-keys", type:"compile", label:"прямое производное"},
+  // каббала
+  {f:"sefer", t:"bahir", type:"influence"},
+  {f:"bahir", t:"zohar", type:"influence"},
+  {f:"zohar", t:"luria", type:"influence"},
+  {f:"sefer", t:"goldendawn", type:"borrow", label:"Древо Сфирот"},
+  {f:"zohar", t:"goldendawn", type:"influence"},
+  {f:"goldendawn", t:"human-design", type:"borrow", label:"Древо → 9 центров"},
+  {f:"goldendawn", t:"esoteric-tarot", type:"compile"},
+  {f:"sefer", t:"enneagram-pers", type:"borrow", label:"сфирот"},
+  // герметизм/алхимия
+  {f:"hermetism", t:"alchemy", type:"influence"},
+  {f:"alchemy", t:"goldendawn", type:"borrow"},
+  {f:"alchemy", t:"jung-arch", type:"influence", label:"психология алхимии"},
+  {f:"hermetism", t:"goldendawn", type:"borrow"},
+  // таро
+  {f:"tarot-game", t:"esoteric-tarot", type:"influence"},
+  {f:"esoteric-tarot", t:"matrix-destiny", type:"borrow", label:"22 аркана"},
+  {f:"esoteric-tarot", t:"goldendawn", type:"borrow"},
+  // индия/чакры
+  {f:"chakra1577", t:"chakra-rainbow", type:"influence", label:"через Вудроффа"},
+  {f:"chakra1577", t:"human-design", type:"borrow", label:"чакры → центры"},
+  {f:"chakra-rainbow", t:"matrix-destiny", type:"borrow", label:"7-чакр. вертикаль"},
+  {f:"sufi", t:"transpersonal", type:"concept"},
+  // теософия как мост
+  {f:"theosophy", t:"anthroposophy", type:"influence"},
+  {f:"theosophy", t:"chakra-rainbow", type:"borrow", label:"Ледбитер"},
+  {f:"chakra1577", t:"theosophy", type:"influence"},
+  {f:"esoteric-tarot", t:"theosophy", type:"concept"},
+  // юнгианская семья
+  {f:"jung-arch", t:"jung-types", type:"influence"},
+  {f:"jung-types", t:"mbti", type:"borrow", label:"3 дихотомии"},
+  {f:"jung-types", t:"socionics", type:"borrow"},
+  {f:"socionics", t:"psychosophy", type:"influence"},
+  {f:"jung-arch", t:"transpersonal", type:"influence"},
+  {f:"mbti", t:"16p", type:"borrow", label:"4 буквы"},
+  {f:"bigfive", t:"16p", type:"borrow", label:"скрытая основа"},
+  // эннеаграмма
+  {f:"enneagram-symbol", t:"enneagram-pers", type:"influence"},
+  // современный рынок
+  {f:"human-design", t:"insta", type:"compile"},
+  {f:"matrix-destiny", t:"insta", type:"compile"},
+  {f:"enneagram-pers", t:"insta", type:"compile"},
+  // эллинистика + юнг → совр. астрология (концепт)
+  {f:"hellenistic", t:"jung-arch", type:"concept", label:"психологич. астрология"},
+  // джйотиш: эллинистическое влияние (V в.) + тантрический контекст
+  {f:"hellenistic", t:"jyotish", type:"influence", label:"греч. влияние с V в."},
+  {f:"jyotish", t:"chakra1577", type:"concept", label:"общий вед.-тантр. контекст"},
+  {f:"jyotish", t:"theosophy", type:"influence", label:"через индийскую мистику"},
+  // big five научная линия
+  {f:"jung-types", t:"bigfive", type:"concept", label:"корреляция доменов"},
+];
+
+/* хронология — слои эпох */
+const TIMELINE = [
+  {era:"Древние очаги", range:"2000 – 500 до н.э.", color:"meso",
+   items:[
+     {y:"~2000 до н.э.", t:"Вавилонские зодиакальные списки (Enūma Anu Enlil)", id:"babylon"},
+     {y:"Чжоу 1046–256", t:"И-Цзин как пособие по гаданию на тысячелистнике", id:"iching"},
+     {y:"~1400 до н.э.", t:"Веданга-джйотиша Лагадхи", id:"jyotish"},
+     {y:"VI в. до н.э.", t:"Пифагор: число как первоначало", id:"pythag"},
+   ]},
+  {era:"Античность и поздняя древность", range:"500 до н.э. – 600 н.э.", color:"greek",
+   items:[
+     {y:"III в. до н.э.–II н.э.", t:"Эллинистическая астрология в Александрии; Тетрабиблос", id:"hellenistic"},
+     {y:"II–III вв.", t:"Corpus Hermeticum; александрийская алхимия", id:"hermetism"},
+     {y:"III–VI вв.", t:"Сефер Йецира — устройство творения через буквы", id:"sefer"},
+   ]},
+  {era:"Средневековье и Возрождение", range:"600 – 1600", color:"hebrew",
+   items:[
+     {y:"Тан–Сун", t:"Формирование Ба-Цзы (четыре столпа судьбы)", id:"bazi"},
+     {y:"1280-е", t:"Зогар — Моше де Леон (атрибуция бар Йохаю)", id:"zohar"},
+     {y:"~1440", t:"Таро как карточная игра tarocchi, Сев. Италия", id:"tarot-game"},
+     {y:"1572", t:"Лурианская каббала в Цфате", id:"luria"},
+     {y:"1577", t:"Шат-чакра-нирупана Пурнананды", id:"chakra1577"},
+   ]},
+  {era:"Оккультное возрождение", range:"1750 – 1900", color:"meso",
+   items:[
+     {y:"1781", t:"Кур де Жебелен изобретает «египетскую» родословную Таро", id:"esoteric-tarot"},
+     {y:"1850-е", t:"Леви связывает 22 аркана с 22 буквами иврита", id:"esoteric-tarot"},
+     {y:"1875", t:"Блаватская основывает Теософское общество", id:"theosophy"},
+     {y:"1888", t:"Орден Золотой Зари", id:"goldendawn"},
+   ]},
+  {era:"Психологический поворот", range:"1900 – 1970", color:"sci",
+   items:[
+     {y:"~1915", t:"Гурджиев представляет символ эннеаграммы", id:"enneagram-symbol"},
+     {y:"1919/1921", t:"Юнг: архетипы и психологические типы", id:"jung-types"},
+     {y:"1927", t:"Ледбитер, The Chakras — «7 чакр» рождается на Западе", id:"chakra-rainbow"},
+     {y:"1936", t:"Allport & Odbert: лексическая гипотеза (основа Big Five)", id:"bigfive"},
+     {y:"1962", t:"MBTI принят Educational Testing Service", id:"mbti"},
+     {y:"1968–70", t:"Ичазо и Наранхо: эннеаграмма личности (Чили → Эсален)", id:"enneagram-pers"},
+   ]},
+  {era:"Синтетические и цифровые системы", range:"1970 – наши дни", color:"china",
+   items:[
+     {y:"1970-е", t:"Аугустинавичюте создаёт соционику", id:"socionics"},
+     {y:"1977", t:"Хиллс фиксирует ROYGBIV-чакры (Nuclear Evolution)", id:"chakra-rainbow"},
+     {y:"1985–92", t:"Costa & McCrae: NEO-PI-R — стандарт Big Five", id:"bigfive"},
+     {y:"1987", t:"Human Design — «передача голоса» на Ибице", id:"human-design"},
+     {y:"1991", t:"Афанасьев: психософия", id:"psychosophy"},
+     {y:"2006", t:"Ладини «открывает» Матрицу Судьбы в Москве", id:"matrix-destiny"},
+     {y:"~2009", t:"Радд развивает Gene Keys", id:"gene-keys"},
+     {y:"2015 →", t:"Массовые инста-«авторские» производные", id:"insta"},
+   ]},
+];
+
+/* метасистемные паттерны */
+const PATTERNS = {
+  numbers:[
+    {n:"3", title:"Триада", items:"тело/душа/дух · саттва/раджас/тамас · соль/сера/ртуть · 3 типа HD · тень/дар/сиддхи · Троица"},
+    {n:"4", title:"Кватернер", items:"стихии греков · масти Таро · функции Юнга · столпы Ба-Цзы · 4 направления шамана"},
+    {n:"5", title:"Пентада", items:"У-Син · махабхуты · Big Five · 5 элементов герметизма"},
+    {n:"7", title:"Гептада", items:"планеты древних · чакры · дни недели · ступени Золотой Зари · 7 Лучей Бейли"},
+    {n:"8", title:"Огдоада", items:"тригограммы И-Цзин · функции соционики · восьмеричный путь · октаграмма Матрицы"},
+    {n:"9", title:"Эннеада", items:"точки эннеаграммы · 9 центров HD (мутация из 7 чакр) · небеса Данте"},
+    {n:"10", title:"Декада", items:"сфирот · пифагорейская декада · десятилетия даш джйотиша"},
+    {n:"12", title:"Додекада", items:"зодиак · дома гороскопа · китайский цикл"},
+    {n:"22", title:"22 пути", items:"буквы иврита · старшие арканы Таро · «коды» Ладини · пути Древа Сфирот"},
+    {n:"64", title:"Гексаграммы", items:"И-Цзин · ворота HD · ключи Gene Keys · кодоны ген. кода (4³=2⁶)"},
+  ],
+  structures:[
+    {title:"Карта тела как пространство значений", items:["Чакры (тантра)","Латаиф (суфизм)","Сфирот на Адаме Кадмоне","Даньтьяны (даосизм)","9 центров Human Design"]},
+    {title:"Тройная структура внутреннего человека", items:["Тело / душа / дух","Гросс / сюкшма / карана","Nafs / Qalb / Ruh","Personality / Soul / Spirit","Shadow / Gift / Siddhi"]},
+    {title:"Истинное «я» под обусловленностью", items:["Гностическое pneuma","Природа Будды","Эссенция в эннеаграмме","«Дизайн» в Human Design","Индивидуация Юнга"]},
+    {title:"Бинарные пары классификации психики", items:["Экстраверсия / интроверсия","Иррациональный / рациональный","Defined / undefined","Ян / Инь","Active / receptive"]},
+    {title:"Структуры развития и трансформации", items:["Восхождение по чакрам","Путь по Древу Сфирот","Nigredo→Albedo→Rubedo","Индивидуация Юнга","Путешествие героя (Кэмпбелл)"]},
+  ]
+};
+
+/* самые влиятельные первоисточники / оригинальные / компилятивные */
+const RANKINGS = {
+  influential:[
+    {id:"iching", reason:"Фундамент китайской метафизики; источник Ба-Цзы, HD, Gene Keys; вдохновил Лейбница и Юнга."},
+    {id:"babylon", reason:"Родительница всей мировой астрологической традиции."},
+    {id:"sefer", reason:"Основа всех каббалистических, герметико-каббалистических и нью-эйдж-систем."},
+    {id:"hermetism", reason:"Фундамент алхимии, розенкрейцерства, Золотой Зари."},
+    {id:"jung-types", reason:"Родитель MBTI, соционики, психософии, большинства типологий."},
+    {id:"pythag", reason:"Родитель всей западной нумерологии."},
+    {id:"chakra1577", reason:"Основа всех чакральных систем Запада через Вудроффа и Ледбитера."},
+    {id:"theosophy", reason:"Главный канал передачи восточной эзотерики на Запад в XX в."},
+  ],
+  original:[
+    {id:"iching", reason:"Комбинаторный аппарат 64 гексаграмм без аналогов."},
+    {id:"bigfive", reason:"Единственная система, полученная факторным анализом языка; верифицирована в 50+ культурах."},
+    {id:"jung-types", reason:"Оригинальный синтез наблюдения и философской традиции."},
+    {id:"sefer", reason:"Самый ранний систематический иудейский текст об устройстве творения."},
+    {id:"socionics", reason:"Оригинальная теория информационного метаболизма + интертипные отношения."},
+    {id:"luria", reason:"Оригинальное развитие цимцум / швират ха-келим / тиккун."},
+  ],
+  compilative:[
+    {id:"human-design", reason:"И-Цзин + астрология + каббала + чакры + псевдо-физика, легитимизировано «откровением»."},
+    {id:"matrix-destiny", reason:"22 аркана Таро + чакры + нумерология + геометрия, переименованные в «22 кода»."},
+    {id:"esoteric-tarot", reason:"Игровая колода XV в. + придуманные связи с Египтом и каббалой."},
+    {id:"enneagram-pers", reason:"Символ Гурджиева + 9 пороков Эвагрия + сфирот + автоматическое письмо."},
+    {id:"theosophy", reason:"Индуизм + буддизм + спиритизм + оккультизм + задокументированный плагиат."},
+    {id:"goldendawn", reason:"Почти идеальная компиляция всего западного эзотерического наследия до 1888 г."},
+    {id:"16p", reason:"MBTI-этикетка на гибридной Big-Five-основе."},
+  ]
+};
+
+</script>
+<script>
+/* ============================================================
+   ATLAS RENDER ENGINE
+   ============================================================ */
+const $ = (s,p=document)=>p.querySelector(s);
+const $$ = (s,p=document)=>[...p.querySelectorAll(s)];
+const SVGNS="http://www.w3.org/2000/svg";
+const sysById = id => SYSTEMS.find(s=>s.id===id);
+const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;};
+function svg(tag,attrs){const e=document.createElementNS(SVGNS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);return e;}
+function contColor(c){return CONTINENTS[c]?CONTINENTS[c].hex:"#999";}
+
+/* ---------- starfield canvas ---------- */
+(function(){
+  const c=$("#stars-canvas"),x=c.getContext("2d");let w,h,stars;
+  function init(){w=c.width=innerWidth;h=c.height=innerHeight;
+    stars=[...Array(Math.floor(w*h/9000))].map(()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.3+.2,a:Math.random(),s:Math.random()*.02+.004}));}
+  function loop(){x.clearRect(0,0,w,h);for(const st of stars){st.a+=st.s;const o=(Math.sin(st.a)*.5+.5)*.6+.1;
+    x.beginPath();x.arc(st.x,st.y,st.r,0,7);x.fillStyle=`rgba(255,228,170,${o})`;x.fill();}requestAnimationFrame(loop);}
+  init();loop();addEventListener("resize",init);
+})();
+
+/* ---------- continents legend ---------- */
+(function(){
+  const root=$("#continents-legend");
+  for(const k in CONTINENTS){const c=CONTINENTS[k];
+    const chip=el("div","cont-chip");
+    chip.innerHTML=`<span class="dot" style="background:${c.hex};color:${c.hex}"></span>${c.name}<span style="opacity:.5">· ${c.short}</span>`;
+    root.appendChild(chip);}
+})();
+
+/* ============================================================
+   LAYER REGISTRY
+   ============================================================ */
+const LAYERS=[
+  {id:"origin",   num:"01", nav:"Карта происхождения", build:buildOrigin},
+  {id:"timeline", num:"02", nav:"Хронология",          build:buildTimeline},
+  {id:"tree",     num:"03", nav:"Древо влияний",        build:buildTree},
+  {id:"graph",    num:"04", nav:"Граф связей",          build:buildGraph},
+  {id:"sources",  num:"05", nav:"Первоисточники",       build:buildSources},
+  {id:"hybrid",   num:"06", nav:"Гибридные системы",    build:buildHybrid},
+  {id:"independent",num:"07",nav:"Независимые ветви",   build:buildIndependent},
+  {id:"derived",  num:"08", nav:"Современные производные",build:buildDerived},
+  {id:"patterns", num:"09", nav:"Метасистемные паттерны",build:buildPatterns},
+  {id:"meta",     num:"10", nav:"Финальная метакарта",  build:buildMeta},
+  {id:"registry", num:"11", nav:"Полный реестр",         build:buildRegistry},
+];
+
+function mountLayers(){
+  const nav=$("#layer-nav"), root=$("#layers-root");
+  LAYERS.forEach((L,i)=>{
+    const b=el("button","nav-btn"+(i===0?" active":""));
+    b.innerHTML=`<span class="num">${L.num}</span>${L.nav}`;
+    b.onclick=()=>activate(L.id);
+    nav.appendChild(b);
+    const sec=el("section","layer"+(i===0?" active":""));
+    sec.id="layer-"+L.id;
+    root.appendChild(sec);
+  });
+  // build first eagerly, others lazily
+  LAYERS.forEach(L=>{const sec=$("#layer-"+L.id);L._built=false;
+    if(L.id==="origin"){L.build(sec);L._built=true;}});
+}
+function activate(id){
+  LAYERS.forEach((L,i)=>{
+    const sec=$("#layer-"+L.id), btn=$$(".nav-btn")[i];
+    const on=L.id===id;
+    sec.classList.toggle("active",on);
+    btn.classList.toggle("active",on);
+    if(on&&!L._built){L.build(sec);L._built=true;}
+  });
+  window.scrollTo({top:$("nav.layer-nav").offsetTop-2,behavior:"smooth"});
+}
+
+/* shared: layer head */
+function layerHead(parent,kicker,title,lede){
+  const h=el("div","layer-head");
+  h.innerHTML=`<div class="layer-kicker">${kicker}</div>
+    <h2 class="layer-title">${title}</h2>
+    <p class="layer-lede">${lede}</p>`;
+  parent.appendChild(h);
+  return h;
+}
+
+/* shared: detail tooltip ------------------------------------ */
+let TIP;
+function ensureTip(){
+  if(TIP)return TIP;
+  TIP=el("div");TIP.id="atlas-tip";
+  Object.assign(TIP.style,{position:"fixed",zIndex:200,maxWidth:"320px",pointerEvents:"none",
+    opacity:0,transition:"opacity .18s",background:"linear-gradient(160deg,#241812,#1F1610)",
+    border:"1px solid var(--ink-line)",borderRadius:"12px",padding:"15px 17px",
+    boxShadow:"var(--shadow-deep)",fontFamily:"var(--ff-body)"});
+  document.body.appendChild(TIP);
+  return TIP;
+}
+function showTip(s,ev){
+  const t=ensureTip(),c=CONTINENTS[s.cont];
+  t.innerHTML=`<div style="font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.1em;
+      color:${contColor(s.cont)};text-transform:uppercase;margin-bottom:6px">${c.name} · ${s.era}</div>
+    <div style="font-family:var(--ff-display);font-size:1.32rem;font-weight:600;color:var(--white);line-height:1.1">${s.name}</div>
+    <div style="font-size:.82rem;color:var(--parch-faint);margin:4px 0 9px;font-style:italic">${s.author}</div>
+    <div style="font-size:.9rem;color:var(--parch-dim);line-height:1.5">${s.note}</div>
+    <div style="margin-top:11px;display:flex;gap:6px;flex-wrap:wrap">
+      <span class="tag" style="color:${ORIG[s.orig].color}">${ORIG[s.orig].label}</span>
+      <span class="tag" style="color:var(--parch-faint)">${s.epist}</span></div>`;
+  t.style.opacity=1;TIP_OPEN=true;moveTip(ev);
+}
+function moveTip(ev){const t=ensureTip();if(!t)return;
+  let x=ev.clientX+18,y=ev.clientY+18;
+  const r=t.getBoundingClientRect();
+  if(x+r.width>innerWidth-12)x=ev.clientX-r.width-18;
+  if(y+r.height>innerHeight-12)y=ev.clientY-r.height-18;
+  t.style.left=x+"px";t.style.top=y+"px";}
+function hideTip(){if(TIP)TIP.style.opacity=0;TIP_OPEN=false;}
+
+/* — глобальные страховки: тултип не «залипает» — */
+let TIP_OPEN=false;
+const HOVER_SEL=".onode,.gnode,.mnode,.tl-item,.sys-card";
+addEventListener("mousemove",e=>{
+  if(!TIP_OPEN)return;
+  if(!e.target.closest(HOVER_SEL))hideTip();   // мышь ушла с любого объекта → скрыть
+},true);
+addEventListener("mousedown",e=>{ if(!e.target.closest(HOVER_SEL))hideTip(); },true); // клик в пустоту
+addEventListener("scroll",()=>{ if(TIP_OPEN)hideTip(); },true);
+addEventListener("blur",hideTip);
+
+document.addEventListener("DOMContentLoaded",mountLayers);
+
+/* ============================================================
+   LAYER 01 — КАРТА ПРОИСХОЖДЕНИЯ (радиальная по континентам)
+   ============================================================ */
+function buildOrigin(p){
+  layerHead(p,"Слой 01 · Главная карта",
+    "Карта происхождения систем",
+    "Шесть цивилизационных «континентов» знания. Каждый узел — система; цвет — её исток; размер — культурное влияние. Линии — задокументированные передачи.");
+
+  const W=1240,H=860,cx=W/2,cy=H/2;
+  const wrap=el("div","panel");wrap.style.padding="10px";
+  const holder=el("div");holder.style.cssText="width:100%;overflow:hidden;border-radius:10px";
+  const s=svg("svg",{viewBox:`0 0 ${W} ${H}`,width:"100%",style:"display:block;min-height:520px"});
+
+  // continent order around the circle
+  const order=["meso","greek","hebrew","india","china","sci"];
+  const angleFor={};order.forEach((c,i)=>angleFor[c]=(i/order.length)*Math.PI*2 - Math.PI/2);
+
+  // place systems: group by continent, distribute on arc + radius by year
+  const yMin=-2000,yMax=2025;
+  const rInner=120,rOuter=380;
+  const pos={};
+  const byCont={};order.forEach(c=>byCont[c]=[]);
+  SYSTEMS.forEach(sy=>byCont[sy.cont].push(sy));
+  order.forEach(c=>{
+    const arr=byCont[c].sort((a,b)=>a.year-b.year);
+    const base=angleFor[c], spread=0.62;
+    arr.forEach((sy,i)=>{
+      const t=arr.length>1?i/(arr.length-1):0.5;
+      const ang=base+(t-0.5)*spread;
+      const rr=rInner+((sy.year-yMin)/(yMax-yMin))*(rOuter-rInner);
+      pos[sy.id]={x:cx+Math.cos(ang)*rr, y:cy+Math.sin(ang)*rr, ang, rr};
+    });
+  });
+
+  // defs glow
+  const defs=svg("defs",{});
+  for(const c in CONTINENTS){
+    const g=svg("radialGradient",{id:"glow-"+c});
+    g.appendChild(svg("stop",{offset:"0%","stop-color":CONTINENTS[c].hex,"stop-opacity":"0.5"}));
+    g.appendChild(svg("stop",{offset:"100%","stop-color":CONTINENTS[c].hex,"stop-opacity":"0"}));
+    defs.appendChild(g);
+  }
+  s.appendChild(defs);
+
+  // concentric era rings
+  const ringYears=[-1500,-500,500,1500,1900,2025];
+  ringYears.forEach(yr=>{
+    const rr=rInner+((yr-yMin)/(yMax-yMin))*(rOuter-rInner);
+    s.appendChild(svg("circle",{cx,cy,r:rr,fill:"none",stroke:"#3A2A1E","stroke-width":"1","stroke-dasharray":"2 6"}));
+    const lbl=svg("text",{x:cx,y:cy-rr-3,fill:"#A08B6E","font-size":"10","text-anchor":"middle","font-family":"var(--ff-mono)"});
+    lbl.textContent=yr<0?Math.abs(yr)+" до н.э.":yr+"";
+    s.appendChild(lbl);
+  });
+  // center
+  s.appendChild(svg("circle",{cx,cy,r:54,fill:"url(#glow-meso)",opacity:".4"}));
+  const ct=svg("text",{x:cx,y:cy-4,fill:"#FFE9C2","font-size":"15","text-anchor":"middle","font-family":"var(--ff-display)","font-weight":"600"});
+  ct.textContent="Истоки";
+  const ct2=svg("text",{x:cx,y:cy+14,fill:"#A08B6E","font-size":"9.5","text-anchor":"middle","font-family":"var(--ff-mono)"});
+  ct2.textContent="2000 до н.э.";
+  s.appendChild(ct);s.appendChild(ct2);
+
+  // continent sector labels
+  order.forEach(c=>{
+    const ang=angleFor[c],rr=rOuter+46;
+    const x=cx+Math.cos(ang)*rr,y=cy+Math.sin(ang)*rr;
+    const g=svg("text",{x,y,fill:CONTINENTS[c].hex,"font-size":"13","text-anchor":"middle",
+      "font-family":"var(--ff-display)","font-weight":"600","opacity":".9"});
+    g.textContent=CONTINENTS[c].name;
+    s.appendChild(g);
+  });
+
+  // links
+  const linkG=svg("g",{});s.appendChild(linkG);
+  LINKS.forEach(L=>{
+    const a=pos[L.f],b=pos[L.t];if(!a||!b)return;
+    const mx=(a.x+b.x)/2,my=(a.y+b.y)/2;
+    const dx=mx-cx,dy=my-cy;const k=0.16;
+    const path=svg("path",{d:`M${a.x},${a.y} Q${mx-dx*k},${my-dy*k} ${b.x},${b.y}`,
+      fill:"none",stroke:contColor(sysById(L.f).cont),"stroke-width":"1","stroke-opacity":".22","data-f":L.f,"data-t":L.t,class:"olink"});
+    linkG.appendChild(path);
+  });
+
+  // nodes
+  const nodeG=svg("g",{});s.appendChild(nodeG);
+  SYSTEMS.forEach(sy=>{
+    const pp=pos[sy.id];
+    const r=4+sy.depth.infl*1.7;
+    const g=svg("g",{transform:`translate(${pp.x},${pp.y})`,style:"cursor:pointer",class:"onode","data-id":sy.id});
+    g.appendChild(svg("circle",{r:r+6,fill:`url(#glow-${sy.cont})`,opacity:sy.featured?".9":".5"}));
+    const circ=svg("circle",{r,fill:contColor(sy.cont),stroke:sy.featured?"#FFE9C2":"#0F0805","stroke-width":sy.featured?"2":"1.4"});
+    g.appendChild(circ);
+    if(sy.featured){
+      g.appendChild(svg("circle",{r:r+4,fill:"none",stroke:"#FFE9C2","stroke-width":"1","stroke-opacity":".6"}));
+    }
+    // label
+    const out=pp.rr>250;
+    const tx=svg("text",{x:0,y:r+13,fill:"#D2BE9F","font-size":"10","text-anchor":"middle",
+      "font-family":"var(--ff-body)","style":"pointer-events:none"});
+    tx.textContent=sy.name.length>22?sy.name.slice(0,21)+"…":sy.name;
+    g.appendChild(tx);
+    g.addEventListener("mouseenter",e=>{showTip(sy,e);highlight(sy.id,true);});
+    g.addEventListener("mousemove",moveTip);
+    g.addEventListener("mouseleave",()=>{hideTip();highlight(sy.id,false);});
+    nodeG.appendChild(g);
+  });
+
+  function highlight(id,on){
+    $$(".olink",s).forEach(l=>{
+      const rel=l.dataset.f===id||l.dataset.t===id;
+      l.setAttribute("stroke-opacity",on?(rel?".85":".05"):".22");
+      l.setAttribute("stroke-width",on&&rel?"2":"1");
+    });
+    $$(".onode",s).forEach(n=>{
+      n.style.opacity=on?(n.dataset.id===id||isLinked(id,n.dataset.id)?"1":".25"):"1";
+    });
+  }
+  function isLinked(a,b){return LINKS.some(L=>(L.f===a&&L.t===b)||(L.f===b&&L.t===a));}
+
+  holder.appendChild(s);wrap.appendChild(holder);
+  const hint=el("p","scroll-hint","Наведите на узел — связи подсветятся. Радиус = эпоха · размер = культурное влияние · цвет = континент происхождения");
+  wrap.appendChild(hint);
+  p.appendChild(wrap);
+
+  // link-type legend
+  p.appendChild(linkTypeLegend());
+}
+
+function linkTypeLegend(){
+  const types=[
+    {k:"borrow",c:"#DC9658",t:"Прямое заимствование"},
+    {k:"influence",c:"#6f93c8",t:"Историческое влияние"},
+    {k:"concept",c:"#6fae8f",t:"Концептуальное сходство"},
+    {k:"symbol",c:"#9a7fc0",t:"Символическое пересечение"},
+    {k:"compile",c:"#c0617a",t:"Современная компиляция"},
+  ];
+  const d=el("div");d.style.cssText="display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-top:18px";
+  types.forEach(t=>{
+    const i=el("div");i.style.cssText="display:flex;align-items:center;gap:8px;font-family:var(--ff-mono);font-size:.72rem;color:var(--parch-dim)";
+    i.innerHTML=`<svg width="26" height="6"><line x1="0" y1="3" x2="26" y2="3" stroke="${t.c}" stroke-width="2"/></svg>${t.t}`;
+    d.appendChild(i);
+  });
+  return d;
+}
+
+/* ============================================================
+   LAYER 02 — ХРОНОЛОГИЯ
+   ============================================================ */
+function buildTimeline(p){
+  layerHead(p,"Слой 02 · Временная шкала",
+    "Хронология возникновения",
+    "Шесть эпох цивилизационного знания. Обратите внимание: «древние» эзотерические системы (эннеаграмма, чакры-радуга, Human Design) рождаются поздно — их древность есть маркетинг, а не история.");
+
+  const lane=el("div");lane.style.cssText="position:relative;padding-left:8px";
+  TIMELINE.forEach((era,ei)=>{
+    const c=CONTINENTS[era.color].hex;
+    const block=el("div","panel");
+    block.style.cssText=`margin-bottom:22px;border-left:3px solid ${c};padding-left:26px`;
+    block.style.opacity=0;block.style.transform="translateX(-12px)";
+    block.style.transition=`all .5s ${ei*0.07}s`;
+    let html=`<div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:16px">
+        <span style="font-family:var(--ff-display);font-size:1.5rem;font-weight:600;color:var(--white)">${era.era}</span>
+        <span style="font-family:var(--ff-mono);font-size:.78rem;letter-spacing:.1em;color:${c}">${era.range}</span></div>
+      <div style="display:flex;flex-direction:column;gap:0">`;
+    era.items.forEach(it=>{
+      const sy=sysById(it.id);
+      html+=`<div class="tl-item" data-id="${it.id}" style="display:grid;grid-template-columns:150px 1fr;gap:18px;
+          padding:11px 0;border-top:1px solid #3A2A1E;cursor:pointer;transition:.2s">
+        <div style="font-family:var(--ff-mono);font-size:.74rem;color:var(--gold);padding-top:2px">${it.y}</div>
+        <div style="display:flex;align-items:flex-start;gap:10px">
+          <span style="width:8px;height:8px;border-radius:50%;background:${contColor(sy.cont)};margin-top:7px;flex:0 0 auto;box-shadow:0 0 8px ${contColor(sy.cont)}"></span>
+          <span style="color:var(--parch-dim);font-size:.96rem">${it.t}</span></div></div>`;
+    });
+    html+=`</div>`;
+    block.innerHTML=html;
+    lane.appendChild(block);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{block.style.opacity=1;block.style.transform="none";}));
+  });
+  p.appendChild(lane);
+  $$(".tl-item",p).forEach(it=>{
+    const sy=sysById(it.dataset.id);
+    it.addEventListener("mouseenter",e=>{showTip(sy,e);it.style.background="rgba(220,150,88,.06)";});
+    it.addEventListener("mousemove",moveTip);
+    it.addEventListener("mouseleave",()=>{hideTip();it.style.background="";});
+  });
+}
+
+/* ============================================================
+   LAYER 03 — ДРЕВО ВЛИЯНИЙ (континент-колонки, поток слева→направо)
+   ============================================================ */
+function buildTree(p){
+  layerHead(p,"Слой 03 · Древо происхождения",
+    "Древо влияний",
+    "От первоисточников (слева) к производным (справа). Стрелки наследования. Видно, как немногие древние корни порождают весь современный «духовный рынок».");
+
+  // featured genealogies as explicit trees
+  const trees=[
+    {root:"Human Design", color:"#c0617a", chain:[
+      {label:"И-Цзин", sub:"64 гексаграммы → 64 ворот"},
+      {label:"Западная астрология", sub:"планетарные позиции"},
+      {label:"Древо Сфирот (каббала)", sub:"10 сфирот → 9 центров"},
+      {label:"Индуистские чакры", sub:"центры тела"},
+      {label:"Квантовая риторика", sub:"«нейтрино влияют на ДНК» — псевдонаука"},
+    ], out:"→ Gene Keys → инста-производные"},
+    {root:"Матрица Судьбы", color:"#9a7fc0", chain:[
+      {label:"22 старших аркана Таро", sub:"переименованы в «22 кода»"},
+      {label:"Пифагорейская нумерология", sub:"расчёт от даты рождения"},
+      {label:"7-чакральная вертикаль", sub:"теософская версия (Ледбитер)"},
+      {label:"Сакральная геометрия", sub:"октаграмма"},
+    ], out:"→ русскоязычный «духовный рынок»"},
+    {root:"Эннеаграмма личности", color:"#DC9658", chain:[
+      {label:"Символ Гурджиева (~1915)", sub:"диаграмма процесса"},
+      {label:"8 помыслов Эвагрия (IV в.)", sub:"→ пороки/страсти"},
+      {label:"Сфирот (каббала)", sub:"связи точек"},
+      {label:"Автоматическое письмо Наранхо", sub:"формулировка типов"},
+    ], out:"→ Enneagram Institute → поп-типология"},
+    {root:"MBTI", color:"#7fcfd4", chain:[
+      {label:"Юнг: психологические типы (1921)", sub:"3 дихотомии E/I, S/N, T/F"},
+      {label:"Добавление J/P", sub:"изобретение Бриггс-Майерс (нет у Юнга)"},
+    ], out:"→ 16Personalities (+ скрытый Big Five)"},
+  ];
+
+  const grid=el("div");grid.style.cssText="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px";
+  trees.forEach(tr=>{
+    const card=el("div","panel");
+    card.style.borderTop="none";
+    let h=`<div style="font-family:var(--ff-display);font-size:1.55rem;font-weight:600;color:var(--white);margin-bottom:4px">${tr.root}</div>
+      <div style="font-family:var(--ff-mono);font-size:.66rem;letter-spacing:.1em;color:${tr.color};text-transform:uppercase;margin-bottom:18px">синтезирована из</div>`;
+    tr.chain.forEach((c,i)=>{
+      h+=`<div style="position:relative;padding-left:24px;padding-bottom:${i===tr.chain.length-1?'4':'16'}px">
+        <span style="position:absolute;left:5px;top:4px;width:9px;height:9px;border-radius:50%;background:${tr.color};box-shadow:0 0 8px ${tr.color}"></span>
+        ${i<tr.chain.length-1?`<span style="position:absolute;left:9px;top:14px;bottom:-2px;width:1px;background:linear-gradient(${tr.color},transparent)"></span>`:''}
+        <div style="color:var(--parch);font-size:.96rem;font-weight:400">${c.label}</div>
+        <div style="color:var(--parch-faint);font-size:.8rem;font-style:italic">${c.sub}</div></div>`;
+    });
+    h+=`<div style="margin-top:16px;padding-top:14px;border-top:1px dashed #3A2A1E;
+        font-family:var(--ff-mono);font-size:.74rem;color:${tr.color}">${tr.out}</div>`;
+    card.innerHTML=h;
+    card.querySelector("div").style.borderTop="";
+    grid.appendChild(card);
+  });
+  p.appendChild(grid);
+
+  // continent → derivatives summary
+  const note=el("div","panel");note.style.marginTop="22px";
+  note.innerHTML=`<div style="font-family:var(--ff-display);font-size:1.3rem;color:var(--gold-bright);margin-bottom:10px">Закон древа</div>
+    <p style="color:var(--parch-dim);font-size:.98rem;line-height:1.65">Подлинно независимых корней — восемь-девять на весь атлас:
+    <b style="color:var(--c-china)">И-Цзин</b>, <b style="color:var(--c-meso)">вавилонская астрология</b>,
+    <b style="color:var(--c-india)">джйотиш</b>, <b style="color:var(--c-hebrew)">Сефер Йецира</b>,
+    <b style="color:var(--c-greek)">пифагорейство</b>, тантрические тексты,
+    <b style="color:var(--c-sci)">юнгианство</b> и методологически независимая <b style="color:var(--c-sci)">Big Five</b>.
+    Всё прочее — ветви, привои и поздние компиляции на этих корнях.</p>`;
+  p.appendChild(note);
+}
+
+/* ============================================================
+   LAYER 04 — ГРАФ СВЯЗЕЙ (force-directed, как knowledge graph)
+   ============================================================ */
+function buildGraph(p){
+  layerHead(p,"Слой 04 · Knowledge graph",
+    "Граф взаимосвязей",
+    "Силовой граф всех систем. Перетаскивайте узлы. Фильтруйте по типу связи. Кластеры формируются естественно — родственные традиции притягиваются.");
+
+  // controls
+  const ctrl=el("div");ctrl.style.cssText="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center";
+  const types=[["all","Все","#DC9658"],["borrow","Заимствование","#DC9658"],["influence","Влияние","#6f93c8"],
+    ["concept","Сходство","#6fae8f"],["symbol","Символ","#9a7fc0"],["compile","Компиляция","#c0617a"]];
+  let filter="all";
+  types.forEach(([k,lbl,c])=>{
+    const b=el("button");b.textContent=lbl;
+    b.style.cssText=`font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.05em;padding:7px 13px;border-radius:20px;
+      cursor:pointer;background:${k==='all'?'rgba(220,150,88,.14)':'transparent'};
+      border:1px solid ${k==='all'?'#C8642E':'#3A2A1E'};color:${k==='all'?'#FFE9C2':'#D2BE9F'};transition:.2s`;
+    b.onclick=()=>{filter=k;$$("button",ctrl).forEach(x=>{x.style.background="transparent";x.style.borderColor="#3A2A1E";x.style.color="#D2BE9F";});
+      b.style.background="rgba(220,150,88,.14)";b.style.borderColor="#C8642E";b.style.color="#FFE9C2";applyFilter();};
+    ctrl.appendChild(b);
+  });
+  p.appendChild(ctrl);
+
+  const wrap=el("div","panel");wrap.style.padding="6px";
+  const W=1240,H=820;
+  const s=svg("svg",{viewBox:`0 0 ${W} ${H}`,width:"100%",style:"display:block;min-height:540px;cursor:grab"});
+  wrap.appendChild(s);p.appendChild(wrap);
+  p.appendChild(linkTypeLegend());
+
+  const typeColor={borrow:"#DC9658",influence:"#6f93c8",concept:"#6fae8f",symbol:"#9a7fc0",compile:"#c0617a"};
+
+  // init nodes near continent anchors
+  const anchors={meso:[300,180],greek:[300,640],hebrew:[620,150],india:[930,200],china:[960,640],sci:[620,690]};
+  const N=SYSTEMS.map(sy=>{const a=anchors[sy.cont]||[620,410];
+    return {...sy, x:a[0]+(Math.random()-.5)*180, y:a[1]+(Math.random()-.5)*180, vx:0, vy:0,
+      r:5+sy.depth.infl*1.6};});
+  const idx={};N.forEach((n,i)=>idx[n.id]=i);
+  const E=LINKS.map(L=>({...L,s:idx[L.f],tt:idx[L.t]}));
+
+  const linkG=svg("g",{}),nodeG=svg("g",{});
+  s.appendChild(linkG);s.appendChild(nodeG);
+  const lineEls=E.map(L=>{
+    const ln=svg("line",{stroke:typeColor[L.type]||"#888","stroke-width":L.type==="borrow"||L.type==="compile"?"1.6":"1",
+      "stroke-opacity":".3","data-type":L.type});
+    linkG.appendChild(ln);return ln;});
+  const nodeEls=N.map((n,i)=>{
+    const g=svg("g",{style:"cursor:pointer",class:"gnode","data-i":i});
+    g.appendChild(svg("circle",{r:n.r+5,fill:contColor(n.cont),"fill-opacity":".12"}));
+    g.appendChild(svg("circle",{r:n.r,fill:contColor(n.cont),stroke:n.featured?"#FFE9C2":"#0F0805","stroke-width":n.featured?"2":"1.2"}));
+    const t=svg("text",{x:0,y:n.r+12,fill:"#C9B8A0","font-size":"9.5","text-anchor":"middle","font-family":"var(--ff-body)",style:"pointer-events:none"});
+    t.textContent=n.name.length>18?n.name.slice(0,17)+"…":n.name;
+    g.appendChild(t);
+    nodeG.appendChild(g);return g;});
+
+  // physics
+  let drag=null,raf;
+  function tick(){
+    // repulsion
+    for(let i=0;i<N.length;i++)for(let j=i+1;j<N.length;j++){
+      let dx=N[j].x-N[i].x,dy=N[j].y-N[i].y,d2=dx*dx+dy*dy+0.01,d=Math.sqrt(d2);
+      const f=2600/d2;const fx=dx/d*f,fy=dy/d*f;
+      N[i].vx-=fx;N[i].vy-=fy;N[j].vx+=fx;N[j].vy+=fy;}
+    // springs
+    E.forEach(L=>{const a=N[L.s],b=N[L.tt];let dx=b.x-a.x,dy=b.y-a.y,d=Math.sqrt(dx*dx+dy*dy)||1;
+      const f=(d-150)*0.012;const fx=dx/d*f,fy=dy/d*f;
+      a.vx+=fx;a.vy+=fy;b.vx-=fx;b.vy-=fy;});
+    // continent gravity + center
+    N.forEach(n=>{const a=anchors[n.cont]||[W/2,H/2];
+      n.vx+=(a[0]-n.x)*0.006;n.vy+=(a[1]-n.y)*0.006;
+      n.vx+=(W/2-n.x)*0.001;n.vy+=(H/2-n.y)*0.001;});
+    N.forEach((n,i)=>{if(drag===i)return;
+      n.vx*=0.86;n.vy*=0.86;n.x+=n.vx;n.y+=n.vy;
+      n.x=Math.max(40,Math.min(W-40,n.x));n.y=Math.max(30,Math.min(H-30,n.y));});
+    render();raf=requestAnimationFrame(tick);
+  }
+  function render(){
+    E.forEach((L,k)=>{const a=N[L.s],b=N[L.tt];
+      lineEls[k].setAttribute("x1",a.x);lineEls[k].setAttribute("y1",a.y);
+      lineEls[k].setAttribute("x2",b.x);lineEls[k].setAttribute("y2",b.y);});
+    N.forEach((n,i)=>nodeEls[i].setAttribute("transform",`translate(${n.x},${n.y})`));
+  }
+  function applyFilter(){
+    lineEls.forEach((ln,k)=>{const show=filter==="all"||E[k].type===filter;
+      ln.setAttribute("stroke-opacity",show?".34":".03");});
+  }
+
+  // interaction
+  function clientToSvg(ev){const r=s.getBoundingClientRect();
+    return {x:(ev.clientX-r.left)/r.width*W,y:(ev.clientY-r.top)/r.height*H};}
+  nodeEls.forEach((g,i)=>{
+    g.addEventListener("mouseenter",e=>{showTip(N[i],e);
+      E.forEach((L,k)=>{const rel=L.s===i||L.tt===i;
+        if(filter==="all"||L.type===filter)lineEls[k].setAttribute("stroke-opacity",rel?".9":".05");});
+      nodeEls.forEach((gg,j)=>{const rel=j===i||E.some(L=>(L.s===i&&L.tt===j)||(L.tt===i&&L.s===j));
+        gg.style.opacity=rel?"1":".22";});});
+    g.addEventListener("mousemove",moveTip);
+    g.addEventListener("mouseleave",()=>{hideTip();applyFilter();nodeEls.forEach(gg=>gg.style.opacity="1");});
+    g.addEventListener("mousedown",e=>{drag=i;s.style.cursor="grabbing";e.preventDefault();});
+  });
+  s.addEventListener("mousemove",e=>{if(drag==null)return;const pt=clientToSvg(e);N[drag].x=pt.x;N[drag].y=pt.y;N[drag].vx=0;N[drag].vy=0;});
+  addEventListener("mouseup",()=>{drag=null;s.style.cursor="grab";});
+  // touch
+  s.addEventListener("touchmove",e=>{if(drag==null)return;const t=e.touches[0];const pt=clientToSvg(t);N[drag].x=pt.x;N[drag].y=pt.y;e.preventDefault();},{passive:false});
+
+  tick();
+  // settle then keep gentle
+  setTimeout(()=>{N.forEach(n=>{n.vx*=.3;n.vy*=.3;});},2500);
+}
+
+/* ============================================================
+   shared: system card (для слоёв 05-08)
+   ============================================================ */
+function sysCard(sy,extra){
+  const c=el("div","sys-card");
+  c.style.cssText=`background:linear-gradient(160deg,rgba(42,24,16,.6),rgba(31,22,16,.4));
+    border:1px solid #3A2A1E;border-left:3px solid ${contColor(sy.cont)};border-radius:11px;padding:16px 18px;
+    cursor:pointer;transition:.22s`;
+  c.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:5px">
+      <span style="font-family:var(--ff-display);font-size:1.22rem;font-weight:600;color:var(--white)">${sy.name}</span>
+      <span style="font-family:var(--ff-mono);font-size:.66rem;color:var(--gold);white-space:nowrap">${sy.era}</span></div>
+    <div style="font-size:.8rem;color:var(--parch-faint);font-style:italic;margin-bottom:8px">${sy.author}</div>
+    <div style="font-size:.9rem;color:var(--parch-dim);line-height:1.5">${extra||sy.note}</div>`;
+  c.addEventListener("mouseenter",e=>{showTip(sy,e);c.style.borderColor=contColor(sy.cont);c.style.transform="translateY(-2px)";});
+  c.addEventListener("mousemove",moveTip);
+  c.addEventListener("mouseleave",()=>{hideTip();c.style.borderColor="#3A2A1E";c.style.borderLeftColor=contColor(sy.cont);c.style.transform="";});
+  return c;
+}
+function cardGrid(){const g=el("div");g.style.cssText="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px";return g;}
+
+/* ============================================================
+   LAYER 05 — ПЕРВОИСТОЧНИКИ
+   ============================================================ */
+function buildSources(p){
+  layerHead(p,"Слой 05 · Корни",
+    "Карта первоисточников",
+    "Системы, по влиянию породившие наибольшее число производных. Сортировка — по реальному воздействию на современный ландшафт самопознания.");
+  const g=cardGrid();
+  RANKINGS.influential.forEach((r,i)=>{
+    const sy=sysById(r.id);
+    const card=sysCard(sy,r.reason);
+    const rank=el("div");rank.style.cssText=`font-family:var(--ff-display);font-size:2rem;font-weight:700;color:${contColor(sy.cont)};opacity:.4;line-height:1`;
+    rank.textContent="№"+(i+1);
+    card.insertBefore(rank,card.firstChild);
+    g.appendChild(card);
+  });
+  p.appendChild(g);
+}
+
+/* ============================================================
+   LAYER 06 — ГИБРИДНЫЕ СИСТЕМЫ
+   ============================================================ */
+function buildHybrid(p){
+  layerHead(p,"Слой 06 · Синтезы",
+    "Карта гибридных и компилятивных систем",
+    "Системы, собранные из нескольких источников. Чем темнее — тем агрессивнее маркетинг при слабости первоисточников. Самое компилятивное — внизу.");
+  const g=cardGrid();
+  RANKINGS.compilative.forEach(r=>{
+    const sy=sysById(r.id);
+    const card=sysCard(sy,r.reason);
+    const badge=el("span","tag");badge.style.cssText=`color:${ORIG[sy.orig].color};margin-top:10px;display:inline-block`;
+    badge.textContent=ORIG[sy.orig].label;
+    card.appendChild(badge);
+    g.appendChild(card);
+  });
+  p.appendChild(g);
+
+  // borrowings table
+  const tbl=el("div","panel");tbl.style.marginTop="24px";
+  let h=`<div style="font-family:var(--ff-display);font-size:1.4rem;color:var(--gold-bright);margin-bottom:16px">Таблица заимствований</div>
+    <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:.86rem">
+    <tr style="text-align:left;color:var(--gold);font-family:var(--ff-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase">
+      <th style="padding:8px 12px 8px 0">Система</th><th style="padding:8px 12px">Что заимствовано</th>
+      <th style="padding:8px 12px">Откуда</th><th style="padding:8px 0 8px 12px">Декларируется?</th></tr>`;
+  const rows=[
+    ["Human Design","64 ворот","И-Цзин","Да"],
+    ["Human Design","9 центров","Древо Сфирот (10→9) + чакры","Частично"],
+    ["Human Design","«нейтрино влияют на ДНК»","псевдо-физика — ложно","Как «научно»"],
+    ["Gene Keys","64 ключа + тень/дар/сиддхи","HD / И-Цзин + санскрит siddhi","Частично"],
+    ["Матрица Судьбы","22 «энергии»","22 старших аркана Таро","Нет (назв. «22 кода»)"],
+    ["Матрица Судьбы","7-чакральная вертикаль","Тантра / Ледбитер","Индуист. термины в книге"],
+    ["Эннеаграмма личн.","9 пороков","8 помыслов Эвагрия (IV в.)","Частично"],
+    ["Эннеаграмма личн.","часть типологии","автоматическое письмо Наранхо","Нет"],
+    ["MBTI","шкала J/P","изобретение Бриггс-Майерс","Нет (как нововведение)"],
+    ["«7 чакр радуги»","ROYGBIV-схема","Ледбитер 1927 / Хиллс 1977","Как «древняя индийская»"],
+    ["Теософия","тексты Isis Unveiled","плагиат (Coleman 1895)","«От Учителей»"],
+  ];
+  rows.forEach((r,i)=>{
+    h+=`<tr style="border-top:1px solid #3A2A1E;${i%2?'background:rgba(42,24,16,.3)':''}">
+      <td style="padding:9px 12px 9px 0;color:var(--white)">${r[0]}</td>
+      <td style="padding:9px 12px;color:var(--parch-dim)">${r[1]}</td>
+      <td style="padding:9px 12px;color:var(--parch-dim)">${r[2]}</td>
+      <td style="padding:9px 0 9px 12px;color:${r[3].startsWith('Да')?'#6fae8f':r[3].startsWith('Нет')?'#c0617a':'#DC9658'};font-family:var(--ff-mono);font-size:.74rem">${r[3]}</td></tr>`;
+  });
+  h+=`</table></div>`;
+  tbl.innerHTML=h;
+  p.appendChild(tbl);
+}
+
+/* ============================================================
+   LAYER 07 — НЕЗАВИСИМЫЕ ВЕТВИ
+   ============================================================ */
+function buildIndependent(p){
+  layerHead(p,"Слой 07 · Корневые традиции",
+    "Карта независимых ветвей",
+    "Девять систем, не сводящихся к более раннему первоисточнику внутри своей цивилизации. Это подлинные корни древа — всё остальное растёт из них.");
+  const indep=SYSTEMS.filter(s=>s.orig==="indep"||s.orig==="science");
+  const g=cardGrid();
+  indep.forEach(sy=>{
+    const card=sysCard(sy);
+    const why=el("div");why.style.cssText="margin-top:10px;font-family:var(--ff-mono);font-size:.7rem;color:var(--orig-indep);letter-spacing:.04em";
+    why.textContent=sy.orig==="science"?"◆ эмпирически независима":"◆ корневая традиция";
+    card.appendChild(why);
+    g.appendChild(card);
+  });
+  p.appendChild(g);
+
+  // originality spectrum bar
+  const spec=el("div","panel");spec.style.marginTop="24px";
+  spec.innerHTML=`<div style="font-family:var(--ff-display);font-size:1.4rem;color:var(--gold-bright);margin-bottom:16px">Спектр оригинальности</div>`;
+  const order=["indep","science","hybrid","compil","market"];
+  const counts={};SYSTEMS.forEach(s=>counts[s.orig]=(counts[s.orig]||0)+1);
+  const bar=el("div");bar.style.cssText="display:flex;height:46px;border-radius:8px;overflow:hidden;border:1px solid #3A2A1E";
+  order.forEach(o=>{const n=counts[o]||0;if(!n)return;
+    const seg=el("div");seg.style.cssText=`flex:${n};background:${ORIG[o].color};opacity:.78;display:flex;align-items:center;justify-content:center;
+      font-family:var(--ff-mono);font-size:.7rem;color:#0F0805;font-weight:500`;
+    seg.textContent=n;seg.title=ORIG[o].label;bar.appendChild(seg);});
+  spec.appendChild(bar);
+  const lg=el("div");lg.style.cssText="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px";
+  order.forEach(o=>{const i=el("span");i.style.cssText="display:flex;align-items:center;gap:7px;font-size:.78rem;color:var(--parch-dim);font-family:var(--ff-mono)";
+    i.innerHTML=`<span style="width:11px;height:11px;border-radius:3px;background:${ORIG[o].color}"></span>${ORIG[o].label}`;lg.appendChild(i);});
+  spec.appendChild(lg);
+  p.appendChild(spec);
+}
+
+/* ============================================================
+   LAYER 08 — СОВРЕМЕННЫЕ ПРОИЗВОДНЫЕ
+   ============================================================ */
+function buildDerived(p){
+  layerHead(p,"Слой 08 · Цифровой рынок",
+    "Карта современных производных систем",
+    "Системы XX–XXI вв., продаваемые как «древняя мудрость» или «уникальное открытие». Тест трёх вопросов: кто, когда, из чего — и заявленная древность рассыпается.");
+
+  const modern=["human-design","gene-keys","matrix-destiny","enneagram-pers","chakra-rainbow","16p","insta"];
+  const g=cardGrid();
+  modern.forEach(id=>{
+    const sy=sysById(id);
+    const card=sysCard(sy);
+    const claim=el("div");claim.style.cssText="margin-top:11px;padding-top:10px;border-top:1px dashed #3A2A1E;font-size:.82rem";
+    const claims={
+      "human-design":["Заявлено: «передача от Голоса», древняя синтез-наука","Реально: коллаж 1987 г. + псевдо-нейтрино"],
+      "gene-keys":["Заявлено: путь к высшим частотам ДНК","Реально: ребрендинг Human Design (~2009)"],
+      "matrix-destiny":["Заявлено: «уникальное открытие, не имеющее аналогов»","Реально: 22 аркана Таро + нумерология (2006)"],
+      "enneagram-pers":["Заявлено: 4500 лет суфийской мудрости","Реально: Чили, 1968–70, Ичазо/Наранхо"],
+      "chakra-rainbow":["Заявлено: древние 7 чакр радужных цветов","Реально: Ледбитер 1927 / Хиллс 1977"],
+      "16p":["Заявлено: научный личностный тест","Реально: MBTI-вывеска на Big-Five-основе"],
+      "insta":["Заявлено: авторский эксклюзивный метод","Реально: ремикс HD / Матрицы / эннеаграммы"],
+    };
+    const cl=claims[id];
+    claim.innerHTML=`<div style="color:var(--crimson);margin-bottom:3px">▸ ${cl[0]}</div>
+      <div style="color:var(--jade)">▸ ${cl[1]}</div>`;
+    card.appendChild(claim);
+    g.appendChild(card);
+  });
+  p.appendChild(g);
+}
+
+/* ============================================================
+   LAYER 09 — МЕТАСИСТЕМНЫЕ ПАТТЕРНЫ
+   ============================================================ */
+function buildPatterns(p){
+  layerHead(p,"Слой 09 · Универсалии",
+    "Метасистемные паттерны",
+    "Числа, структуры и модели, повторяющиеся в независимых традициях. Совпадения объясняются передачами, когнитивными ограничениями и архетипами опыта — не «скрытой истиной».");
+
+  // numeric archetypes as orbit chips
+  const numWrap=el("div","panel");
+  numWrap.innerHTML=`<div style="font-family:var(--ff-display);font-size:1.4rem;color:var(--gold-bright);margin-bottom:6px">Повторяющиеся числа</div>
+    <p style="color:var(--parch-faint);font-size:.86rem;font-style:italic;margin-bottom:20px">Одни и те же числовые скелеты в системах, не знавших друг о друге</p>`;
+  const numGrid=el("div");numGrid.style.cssText="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px";
+  PATTERNS.numbers.forEach(n=>{
+    const c=el("div");c.style.cssText="display:flex;gap:14px;align-items:flex-start;padding:13px;border-radius:10px;background:rgba(42,24,16,.4);border:1px solid #3A2A1E";
+    c.innerHTML=`<div style="font-family:var(--ff-display);font-size:2.2rem;font-weight:700;color:var(--gold);line-height:.9;min-width:42px;text-align:center">${n.n}</div>
+      <div><div style="color:var(--white);font-size:.94rem;margin-bottom:3px;font-weight:500">${n.title}</div>
+      <div style="color:var(--parch-faint);font-size:.78rem;line-height:1.45">${n.items}</div></div>`;
+    numGrid.appendChild(c);
+  });
+  numWrap.appendChild(numGrid);
+  p.appendChild(numWrap);
+
+  // recurring structures
+  const structWrap=el("div");structWrap.style.cssText="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px;margin-top:22px";
+  PATTERNS.structures.forEach(st=>{
+    const c=el("div","panel");
+    let h=`<div style="font-family:var(--ff-display);font-size:1.18rem;color:var(--white);font-weight:600;margin-bottom:14px;line-height:1.2">${st.title}</div>`;
+    st.items.forEach(it=>{h+=`<div style="display:flex;align-items:center;gap:9px;padding:6px 0;border-top:1px solid #3A2A1E">
+      <span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex:0 0 auto"></span>
+      <span style="color:var(--parch-dim);font-size:.88rem">${it}</span></div>`;});
+    c.innerHTML=h;
+    structWrap.appendChild(c);
+  });
+  p.appendChild(structWrap);
+
+  // 64 coincidence highlight
+  const hi=el("div","panel");hi.style.cssText="margin-top:22px;border-color:#C8642E";
+  hi.innerHTML=`<div style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap">
+    <div style="font-family:var(--ff-display);font-size:3.4rem;font-weight:700;color:var(--gold);line-height:.85">64</div>
+    <div style="flex:1;min-width:240px">
+      <div style="color:var(--white);font-size:1.15rem;font-weight:600;margin-bottom:6px">Совпадение И-Цзин ↔ генетический код</div>
+      <p style="color:var(--parch-dim);font-size:.92rem;line-height:1.6">64 гексаграммы = 64 кодона ДНК — любимое «доказательство» Human Design и Gene Keys.
+      Но комбинаторно <b style="color:var(--gold-bright)">64 = 4³ = 2⁶</b>: базовое число для троичной системы из четырёх элементов или шестипозиционного двоичного кода.
+      Совпадение лишено каузального содержания — это нумерологическая ошибка, а не биологическая истина.</p></div></div>`;
+  p.appendChild(hi);
+}
+
+/* ============================================================
+   LAYER 10 — ФИНАЛЬНАЯ МЕТАКАРТА (глубина + статус)
+   ============================================================ */
+function buildMeta(p){
+  layerHead(p,"Слой 10 · Синтез",
+    "Финальная метасистемная карта",
+    "Каждая система на двух осях: эпистемический статус (что это на самом деле) и культурное влияние (сколько весит). Размер — структурная глубина. Это итоговая топография поля.");
+
+  // scatter: x = epistemic rigor (custom score), y = influence
+  const rigor={ // 0..10 субъективная ось «строгости/достоверности»
+    "bigfive":10, "jung-arch":6, "jung-types":6, "socionics":4, "mbti":3, "psychosophy":3, "transpersonal":4,
+    "iching":5, "sefer":5, "hermetism":4, "alchemy":4, "zohar":4, "luria":4, "bahir":3, "sufi":5, "chakra1577":5,
+    "babylon":4, "hellenistic":3, "jyotish":3, "bazi":3, "pythag":3, "chaldean":2,
+    "tarot-game":4, "esoteric-tarot":2, "goldendawn":3, "theosophy":2, "anthroposophy":2, "chakra-rainbow":2,
+    "enneagram-symbol":4, "enneagram-pers":3, "human-design":1, "gene-keys":1, "matrix-destiny":1, "16p":3, "insta":0.5,
+  };
+  const W=1240,H=720,padL=70,padB=60,padT=30,padR=40;
+  const wrap=el("div","panel");wrap.style.padding="10px";
+  const s=svg("svg",{viewBox:`0 0 ${W} ${H}`,width:"100%",style:"display:block;min-height:520px"});
+
+  const x0=padL,x1=W-padR,y0=H-padB,y1=padT;
+  const xs=v=>x0+(v/10)*(x1-x0);
+  const ys=v=>y0-(v/5)*(y0-y1);
+
+  // grid + axes
+  for(let i=0;i<=10;i+=2){const x=xs(i);s.appendChild(svg("line",{x1:x,y1:y0,x2:x,y2:y1,stroke:"#2A1810","stroke-width":"1"}));}
+  for(let i=0;i<=5;i++){const y=ys(i);s.appendChild(svg("line",{x1:x0,y1:y,x2:x1,y2:y,stroke:"#2A1810","stroke-width":"1"}));}
+  s.appendChild(svg("line",{x1:x0,y1:y0,x2:x1,y2:y0,stroke:"#3A2A1E","stroke-width":"1.5"}));
+  s.appendChild(svg("line",{x1:x0,y1:y0,x2:x0,y2:y1,stroke:"#3A2A1E","stroke-width":"1.5"}));
+  // axis labels
+  const axX=svg("text",{x:(x0+x1)/2,y:H-16,fill:"#DC9658","font-size":"12","text-anchor":"middle","font-family":"var(--ff-mono)","letter-spacing":"1"});
+  axX.textContent="ЭПИСТЕМИЧЕСКАЯ ДОСТОВЕРНОСТЬ →";s.appendChild(axX);
+  const axY=svg("text",{x:18,y:(y0+y1)/2,fill:"#DC9658","font-size":"12","text-anchor":"middle","font-family":"var(--ff-mono)","letter-spacing":"1",transform:`rotate(-90 18 ${(y0+y1)/2})`});
+  axY.textContent="КУЛЬТУРНОЕ ВЛИЯНИЕ →";s.appendChild(axY);
+  // quadrant hints
+  const q=(x,y,t,c)=>{const e=svg("text",{x,y,fill:c,"font-size":"11","font-family":"var(--ff-body)","font-style":"italic","opacity":".5","text-anchor":"middle"});e.textContent=t;s.appendChild(e);};
+  q(xs(2),ys(4.6),"влиятельная эзотерика","#c0617a");
+  q(xs(8.2),ys(4.6),"влиятельная наука","#7fcfd4");
+  q(xs(2),ys(.5),"маргинальный рынок","#8a8170");
+
+  // points
+  const nodeG=svg("g",{});s.appendChild(nodeG);
+
+  // 1) базовые координаты + нумерация (слева-направо по достоверности, затем сверху-вниз)
+  const P=SYSTEMS.map(sy=>{
+    const rg=rigor[sy.id]!=null?rigor[sy.id]:3;
+    return {sy, r:4+sy.depth.str*1.5, x:xs(rg), y:ys(sy.depth.infl)};
+  });
+  const numbered=[...P].sort((a,b)=>(a.x-b.x)||(a.y-b.y));
+  numbered.forEach((pt,i)=>pt._n=i+1);
+
+  // 2) КЛАСТЕРИЗАЦИЯ: системы с близкими координатами объединяются в один узел.
+  //    Это честнее растаскивания — одинаковые (достоверность, влияние) и должны быть вместе.
+  const CELL=40;
+  const clusters=new Map();
+  P.forEach(pt=>{
+    const key=Math.round(pt.x/CELL)+":"+Math.round(pt.y/CELL);
+    if(!clusters.has(key))clusters.set(key,{x:0,y:0,items:[]});
+    const c=clusters.get(key);c.items.push(pt);
+  });
+  const CL=[...clusters.values()].map(c=>{
+    c.items.sort((a,b)=>a._n-b._n);
+    c.x=c.items.reduce((s,p)=>s+p.x,0)/c.items.length;
+    c.y=c.items.reduce((s,p)=>s+p.y,0)/c.items.length;
+    // доминирующий цвет = континент самой влиятельной системы кластера
+    c.lead=c.items.reduce((m,p)=>p.sy.depth.infl>m.sy.depth.infl?p:m,c.items[0]);
+    return c;
+  });
+
+  // 3) отрисовка узлов (одиночные и кластеры)
+  CL.forEach(c=>{
+    const multi=c.items.length>1;
+    const r=multi?13:Math.max(c.items[0].r,9);
+    const col=contColor(c.lead.sy.cont);
+    const ids=c.items.map(p=>p.sy.id);
+    const g=svg("g",{transform:`translate(${c.x},${c.y})`,style:"cursor:pointer",class:"mnode",
+      id:"meta-node-"+ids[0], "data-ids":ids.join(",")});
+    const halo=svg("circle",{r:r+5,fill:col,"fill-opacity":".14",class:"mhalo"});
+    g.appendChild(halo);g.__r=r;
+    g.appendChild(svg("circle",{r,fill:col,stroke:c.lead.sy.featured&&!multi?"#FFE9C2":"#0F0805",
+      "stroke-width":multi?"1.6":(c.lead.sy.featured?"1.8":"1"),"fill-opacity":".92"}));
+    if(multi){
+      // кольцо-индикатор группы + счётчик
+      g.appendChild(svg("circle",{r:r+3.5,fill:"none",stroke:col,"stroke-width":"1","stroke-opacity":".55","stroke-dasharray":"2 3"}));
+    }
+    const label=multi?("×"+c.items.length):(""+c.items[0]._n);
+    const t=svg("text",{x:0,y:3.4,fill:"#0F0805","font-size":multi?"10":"9.5","text-anchor":"middle",
+      "font-family":"var(--ff-mono)","font-weight":"700",style:"pointer-events:none"});
+    t.textContent=label;
+    g.appendChild(t);
+
+    g.addEventListener("mouseenter",e=>{showClusterTip(c,e);g.parentNode.appendChild(g);pulseCluster(c,true);});
+    g.addEventListener("mousemove",moveTip);
+    g.addEventListener("mouseleave",()=>{hideTip();pulseCluster(c,false);});
+    nodeG.appendChild(g);
+  });
+
+  // тултип кластера: только название + номер + цвет континента (без описаний)
+  function showClusterTip(c,ev){
+    const t=ensureTip();
+    const rows=c.items.map(p=>{
+      const s=p.sy, cc=contColor(s.cont);
+      return `<div style="display:flex;align-items:center;gap:9px;padding:3px 0">
+        <span style="flex:0 0 auto;width:18px;height:18px;border-radius:50%;background:${cc};display:flex;align-items:center;
+          justify-content:center;font-family:var(--ff-mono);font-size:.58rem;font-weight:600;color:#0F0805">${p._n}</span>
+        <span style="color:var(--parch);font-size:.9rem">${s.name}</span></div>`;
+    }).join("");
+    const head=c.items.length>1
+      ? `<div style="font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-bottom:8px">Сектор · ${c.items.length} систем · одинаковые достоверность и влияние</div>`
+      : `<div style="font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.12em;color:${contColor(c.items[0].sy.cont)};text-transform:uppercase;margin-bottom:8px">${CONTINENTS[c.items[0].sy.cont].name}</div>`;
+    t.innerHTML=head+rows;
+    t.style.opacity=1;TIP_OPEN=true;moveTip(ev);
+  }
+
+  // подсветка всех точек кластера + строк реестра
+  function pulseCluster(c,on){
+    const g=document.getElementById("meta-node-"+c.items[0].sy.id);
+    if(g){const halo=g.querySelector(".mhalo");
+      if(on){g.parentNode.appendChild(g);halo.setAttribute("fill-opacity",".5");halo.setAttribute("stroke","#FFE9C2");halo.setAttribute("stroke-width","1.4");}
+      else{halo.setAttribute("fill-opacity",".14");halo.removeAttribute("stroke");}}
+    c.items.forEach(p=>{const li=document.getElementById("meta-leg-"+p.sy.id);if(li)li.style.background=on?"rgba(220,150,88,.12)":"";});
+  }
+
+  // подсветка одной точки/кластера по id (для наведения из реестра)
+  function pulse(id,on){
+    // найти кластер, содержащий id
+    const c=CL.find(cl=>cl.items.some(p=>p.sy.id===id));
+    if(!c)return;
+    const g=document.getElementById("meta-node-"+c.items[0].sy.id);
+    if(g){const halo=g.querySelector(".mhalo");
+      if(on){g.parentNode.appendChild(g);halo.setAttribute("fill-opacity",".5");halo.setAttribute("stroke","#FFE9C2");halo.setAttribute("stroke-width","1.4");}
+      else{halo.setAttribute("fill-opacity",".14");halo.removeAttribute("stroke");}}
+  }
+  buildMeta._pulse=pulse;
+  wrap.appendChild(s);
+  wrap.appendChild(el("p","scroll-hint","Ось X — достоверность · ось Y — влияние · размер — структурная глубина · узел «×N» = несколько систем в одной зоне (наведите, чтобы раскрыть список)"));
+
+  // легенда «номер → система» — полный реестр всех систем карты
+  const legHead=el("div");
+  legHead.style.cssText="margin-top:24px;font-family:var(--ff-mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:12px";
+  legHead.innerHTML=`<span style="width:24px;height:1px;background:var(--gold)"></span>Полный реестр · ${numbered.length} систем · наведите на строку, чтобы найти точку`;
+  wrap.appendChild(legHead);
+  const leg=el("div");
+  leg.style.cssText="margin-top:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:5px 18px";
+  numbered.forEach(pt=>{
+    const sy=pt.sy;
+    const row=el("div");row.id="meta-leg-"+sy.id;
+    row.style.cssText="display:flex;align-items:center;gap:9px;padding:4px 7px;border-radius:6px;transition:.2s;cursor:default;font-size:.8rem";
+    row.innerHTML=`<span style="flex:0 0 auto;width:20px;height:20px;border-radius:50%;background:${contColor(sy.cont)};
+        display:flex;align-items:center;justify-content:center;font-family:var(--ff-mono);font-size:.62rem;font-weight:600;color:#0F0805">${pt._n}</span>
+      <span style="color:var(--parch-dim)">${sy.name}</span>`;
+    row.addEventListener("mouseenter",()=>{row.style.background="rgba(220,150,88,.1)";buildMeta._pulse&&buildMeta._pulse(sy.id,true);});
+    row.addEventListener("mouseleave",()=>{row.style.background="";buildMeta._pulse&&buildMeta._pulse(sy.id,false);});
+    leg.appendChild(row);
+  });
+  wrap.appendChild(leg);
+  p.appendChild(wrap);
+
+  // closing thesis
+  const thesis=el("div","panel");thesis.style.cssText="margin-top:24px;border-color:#C8642E";
+  thesis.innerHTML=`<div style="font-family:var(--ff-mono);font-size:.68rem;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:14px">Итоговое заключение</div>
+    <p style="font-family:var(--ff-display);font-size:clamp(1.3rem,2.6vw,1.8rem);color:var(--white);line-height:1.4;font-weight:400;font-style:italic">
+    «Карты „внутреннего человека“ — не доказательство того, что человек устроен так, как они утверждают.
+    Они доказательство того, что человек <span style="color:var(--gold-bright)">нуждается</span> в картах.
+    Универсалия — не структура психики, а потребность в её схеме.»</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:26px">
+      <div><div style="color:var(--c-sci);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:.08em;margin-bottom:6px">НАУЧНЫЙ СТАТУС</div>
+        <p style="color:var(--parch-dim);font-size:.88rem;line-height:1.55">Только у Big Five: межкультурная воспроизводимость (50+ культур), наследуемость 40–60%, прогностическая валидность.</p></div>
+      <div><div style="color:var(--gold);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:.08em;margin-bottom:6px">ФИЛОСОФСКАЯ ЦЕННОСТЬ</div>
+        <p style="color:var(--parch-dim);font-size:.88rem;line-height:1.55">Велика у И-Цзина, каббалы, герметизма, юнгианства, тантры — как языков саморефлексии.</p></div>
+      <div><div style="color:var(--crimson);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:.08em;margin-bottom:6px">МАРКЕТИНГ ПРОТИВ ИСТОКОВ</div>
+        <p style="color:var(--parch-dim);font-size:.88rem;line-height:1.55">Отличительная черта новейших систем: Human Design, Матрица Судьбы, инста-методологии — слабые корни, агрессивная подача.</p></div>
+    </div>`;
+  p.appendChild(thesis);
+}
+
+/* ============================================================
+   LAYER 11 — ПОЛНЫЙ РЕЕСТР (каталог всех 35 систем с фильтрами)
+   ============================================================ */
+function buildRegistry(p){
+  layerHead(p,"Слой 11 · Каталог",
+    "Полный реестр систем",
+    "Все системы атласа в одном месте — независимо от того, попали ли они в кураторские витрины. Фильтруйте по континенту происхождения и по степени оригинальности.");
+
+  // состояние фильтров
+  let fCont="all", fOrig="all", sortMode="year";
+
+  // панель управления
+  const ctrl=el("div");ctrl.style.cssText="display:flex;flex-direction:column;gap:14px;margin-bottom:24px";
+
+  function pillRow(label,items,active,onPick){
+    const row=el("div");row.style.cssText="display:flex;gap:8px;flex-wrap:wrap;align-items:center";
+    const lab=el("span");lab.style.cssText="font-family:var(--ff-mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--parch-faint);min-width:104px";
+    lab.textContent=label;row.appendChild(lab);
+    items.forEach(([k,txt,c])=>{
+      const b=el("button");b.textContent=txt;b.dataset.k=k;
+      const on=k===active();
+      b.style.cssText=`font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.03em;padding:6px 12px;border-radius:18px;cursor:pointer;transition:.2s;
+        background:${on?'rgba(220,150,88,.14)':'transparent'};border:1px solid ${on?(c||'#C8642E'):'#3A2A1E'};color:${on?(c||'#FFE9C2'):'#D2BE9F'}`;
+      b.onclick=()=>{onPick(k);
+        [...row.querySelectorAll("button")].forEach(x=>{const xo=x.dataset.k===k;
+          x.style.background=xo?'rgba(220,150,88,.14)':'transparent';
+          x.style.borderColor=xo?(c||'#C8642E'):'#3A2A1E';x.style.color=xo?(c||'#FFE9C2'):'#D2BE9F';});
+        renderGrid();};
+      row.appendChild(b);
+    });
+    return row;
+  }
+
+  const contItems=[["all","Все",null],...Object.keys(CONTINENTS).map(k=>[k,CONTINENTS[k].short,CONTINENTS[k].hex])];
+  const origItems=[["all","Все",null],["indep","Независимые",ORIG.indep.color],["science","Эмпирические",ORIG.science.color],
+    ["hybrid","Гибридные",ORIG.hybrid.color],["compil","Компилятивные",ORIG.compil.color],["market","Маркетинговые",ORIG.market.color]];
+  const sortItems=[["year","По хронологии",null],["infl","По влиянию",null],["name","По алфавиту",null]];
+
+  ctrl.appendChild(pillRow("Континент",contItems,()=>fCont,k=>fCont=k));
+  ctrl.appendChild(pillRow("Оригинальность",origItems,()=>fOrig,k=>fOrig=k));
+  ctrl.appendChild(pillRow("Сортировка",sortItems,()=>sortMode,k=>sortMode=k));
+  p.appendChild(ctrl);
+
+  const counter=el("div");counter.style.cssText="font-family:var(--ff-mono);font-size:.74rem;color:var(--gold);margin-bottom:14px;letter-spacing:.06em";
+  p.appendChild(counter);
+
+  const grid=cardGrid();grid.style.alignItems="start";
+  p.appendChild(grid);
+
+  function renderGrid(){
+    let list=SYSTEMS.filter(s=>(fCont==="all"||s.cont===fCont)&&(fOrig==="all"||s.orig===fOrig));
+    if(sortMode==="year")list.sort((a,b)=>a.year-b.year);
+    else if(sortMode==="infl")list.sort((a,b)=>b.depth.infl-a.depth.infl);
+    else list.sort((a,b)=>a.name.localeCompare(b.name,"ru"));
+
+    counter.textContent=`показано ${list.length} из ${SYSTEMS.length} систем`;
+    grid.innerHTML="";
+    list.forEach(sy=>{
+      const card=sysCard(sy);
+      // верхняя строка бейджей: континент + оригинальность
+      const badges=el("div");badges.style.cssText="display:flex;gap:6px;flex-wrap:wrap;margin-top:11px";
+      badges.innerHTML=`<span class="tag" style="color:${contColor(sy.cont)}">${CONTINENTS[sy.cont].short}</span>
+        <span class="tag" style="color:${ORIG[sy.orig].color}">${ORIG[sy.orig].label}</span>`;
+      card.appendChild(badges);
+      grid.appendChild(card);
+    });
+    if(!list.length){
+      const empty=el("div");empty.style.cssText="grid-column:1/-1;text-align:center;padding:40px;color:var(--parch-faint);font-style:italic";
+      empty.textContent="Нет систем с такой комбинацией фильтров.";
+      grid.appendChild(empty);
+    }
+  }
+  renderGrid();
+}
+
+</script>
+</body>
+</html>
