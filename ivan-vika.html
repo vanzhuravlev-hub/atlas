@@ -1,0 +1,2158 @@
+<html lang="ru"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solir — Иван и Виктория</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..400,0..100&amp;family=Inter:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Solir — тёплая палитра «свет, а не космос» */
+  --paper: #FFF1DD;
+  --sand: #FFF1DD;          /* фон тела = бумага */
+  --sand-warm: #F5DBB3;
+  --sun-highlight: #FFE9C2;
+  --sun-light: #E8B47D;
+  --sun: #DC9658;          /* алиас → солнце (акцент, CTA) */
+  --sun-deep: #C8642E;     /* алиас → солнце-глубокое (eyebrow, акценты) */
+  --earth: #8B4513;
+  --ink: #2A1810;
+  --shadow: #3A2415;        /* тёплый тёмный субстрат (тень/тёмные секции) */
+  --glow: #FFE48A;
+  /* Заголовки и лиды — Georgia (RU+EN одним шрифтом). Fraunces — только логотип. */
+  --serif: Georgia, 'Times New Roman', serif;
+  --logo: 'Fraunces', Georgia, serif;
+  --sans: 'Inter', system-ui, sans-serif;
+}
+
+/* ===== Solir · КАНОННЫЙ ЛОГОТИП — единственный источник истины =====
+   Локап в строку: пустое солнце + «Solir». Диск завязан на размер слова через em,
+   текст вплотную. Менять ТОЛЬКО здесь. Размер — одним свойством font-size.
+   Никогда не рисовать логотип заново — переиспользовать этот блок. */
+.solir-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.30em;            /* текст вплотную к солнцу */
+  font-size: 28px;        /* единственный регулятор размера */
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.solir-lockup .solir-disc {
+  width: 1.12em;          /* «больше солнца» — диск чуть крупнее слова */
+  height: 1.12em;
+  flex: none;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #FFE9C2 0%, #DC9658 65%, #C8642E 100%);
+}
+.solir-lockup .solir-word {
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: 'opsz' 96, 'SOFT' 60;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.solir-lockup--footer { font-size: 20px; }   /* подвал меньше, пропорции те же */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--sand);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+.container {
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 36px 28px 60px;
+}
+
+/* — Шапка сайта — */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 241, 221, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid rgba(200, 100, 46, 0.18);
+}
+.site-header-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+}
+.brand-name {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  line-height: 1;
+}
+.brand-name em {
+  font-style: italic;
+  color: var(--sun-deep);
+  font-weight: 400;
+}
+.site-nav {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+}
+.site-nav a {
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+.site-nav a:hover { opacity: 1; }
+.site-nav .nav-cta {
+  padding: 7px 14px;
+  border: 0.5px solid var(--sun-deep);
+  border-radius: 999px;
+  opacity: 1;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--sun-deep);
+}
+.site-nav .nav-cta:hover {
+  background: var(--sun-deep);
+  color: var(--sand);
+}
+@media (max-width: 480px) {
+  .site-header-inner { padding: 14px 20px; gap: 12px; }
+  .site-nav .nav-link { display: none; }
+  .brand-name { font-size: 19px; }
+}
+
+/* — Шапка пары — */
+.pair-header { margin-bottom: 32px; }
+.pair-kind {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  margin-bottom: 14px;
+  opacity: 0.85;
+}
+.pair-greet {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.pair-greet .pair-and {
+  font-style: italic;
+  color: var(--sun-deep);
+  font-weight: 400;
+  margin: 0 6px;
+}
+.pair-tag {
+  font-family: var(--sans);
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink);
+  opacity: 0.75;
+  margin-bottom: 24px;
+}
+
+.portrait-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 22px;
+  position: relative;
+}
+.portrait-pair::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 50%;
+  width: 0.5px;
+  background: rgba(200, 100, 46, 0.35);
+  transform: translateX(-50%);
+}
+.portrait {
+  padding: 4px 0;
+}
+.portrait-name {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+.portrait-key {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  margin-bottom: 10px;
+  opacity: 0.85;
+}
+.portrait-text {
+  font-family: var(--sans);
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink);
+  opacity: 0.86;
+  font-style: italic;
+}
+
+.pair-meeting {
+  padding: 20px 22px;
+  border-left: 2px solid var(--sun);
+  background: rgba(220, 150, 88, 0.08);
+  border-radius: 0 10px 10px 0;
+  margin-top: 8px;
+}
+.pair-meeting-label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.pair-meeting-text {
+  font-family: var(--sans);
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--ink);
+  opacity: 0.92;
+}
+
+@media (max-width: 480px) {
+  .portrait-pair { grid-template-columns: 1fr; gap: 24px; }
+  .portrait-pair::before {
+    top: auto; bottom: auto;
+    left: 12px; right: 12px;
+    top: 50%; height: 0.5px; width: auto;
+    transform: none;
+  }
+}
+
+/* — Глиф резонанса с интенсивностью (как в индивидуальных) — */
+.resonance {
+  display: inline-block;
+  vertical-align: middle;
+  width: 22px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--sun-deep);
+  overflow: visible;
+}
+.resonance line, .resonance path {
+  stroke: currentColor;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.resonance line { stroke-width: 1.6; }
+.resonance .wave { stroke-width: 1.4; opacity: 0.12; }
+.resonance.r-1 .wave-1 { opacity: 1; stroke-width: 1.7; }
+.resonance.r-2 .wave-1, .resonance.r-2 .wave-2 { opacity: 1; stroke-width: 1.7; }
+.resonance.r-3 .wave-1, .resonance.r-3 .wave-2, .resonance.r-3 .wave-3 { opacity: 1; stroke-width: 1.7; }
+
+/* Тёмный вариант для петель — пунктирные волны */
+.resonance-shadow {
+  display: inline-block;
+  vertical-align: middle;
+  width: 22px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--sun);
+  overflow: visible;
+  opacity: 0.7;
+}
+.resonance-shadow line, .resonance-shadow path {
+  stroke: currentColor;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.resonance-shadow line { stroke-width: 1.4; }
+.resonance-shadow .wave {
+  stroke-width: 1.3;
+  stroke-dasharray: 2.5 1.6;
+  opacity: 0.18;
+}
+.resonance-shadow.r-1 .wave-1 { opacity: 1; }
+.resonance-shadow.r-2 .wave-1, .resonance-shadow.r-2 .wave-2 { opacity: 1; }
+.resonance-shadow.r-3 .wave-1, .resonance-shadow.r-3 .wave-2, .resonance-shadow.r-3 .wave-3 { opacity: 1; }
+
+/* — Заголовки секций — */
+.section { margin-top: 44px; }
+.section-title {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  letter-spacing: -0.005em;
+}
+.section-sub {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink);
+  opacity: 0.7;
+  margin-bottom: 22px;
+  max-width: 520px;
+}
+
+/* — Точки опоры — */
+.anchor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.anchor-card {
+  position: relative;
+  padding: 18px 18px 16px;
+  background: rgba(255, 255, 255, 0.45);
+  border: 0.5px solid rgba(200, 100, 46, 0.35);
+  border-radius: 12px;
+}
+.anchor-card:last-of-type:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+.anchor-glyph {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  color: var(--sun-deep);
+  opacity: 0.65;
+}
+.anchor-source {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  opacity: 0.85;
+  margin-bottom: 6px;
+  padding-right: 36px;
+}
+.anchor-name {
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  margin-bottom: 8px;
+  color: var(--ink);
+  line-height: 1.15;
+}
+.anchor-flow {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink);
+  opacity: 0.85;
+}
+.anchor-flow .flow-arrow {
+  color: var(--sun-deep);
+  font-style: italic;
+  opacity: 0.85;
+  margin: 0 4px;
+}
+@media (max-width: 480px) {
+  .anchor-grid { grid-template-columns: 1fr; }
+}
+
+/* — Линии встречи — */
+.lines-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.line-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 18px 18px 16px;
+  background: rgba(255, 255, 255, 0.45);
+  border: 0.5px solid rgba(200, 100, 46, 0.35);
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.18s;
+}
+.line-card:hover {
+  background: rgba(220, 150, 88, 0.16);
+  border-color: var(--sun);
+  transform: translateY(-1px);
+}
+.line-card.key {
+  grid-column: 1 / -1;
+  background: rgba(220, 150, 88, 0.12);
+  border-color: rgba(220, 150, 88, 0.55);
+}
+.line-card.key:hover {
+  background: rgba(220, 150, 88, 0.22);
+}
+.line-glyph {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  color: var(--sun-deep);
+  opacity: 0.7;
+}
+.line-source {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  opacity: 0.85;
+  margin-bottom: 6px;
+  padding-right: 36px;
+}
+.line-source .key-mark {
+  color: var(--sun-deep);
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  opacity: 0.95;
+  margin-right: 6px;
+}
+.line-name {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  margin-bottom: 8px;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.line-brief {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink);
+  opacity: 0.85;
+}
+.line-card.open {
+  background: rgba(220, 150, 88, 0.22);
+  border-color: var(--sun);
+}
+.line-detail {
+  display: none;
+  grid-column: 1 / -1;
+  margin-top: -2px;
+  padding: 22px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 0.5px solid rgba(220, 150, 88, 0.45);
+  border-radius: 12px;
+  animation: fade 0.25s ease;
+}
+.line-detail.open { display: block; }
+.line-detail .ld-block { margin-top: 18px; }
+.line-detail .ld-block:first-child { margin-top: 0; }
+.line-detail .ld-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--sun-deep);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.line-detail .ld-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ink);
+  opacity: 0.92;
+}
+.line-detail .ld-collapse {
+  margin-top: 22px;
+  font-size: 12px;
+  color: var(--sun-deep);
+  background: transparent;
+  border: 0.5px solid rgba(200, 100, 46, 0.4);
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.line-detail .ld-collapse:hover {
+  background: var(--sun-deep);
+  color: var(--sand);
+  border-color: var(--sun-deep);
+}
+@media (max-width: 480px) {
+  .lines-grid { grid-template-columns: 1fr; }
+  .line-card.key { grid-column: 1; }
+}
+
+/* — Петли напряжения (тёмные карточки) — */
+.loops-transition {
+  margin-top: 32px;
+  padding: 16px 22px;
+  font-family: var(--sans);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink);
+  opacity: 0.78;
+  border-left: 2px solid rgba(200, 100, 46, 0.4);
+  background: rgba(200, 100, 46, 0.05);
+}
+.loops-section {
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 0.5px solid rgba(200, 100, 46, 0.35);
+}
+.loops-grid {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.loop-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 20px 22px 18px;
+  background: var(--shadow);
+  border: 0.5px solid rgba(220, 150, 88, 0.25);
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.18s;
+  color: var(--sand);
+}
+.loop-card:hover {
+  border-color: var(--sun);
+  transform: translateY(-1px);
+}
+.loop-glyph {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  color: var(--sun);
+  opacity: 0.55;
+}
+.loop-source {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--sun);
+  font-weight: 500;
+  opacity: 0.82;
+  margin-bottom: 6px;
+  padding-right: 40px;
+}
+.loop-name {
+  font-family: var(--serif);
+  font-size: 23px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  margin-bottom: 8px;
+  color: var(--sand);
+  line-height: 1.1;
+}
+.loop-brief {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--sand);
+  opacity: 0.82;
+}
+.loop-card.open {
+  border-color: var(--sun);
+}
+.loop-detail {
+  display: none;
+  margin-top: -2px;
+  padding: 22px;
+  background: var(--shadow);
+  border: 0.5px solid rgba(220, 150, 88, 0.4);
+  border-radius: 12px;
+  color: var(--sand);
+  animation: fade 0.25s ease;
+}
+.loop-detail.open { display: block; }
+.loop-detail .lp-block { margin-top: 20px; }
+.loop-detail .lp-block:first-child { margin-top: 0; }
+.loop-detail .lp-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--sun);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.loop-detail .lp-label .lp-name {
+  margin-left: 8px;
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  opacity: 0.78;
+}
+.loop-detail .lp-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--sand);
+  opacity: 0.92;
+}
+.loop-detail .lp-exit {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 0.5px solid rgba(220, 150, 88, 0.25);
+}
+.loop-detail .lp-exit .lp-label {
+  color: var(--sand);
+  opacity: 0.95;
+}
+.loop-detail .lp-collapse {
+  margin-top: 22px;
+  font-size: 12px;
+  color: var(--sun);
+  background: transparent;
+  border: 0.5px solid rgba(220, 150, 88, 0.4);
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.loop-detail .lp-collapse:hover {
+  background: var(--sun);
+  color: var(--shadow);
+  border-color: var(--sun);
+}
+
+/* — Info-блоки: компасы, циклы — */
+.info-block {
+  margin-top: 22px;
+  padding: 26px 26px 22px;
+  background: rgba(255, 255, 255, 0.45);
+  border: 0.5px solid rgba(200, 100, 46, 0.35);
+  border-radius: 12px;
+}
+.compass-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+.compass-col {
+  padding: 16px 18px;
+  background: rgba(255, 241, 221, 0.5);
+  border-radius: 10px;
+  border: 0.5px solid rgba(200, 100, 46, 0.18);
+}
+.compass-name {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+.compass-tag {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  margin-bottom: 10px;
+  opacity: 0.85;
+}
+.compass-text {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink);
+  opacity: 0.88;
+}
+.compass-rule {
+  padding: 16px 18px;
+  background: rgba(220, 150, 88, 0.08);
+  border-left: 2px solid var(--sun);
+  border-radius: 0 10px 10px 0;
+}
+.compass-rule .rule-label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.compass-rule .rule-text {
+  font-family: var(--sans);
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--ink);
+  opacity: 0.92;
+  font-style: italic;
+}
+@media (max-width: 480px) {
+  .compass-grid { grid-template-columns: 1fr; gap: 12px; }
+}
+
+.cycles-text {
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: var(--ink);
+  opacity: 0.92;
+}
+.cycles-text p { margin-bottom: 14px; }
+.cycles-text p:last-child { margin-bottom: 0; }
+.cycles-text strong {
+  font-weight: 500;
+  color: var(--sun-deep);
+}
+
+/* — Уроки встречи — */
+.lessons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 22px;
+}
+.lesson-col {
+  padding: 22px 22px 20px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 0.5px solid rgba(200, 100, 46, 0.35);
+  border-radius: 12px;
+}
+.lesson-for {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  margin-bottom: 6px;
+  opacity: 0.85;
+}
+.lesson-name {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+.lesson-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.lesson-list li {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink);
+  opacity: 0.88;
+  padding: 10px 0 10px 18px;
+  position: relative;
+  border-top: 0.5px solid rgba(200, 100, 46, 0.18);
+}
+.lesson-list li:first-child { border-top: 0; padding-top: 0; }
+.lesson-list li:last-child { padding-bottom: 0; }
+.lesson-list li::before {
+  content: "·";
+  position: absolute;
+  left: 4px;
+  top: 9px;
+  color: var(--sun-deep);
+  font-size: 18px;
+  font-weight: 500;
+}
+.lesson-list li:first-child::before { top: -1px; }
+@media (max-width: 480px) {
+  .lessons-grid { grid-template-columns: 1fr; }
+}
+
+/* — CTA — */
+.cta-band {
+  margin-top: 50px;
+  padding: 28px 26px;
+  background: var(--shadow);
+  color: var(--sand);
+  border-radius: 14px;
+  text-align: center;
+}
+.cta-band .cta-eyebrow {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--sun);
+  font-weight: 500;
+  margin-bottom: 10px;
+  opacity: 0.85;
+}
+.cta-band .cta-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+}
+.cta-band .cta-text {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--sand);
+  opacity: 0.82;
+  margin-bottom: 18px;
+  max-width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cta-band .cta-btn {
+  display: inline-block;
+  padding: 11px 22px;
+  border: 0.5px solid var(--sun);
+  border-radius: 999px;
+  color: var(--sun);
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: all 0.18s;
+}
+.cta-band .cta-btn:hover {
+  background: var(--sun);
+  color: var(--shadow);
+}
+
+/* — Подвал — */
+.site-footer {
+  margin-top: 60px;
+  padding: 36px 32px 32px;
+  border-top: 0.5px solid rgba(200, 100, 46, 0.18);
+  background: rgba(255, 241, 221, 0.5);
+}
+.site-footer-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.footer-brand-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+}
+.footer-brand-row span em,
+.footer-brand-row em {
+  font-style: italic;
+  color: var(--sun-deep);
+  font-weight: 400;
+}
+.footer-tag {
+  font-family: var(--sans);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink);
+  opacity: 0.75;
+  max-width: 480px;
+  line-height: 1.55;
+}
+.footer-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  padding-top: 8px;
+}
+.footer-col p:first-child {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.footer-col a, .footer-col span {
+  display: block;
+  font-size: 13px;
+  color: var(--ink);
+  text-decoration: none;
+  opacity: 0.75;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+.footer-col a:hover { opacity: 1; color: var(--sun-deep); }
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 18px;
+  border-top: 0.5px solid rgba(200, 100, 46, 0.18);
+  font-size: 11.5px;
+  color: var(--ink);
+  opacity: 0.55;
+  letter-spacing: 0.02em;
+}
+.footer-bottom a {
+  color: inherit;
+  text-decoration: none;
+  margin-left: 16px;
+}
+.footer-bottom a:hover { opacity: 1; color: var(--sun-deep); }
+@media (max-width: 480px) {
+  .site-footer { margin-top: 40px; padding: 28px 20px; }
+  .footer-cols { grid-template-columns: 1fr; gap: 18px; }
+  .footer-bottom { flex-direction: column; gap: 10px; align-items: flex-start; }
+  .footer-bottom a { margin-left: 0; margin-right: 14px; }
+}
+
+/* — Близость в теле — */
+.body-block .compass-name { font-size: 19px; }
+.body-block .compass-text { font-size: 13.5px; line-height: 1.65; }
+
+/* — Усиление резонанса (светлый блок практик) — */
+.amplify-block {
+  margin-top: 22px;
+  padding: 26px 26px 22px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 0.5px solid rgba(200, 100, 46, 0.35);
+  border-radius: 12px;
+}
+.practice-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.practice-list li {
+  padding: 16px 0;
+  border-top: 0.5px solid rgba(200, 100, 46, 0.18);
+}
+.practice-list li:first-child { border-top: 0; padding-top: 0; }
+.practice-list li:last-child { padding-bottom: 4px; }
+.practice-name {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: var(--sun-deep);
+  letter-spacing: -0.005em;
+}
+.practice-text {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink);
+  opacity: 0.88;
+}
+.signal-box {
+  margin-top: 22px;
+  padding: 18px 20px;
+  background: rgba(220, 150, 88, 0.08);
+  border-left: 2px solid var(--sun);
+  border-radius: 0 10px 10px 0;
+}
+.signal-box .signal-label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.signal-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.signal-list li {
+  font-family: var(--sans);
+  font-style: italic;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink);
+  opacity: 0.88;
+  padding: 6px 0 6px 16px;
+  position: relative;
+}
+.signal-list li::before {
+  content: "·";
+  position: absolute;
+  left: 4px;
+  top: 0;
+  color: var(--sun-deep);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* — Распутывание петель (тёмный блок практик) — */
+.untangle-block {
+  margin-top: 22px;
+  padding: 28px 26px 26px;
+  background: var(--shadow);
+  color: var(--sand);
+  border-radius: 12px;
+  border: 0.5px solid rgba(220, 150, 88, 0.25);
+}
+.untangle-step {
+  padding: 18px 0;
+  border-top: 0.5px solid rgba(220, 150, 88, 0.18);
+}
+.untangle-step:first-child { border-top: 0; padding-top: 0; }
+.untangle-step:last-child { padding-bottom: 0; }
+.untangle-eyebrow {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--sun);
+  font-weight: 500;
+  margin-bottom: 6px;
+  opacity: 0.85;
+}
+.untangle-name {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: var(--sand);
+  letter-spacing: -0.005em;
+}
+.untangle-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--sand);
+  opacity: 0.88;
+}
+.untangle-rules {
+  margin-top: 12px;
+  padding-left: 18px;
+  list-style: none;
+}
+.untangle-rules li {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--sand);
+  opacity: 0.85;
+  padding: 6px 0;
+  position: relative;
+}
+.untangle-rules li::before {
+  content: "—";
+  position: absolute;
+  left: -18px;
+  color: var(--sun);
+  font-weight: 500;
+  opacity: 0.75;
+}
+
+/* — Профиль пары — */
+.pair-profile {
+  margin-top: 22px;
+  padding: 22px 24px 20px;
+  background: rgba(255, 255, 255, 0.45);
+  border: 0.5px solid rgba(200, 100, 46, 0.35);
+  border-radius: 12px;
+}
+.profile-label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  margin-bottom: 6px;
+  opacity: 0.85;
+}
+.profile-tag {
+  font-family: var(--sans);
+  font-style: italic;
+  font-size: 16.5px;
+  line-height: 1.5;
+  color: var(--ink);
+  opacity: 0.92;
+  margin-bottom: 18px;
+}
+.profile-rows { display: flex; flex-direction: column; gap: 0; }
+.profile-row {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 0;
+  border-top: 0.5px solid rgba(200, 100, 46, 0.18);
+}
+.profile-row:first-child { border-top: 0; padding-top: 4px; }
+.profile-row:last-child { padding-bottom: 0; }
+.profile-row .resonance { width: 24px; height: 22px; }
+.profile-text {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.profile-name {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+}
+.profile-note {
+  font-size: 13px;
+  color: var(--ink);
+  opacity: 0.7;
+  line-height: 1.45;
+}
+.profile-legend {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 0.5px solid rgba(200, 100, 46, 0.18);
+  font-size: 11.5px;
+  color: var(--ink);
+  opacity: 0.6;
+  line-height: 1.55;
+  font-style: italic;
+}
+
+/* — Сворачиваемые блоки — */
+.collapsible {
+  margin-top: 14px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.collapsible-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.45);
+  border: 0.5px solid rgba(200, 100, 46, 0.35);
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.18s;
+  color: var(--ink);
+}
+.collapsible-toggle:hover {
+  background: rgba(220, 150, 88, 0.14);
+  border-color: var(--sun);
+}
+.collapsible.open .collapsible-toggle {
+  border-radius: 12px 12px 0 0;
+  background: rgba(220, 150, 88, 0.18);
+  border-color: var(--sun);
+}
+.toggle-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: var(--sun-deep);
+  transition: transform 0.2s;
+}
+.collapsible.open .toggle-icon { transform: rotate(45deg); }
+.toggle-text { flex: 1; min-width: 0; }
+.toggle-name {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--ink);
+  display: block;
+  letter-spacing: -0.005em;
+  line-height: 1.2;
+}
+.toggle-hint {
+  display: block;
+  font-size: 11.5px;
+  color: var(--ink);
+  opacity: 0.6;
+  margin-top: 3px;
+  line-height: 1.4;
+}
+.collapsible-content {
+  display: none;
+  padding: 22px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 0.5px solid var(--sun);
+  border-top: 0;
+  border-radius: 0 0 12px 12px;
+  animation: fade 0.25s ease;
+}
+.collapsible.open .collapsible-content { display: block; }
+
+/* Тёмная вариация — для «как распутывать петли» */
+.collapsible-shadow .collapsible-toggle {
+  background: var(--shadow);
+  border-color: rgba(220, 150, 88, 0.3);
+  color: var(--sand);
+}
+.collapsible-shadow .collapsible-toggle:hover { border-color: var(--sun); }
+.collapsible-shadow .toggle-icon { color: var(--sun); }
+.collapsible-shadow .toggle-name { color: var(--sand); }
+.collapsible-shadow .toggle-hint { color: var(--sand); opacity: 0.65; }
+.collapsible-shadow.open .collapsible-toggle {
+  background: var(--shadow);
+  border-color: var(--sun);
+}
+.collapsible-shadow .collapsible-content {
+  background: var(--shadow);
+  border-color: var(--sun);
+  color: var(--sand);
+  padding: 26px 24px 24px;
+}
+
+/* — Финальное резюме «Главное» — */
+.finale-block {
+  margin-top: 22px;
+  padding: 30px 28px 26px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 0.5px solid rgba(200, 100, 46, 0.35);
+  border-radius: 14px;
+  position: relative;
+}
+.finale-essence {
+  font-family: var(--sans);
+  font-style: italic;
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--ink);
+  opacity: 0.92;
+  letter-spacing: -0.005em;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 0.5px solid rgba(200, 100, 46, 0.25);
+}
+.finale-essence p { margin-bottom: 12px; }
+.finale-essence p:last-child { margin-bottom: 0; }
+
+.finale-watch {
+  margin-bottom: 26px;
+}
+.watch-label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  margin-bottom: 14px;
+  opacity: 0.9;
+}
+.watch-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: watch;
+}
+.watch-list li {
+  position: relative;
+  padding: 14px 0 14px 38px;
+  border-top: 0.5px solid rgba(200, 100, 46, 0.18);
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink);
+  opacity: 0.9;
+  counter-increment: watch;
+}
+.watch-list li:first-child { border-top: 0; padding-top: 4px; }
+.watch-list li:last-child { padding-bottom: 4px; }
+.watch-list li::before {
+  content: counter(watch);
+  position: absolute;
+  left: 0;
+  top: 14px;
+  width: 24px;
+  height: 24px;
+  border: 0.5px solid var(--sun);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 22px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--sun-deep);
+  font-family: var(--sans);
+  font-style: italic;
+}
+.watch-list li:first-child::before { top: 4px; }
+
+.finale-note {
+  padding: 22px 24px;
+  background: rgba(220, 150, 88, 0.08);
+  border-left: 2px solid var(--sun);
+  border-radius: 0 12px 12px 0;
+}
+.finale-note p {
+  font-family: var(--sans);
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink);
+  opacity: 0.92;
+}
+.finale-signature {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 0.5px dashed rgba(200, 100, 46, 0.3);
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  opacity: 0.7;
+  font-style: normal;
+  font-family: var(--sans);
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="solir-lockup" href="#" aria-label="Solir">
+      <span class="solir-disc" aria-hidden="true"></span>
+      <span class="solir-word">Solir</span>
+    </a>
+    <nav class="site-nav">
+      <a class="nav-link" href="#">О проекте</a>
+      <a class="nav-link" href="#">Как устроено</a>
+      <a class="nav-cta" href="#">Получить ключ</a>
+    </nav>
+  </div>
+</header>
+
+
+
+<div class="container">
+
+<!-- ========= ШАПКА ПАРЫ ========= -->
+<div class="pair-header">
+  <p class="pair-kind">Карта пары · Близость</p>
+  <h1 class="pair-greet">Иван <span class="pair-and">и</span> Виктория</h1>
+  <p class="pair-tag">Звучание двух ключей рядом — что эта пара даёт друг другу и чему учит.</p>
+
+  <div class="portrait-pair">
+    <div class="portrait">
+      <h2 class="portrait-name">Иван</h2>
+      <p class="portrait-key">Сольный знаменосец</p>
+      <p class="portrait-text">Архитектор, идущий впереди, к нему подтягиваются. Решения собираются волной камертона — нужно дать ей дослушаться. Дело — миссия, близость — главный учитель этой жизни.</p>
+    </div>
+    <div class="portrait">
+      <h2 class="portrait-name">Виктория</h2>
+      <p class="portrait-key">Глубокий рассказчик</p>
+      <p class="portrait-text">Острая, идейная, общительная снаружи; внутри — пристальная страсть и потаённое одиночество. Решает откликом «ага / хм» из живота. Тебя видят раньше, чем ты сама — и зов уже идёт.</p>
+    </div>
+  </div>
+
+  <div class="pair-meeting">
+    <p class="pair-meeting-label">Что это за встреча</p>
+    <p class="pair-meeting-text">Двое, для которых поверхность не работает. Оба идут к делу как к смыслу, оба чувствуют близость как событие, не как фон. Эта пара рождает третью сущность — общее пространство глубины, где каждый получает доступ к тому, чего у него нет: она к его форме и сольной дуге, он к её настройке и природному зову. Цена этой пары — она требует сознательности; награда — она вытаскивает обоих туда, куда поодиночке они бы не дошли.</p>
+  </div>
+
+  <!-- ПРОФИЛЬ ПАРЫ -->
+  <div class="pair-profile">
+    <p class="profile-label">Профиль пары</p>
+    <p class="profile-tag">Насыщенная встреча длинного ритма. Главная зона — близость; общее дело возможно; темп — не быстрый.</p>
+    <div class="profile-rows">
+      <div class="profile-row">
+        <svg class="resonance r-3" viewBox="0 0 24 22" aria-hidden="true">
+          <line x1="12" y1="16" x2="12" y2="21"></line>
+          <line x1="9" y1="16" x2="15" y2="16"></line>
+          <line x1="9" y1="11" x2="9" y2="16"></line>
+          <line x1="15" y1="11" x2="15" y2="16"></line>
+          <path class="wave wave-1" d="M6 9 Q 12 6, 18 9"></path>
+          <path class="wave wave-2" d="M4 6 Q 12 2, 20 6"></path>
+          <path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"></path>
+        </svg>
+        <div class="profile-text">
+          <span class="profile-name">Близость</span>
+          <span class="profile-note">главная зона глубины и работы</span>
+        </div>
+      </div>
+      <div class="profile-row">
+        <svg class="resonance r-2" viewBox="0 0 24 22" aria-hidden="true">
+          <line x1="12" y1="16" x2="12" y2="21"></line>
+          <line x1="9" y1="16" x2="15" y2="16"></line>
+          <line x1="9" y1="11" x2="9" y2="16"></line>
+          <line x1="15" y1="11" x2="15" y2="16"></line>
+          <path class="wave wave-1" d="M6 9 Q 12 6, 18 9"></path>
+          <path class="wave wave-2" d="M4 6 Q 12 2, 20 6"></path>
+          <path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"></path>
+        </svg>
+        <div class="profile-text">
+          <span class="profile-name">Дело</span>
+          <span class="profile-note">общий ресурс на длинной дистанции</span>
+        </div>
+      </div>
+      <div class="profile-row">
+        <svg class="resonance r-2" viewBox="0 0 24 22" aria-hidden="true">
+          <line x1="12" y1="16" x2="12" y2="21"></line>
+          <line x1="9" y1="16" x2="15" y2="16"></line>
+          <line x1="9" y1="11" x2="9" y2="16"></line>
+          <line x1="15" y1="11" x2="15" y2="16"></line>
+          <path class="wave wave-1" d="M6 9 Q 12 6, 18 9"></path>
+          <path class="wave wave-2" d="M4 6 Q 12 2, 20 6"></path>
+          <path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"></path>
+        </svg>
+        <div class="profile-text">
+          <span class="profile-name">Тело и здоровье</span>
+          <span class="profile-note">ритмичная зона, требует сознательности</span>
+        </div>
+      </div>
+      <div class="profile-row">
+        <svg class="resonance r-3" viewBox="0 0 24 22" aria-hidden="true">
+          <line x1="12" y1="16" x2="12" y2="21"></line>
+          <line x1="9" y1="16" x2="15" y2="16"></line>
+          <line x1="9" y1="11" x2="9" y2="16"></line>
+          <line x1="15" y1="11" x2="15" y2="16"></line>
+          <path class="wave wave-1" d="M6 9 Q 12 6, 18 9"></path>
+          <path class="wave wave-2" d="M4 6 Q 12 2, 20 6"></path>
+          <path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"></path>
+        </svg>
+        <div class="profile-text">
+          <span class="profile-name">Темп</span>
+          <span class="profile-note">длинный — оба ритма медленные</span>
+        </div>
+      </div>
+    </div>
+    <p class="profile-legend">Волны показывают силу проявления внутри этой пары — не оценку и не сравнение с другими. Три волны = громко, одна = тише.</p>
+  </div>
+</div>
+
+<!-- ========= 1. ЧТО ВЫ ДАЁТЕ ДРУГ ДРУГУ ========= -->
+<div class="section">
+  <h2 class="section-title">Что вы даёте друг другу</h2>
+  <p class="section-sub">Опорные связки, где свет одного попадает в открытое место другого. Не магия совместимости — точная инженерия резонанса.</p>
+
+  <div class="anchor-grid">
+
+    <div class="anchor-card">
+      <svg class="resonance r-3 anchor-glyph" viewBox="0 0 24 22" aria-hidden="true">
+        <line x1="12" y1="16" x2="12" y2="21"></line>
+        <line x1="9" y1="16" x2="15" y2="16"></line>
+        <line x1="9" y1="11" x2="9" y2="16"></line>
+        <line x1="15" y1="11" x2="15" y2="16"></line>
+        <path class="wave wave-1" d="M6 9 Q 12 6, 18 9"></path>
+        <path class="wave wave-2" d="M4 6 Q 12 2, 20 6"></path>
+        <path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"></path>
+      </svg>
+      <p class="anchor-source">опора · Самость · Дело</p>
+      <h3 class="anchor-name">Дуга и зов</h3>
+      <p class="anchor-flow">Он держит сольную дугу — направление, темп, форму движения. <span class="flow-arrow">→</span> Она через его дугу получает доступ к собственному зову: тот, кто её видит, помогает ей увидеть себя. Без его дуги её талант рассеивается; без её отклика его движение становится монологом.</p>
+    </div>
+
+    <div class="anchor-card">
+      <svg class="resonance r-2 anchor-glyph" viewBox="0 0 24 22" aria-hidden="true">
+        <line x1="12" y1="16" x2="12" y2="21"></line>
+        <line x1="9" y1="16" x2="15" y2="16"></line>
+        <line x1="9" y1="11" x2="9" y2="16"></line>
+        <line x1="15" y1="11" x2="15" y2="16"></line>
+        <path class="wave wave-1" d="M6 9 Q 12 6, 18 9"></path>
+        <path class="wave wave-2" d="M4 6 Q 12 2, 20 6"></path>
+        <path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"></path>
+      </svg>
+      <p class="anchor-source">опора · Ум</p>
+      <h3 class="anchor-name">Архитектура и слово</h3>
+      <p class="anchor-flow">У него — система, у неё — образ. <span class="flow-arrow">↔</span> Его конструкция получает живое слово, которое доносит её до тех, кто не считывает чертежи. Её рассказ обретает каркас, без которого красивая фраза рассыпается. Каждый достраивает то, чего другому не хватает.</p>
+    </div>
+
+    <div class="anchor-card">
+      <svg class="resonance r-3 anchor-glyph" viewBox="0 0 24 22" aria-hidden="true">
+        <line x1="12" y1="16" x2="12" y2="21"></line>
+        <line x1="9" y1="16" x2="15" y2="16"></line>
+        <line x1="9" y1="11" x2="9" y2="16"></line>
+        <line x1="15" y1="11" x2="15" y2="16"></line>
+        <path class="wave wave-1" d="M6 9 Q 12 6, 18 9"></path>
+        <path class="wave wave-2" d="M4 6 Q 12 2, 20 6"></path>
+        <path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"></path>
+      </svg>
+      <p class="anchor-source">опора · Самость</p>
+      <h3 class="anchor-name">Стержень и антенна</h3>
+      <p class="anchor-flow">Его стержень — точка, к которой можно вернуться. <span class="flow-arrow">→</span> Её тонкая настройка считывает то, что он сам в себе не видит. Он даёт ей место не растворяться, она даёт ему слышать, где стержень превратился в стену.</p>
+    </div>
+
+    <div class="anchor-card">
+      <svg class="resonance r-2 anchor-glyph" viewBox="0 0 24 22" aria-hidden="true">
+        <line x1="12" y1="16" x2="12" y2="21"></line>
+        <line x1="9" y1="16" x2="15" y2="16"></line>
+        <line x1="9" y1="11" x2="9" y2="16"></line>
+        <line x1="15" y1="11" x2="15" y2="16"></line>
+        <path class="wave wave-1" d="M6 9 Q 12 6, 18 9"></path>
+        <path class="wave wave-2" d="M4 6 Q 12 2, 20 6"></path>
+        <path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"></path>
+      </svg>
+      <p class="anchor-source">опора · Эмоции</p>
+      <h3 class="anchor-name">Общая глубина</h3>
+      <p class="anchor-flow">Оба «всерьёз». <span class="flow-arrow">↔</span> Ни один не считает другого «слишком интенсивным» — то, что в других парах было бы перегревом, у вас норма. Это редкая базовая совместимость по плотности чувств: вы не тратите силы на то, чтобы объяснять друг другу, что чувствуете глубоко.</p>
+    </div>
+
+  </div>
+
+  <!-- СВЁРНУТО: Как усиливать резонанс -->
+  <div class="collapsible">
+    <button class="collapsible-toggle" type="button">
+      <svg class="toggle-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line>
+        <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line>
+      </svg>
+      <span class="toggle-text">
+        <span class="toggle-name">Как усиливать резонанс</span>
+        <span class="toggle-hint">4 совместные практики и признаки, что пара звучит</span>
+      </span>
+    </button>
+    <div class="collapsible-content">
+      <ul class="practice-list">
+      <li>
+        <p class="practice-name">Тишина вместе раз в неделю</p>
+        <p class="practice-text">Минимум час без задач, без планирования, без обсуждения отношений. Просто быть в одном пространстве молча — читать, гулять, готовить, лежать. Ему это нужно для камертона; ей — для отклика из живота. Тишина у вас — место восстановления каждого, и она работает только если она ВМЕСТЕ. Тишина параллельных людей в общем пространстве — это и есть форма близости, на которой вы оба отдыхаете.</p>
+      </li>
+      <li>
+        <p class="practice-name">Длинные форматы вместо коротких</p>
+        <p class="practice-text">Длинная прогулка вместо «давай поговорим за чаем», поездка на выходные вместо «вечер в баре», совместный проект на полгода вместо «попробуем что-то новое». У вас обоих ритмы длинные — короткие форматы не дают ни одному из вас раскрыться. То, что для других пар «достаточно вечера», у вас — только разогрев.</p>
+      </li>
+      <li>
+        <p class="practice-name">Сольный день каждому в неделю</p>
+        <p class="practice-text">Без вины, без объяснений, без согласований. Ему это нужно как воздух (стержень дышит сольно), ей — как способ собрать себя обратно (антенна впитала много). Когда оба знают, что у каждого есть свой день — пара перестаёт быть «обязанностью присутствовать» и становится тем, к чему хочется возвращаться. Парадоксально: чем чаще каждый из вас один, тем лучше вам вдвоём.</p>
+      </li>
+      <li>
+        <p class="practice-name">Парный ритуал «не торопить ответ»</p>
+        <p class="practice-text">Договоритесь явно: ни один из вас не обязан отвечать на сложный вопрос в день, когда он задан. «Я тебе скажу завтра» — это не уход от темы, это нормальный способ принимать решения у вас обоих. Чем плотнее этот ритуал, тем меньше решений, принятых из давления, тем меньше потом обид, что «согласились, а оказалось не своё».</p>
+      </li>
+    </ul>
+
+    <div class="signal-box">
+      <p class="signal-label">Признаки, что пара звучит</p>
+      <ul class="signal-list">
+        <li>В тишине вместе не возникает желания заполнить её разговором.</li>
+        <li>Каждый возвращается из своего сольного дня бо́льшим, не меньшим — и приносит это в пару.</li>
+        <li>Решения, принятые вместе, остаются убеждениями обоих через неделю, не только в момент.</li>
+        <li>Близость не требует поддержания — она держится сама, потому что вы не выматываете её спешкой.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ========= 2. ЛИНИИ ВСТРЕЧИ ========= -->
+<div class="section">
+  <h2 class="section-title">Линии встречи</h2>
+  <p class="section-sub">Семь пересечений ваших карт — где звучит ярко, где звучит сложно, и что с этим делать. Ткни карточку — раскроется.</p>
+
+  <div class="lines-grid">
+
+    <button class="line-card key" data-target="line-1" type="button">
+      <svg class="resonance r-3 line-glyph" viewBox="0 0 24 22" aria-hidden="true">
+        <line x1="12" y1="16" x2="12" y2="21"></line>
+        <line x1="9" y1="16" x2="15" y2="16"></line>
+        <line x1="9" y1="11" x2="9" y2="16"></line>
+        <line x1="15" y1="11" x2="15" y2="16"></line>
+        <path class="wave wave-1" d="M6 9 Q 12 6, 18 9"></path>
+        <path class="wave wave-2" d="M4 6 Q 12 2, 20 6"></path>
+        <path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"></path>
+      </svg>
+      <p class="line-source"><span class="key-mark">ключевая линия ·</span> Эмоции</p>
+      <h3 class="line-name">Прилив и волна</h3>
+      <p class="line-brief">Оба погружаются всерьёз, но разными ритмами. Его прилив набирает медленно и долго не отступает. Её волна короче, глубже, и расходится без середины. Это самая мощная и самая тонкая линия вашей встречи.</p>
+    </button>
+
+    <button class="line-card" data-target="line-2" type="button">
+      <svg class="resonance r-2 line-glyph" viewBox="0 0 24 22" aria-hidden="true">
+        <line x1="12" y1="16" x2="12" y2="21"></line>
+        <line x1="9" y1="16" x2="15" y2="16"></line>
+        <line x1="9" y1="11" x2="9" y2="16"></line>
+        <line x1="15" y1="11" x2="15" y2="16"></line>
+        <path class="wave wave-1" d="M6 9 Q 12 6, 18 9"></path>
+        <path class="wave wave-2" d="M4 6 Q 12 2, 20 6"></path>
+        <path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"></path>
+      </svg>
+      <p class="line-source">линия · Ум</p>
+      <h3 class="line-name">Архитектор и стрела</h3>
+      <p class="line-brief">Он строит конструкции медленно и крепко. Она режет к сути одной фразой. Когда вы вместе — она задаёт направление удара, он даёт силу опоры.</p>
+    </button>
+
+    <button class="line-card" data-target="line-3" type="button">
+      <svg class="resonance r-2 line-glyph" viewBox="0 0 24 22" aria-hidden="true">
+        <line x1="12" y1="16" x2="12" y2="21"></line>
+        <line x1="9" y1="16" x2="15" y2="16"></line>
+        <line x1="9" y1="11" x2="9" y2="16"></line>
+        <line x1="15" y1="11" x2="15" y2="16"></line>
+        <path class="wave wave-1" d="M6 9 Q 12 6, 18 9"></path>
+        <path class="wave wave-2" d="M4 6 Q 12 2, 20 6"></path>
+        <path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"></path>
+      </svg>
+      <p class="line-source">линия · Самость</p>
+      <h3 class="line-name">Стержень и пористость</h3>
+      <p class="line-brief">Его «Я» собрано раз и держится. Её «Я» собирается заново под каждую среду. Это два разных способа быть собой — и они не в споре, если оба понимают, что не дефект.</p>
+    </button>
+
+    <button class="line-card" data-target="line-4" type="button">
+      <svg class="resonance r-2 line-glyph" viewBox="0 0 24 22" aria-hidden="true">
+        <line x1="12" y1="16" x2="12" y2="21"></line>
+        <line x1="9" y1="16" x2="15" y2="16"></line>
+        <line x1="9" y1="11" x2="9" y2="16"></line>
+        <line x1="15" y1="11" x2="15" y2="16"></line>
+        <path class="wave wave-1" d="M6 9 Q 12 6, 18 9"></path>
+        <path class="wave wave-2" d="M4 6 Q 12 2, 20 6"></path>
+        <path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"></path>
+      </svg>
+      <p class="line-source">линия · Авторитет</p>
+      <h3 class="line-name">Камертон и живот</h3>
+      <p class="line-brief">Его ясность приходит волной — нужно время. Её ответ собирается в животе — нужна тишина. Два разных компаса. Главный риск — спутать их и принять решение из третьего, чужого места.</p>
+    </button>
+
+    <button class="line-card" data-target="line-5" type="button">
+      <svg class="resonance r-3 line-glyph" viewBox="0 0 24 22" aria-hidden="true">
+        <line x1="12" y1="16" x2="12" y2="21"></line>
+        <line x1="9" y1="16" x2="15" y2="16"></line>
+        <line x1="9" y1="11" x2="9" y2="16"></line>
+        <line x1="15" y1="11" x2="15" y2="16"></line>
+        <path class="wave wave-1" d="M6 9 Q 12 6, 18 9"></path>
+        <path class="wave wave-2" d="M4 6 Q 12 2, 20 6"></path>
+        <path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"></path>
+      </svg>
+      <p class="line-source">линия · Близость</p>
+      <h3 class="line-name">Магнит к магниту</h3>
+      <p class="line-brief">Двойное притяжение, двойная глубина. Вместе вы не «нравитесь друг другу» — вас тянет с силой, которая выходит за обыденность. И ровно это — корень и силы, и риска.</p>
+    </button>
+
+    <button class="line-card" data-target="line-6" type="button">
+      <svg class="resonance r-2 line-glyph" viewBox="0 0 24 22" aria-hidden="true">
+        <line x1="12" y1="16" x2="12" y2="21"></line>
+        <line x1="9" y1="16" x2="15" y2="16"></line>
+        <line x1="9" y1="11" x2="9" y2="16"></line>
+        <line x1="15" y1="11" x2="15" y2="16"></line>
+        <path class="wave wave-1" d="M6 9 Q 12 6, 18 9"></path>
+        <path class="wave wave-2" d="M4 6 Q 12 2, 20 6"></path>
+        <path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"></path>
+      </svg>
+      <p class="line-source">линия · Дело</p>
+      <h3 class="line-name">Знамя и голос</h3>
+      <p class="line-brief">Он несёт знамя: дело — миссия. Её голос вызревает медленнее, чем ждут окружающие. Темпы разные. Это не про «кто впереди» — это про разные временны́е дуги одного движения.</p>
+    </button>
+
+    <button class="line-card key" data-target="line-7" type="button">
+      <svg class="resonance r-3 line-glyph" viewBox="0 0 24 22" aria-hidden="true">
+        <line x1="12" y1="16" x2="12" y2="21"></line>
+        <line x1="9" y1="16" x2="15" y2="16"></line>
+        <line x1="9" y1="11" x2="9" y2="16"></line>
+        <line x1="15" y1="11" x2="15" y2="16"></line>
+        <path class="wave wave-1" d="M6 9 Q 12 6, 18 9"></path>
+        <path class="wave wave-2" d="M4 6 Q 12 2, 20 6"></path>
+        <path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"></path>
+      </svg>
+      <p class="line-source"><span class="key-mark">ключевая линия ·</span> Дух</p>
+      <h3 class="line-name">Послание и тайна</h3>
+      <p class="line-brief">Он живёт вестью наружу: миссия, идея, дальние горизонты. Её духовная жизнь — медленная, многослойная, в основном внутри. Один направлен к большому миру, другая — в большой внутренний. Это вторая ключевая линия пары: точка, где вы можете максимально друг друга питать или максимально мимо проходить.</p>
+    </button>
+
+  </div>
+</div>
+
+<!-- ========= 3. ПЕТЛИ НАПРЯЖЕНИЯ ========= -->
+<p class="loops-transition">Выше — где две карты звучат вместе чисто. Ниже — где одна задевает другую, и срабатывает петля: чем сильнее каждый «решает по-своему», тем плотнее затягивается узел. Это не про «несовместимость». Это про места, где паре нужна сознательность.</p>
+
+<div class="loops-section">
+  <h2 class="section-title">Петли напряжения</h2>
+  <p class="section-sub">Три места, где помеха одного попадает в чувствительное другого. Самое ценное знание о паре — не в том, что вы даёте друг другу хорошего, а в том, как вы попадаете в одни и те же воронки.</p>
+
+  <div class="loops-grid">
+
+    <button class="loop-card" data-target="loop-1" type="button">
+      <svg class="resonance-shadow r-3 loop-glyph" viewBox="0 0 24 22" aria-hidden="true">
+        <line x1="12" y1="16" x2="12" y2="21"></line>
+        <line x1="9" y1="16" x2="15" y2="16"></line>
+        <line x1="9" y1="11" x2="9" y2="16"></line>
+        <line x1="15" y1="11" x2="15" y2="16"></line>
+        <path class="wave wave-1" d="M6 9 Q 12 6, 18 9"></path>
+        <path class="wave wave-2" d="M4 6 Q 12 2, 20 6"></path>
+        <path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"></path>
+      </svg>
+      <p class="loop-source">петля · Самость · Близость</p>
+      <h3 class="loop-name">Структура и растворение</h3>
+      <p class="loop-brief">Он структурирует — она впитывает его форму — теряет себя — отдаляется — он усиливает структуру. Самая узнаваемая ваша петля.</p>
+    </button>
+
+    <button class="loop-card" data-target="loop-2" type="button">
+      <svg class="resonance-shadow r-2 loop-glyph" viewBox="0 0 24 22" aria-hidden="true">
+        <line x1="12" y1="16" x2="12" y2="21"></line>
+        <line x1="9" y1="16" x2="15" y2="16"></line>
+        <line x1="9" y1="11" x2="9" y2="16"></line>
+        <line x1="15" y1="11" x2="15" y2="16"></line>
+        <path class="wave wave-1" d="M6 9 Q 12 6, 18 9"></path>
+        <path class="wave wave-2" d="M4 6 Q 12 2, 20 6"></path>
+        <path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"></path>
+      </svg>
+      <p class="loop-source">петля · Ум · Эмоции</p>
+      <h3 class="loop-name">Прямота и волна</h3>
+      <p class="loop-brief">Он говорит резко, потому что «всё ясно». Её волна ловит резкость и долго не отпускает. Он не понимает, почему «такая мелочь» так далеко уходит.</p>
+    </button>
+
+    <button class="loop-card" data-target="loop-3" type="button">
+      <svg class="resonance-shadow r-3 loop-glyph" viewBox="0 0 24 22" aria-hidden="true">
+        <line x1="12" y1="16" x2="12" y2="21"></line>
+        <line x1="9" y1="16" x2="15" y2="16"></line>
+        <line x1="9" y1="11" x2="9" y2="16"></line>
+        <line x1="15" y1="11" x2="15" y2="16"></line>
+        <path class="wave wave-1" d="M6 9 Q 12 6, 18 9"></path>
+        <path class="wave wave-2" d="M4 6 Q 12 2, 20 6"></path>
+        <path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"></path>
+      </svg>
+      <p class="loop-source">петля · Близость</p>
+      <h3 class="loop-name">Хватка и воронка</h3>
+      <p class="loop-brief">Он хочет удержать связь под контролем. Она хочет «понять до дна». Двое сильных тяг сходятся в одной точке — и обоих затягивает.</p>
+    </button>
+
+  </div>
+
+  <!-- СВЁРНУТО: Как распутывать петли -->
+  <div class="collapsible collapsible-shadow">
+    <button class="collapsible-toggle" type="button">
+      <svg class="toggle-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line>
+        <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line>
+      </svg>
+      <span class="toggle-text">
+        <span class="toggle-name">Как распутывать петли</span>
+        <span class="toggle-hint">Рабочий протокол: 3 шага и 5 парных правил</span>
+      </span>
+    </button>
+    <div class="collapsible-content">
+      <div class="untangle-step">
+      <p class="untangle-eyebrow">Шаг 1</p>
+      <h3 class="untangle-name">Раннее распознавание</h3>
+      <p class="untangle-text">Каждая петля имеет ранний сигнал — момент, когда вы ещё на её краю, а не внутри. У него: появляется желание «сесть и поговорить как взрослые», поставить рамку, что-то структурировать в отношениях. Это сигнал «петля № 1 запустилась» — не разговаривать, а дать ей день одиночества. У неё: ловит себя на том, что говорит его словами, носит его ритм, не помнит, какие желания свои. Это сигнал «пора попросить пространство» — до того, как растворилась полностью.</p>
+      <p class="untangle-text" style="margin-top: 10px;">Рабочее правило обоих: <em style="color: var(--sun); font-style: italic;">если ловишь сигнал — ты ещё на краю, и обращение стоит дёшево. Если внутри петли — обращение стоит уже трёх дней восстановления.</em></p>
+    </div>
+
+    <div class="untangle-step">
+      <p class="untangle-eyebrow">Шаг 2</p>
+      <h3 class="untangle-name">Не лечить второго в свою сторону</h3>
+      <p class="untangle-text">Главная ошибка обоих внутри петли — желание «объяснить партнёру, как он должен/должна быть устроен(а)». Её пористость не «нужно укрепить». Его прямота — не дефект мягкости. Её устройство собирается через резонанс, его — через стержень, и попытка переделать друг друга в свою сторону — это и ЕСТЬ петля. Распутывание начинается с признания: «он/она устроен так, и это норма». Только после этого работает любая техника.</p>
+    </div>
+
+    <div class="untangle-step">
+      <p class="untangle-eyebrow">Шаг 3</p>
+      <h3 class="untangle-name">Парные правила</h3>
+      <p class="untangle-text">Чёткие договорённости, которые работают именно для ваших петель:</p>
+      <ul class="untangle-rules">
+        <li>Никаких серьёзных разговоров после 22:00. Его волна устала, её антенна тоже — любое «давай прямо сейчас разберёмся» в это время уйдёт в петлю.</li>
+        <li>Если ссора длится больше дня — пауза. Без объяснений, без последнего слова. Возврат через три дня. Если за три дня тема ушла — она не была главной.</li>
+        <li>Когда один говорит «я не могу это сейчас», второй НЕ отвечает «ну тогда никогда». Это самая частая ошибка вашей пары: давить в момент спада партнёра. Спад не равен отказу.</li>
+        <li>Один проверочный вопрос для обоих: «я сейчас прошу того, что мне нужно — или того, чего хочу, потому что боюсь?» Половина петель распутывается на этом вопросе.</li>
+        <li>В острой петле — первое действие не разговор. Сначала час одиночества каждому, и только потом встреча. Любая попытка «решить горячим» эту пару подводила и подведёт.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========= 4. ЖИЗНЬ ПАРЫ ========= -->
+<div class="section">
+  <h2 class="section-title">Жизнь пары</h2>
+  <p class="section-sub">Три точки внимания: как вы решаете вместе, как встречаются ваши тела, как взаимодействуют ваши ритмы. Раскрой нужное.</p>
+
+  <!-- Как вы решаете вместе -->
+  <div class="collapsible">
+    <button class="collapsible-toggle" type="button">
+      <svg class="toggle-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line>
+        <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line>
+      </svg>
+      <span class="toggle-text">
+        <span class="toggle-name">Как вы решаете вместе</span>
+        <span class="toggle-hint">Два разных компаса и главное правило пары</span>
+      </span>
+    </button>
+    <div class="collapsible-content">
+      <div class="compass-grid">
+      <div class="compass-col">
+        <p class="compass-tag">Его компас</p>
+        <h3 class="compass-name">Камертон</h3>
+        <p class="compass-text">Решение собирается волной — иногда несколько часов, иногда несколько дней. До того, как камертон отзвучал, любое «да» — преждевременное. Ему нужно время и тишина, и это не нерешительность, это устройство.</p>
+      </div>
+      <div class="compass-col">
+        <p class="compass-tag">Её компас</p>
+        <h3 class="compass-name">Отклик из живота</h3>
+        <p class="compass-text">Ответ приходит как «ага» или «хм» — быстро и телесно. Но красивая фраза ума умеет его перекрыть. Ей нужна тишина, чтобы отделить настоящий отклик от блестящей формулировки, которая родилась 30 секунд назад.</p>
+      </div>
+    </div>
+
+    <div class="compass-rule">
+      <p class="rule-label">Главное правило пары</p>
+      <p class="rule-text">Если вы решаете вместе и хочется ответ «прямо сейчас» — это всегда плохой знак. Один из вас (или оба) ответил из давления, не из себя. Нормальное решение пары: «давай вернёмся к этому через день». Кто этого боится — тот не доверяет своему компасу, а не партнёру.</p>
+    </div>
+  </div>
+
+  <!-- Близость в теле -->
+  <div class="collapsible">
+    <button class="collapsible-toggle" type="button">
+      <svg class="toggle-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line>
+        <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line>
+      </svg>
+      <span class="toggle-text">
+        <span class="toggle-name">Близость в теле</span>
+        <span class="toggle-hint">Природа телесной встречи и главный риск</span>
+      </span>
+    </button>
+    <div class="collapsible-content">
+      <div class="compass-grid">
+      <div class="compass-col">
+        <p class="compass-tag">Его тело</p>
+        <h3 class="compass-name">Откликается</h3>
+        <p class="compass-text">Тело отвечает на партнёра, не само по себе. Энергия для близости приходит в ответ — не до, не из себя, а через тебя. В резонансе включается глубоко, надолго и всерьёз. Без эмоционального отклика батарея не разогревается, и это снаружи можно прочесть как холодность. Это не «не хочет» — это устройство.</p>
+      </div>
+      <div class="compass-col">
+        <p class="compass-tag">Её тело</p>
+        <h3 class="compass-name">Резонатор</h3>
+        <p class="compass-text">Её тело — пружина, которая обновляется через резонанс. Близость для неё телесно неотделима от эмоционального фона: если фон тёплый — тело отзывается всей собой. Если фон сжат — никакой волей это не починить. И ещё: её форма меняется — то, что включало месяц назад, может не включить сейчас, и это часть её нормы.</p>
+      </div>
+    </div>
+
+    <div class="compass-rule">
+      <p class="rule-label">Природа этой пары</p>
+      <p class="rule-text">Оба ваших тела устроены как резонаторы, не как двигатели. Никто из вас не «включается из себя» — оба ждут отклика. Это значит: близость в теле приходит ИЗ близости в эмоции, не до неё. Когда вы это понимаете — она становится одной из ваших главных опор. Когда нет — каждый ждёт от другого «инициативы», и оба остаются холодными, считая, что «у нас что-то не так».</p>
+    </div>
+
+    <div class="compass-rule" style="margin-top: 14px;">
+      <p class="rule-label">Главный риск</p>
+      <p class="rule-text">«Холодная фаза» одного у этой пары почти всегда читается как отвержение второго. Это редко так. У него — «волна ещё не подошла»; у неё — «пружина в фазе перемен». Возвращение к телесной близости почти всегда идёт не через прямое физическое («давай попробуем»), а через тёплый эмоциональный фон. Чем больше пара пытается «починить через тело», тем дальше уходит. Чем больше через присутствие — тем быстрее возвращается само.</p>
+    </div>
+  </div>
+
+  <!-- Циклы вместе -->
+  <div class="collapsible">
+    <button class="collapsible-toggle" type="button">
+      <svg class="toggle-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line>
+        <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line>
+      </svg>
+      <span class="toggle-text">
+        <span class="toggle-name">Циклы вместе</span>
+        <span class="toggle-hint">Длинная волна × пружина перемен — как взаимодействуют ваши ритмы</span>
+      </span>
+    </button>
+    <div class="collapsible-content">
+      <div class="cycles-text">
+      <p>Его ритм — <strong>длинная волна</strong>. Подъёмы накапливаются месяцами, спады тоже. На спаде он замыкается, не объясняя, и снаружи это похоже на холод. На самом деле — он внутри себя ждёт, пока волна развернётся обратно.</p>
+      <p>Её ритм — <strong>пружина перемен</strong>. Форма обновляется чаще: то, что было её средой полгода назад, может перестать греть. На спаде ей хочется менять — работу, среду, отношения, расписание. Это не нестабильность, это её способ обновляться через тело.</p>
+      <p>Когда вы попадаете в <strong>один цикл</strong> — то есть оба на подъёме или оба на спаде — это тяжёлый период. Вместе на подъёме вы перегружаете друг друга интенсивностью. Вместе на спаде — каждый требует от другого того, чего у того сейчас нет.</p>
+      <p>Когда вы в <strong>противоходе</strong> — это самая сильная конфигурация пары. Один на подъёме держит, второй на спаде восстанавливается. Через 2–3 месяца вы меняетесь местами. Это не баг, это самая зрелая форма вашего партнёрства: научиться не тащить второго в свой темп, а подстраивать под его.</p>
+      <p><strong>Признак того, что цикл здоровый:</strong> на спаде второго ты не пытаешься его «вытащить», ты просто продолжаешь жить рядом. Без претензий, без объяснений, без проектов «как тебе помочь». Близость на спаде — это присутствие, не активность.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ========= 5. УРОКИ ВСТРЕЧИ ========= -->
+<div class="section">
+  <h2 class="section-title">Уроки встречи</h2>
+  <p class="section-sub">Что эта пара учит каждого из вас — индивидуально. Связь — не цель, связь — инструмент.</p>
+
+  <div class="lessons-grid">
+
+    <div class="lesson-col">
+      <p class="lesson-for">Чему пара учит его</p>
+      <h3 class="lesson-name">Иван</h3>
+      <ul class="lesson-list">
+        <li>Отпускать хватку — она устроена так, что под давлением структуры исчезает; единственный способ её удержать — не держать.</li>
+        <li>Видеть, что не всё надо строить. Близкий человек — не материал для системы. Иногда «послушать» важнее, чем «решить».</li>
+        <li>Через её тонкую настройку слышать собственные сигналы, которые твой стержень привычно игнорирует.</li>
+        <li>Дослушивать камертон до конца, особенно когда она ждёт ответа сейчас. Её спешка — её устройство, не повод торопить твою волну.</li>
+      </ul>
+    </div>
+
+    <div class="lesson-col">
+      <p class="lesson-for">Чему пара учит её</p>
+      <h3 class="lesson-name">Виктория</h3>
+      <ul class="lesson-list">
+        <li>Держать стержень рядом с тем, у кого он крепкий — не растворяясь и не подстраиваясь.</li>
+        <li>Говорить «нет» зову вежливости — даже когда зовёт человек, с которым ты глубоко связана.</li>
+        <li>Не торопить голос: рядом с тем, кто говорит уверенно, особенно тянет звучать зрело раньше времени. Учись честному «я не знаю».</li>
+        <li>Различать настоящий отклик из живота и красивое объяснение — особенно когда другой даёт тебе аргумент, в который хочется поверить.</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========= 6. ГЛАВНОЕ (ФИНАЛ) ========= -->
+<div class="section">
+  <h2 class="section-title">Главное</h2>
+  <p class="section-sub">Если из всей карты нужно унести что-то одно — это здесь.</p>
+
+  <div class="finale-block">
+
+    <div class="finale-essence">
+      <p>Это пара, в которой ни один из вас не одинок в своей глубине. Не каждая встреча даёт это; ваша даёт. Это редкое — и это рабочее.</p>
+      <p>Цена этой глубины ровно такая же, какая глубина: не «небольшие шероховатости» и не «лёгкие притирки». Поверхностность с вами не сработает в обе стороны — её просто нет в вашем устройстве. Вместо неё у вас две карты, которые, когда звучат вместе, дают резонанс на трёх октавах сразу. И когда расходятся — слышно тоже на трёх.</p>
+    </div>
+
+    <div class="finale-watch">
+      <p class="watch-label">Три точки, которые держать в голове всегда</p>
+      <ol class="watch-list">
+        <li>Ритм у вас обоих <strong>длинный</strong>. Решения, которые требуют ответа сегодня, в этой паре чаще всего принимать не стоит. Когда хочется быстро — это сигнал, что один из вас (или оба) не в себе.</li>
+        <li>Каждая ваша петля распутывается <strong>признанием устройства</strong>, не переделкой. Импульс «давай я объясню тебе, как ты должен/должна быть» — главный сигнал, что вы внутри петли, а не на её краю.</li>
+        <li>Близость возвращается через <strong>тёплый эмоциональный фон</strong>, не через прямую активность. Это контринтуитивно для большинства пар. Для вас — рабочий ключ. Когда отдалились — возвращайтесь через присутствие, не через «давай поговорим о нас».</li>
+      </ol>
+    </div>
+
+    <div class="finale-note">
+      <p>Эта карта — не приговор и не предсказание. Она показывает, как звучат рядом два ваших устройства: где громко, где тихо, где с помехами. Что вы с этим знанием делаете — за вами. Главное — что теперь вы оба слышите друг друга чуть яснее, чем до того, как эту карту открыли.</p>
+      <p class="finale-signature">Solir · Карта пары</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========= CTA ========= -->
+<div class="cta-band">
+  <p class="cta-eyebrow">Карта пары · v1</p>
+  <h3 class="cta-title">Это первая версия карты совместимости.<br>Она строится на ваших личных картах.</h3>
+  <p class="cta-text">Открой карту партнёра отдельно — там подробно про каждого. Здесь — только то, что появляется между вами.</p>
+  <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+    <a class="cta-btn" href="#">Карта Ивана</a>
+    <a class="cta-btn" href="#">Карта Виктории</a>
+  </div>
+</div>
+
+</div><!-- /.container -->
+
+<script>
+
+// — Линии встречи: данные —
+const linesData = {
+  'line-1': {
+    sound: 'Когда что-то важное случается — вы оба идёте до дна, но не одновременно. Его прилив набирает силу медленно: проходит несколько дней, прежде чем он действительно «внутри» события. Её волна догоняет его глубину быстрее, но и расходится без середины — либо до конца, либо никак. В лучшие моменты вы оба погружены и держите друг друга в этой плотности. В худшие — один уже на дне, второй ещё на подходе, и каждому кажется, что другой «недостаточно с ним».',
+    gives: 'Эта пара не выживает на лёгкости — и слава богу. Вы оба нашли то, чего обычно нет в людях вокруг: способность чувствовать всерьёз без объяснений. Здесь не нужно делать вид, что что-то «не так уж важно». То, что важно — важно, и второй это знает без перевода. Это редкое и настоящее.',
+    care: 'Главная задача — выучить ритм друг друга. Когда у одного событие, второму надо знать: первая реакция партнёра не финальная. У него ещё подойдёт прилив, у неё ещё может вернуться волна. Не торопите итоговое суждение друг о друге — оно ещё не сложилось.'
+  },
+  'line-2': {
+    sound: 'У него ум — медленная архитектура: видит систему целиком, держит её, додумывает по частям. У неё — острая стрела: одна точная фраза, и абстрактное становится зримым. В разговоре это либо магия (он строит, она заостряет, идея получается живой и устойчивой), либо ловушка: её фраза звучит как ответ, и он принимает её за итог, не достроив систему до конца.',
+    gives: 'Связка идея → форма у вас работает в обе стороны. Его конструкция получает голос, без которого она остаётся непонятной. Её рассказ обретает каркас, без которого блестящая фраза не доносит до главного. Когда вы соавторы — это сильно.',
+    care: 'Не путать «она сказала точно» с «мы решили». Её точность работает на доступ к истине, не на завершение размышления. Ему — слышать, что её фраза часто только дверь, а не комната. Ей — не позволять блестящему ответу закрывать вопрос раньше, чем он дозрел.'
+  },
+  'line-3': {
+    sound: 'У него «Я» — собранный стержень. Он остаётся собой в любой среде, и это его большой ресурс. У неё «Я» — тонкая настройка: каждая среда оставляет след, и собирается она через резонанс, не через декларацию. Снаружи разница может выглядеть как «он цельный, а она колеблется», но это иллюзия — у неё другая архитектура самости, не дефектная, а другая.',
+    gives: 'Он ей — точка возврата. Когда она впитала слишком много чужой среды, рядом с его стержнем легче вспомнить, какие из желаний её собственные. Она ему — постоянный сигнал о том, что мир тоньше его конструкций. Через неё он слышит то, что собственный стержень привычно отфильтровывает.',
+    care: 'Не оценивайте устройство друг друга по своему. Ему: её пористость — не слабость. Ей: его цельность — не закрытость. Когда вы начинаете лечить друг друга в эту сторону — оба теряют именно то, что было ценно.'
+  },
+  'line-4': {
+    sound: 'Когда вам надо принять общее решение — у вас два разных компаса. Его камертон собирается волной: важное не должно быть быстрым. Её отклик из живота приходит сразу — но требует тишины, чтобы не быть перекрытым красивым объяснением. Если попытаться решать «как у одного» — второй всегда ответит из чужого места.',
+    gives: 'Два компаса — это редкая роскошь. Когда оба компаса согласны — решение почти безошибочное. Когда расходятся — это сигнал: один из ответов ещё не дозрел. Это не повод спорить, это повод подождать.',
+    care: 'Не торопите друг друга. Если он не готов отвечать — это не уход от разговора, это волна, которая не дошла до пика. Если ей надо побыть одной перед ответом — это не дистанция, это путь к её настоящему «да». Третий вариант («давай решим прямо сейчас») — почти всегда плохой ответ обоих.'
+  },
+  'line-5': {
+    sound: 'Двое, для которых близость — не «приятная часть жизни», а место главной интенсивности. У каждого свой стиль (его — через сцепку и удержание, её — через впитывание и глубину), но природа одна: оба чувствуют близкого как событие, не как фон. Это создаёт ту самую плотность, в которой обоим хочется жить.',
+    gives: 'Эта линия — главный дар вашей пары. Большинство людей вокруг чувствуют близость на одной нотации; вы оба — на трёх октавах одновременно. Это позволяет каждому быть видимым насквозь — то, чего ни один из вас не получит в более «лёгких» отношениях.',
+    care: 'Двойной магнит = двойная цена. Его хватка и её воронка — естественные побочные продукты этой плотности. Не пытайтесь сделать связь «легче» — у вас не получится. Попытка идти к лёгкости приведёт обоих к разочарованию или скуке. Идти надо в другую сторону: к большей сознательности, не меньшей интенсивности.'
+  },
+  'line-6': {
+    sound: 'Он несёт знамя — дело для него миссия, и темп этого движения ощутим во всём. Её настоящий голос в деле вызревает медленнее, чем ждут окружающие; её зрелость не в 30, а в 50. Внешне может казаться, что он «впереди», но это ошибка перспективы: вы движетесь по разным временны́м дугам, и срок измеряется по-разному.',
+    gives: 'Его движение тянет её к ответственности; её медленный темп тянет его к выдержке. Без него она может слишком долго оставаться в фазе «нащупываю»; без неё он может слишком рано затвердеть в «я знаю».',
+    care: 'Главный риск — он начинает «помогать» ей доспеть быстрее. Это не работает: его темп не передаётся. Её внутренний учитель не принимает чужой график. Лучшая помощь от него — держать её право на медленный голос, не объясняя, что «надо уже».'
+  },
+  'line-7': {
+    sound: 'Его дух смотрит вовне — миссия, идея, сеть единомышленников, дальние горизонты. Её — внутрь: медленная, многослойная, тайная духовная жизнь, к которой почти никто не допущен. Это не противоречие, но и не симметрия: один работает в большом мире, другая — в большом внутреннем. Когда вы это понимаете — пара получает невероятную глубину.',
+    gives: 'Он ей — масштаб, выход из её тайной комнаты в общий язык. Она ему — изнанку, без которой его весть сначала становится плоской, потом — тиранической. Без её внутреннего его внешнее теряет глубину; без его внешнего её внутреннее не получает формы.',
+    care: 'Главная ошибка пары — он начинает требовать, чтобы она разделяла его весть. Она этого не сделает: её духовная жизнь устроена иначе, и попытка «обращать» её в свою миссию обнулит самое ценное. И обратное — её соблазн думать, что его внешнее «менее настоящее», чем её внутреннее. Это две формы одного, не иерархия.'
+  }
+};
+
+// — Петли напряжения: данные (новая структура: что у него / что у неё / выход) —
+const loopsData = {
+  'loop-1': {
+    him: 'Когда он чувствует, что между вами появилась дистанция, его первый импульс — структурировать. Сесть поговорить, проговорить «как мы будем». Поставить рамку. В мирном режиме это его дар — он умеет наводить порядок там, где у других хаос. Но рядом с её устройством структура работает наоборот: чем чётче он формулирует, тем меньше у неё пространства быть.',
+    her: 'Её тонкая антенна впитывает его форму как любую другую среду. Она не сопротивляется — она просто настраивается. И через неделю-две обнаруживает, что говорит его словами, думает его системой, и не понимает, какие из желаний её. Это пугает, и она отдаляется — не потому что разлюбила, а потому что теряет себя.',
+    exit: 'Ему — НЕ начинать с предложения «давай поговорим, как мы будем». Начинать с вопроса «что тебе сейчас нужно?» и быть готовым услышать «одиночество». Её одиночество — не отказ от него, это её способ собрать себя обратно. Ей — учиться просить пространство ДО того, как она растворилась. Не «когда уже теряю себя», а «когда впитываю слишком быстро». Чем раньше она замечает фазу, тем меньше отдаление выглядит как уход.'
+  },
+  'loop-2': {
+    him: 'Когда он говорит — он формулирует прямо. Не виляет, не размазывает: для него прямой контакт = уважение. Голос у него не свободно льющийся — он выходит готовыми блоками, и когда выходит, мысль уже плотная. Тон может звучать резко не от злости, а от того, что фраза не смягчается на ходу — она уже структурирована до того, как стала словом. В близости он не переключает регистр и думает, что прямота нужна и здесь.',
+    her: 'Её эмоциональная волна ловит резкость и не отпускает. Для неё «он сказал прямо» равно «он сказал, не подумав о моём отклике». Через час она уже не помнит контекст — помнит только вкус фразы. И этот вкус живёт неделями. Снаружи это может выглядеть как «обиделась на ровном месте»; внутри — у неё долгая работа с тем, что для него уже забыто.',
+    exit: 'Ему — перед резкой формулировкой о близком давать себе паузу: «ему сейчас нужна моя точность — или нужно, чтобы я слушал?» В 7 случаях из 10 — второе. Точность без запроса в близости читается как давление. Ей — отделять «он сказал прямо» от «он не любит». У него прямота — не оружие, это форма его мысли, выходящая в слово готовым блоком. Если это знать заранее, фраза не уходит так глубоко. И прямо просить мягкости там, где она нужна, — это не слабость, это инструкция.'
+  },
+  'loop-3': {
+    him: 'Когда близость глубокая, он чувствует её как ценность, которую нельзя потерять. И незаметно включается контроль связи — спросить «где ты», следить за изменением тона в сообщениях, считать паузу как сигнал отдаления. Это не ревность в обычном смысле; это его способ удержать то, что для него важнее всего. Но именно эта хватка делает близость тяжёлой.',
+    her: 'Когда что-то в близости становится непонятным, её первый импульс — понять до конца. Она перебирает разговоры, ищет, где сошло, перечитывает свои реакции, пытается дойти до дна того, что лучше отпустить. Под видом «понимания» — попытка остаться внутри ситуации, которая давно завершилась.',
+    exit: 'Каждому — учиться отпускать ситуацию ДО полного «разрешения». Ему: когда хочется проверить — час пауза. За час станет ясно, тебе нужен ответ или сам факт контроля. Ей: когда хочется «понять до конца» — спросить себя, ты понимаешь, чтобы освободиться, или чтобы остаться внутри. Если второе — закрой книгу, не дочитав. Парный шаг: не закрывать каждый разговор «полным разрешением». Иногда лучшее завершение — «давай оставим это здесь, возвращаться не будем». Без этого «оставим» каждый из вас будет затягивать петлю.'
+  }
+};
+
+// — Линии встречи: обработчики —
+document.querySelectorAll('.line-card').forEach(card => {
+  const detail = document.createElement('div');
+  detail.className = 'line-detail';
+  card.insertAdjacentElement('afterend', detail);
+  card._detail = detail;
+
+  card.onclick = (ev) => {
+    if (ev.target.closest('.line-detail')) return;
+    const key = card.dataset.target;
+    const data = linesData[key];
+    if (!data) return;
+    if (detail.classList.contains('open')) {
+      detail.classList.remove('open');
+      card.classList.remove('open');
+      detail.innerHTML = '';
+      return;
+    }
+    document.querySelectorAll('.line-detail.open').forEach(d => {
+      d.classList.remove('open');
+      d.innerHTML = '';
+    });
+    document.querySelectorAll('.line-card.open').forEach(c => c.classList.remove('open'));
+    detail.innerHTML = `
+      <div class="ld-block">
+        <p class="ld-label">Как это звучит</p>
+        <p class="ld-text">${data.sound}</p>
+      </div>
+      <div class="ld-block">
+        <p class="ld-label">Что это даёт</p>
+        <p class="ld-text">${data.gives}</p>
+      </div>
+      <div class="ld-block">
+        <p class="ld-label">На что обратить внимание</p>
+        <p class="ld-text">${data.care}</p>
+      </div>
+      <button class="ld-collapse">← свернуть</button>
+    `;
+    detail.classList.add('open');
+    card.classList.add('open');
+    const collapse = detail.querySelector('.ld-collapse');
+    if (collapse) collapse.onclick = (e) => {
+      e.stopPropagation();
+      detail.classList.remove('open');
+      card.classList.remove('open');
+      detail.innerHTML = '';
+    };
+    setTimeout(() => detail.scrollIntoView({behavior:'smooth', block:'nearest'}), 50);
+  };
+});
+
+// — Петли напряжения: обработчики —
+document.querySelectorAll('.loop-card').forEach(card => {
+  const detail = document.createElement('div');
+  detail.className = 'loop-detail';
+  card.insertAdjacentElement('afterend', detail);
+  card._detail = detail;
+
+  card.onclick = (ev) => {
+    if (ev.target.closest('.loop-detail')) return;
+    const key = card.dataset.target;
+    const data = loopsData[key];
+    if (!data) return;
+    if (detail.classList.contains('open')) {
+      detail.classList.remove('open');
+      card.classList.remove('open');
+      detail.innerHTML = '';
+      return;
+    }
+    document.querySelectorAll('.loop-detail.open').forEach(d => {
+      d.classList.remove('open');
+      d.innerHTML = '';
+    });
+    document.querySelectorAll('.loop-card.open').forEach(c => c.classList.remove('open'));
+    detail.innerHTML = `
+      <div class="lp-block">
+        <p class="lp-label">Что включается <span class="lp-name">у него</span></p>
+        <p class="lp-text">${data.him}</p>
+      </div>
+      <div class="lp-block">
+        <p class="lp-label">Что включается <span class="lp-name">у неё</span></p>
+        <p class="lp-text">${data.her}</p>
+      </div>
+      <div class="lp-exit">
+        <p class="lp-label">Выход из петли</p>
+        <p class="lp-text">${data.exit}</p>
+      </div>
+      <button class="lp-collapse">← свернуть</button>
+    `;
+    detail.classList.add('open');
+    card.classList.add('open');
+    const collapse = detail.querySelector('.lp-collapse');
+    if (collapse) collapse.onclick = (e) => {
+      e.stopPropagation();
+      detail.classList.remove('open');
+      card.classList.remove('open');
+      detail.innerHTML = '';
+    };
+    setTimeout(() => detail.scrollIntoView({behavior:'smooth', block:'nearest'}), 50);
+  };
+});
+
+
+
+// — Сворачиваемые блоки —
+document.querySelectorAll('.collapsible').forEach(block => {
+  const toggle = block.querySelector('.collapsible-toggle');
+  if (!toggle) return;
+  toggle.onclick = () => {
+    block.classList.toggle('open');
+    if (block.classList.contains('open')) {
+      setTimeout(() => block.scrollIntoView({behavior: 'smooth', block: 'nearest'}), 50);
+    }
+  };
+});
+
+</script>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="footer-brand-row">
+      <span class="solir-lockup solir-lockup--footer">
+        <span class="solir-disc" aria-hidden="true"></span>
+        <span class="solir-word">Solir</span>
+      </span>
+    </div>
+    <p class="footer-tag">Карты совместимости Solir. Не оценка пары — знание о паре. Внутри математика трёх систем, наружу — только смысл.</p>
+
+    <div class="footer-cols">
+      <div class="footer-col">
+        <p>Продукт</p>
+        <a href="#">Что это</a>
+        <a href="#">Как устроено</a>
+        <a href="#">Цена</a>
+        <a href="#">Тестовая карта</a>
+      </div>
+      <div class="footer-col">
+        <p>Связаться</p>
+        <a href="https://t.me/solir_ru" target="_blank" rel="noopener">Telegram-канал</a>
+        <a href="#">Написать автору</a>
+        <a href="#">Поддержка</a>
+      </div>
+      <div class="footer-col">
+        <p>Документы</p>
+        <a href="#">Оферта</a>
+        <a href="#">Политика данных</a>
+        <a href="#">Согласие</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Solir. Все права защищены.</span>
+      <span>
+        <a href="#">RU</a>
+        <a href="#">EN</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+
+
+</div></div></div></div>
