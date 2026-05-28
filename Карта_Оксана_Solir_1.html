@@ -1,0 +1,3206 @@
+<html lang="ru"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solir — Оксана</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..400,0..100&amp;family=Inter:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #FFF1DD;
+  --sand: #FFF1DD;
+  --sand-warm: #F5DBB3;
+  --sun-highlight: #FFE9C2;
+  --sun-light: #E8B47D;
+  --sun: #DC9658;
+  --sun-deep: #C8642E;
+  --earth: #8B4513;
+  --ink: #2A1810;
+  --ink-soft: rgba(42,24,16,.74);
+  --ink-muted: rgba(42,24,16,.5);
+  --glow: #FFE48A;
+  --shadow: #3A2415;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Inter', system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--sand);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+.container {
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 36px 28px 60px;
+}
+.header { margin-bottom: 36px; }
+.greet {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+}
+.core {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--ink);
+  opacity: 0.95;
+  margin-bottom: 16px;
+  font-family: var(--sans);
+  font-weight: 400;
+  font-style: italic;
+}
+.sub {
+  font-size: 13px;
+  color: var(--ink);
+  opacity: 0.55;
+  margin-top: 10px;
+}
+
+/* — Образ-якорь — */
+.anchor-image {
+  margin-top: 22px;
+  padding: 18px 22px 20px;
+  background: rgba(220, 150, 88, 0.08);
+  border-left: 2px solid var(--sun);
+  border-radius: 0 12px 12px 0;
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+.anchor-glyph {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  margin-top: 4px;
+  color: var(--sun-deep);
+}
+.anchor-glyph * {
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.anchor-glyph .ray {
+  stroke-dasharray: 1.5 1.8;
+  opacity: 0.55;
+}
+.anchor-content { flex: 1; min-width: 0; }
+.anchor-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.anchor-text {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 17.5px;
+  line-height: 1.6;
+  color: var(--ink);
+  opacity: 0.97;
+}
+.anchor-text strong {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--sun-deep);
+  letter-spacing: 0.005em;
+}
+
+/* — Глифы архетипов (общие стили) — */
+.archetype-glyph * {
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.archetype-glyph .filled { fill: currentColor; }
+.archetype-glyph .dashed { stroke-dasharray: 2 1.5; }
+
+/* Размещение в bright cards */
+.bright-glyph {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 10px;
+  color: var(--sun-deep);
+}
+/* Размещение в interference cards (тёмный фон, gold) */
+.interference-glyph-arch {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 8px;
+  color: var(--sun);
+}
+/* Размещение в traits (компактно слева от label) */
+.trait-glyph {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--sun-deep);
+  display: inline-block;
+  vertical-align: -3px;
+  margin-right: 8px;
+}
+.arch {
+  padding: 22px 0;
+  border-top: 0.5px solid rgba(200, 100, 46, 0.35);
+}
+.arch:last-of-type {
+  border-bottom: 0.5px solid rgba(200, 100, 46, 0.35);
+}
+.arch-head {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+.glyph {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  margin-top: 6px;
+}
+.arch-content { flex: 1; min-width: 0; }
+.zone {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--sun-deep);
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+.arch-name {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.1;
+  margin-bottom: 10px;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+}
+.arch-brief {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  opacity: 0.95;
+  margin-bottom: 10px;
+}
+.arch-source {
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sun-deep);
+  margin: -2px 0 10px;
+  font-weight: 500;
+}
+.arch-source::before {
+  content: "из карты ↳ ";
+  opacity: 0.55;
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+.arch-source.cross::before {
+  content: "сквозная ось ↳ ";
+}
+.cell-strength {
+  display: flex;
+  gap: 3px;
+  margin-top: 8px;
+}
+.cell-strength .dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--sun-deep);
+}
+.cell-strength .dot.empty {
+  background: transparent;
+  border: 0.5px solid rgba(200, 100, 46, 0.4);
+}
+.cell.s-3 {
+  background: rgba(220, 150, 88, 0.16);
+  border-color: rgba(220, 150, 88, 0.5);
+}
+.cell.s-3:hover {
+  background: rgba(220, 150, 88, 0.28);
+  border-color: var(--sun);
+}
+.info-systems {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: rgba(220, 150, 88, 0.13);
+  border-radius: 8px;
+  font-size: 13.5px;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-style: italic;
+  letter-spacing: 0.005em;
+}
+.info-systems .sys-strong { font-style: normal; font-weight: 500; color: var(--sun-deep); }
+.info-systems.hidden { display: none; }
+
+/* — Глиф резонанса (камертон с волнами) — */
+.resonance {
+  display: inline-block;
+  vertical-align: middle;
+  width: 22px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--sun-deep);
+  overflow: visible;
+}
+.resonance line, .resonance path { stroke: currentColor; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.resonance line { stroke-width: 1.6; }
+.resonance .wave { stroke-width: 1.4; opacity: 0.12; }
+.resonance.r-1 .wave-1 { opacity: 1; stroke-width: 1.7; }
+.resonance.r-2 .wave-1, .resonance.r-2 .wave-2 { opacity: 1; stroke-width: 1.7; }
+.resonance.r-3 .wave-1, .resonance.r-3 .wave-2, .resonance.r-3 .wave-3 { opacity: 1; stroke-width: 1.7; }
+
+.cell-resonance {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+}
+.cell-resonance .resonance { width: 18px; height: 17px; }
+
+/* — Градация яркости в матрице: 1 волна тусклее, 3 — ярче — */
+.cell.s-1 .cell-resonance .resonance { opacity: 0.45; }
+.cell.s-2 .cell-resonance .resonance { opacity: 0.72; }
+.cell.s-3 .cell-resonance .resonance { opacity: 1; }
+.cell.s-1 .cell-resonance .resonance .wave-1 { stroke-width: 1.5; }
+.cell.s-2 .cell-resonance .resonance .wave-1,
+.cell.s-2 .cell-resonance .resonance .wave-2 { stroke-width: 1.6; }
+.cell.s-3 .cell-resonance .resonance .wave-1,
+.cell.s-3 .cell-resonance .resonance .wave-2,
+.cell.s-3 .cell-resonance .resonance .wave-3 { stroke-width: 1.8; }
+
+.info-resonance {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: rgba(220, 150, 88, 0.13);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-style: italic;
+  letter-spacing: 0.005em;
+}
+.info-resonance .resonance { width: 26px; height: 24px; }
+.info-resonance .res-label {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--sun-deep);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 11.5px;
+  font-family: var(--sans);
+  margin-right: 4px;
+}
+.info-resonance.hidden { display: none; }
+
+.btn {
+  font-size: 12px;
+  color: var(--sun-deep);
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  background: none;
+  border: none;
+  border-bottom: 0.5px solid rgba(200, 100, 46, 0.5);
+  padding: 0 0 1px;
+  font-family: inherit;
+  font-weight: 500;
+  transition: color 0.15s, border-color 0.15s;
+}
+.btn:hover {
+  color: var(--ink);
+  border-color: rgba(26, 22, 18, 0.6);
+}
+.detail {
+  margin-top: 20px;
+  display: none;
+  animation: fade 0.25s ease;
+}
+.detail.open { display: block; }
+@keyframes fade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.card {
+  border-radius: 12px;
+  padding: 22px 24px;
+  margin-bottom: 12px;
+}
+.card.light { background: rgba(255, 255, 255, 0.55); }
+.card.dark {
+  background: var(--shadow);
+  color: var(--sand);
+}
+.card.dark .side { color: var(--sun); }
+.card.dark .flip-btn {
+  color: var(--sun);
+  border-color: rgba(220, 150, 88, 0.5);
+}
+.side {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  margin-bottom: 12px;
+  font-weight: 500;
+  color: var(--sun-deep);
+}
+.body {
+  font-size: 16px;
+  line-height: 1.7;
+  opacity: 0.95;
+}
+.flip-btn {
+  margin-top: 14px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-bottom: 0.5px solid rgba(200, 100, 46, 0.5);
+  padding: 0 0 1px;
+  font-family: inherit;
+  color: var(--sun-deep);
+  font-weight: 500;
+}
+.lesson {
+  background: var(--sun);
+  color: var(--ink);
+  padding: 18px 22px;
+  border-radius: 12px;
+  margin-top: 14px;
+}
+.lesson.hidden { display: none; }
+.lesson-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  margin-bottom: 8px;
+  font-weight: 500;
+  opacity: 0.75;
+}
+.lesson-text {
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+.practice-amplify {
+  background: var(--sand-warm);
+  border-left: 3px solid var(--sun);
+  color: var(--ink);
+  padding: 16px 20px;
+  border-radius: 10px;
+  margin-top: 14px;
+}
+.practice-amplify.hidden { display: none; }
+.practice-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.16em;
+  margin-bottom: 8px; font-weight: 500; color: var(--sun-deep);
+}
+.practice-text { font-size: 15px; line-height: 1.6; }
+.collapse { margin-top: 16px; }
+.map-section {
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 0.5px solid rgba(200, 100, 46, 0.35);
+}
+.map-title {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+.map-sub {
+  font-size: 14.5px;
+  opacity: 0.75;
+  margin-bottom: 22px;
+}
+.map-grid {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr 1fr;
+  gap: 6px;
+}
+.map-h, .map-row-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+  border-radius: 6px;
+}
+.map-h {
+  padding: 10px 4px;
+  text-align: center;
+}
+.map-row-label {
+  padding: 10px 6px;
+  display: flex;
+  align-items: center;
+}
+.map-h:hover, .map-row-label:hover {
+  background: rgba(220, 150, 88, 0.18);
+  color: var(--ink);
+}
+.map-h.selected, .map-row-label.selected {
+  background: rgba(220, 150, 88, 0.32);
+  color: var(--ink);
+}
+.cell {
+  position: relative;
+  background: rgba(255, 248, 236, 0.6);
+  border-radius: 8px;
+  padding: 12px 36px 12px 14px;
+  border: 0.5px solid rgba(200, 100, 46, 0.25);
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.cell:hover {
+  background: rgba(220, 150, 88, 0.18);
+  border-color: rgba(220, 150, 88, 0.55);
+}
+.cell.featured {
+  background: rgba(220, 150, 88, 0.22);
+  border-color: var(--sun);
+}
+.cell.selected {
+  background: rgba(220, 150, 88, 0.4);
+  border-color: var(--sun-deep);
+  border-width: 1px;
+}
+.cell-name {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.info-block {
+  margin-top: 18px;
+  background: rgba(255, 255, 255, 0.62);
+  border-radius: 12px;
+  padding: 22px 24px;
+  border: 0.5px solid rgba(200, 100, 46, 0.3);
+  display: none;
+  animation: fade 0.25s ease;
+}
+.info-block.open { display: block; }
+.info-coord {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.info-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+}
+.info-side-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-weight: 500;
+  color: var(--sun-deep);
+  margin-bottom: 8px;
+  display: block;
+}
+.info-side {
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 14px;
+  opacity: 0.92;
+}
+.info-shadow {
+  background: var(--shadow);
+  color: var(--sand);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-top: 12px;
+  margin-bottom: 14px;
+}
+.info-shadow .info-side-label { color: var(--sun); }
+.info-shadow .info-side { opacity: 0.95; }
+.info-shadow.hidden { display: none; }
+.info-light {
+  margin-top: 4px;
+}
+.info-light.hidden { display: none; }
+.info-shadow {
+  background: var(--shadow);
+  color: var(--sand);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-top: 4px;
+  margin-bottom: 14px;
+}
+.info-shadow .info-side-label { color: var(--sun); }
+.info-shadow .info-side { opacity: 0.95; }
+.info-shadow.hidden { display: none; }
+.info-shadow .flip-btn-info {
+  color: var(--sun);
+  border-color: rgba(220, 150, 88, 0.5);
+}
+.flip-btn-info {
+  margin-top: 10px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-bottom: 0.5px solid rgba(200, 100, 46, 0.5);
+  padding: 0 0 1px;
+  font-family: inherit;
+  color: var(--sun-deep);
+  font-weight: 500;
+}
+.info-actions {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-top: 14px;
+}
+.map-legend {
+  margin-top: 20px;
+  font-size: 14px;
+  opacity: 0.85;
+  line-height: 1.6;
+}
+.map-legend strong { color: var(--ink); font-weight: 500; }
+
+/* — Циклы (плашка под картой) — */
+.cycles-strip {
+  margin-top: 22px;
+  padding: 18px 22px 20px;
+  background: rgba(220, 150, 88, 0.09);
+  border-left: 2px solid var(--sun);
+  border-radius: 0 12px 12px 0;
+}
+.cycles-strip-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.cycles-strip-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--sun-deep);
+  font-weight: 500;
+}
+.cycles-strip-brief {
+  font-family: var(--sans);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ink);
+  opacity: 0.85;
+}
+.cycles-strip-body p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink);
+  opacity: 0.95;
+  margin-bottom: 10px;
+}
+.cycles-strip-body p:last-child { margin-bottom: 0; }
+.cycles-strip-body strong { font-weight: 500; color: var(--ink); }
+.cycles-strip-aside {
+  margin-top: 10px;
+  padding-top: 12px;
+  border-top: 0.5px dashed rgba(200, 100, 46, 0.3);
+  font-family: var(--sans);
+  font-style: italic;
+  opacity: 0.85 !important;
+  font-size: 13px !important;
+}
+.cycles-strip-aside strong {
+  font-style: normal;
+  color: var(--sun-deep);
+}
+
+/* — Воля и витальность — */
+.traits {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 0.5px solid rgba(200, 100, 46, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.trait { width: 100%; }
+.trait-strip {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+.trait-strip:hover { background: rgba(220, 150, 88, 0.12); }
+.trait-strip.open { background: rgba(220, 150, 88, 0.2); }
+.trait-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 6px;
+}
+.trait-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.trait-brief {
+  font-size: 14.5px;
+  color: var(--ink);
+  opacity: 0.85;
+  text-align: right;
+  font-family: var(--sans);
+  font-style: italic;
+}
+.trait-line {
+  display: block;
+  width: 100%;
+  height: 6px;
+  overflow: visible;
+}
+.trait-detail {
+  margin-top: 14px;
+  display: none;
+  animation: fade 0.25s ease;
+}
+.trait-detail.open { display: block; }
+.flip-btn-trait {
+  margin-top: 14px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-bottom: 0.5px solid rgba(200, 100, 46, 0.5);
+  padding: 0 0 1px;
+  font-family: inherit;
+  color: var(--sun-deep);
+  font-weight: 500;
+}
+.card.dark .flip-btn-trait {
+  color: var(--sun);
+  border-color: rgba(220, 150, 88, 0.5);
+}
+
+/* — Путь — */
+.path-section {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 0.5px solid rgba(200, 100, 46, 0.35);
+}
+.path-section.traits-section {
+  margin-top: 36px;
+  padding-top: 28px;
+}
+
+/* — Ярко звучит — */
+.bright-section {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 0.5px solid rgba(200, 100, 46, 0.35);
+}
+.bright-grid {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.bright-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 18px 18px 16px;
+  background: rgba(255, 255, 255, 0.45);
+  border: 0.5px solid rgba(200, 100, 46, 0.35);
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.18s;
+}
+.bright-card:hover {
+  background: rgba(220, 150, 88, 0.16);
+  border-color: var(--sun);
+  transform: translateY(-1px);
+}
+.bright-card:nth-of-type(odd):last-of-type {
+  grid-column: 1 / -1;
+}
+.bright-source {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  opacity: 0.95;
+  margin-bottom: 6px;
+}
+.bright-name {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  margin-bottom: 8px;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.bright-brief {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink);
+  opacity: 0.95;
+}
+@media (max-width: 480px) {
+  .bright-grid { grid-template-columns: 1fr; }
+}
+.bright-card.open {
+  background: rgba(220, 150, 88, 0.22);
+  border-color: var(--sun);
+}
+.bright-detail {
+  display: none;
+  grid-column: 1 / -1;
+  margin-top: -2px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 0.5px solid rgba(220, 150, 88, 0.45);
+  border-radius: 12px;
+  animation: fade 0.25s ease;
+}
+.bright-detail.open { display: block; }
+.bright-detail .info-resonance { margin-top: 0; }
+.bright-detail .card { margin-top: 14px; }
+.bright-detail .bd-collapse { margin-top: 14px; }
+
+/* — Создаёт помехи — */
+.interference-transition {
+  margin-top: 28px;
+  padding: 16px 22px;
+  font-family: var(--sans);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink);
+  opacity: 0.92;
+  border-left: 2px solid rgba(200, 100, 46, 0.4);
+  background: rgba(200, 100, 46, 0.05);
+}
+.interferences-section {
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 0.5px solid rgba(200, 100, 46, 0.35);
+}
+.interferences-grid {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.interference-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 18px 18px 16px;
+  background: var(--shadow);
+  border: 0.5px solid rgba(220, 150, 88, 0.25);
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.18s;
+  color: var(--sand);
+}
+.interference-card:hover {
+  border-color: var(--sun);
+  transform: translateY(-1px);
+}
+.interference-card:nth-of-type(odd):last-of-type {
+  grid-column: 1 / -1;
+}
+.interference-source {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--sun);
+  font-weight: 500;
+  opacity: 0.95;
+  margin-bottom: 6px;
+}
+.interference-name {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  margin-bottom: 8px;
+  color: var(--sand);
+  line-height: 1.1;
+}
+.interference-brief {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--sand);
+  opacity: 0.95;
+}
+.interference-card.open {
+  border-color: var(--sun);
+}
+.interference-detail {
+  display: none;
+  grid-column: 1 / -1;
+  margin-top: -2px;
+  padding: 22px;
+  background: var(--shadow);
+  border: 0.5px solid rgba(220, 150, 88, 0.4);
+  border-radius: 12px;
+  color: var(--sand);
+  animation: fade 0.25s ease;
+}
+.interference-detail.open { display: block; }
+.interference-detail .int-block { margin-top: 18px; }
+.interference-detail .int-block:first-child { margin-top: 0; }
+.interference-detail .int-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--sun);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.interference-detail .int-text {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--sand);
+  opacity: 0.92;
+}
+.interference-detail .int-collapse {
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--sun);
+  background: transparent;
+  border: 0.5px solid rgba(220, 150, 88, 0.4);
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.interference-detail .int-collapse:hover {
+  background: rgba(220, 150, 88, 0.15);
+}
+@media (max-width: 480px) {
+  .interferences-grid { grid-template-columns: 1fr; }
+}
+
+/* — Рекомендации в info-block для столбцов — */
+.info-recs {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 0.5px dashed rgba(200, 100, 46, 0.45);
+}
+.info-recs-title {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+.info-recs-sub {
+  font-size: 12px;
+  color: var(--ink);
+  opacity: 0.6;
+  margin-bottom: 14px;
+}
+.info-recs-section { margin-top: 18px; }
+.info-recs-section:first-of-type { margin-top: 6px; }
+.info-recs-section-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--sun-deep);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.info-recs-item {
+  margin-top: 12px;
+  padding-left: 14px;
+  border-left: 2px solid rgba(220, 150, 88, 0.4);
+}
+.info-recs-item:first-child { margin-top: 0; }
+.info-recs-item-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 4px;
+  line-height: 1.35;
+}
+.info-recs-item-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink);
+  opacity: 0.82;
+}
+.info-recs-body {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--ink);
+  opacity: 0.88;
+}
+.info-recs-body p { margin-top: 10px; }
+.info-recs-body p:first-child { margin-top: 0; }
+
+.path-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin: 22px 0 0;
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(255, 248, 236, 0.6);
+  border: 0.5px solid rgba(200, 100, 46, 0.3);
+}
+.path-seg {
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  flex: 1;
+  text-align: center;
+  padding: 8px 6px;
+  border-radius: 6px;
+  white-space: nowrap;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.path-seg.past { opacity: 0.45; }
+.path-seg.current {
+  background: var(--sun);
+  color: var(--ink);
+}
+.path-seg.future { opacity: 0.6; }
+.path-seg:hover { opacity: 1; background: rgba(220, 150, 88, 0.22); }
+.path-seg.current:hover { background: rgba(220, 150, 88, 0.55); }
+.path-seg.selected {
+  background: var(--sun-deep);
+  color: var(--sand);
+  opacity: 1;
+}
+.path-seg.current.selected {
+  background: var(--sun-deep);
+  color: var(--sand);
+}
+.path-chev {
+  color: var(--sun-deep);
+  font-size: 14px;
+  font-weight: 400;
+  flex-shrink: 0;
+}
+.path-detail {
+  margin-top: 18px;
+  display: none;
+  animation: fade 0.25s ease;
+}
+.path-detail.open { display: block; }
+.path-stage-coord {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.path-stage-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  letter-spacing: -0.005em;
+  line-height: 1.15;
+}
+@media (max-width: 480px) {
+  .container { padding: 40px 20px 60px; }
+  .greet { font-size: 28px; }
+  .core { font-size: 14.5px; }
+  .arch-name { font-size: 24px; }
+  .map-grid { grid-template-columns: 52px 1fr 1fr 1fr; gap: 4px; }
+  .map-row-label { padding: 8px 2px; font-size: 9.5px; letter-spacing: 0.04em; }
+  .map-h { padding: 8px 2px; font-size: 9.5px; letter-spacing: 0.04em; }
+  .cell { padding: 9px 22px 9px 9px; min-height: 48px; }
+  .cell-name { font-size: 11px; line-height: 1.25; }
+  .cell-strength { margin-top: 6px; gap: 2px; }
+  .cell-resonance { top: 7px; right: 6px; }
+  .cell-resonance .resonance { width: 14px; height: 13px; }
+}
+
+/* — Шапка сайта — */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(245, 238, 226, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid rgba(200, 100, 46, 0.18);
+}
+.site-header-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+}
+.brand-mark {
+  width: 22px;
+  height: 22px;
+  color: var(--sun-deep);
+}
+.brand-name {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  line-height: 1;
+}
+.brand-name em {
+  font-style: italic;
+  color: var(--sun-deep);
+  font-weight: 400;
+}
+.site-nav {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+}
+.site-nav a {
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+.site-nav a:hover { opacity: 1; }
+.site-nav .nav-cta {
+  padding: 7px 14px;
+  border: 0.5px solid var(--sun-deep);
+  border-radius: 999px;
+  opacity: 1;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--sun-deep);
+}
+.site-nav .nav-cta:hover {
+  background: var(--sun-deep);
+  color: var(--sand);
+}
+@media (max-width: 480px) {
+  .site-header-inner { padding: 14px 20px; gap: 12px; }
+  .site-nav .nav-link { display: none; }
+  .brand-name { font-size: 19px; }
+}
+
+/* — Финальное резюме «Главное» — */
+.finale-block {
+  margin-top: 22px;
+  padding: 30px 28px 26px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 0.5px solid rgba(200, 100, 46, 0.35);
+  border-radius: 14px;
+  position: relative;
+}
+.finale-essence {
+  font-family: var(--sans);
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.55;
+  color: var(--ink);
+  opacity: 0.97;
+  letter-spacing: -0.005em;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 0.5px solid rgba(200, 100, 46, 0.25);
+}
+.finale-essence p { margin-bottom: 12px; }
+.finale-essence p:last-child { margin-bottom: 0; }
+
+.finale-watch { margin-bottom: 26px; }
+.watch-label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  margin-bottom: 14px;
+  opacity: 0.9;
+}
+.watch-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: watch;
+}
+.watch-list li {
+  position: relative;
+  padding: 14px 0 14px 38px;
+  border-top: 0.5px solid rgba(200, 100, 46, 0.18);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink);
+  opacity: 0.95;
+  counter-increment: watch;
+}
+.watch-list li:first-child { border-top: 0; padding-top: 4px; }
+.watch-list li:last-child { padding-bottom: 4px; }
+.watch-list li::before {
+  content: counter(watch);
+  position: absolute;
+  left: 0;
+  top: 14px;
+  width: 24px;
+  height: 24px;
+  border: 0.5px solid var(--sun);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 22px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--sun-deep);
+  font-family: var(--sans);
+  font-style: italic;
+}
+.watch-list li:first-child::before { top: 4px; }
+
+.finale-note {
+  padding: 22px 24px;
+  background: rgba(220, 150, 88, 0.08);
+  border-left: 2px solid var(--sun);
+  border-radius: 0 12px 12px 0;
+}
+.finale-note p {
+  font-family: var(--sans);
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink);
+  opacity: 0.95;
+}
+.finale-signature {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 0.5px dashed rgba(200, 100, 46, 0.3);
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  opacity: 0.7;
+  font-style: normal;
+  font-family: var(--sans);
+}
+
+/* — Анкорное эхо в финале — */
+.anchor-echo {
+  margin-top: 22px;
+  padding: 28px 24px 24px;
+  text-align: center;
+}
+.anchor-echo-glyph {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 16px;
+  color: var(--sun-deep);
+  display: block;
+}
+.anchor-echo-glyph * {
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.anchor-echo-glyph .ray {
+  stroke-dasharray: 1.5 1.8;
+  opacity: 0.55;
+}
+.anchor-echo-mantra {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+.anchor-echo-mantra em {
+  color: var(--sun-deep);
+  font-style: italic;
+  font-weight: 400;
+}
+.anchor-echo-coda {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ink);
+  opacity: 0.82;
+  line-height: 1.55;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+/* — Модальное окно деталей — */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 22, 18, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 1000;
+  padding: 60px 20px;
+  overflow-y: auto;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.modal-backdrop.open {
+  display: flex;
+  opacity: 1;
+}
+.modal-content {
+  background: var(--sand);
+  border-radius: 16px;
+  border: 0.5px solid rgba(200, 100, 46, 0.3);
+  max-width: 640px;
+  width: 100%;
+  padding: 36px 32px 32px;
+  position: relative;
+  box-shadow: 0 30px 80px rgba(26, 22, 18, 0.35);
+  transform: scale(0.96);
+  opacity: 0;
+  transition: transform 0.22s ease, opacity 0.22s ease;
+  margin-bottom: 60px;
+}
+.modal-backdrop.open .modal-content {
+  transform: scale(1);
+  opacity: 1;
+}
+.modal-content.dark {
+  background: var(--shadow);
+  color: var(--sand);
+  border-color: rgba(220, 150, 88, 0.3);
+}
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: none;
+  border: 0.5px solid rgba(200, 100, 46, 0.5);
+  color: var(--sun-deep);
+  font-family: inherit;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.modal-content.dark .modal-close {
+  border-color: rgba(220, 150, 88, 0.4);
+  color: var(--sun);
+}
+.modal-close:hover {
+  background: rgba(220, 150, 88, 0.15);
+  border-color: var(--sun);
+}
+.modal-source {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  margin-bottom: 14px;
+  padding-right: 40px;
+}
+.modal-content.dark .modal-source {
+  color: var(--sun);
+}
+.modal-glyph {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 14px;
+  color: var(--sun-deep);
+}
+.modal-content.dark .modal-glyph {
+  color: var(--sun);
+}
+.modal-title {
+  font-family: var(--serif);
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: inherit;
+  margin-bottom: 22px;
+  line-height: 1.15;
+}
+.modal-systems {
+  font-size: 12.5px;
+  color: var(--sun-deep);
+  margin-bottom: 22px;
+  letter-spacing: 0.04em;
+}
+.modal-content.dark .modal-systems { color: var(--sun); }
+.modal-section {
+  margin-top: 22px;
+  padding: 18px 20px;
+  border-radius: 10px;
+  background: rgba(220, 150, 88, 0.1);
+}
+.modal-content.dark .modal-section {
+  background: rgba(220, 150, 88, 0.08);
+}
+.modal-section.lesson {
+  background: rgba(220, 150, 88, 0.22);
+  border-left: 2px solid var(--sun);
+}
+.modal-content.dark .modal-section.lesson {
+  background: rgba(220, 150, 88, 0.14);
+}
+.modal-section-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.modal-content.dark .modal-section-label { color: var(--sun); }
+.modal-section-text {
+  font-size: 16px;
+  line-height: 1.7;
+  opacity: 0.95;
+}
+body.modal-open {
+  overflow: hidden;
+}
+
+/* — Подвал сайта — */
+.site-footer {
+  margin-top: 60px;
+  padding: 36px 32px 32px;
+  border-top: 0.5px solid rgba(200, 100, 46, 0.18);
+  background: rgba(245, 238, 226, 0.5);
+}
+.site-footer-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.footer-brand-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 500;
+}
+.footer-brand-row span em,
+.footer-brand-row em {
+  font-style: italic;
+  color: var(--sun-deep);
+  font-weight: 400;
+}
+.footer-brand-row .brand-mark { width: 18px; height: 18px; }
+.footer-tag {
+  font-family: var(--sans);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ink);
+  opacity: 0.85;
+  max-width: 480px;
+  line-height: 1.55;
+}
+.footer-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  padding-top: 8px;
+}
+.footer-col p:first-child {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--sun-deep);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.footer-col a, .footer-col span {
+  display: block;
+  font-size: 13px;
+  color: var(--ink);
+  text-decoration: none;
+  opacity: 0.75;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+.footer-col a:hover { opacity: 1; color: var(--sun-deep); }
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 18px;
+  border-top: 0.5px solid rgba(200, 100, 46, 0.18);
+  font-size: 11.5px;
+  color: var(--ink);
+  opacity: 0.55;
+  letter-spacing: 0.02em;
+}
+.footer-bottom a {
+  color: inherit;
+  text-decoration: none;
+  margin-left: 16px;
+}
+.footer-bottom a:hover { opacity: 1; color: var(--sun-deep); }
+@media (max-width: 480px) {
+  .site-footer { margin-top: 40px; padding: 28px 20px; }
+  .footer-cols { grid-template-columns: 1fr; gap: 18px; }
+  .footer-bottom { flex-direction: column; gap: 10px; align-items: flex-start; }
+  .footer-bottom a { margin-left: 0; margin-right: 14px; }
+}
+/* ===== Solir card — единый слой улучшений ===== */
+:root{ --ease:cubic-bezier(.25,.46,.45,.94); --line:rgba(139,69,19,.18); }
+
+#solir-scroll{ position:fixed; top:0; left:0; height:2px; width:0%; z-index:1002;
+  background:linear-gradient(90deg,#E8B47D,#DC9658,#C8642E); box-shadow:0 0 8px rgba(220,150,88,.4); transition:width .1s linear; }
+
+/* прогресс по 6 разделам внутри существующей шапки — один бар */
+.site-nav.solir-progress{ display:flex; align-items:center; gap:9px; flex-wrap:wrap; justify-content:flex-end; }
+.site-nav .seg{ display:flex; align-items:center; gap:6px; cursor:pointer; }
+.site-nav .seg .tk{ width:18px; height:3px; border-radius:2px; background:rgba(139,69,19,.22); transition:.25s var(--ease); }
+.site-nav .seg.active .tk{ background:#DC9658; width:28px; }
+.site-nav .seg .nm{ font-family:'Inter',sans-serif; font-size:11px; color:rgba(42,24,16,.5); display:none; white-space:nowrap; }
+.site-nav .seg.active .nm{ color:#C8642E; display:inline; }
+.site-nav .pcount{ font-family:'Inter',sans-serif; font-size:12px; font-weight:500; color:#C8642E; white-space:nowrap; }
+@media(max-width:860px){ .site-nav .seg .nm{ display:none!important; } }
+
+/* кликабельность — спокойный единый язык */
+.cell,.bright-card,.interference-card,.trait-strip,.path-seg,.map-h,.map-row-label{ cursor:pointer; }
+.bright-card,.interference-card,.trait-strip{ position:relative; }
+.cell,.bright-card,.interference-card,.trait-strip{ transition:transform .2s var(--ease),box-shadow .2s var(--ease); }
+.cell:hover,.bright-card:hover,.interference-card:hover,.trait-strip:hover{ transform:translateY(-2px); }
+/* шеврон снизу-справа — для карточек и ячеек (там есть место) */
+.cell::after,.bright-card::after,.interference-card::after{ content:"\203A"; position:absolute; right:14px; bottom:9px; font-family:'Inter',sans-serif; font-size:16px; line-height:1; color:#C8642E; opacity:.45; transition:.2s var(--ease); pointer-events:none; }
+.cell:hover::after,.bright-card:hover::after,.interference-card:hover::after{ opacity:1; transform:translateX(2px); }
+/* теневые карточки «Создаёт помехи» — светлый шеврон на тёмном фоне */
+.interference-card::after{ color:var(--sun-light); opacity:.6; }
+/* сквозные оси: шеврон по центру справа в зарезервированном поле — не наезжает на текст */
+.trait-strip{ padding-right:34px !important; }
+.trait-strip::after{ content:"\203A"; position:absolute; right:13px; top:50%; transform:translateY(-50%); font-family:'Inter',sans-serif; font-size:16px; line-height:1; color:#C8642E; opacity:.42; transition:.2s var(--ease); pointer-events:none; }
+.trait-strip:hover::after{ opacity:1; }
+/* путь: без накладного шеврона (стрелки уже есть в степпере), сигнал — подсветка на hover */
+.map-h:hover,.map-row-label:hover{ color:#C8642E; text-decoration:underline dotted rgba(200,100,46,.55); text-underline-offset:3px; }
+
+/* === контраст: тёмный текст на тёмном + теневой аспект всегда на тёмной подложке === */
+/* фикс утечки .lesson (gold bg + ink color) в тёмную модалку */
+.modal-content.dark .modal-section,
+.modal-content.dark .modal-section.lesson{ color:var(--sand); }
+.modal-content.dark .modal-section-text{ color:var(--sand); opacity:.95; }
+/* теневой аспект — ВСЕГДА тёмная подложка + светлый текст (в любой модалке) */
+.modal-section[data-section-kind="shadow"]{ background:var(--shadow) !important; color:var(--sand); border-radius:10px; }
+.modal-section[data-section-kind="shadow"] .modal-section-label{ color:var(--sun-light); }
+.modal-section[data-section-kind="shadow"] .modal-section-text{ color:var(--sand); opacity:.95; }
+
+/* тонкий гид над картой: подсказка + короткая легенда камертона */
+.map-guide{ display:flex; align-items:center; justify-content:space-between; gap:16px 22px; flex-wrap:wrap;
+  max-width:760px; margin:0 auto 22px; padding-top:13px; border-top:1px solid var(--line);
+  font-family:'Inter',sans-serif; font-size:12.5px; color:rgba(42,24,16,.6); line-height:1.4; }
+.map-guide .mg-hint{ display:inline-flex; align-items:center; gap:8px; }
+.map-guide .mg-hint .tap{ width:22px; height:22px; border:1px solid #DC9658; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:14px; color:#C8642E; flex-shrink:0; }
+.glyphs{ display:inline-flex; align-items:flex-end; gap:9px; }
+.glyphs .resonance{ width:18px; height:17px; color:#C8642E; }
+/* нижняя легенда камертона — глифы слева, текст в 2 строки справа, на подложке */
+.map-legend-reson{ display:flex; width:fit-content; align-items:center; gap:14px; max-width:none; margin:24px auto 0; padding:13px 18px; border-top:none; background:var(--sand-warm); border:1px solid var(--line); border-radius:12px; }
+.map-legend-reson .glyphs{ flex-shrink:0; padding-right:14px; border-right:1px solid var(--line); }
+.map-legend-reson .mlr-note{ font-family:'Inter',sans-serif; font-size:12.5px; line-height:1.45; color:rgba(42,24,16,.62); max-width:300px; }
+
+/* панель ведёт содержанием; камертон остаётся, но компактно */
+.info-resonance{ padding:8px 12px !important; font-size:12.5px !important; opacity:.92; }
+.info-resonance .resonance{ width:20px !important; height:18px !important; }
+
+/* воздух / дыхание */
+.cell{ min-height:64px; }
+h2.map-title{ margin-bottom:18px; }
+.map-section,.path-section,.bright-section,.interferences-section{ margin-top:24px; }
+/* — связи между аспектами (навигируемые) — */
+.modal-links, .info-links{ margin-top:18px; padding-top:16px; border-top:1px solid var(--line-soft); }
+.info-links.hidden{ display:none; }
+.conn-label{ font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--earth); font-weight:500; margin-bottom:9px; display:block; }
+.conn-chip{ display:inline-flex; align-items:center; gap:6px; font-family:'Inter',sans-serif; font-size:13px; font-weight:500;
+  color:var(--ink); background:var(--sand-warm); border:1px solid var(--line); border-radius:999px;
+  padding:6px 14px; margin:0 7px 7px 0; cursor:pointer; transition:all .2s var(--ease); }
+.conn-chip:hover{ border-color:var(--sun); background:var(--sun-highlight); transform:translateY(-1px); }
+.conn-chip::before{ content:'\21B3'; color:var(--earth); }
+.modal-content.dark .conn-label{ color:var(--sun-light); }
+.modal-content.dark .conn-chip{ color:var(--paper); background:rgba(255,241,221,0.08); border-color:rgba(255,241,221,0.2); }
+.modal-content.dark .conn-chip:hover{ border-color:var(--sun-light); background:rgba(255,241,221,0.14); }
+.modal-content.dark .conn-chip::before{ color:var(--sun-light); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="brand" href="#">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <defs><radialGradient id="solSun" cx="35%" cy="30%" r="75%">
+          <stop offset="0%" stop-color="#FFE9C2"/><stop offset="65%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/>
+        </radialGradient></defs>
+        <circle cx="20" cy="20" r="19" fill="url(#solSun)"/>
+      </svg>
+      <span class="brand-name" style="font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:300;font-variation-settings:'opsz' 96,'SOFT' 80;letter-spacing:-.01em;">Solir</span>
+    </a>
+    <nav class="site-nav">
+      <a class="nav-link" href="#">О проекте</a>
+      <a class="nav-link" href="#">Как устроено</a>
+      <a class="nav-cta" href="#">Получить ключ</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+
+<div class="header">
+  <h1 class="greet">Оксана</h1>
+  <p class="core">Земля и глубокая вода в одном человеке. Снаружи — надёжность и тёплое ремесло: на тебя опираются, у тебя всё сделано на совесть. А глубже — сильное страстное течение и тёплый огонь, которому много жизни. В тебе одновременно тянет служить и доводить до толка всё, к чему прикасаешься, — и тянет на простор, к новому, к перемене. Решаешь не сразу: тебе нужна ночь, чтобы услышать, чего ты хочешь на самом деле. А самый большой твой рост в этой жизни — не раствориться в заботе о других и в чужой мудрости, а найти и подать собственный голос.</p>
+
+  <div class="anchor-image">
+    <svg class="anchor-glyph" viewBox="0 0 24 24" aria-hidden="true">
+      <!-- дом: контур -->
+      <path d="M5 11 L12 5 L19 11 L19 20 L5 20 Z"/>
+      <!-- печь: тёплый огонь внутри -->
+      <path class="ray" d="M10.5 17 Q9.6 15, 11 13.6 Q10.6 15, 12 14.4 Q13.4 15.6, 12.6 17"/>
+      <!-- колодец: глубина -->
+      <line x1="9" y1="20" x2="9" y2="17"/>
+      <line x1="15" y1="20" x2="15" y2="17"/>
+      <path class="ray" d="M9 18.4 Q12 19.6, 15 18.4"/>
+      <path class="ray" d="M2 22 Q 12 19.5, 22 22"/>
+    </svg>
+    <div class="anchor-content">
+      <p class="anchor-label">образ</p>
+      <p class="anchor-text"><strong>Дом со светлой печью и глубоким колодцем — у самой дороги.</strong> К тебе приходят за теплом, за хлебом, за настоящим разговором у огня; во дворе — старый глубокий колодец с водой, что лечит, и её достают медленно, по ведру. А мимо тянется дорога — зов простора и нового, который ты слышишь всю жизнь. Есть две лёгкие беды: остаться навсегда согнутой над очагом ради всех, забыв саму себя, — или, когда станет тяжело, запереть дверь и уйти по дороге, не доделав. Твой путь — и держать дом, и не бояться выйти на порог со своим словом. А кому подать хлеб у печи, кому открыть колодец, а кого отпустить дальше — этому ты учишься всю жизнь.</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="path-section bright-section">
+  <h2 class="map-title">Ярко звучит</h2>
+  <p class="map-sub">Шесть самых сильных историй про тебя — то, что отзывается ярче всего. На эти зоны стоит обращать внимание в первую очередь: они и твоя сила, и твои главные опоры.</p>
+
+  <div class="bright-grid">
+    <button class="bright-card" data-target="cell:e-b" type="button">
+            <p class="bright-source">из карты · Эмоции · Близость</p>
+      <svg class="archetype-glyph bright-glyph" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 9 L19 9 L17 20 L7 20 Z"/>
+        <path d="M5 9 L8 5 L16 5 L19 9"/>
+        <line x1="9" y1="13" x2="15" y2="13" class="dashed"/>
+      </svg>
+      <h3 class="bright-name">Хозяйка глубокого колодца</h3>
+      <p class="bright-brief">Умеешь создавать ту близость, которой большинство боится и ищет. Рядом с тобой человек чувствует, что его наконец увидели — не роль, а его самого.</p>
+    </button>
+
+    <button class="bright-card" data-target="trait:lightning" type="button">
+            <p class="bright-source">сквозная ось</p>
+      <svg class="archetype-glyph bright-glyph" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M13 3 L7 12 L11 12 L10 21 L17 10 L13 10 Z"/>
+      </svg>
+      <h3 class="bright-name">Переводчица вспышек</h3>
+      <p class="bright-brief">Знание приходит целиком, в одну секунду. Твоя сила не в том, что думаешь быстрее, а в том, что думаешь иначе — и переводишь это на понятный язык.</p>
+    </button>
+
+    <button class="bright-card" data-target="cell:d-d" type="button">
+            <p class="bright-source">из карты · Дух · Дело</p>
+      <svg class="archetype-glyph bright-glyph" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 12 Q 8 6, 12 12 T 20 12"/>
+        <circle cx="4" cy="12" r="1.4" class="filled"/>
+        <circle cx="20" cy="12" r="1.4" class="filled"/>
+      </svg>
+      <h3 class="bright-name">Преданная мастерица</h3>
+      <p class="bright-brief">Когда говоришь «да» по-настоящему — доходишь до конца. Там, где другие сходят с дистанции на середине, ты остаёшься. Это редко.</p>
+    </button>
+
+    <button class="bright-card" data-target="trait:refiner" type="button">
+            <p class="bright-source">сквозная ось</p>
+      <svg class="archetype-glyph bright-glyph" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="10" cy="10" r="6"/>
+        <line x1="14.5" y1="14.5" x2="20" y2="20"/>
+        <line x1="9" y1="10" x2="11" y2="10"/>
+      </svg>
+      <h3 class="bright-name">Видящая «как лучше»</h3>
+      <p class="bright-brief">Замечаешь, что в системе не работает, быстрее, чем большинство замечает, что оно вообще есть. Направленный на дело — этот дар бесценен.</p>
+    </button>
+
+    <button class="bright-card" data-target="trait:warmfire" type="button">
+            <p class="bright-source">сквозная ось</p>
+      <svg class="archetype-glyph bright-glyph" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 3 Q8 8, 10 12 Q11 9, 12 10 Q14 7, 13.5 12 Q16 9, 16 13 Q16 18, 12 18 Q7 18, 8 12 Q9 14, 9 11"/>
+        <line x1="7" y1="20" x2="17" y2="20" class="dashed"/>
+      </svg>
+      <h3 class="bright-name">Тёплый огонь</h3>
+      <p class="bright-brief">Несмотря на глубину — в тебе живой, иногда внезапно вспыхивающий огонь. Жизни в тебе много: на радость, на красоту, на разговор. И это твоя защита от тяжести.</p>
+    </button>
+
+    <button class="bright-card" data-target="trait:arc" type="button">
+            <p class="bright-source">сквозная ось</p>
+      <svg class="archetype-glyph bright-glyph" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 18 Q 12 2, 21 18"/>
+        <circle cx="3" cy="18" r="1.3" class="filled"/>
+        <circle cx="12" cy="7" r="1.3" class="filled"/>
+        <circle cx="21" cy="18" r="1.3" class="filled"/>
+      </svg>
+      <h3 class="bright-name">Идущая дугой</h3>
+      <p class="bright-brief">Твоя жизнь — не прямая, а длинная дуга в три фазы. Самое большое случится не в 25 и не в 35, а в твоей настоящей зрелости. Это твой ритм, не опоздание.</p>
+    </button>
+  </div>
+</div>
+
+<p class="interference-transition">Выше — где ты звучишь чисто и в полную силу. Ниже — где сигнал искажается. Не тихо, не слабо — громко и ощутимо. Это тоже ты. И это тоже важно знать.</p>
+
+<div class="path-section interferences-section">
+  <h2 class="map-title">Создаёт помехи</h2>
+  <p class="map-sub">Где твоя карта искажает сигнал — громко, ощутимо, и важно знать. Эти шесть помех собраны по тому же принципу, что и «Ярко звучит», но по теневой оси: это не приговор, а места, которые стоит узнавать в себе вовремя.</p>
+
+  <div class="interferences-grid">
+    <button class="interference-card" data-target="int-1" type="button">
+            <p class="interference-source">из карты · помеха · Ум · Близость</p>
+      <svg class="archetype-glyph interference-glyph-arch" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 6 L19 6 L19 14 L13 14 L9 18 L9 14 L5 14 Z"/>
+        <line x1="9" y1="10" x2="15" y2="10"/>
+        <circle cx="12" cy="10" r="0.6" class="filled"/>
+      </svg>
+      <h3 class="interference-name">Судья за столом</h3>
+      <p class="interference-brief">Замечания, которые звучат как забота, а прилетают как оценка. Перфекционизм, развёрнутый внутрь семьи.</p>
+    </button>
+
+    <button class="interference-card" data-target="int-2" type="button">
+            <p class="interference-source">из карты · помеха · Ум · Дело</p>
+      <svg class="archetype-glyph interference-glyph-arch" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M13 3 L7 12 L11 12 L10 21 L17 10 L13 10 Z"/>
+        <rect x="16" y="14" width="5" height="6" class="dashed"/>
+      </svg>
+      <h3 class="interference-name">Молния не в ту дверь</h3>
+      <p class="interference-brief">Говоришь то, что увидела, до того как собеседник готов услышать. В ответ — «ты слишком сложная». И ты замолкаешь.</p>
+    </button>
+
+    <button class="interference-card" data-target="int-3" type="button">
+            <p class="interference-source">из карты · помеха · Самость · Близость</p>
+      <svg class="archetype-glyph interference-glyph-arch" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="9" cy="12" r="5" class="dashed"/>
+        <circle cx="15" cy="12" r="5"/>
+      </svg>
+      <h3 class="interference-name">Растворилась в Другом</h3>
+      <p class="interference-brief">Теряешь себя в близких отношениях: его желаний становится «больше», и однажды — «я не понимаю, чего хочу без него».</p>
+    </button>
+
+    <button class="interference-card" data-target="int-4" type="button">
+            <p class="interference-source">из карты · помеха · Тело · Здоровье</p>
+      <svg class="archetype-glyph interference-glyph-arch" viewBox="0 0 24 24" aria-hidden="true">
+        <line x1="12" y1="4" x2="12" y2="14"/>
+        <path d="M12 14 Q7 16, 6 20"/>
+        <path d="M12 14 Q17 16, 18 20"/>
+        <line x1="6" y1="9" x2="18" y2="9"/>
+      </svg>
+      <h3 class="interference-name">Слишком тяжёлая для себя</h3>
+      <p class="interference-brief">Берёшь ответственность, которой никто не просил. Тело отвечает усталостью. А отдыхать кажется слабостью.</p>
+    </button>
+
+    <button class="interference-card" data-target="int-5" type="button">
+            <p class="interference-source">из карты · помеха · Дух · Близость</p>
+      <svg class="archetype-glyph interference-glyph-arch" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="7" r="2.4"/>
+        <line x1="6" y1="13" x2="18" y2="13"/>
+        <path d="M8 13 L8 19 M16 13 L16 19" class="dashed"/>
+      </svg>
+      <h3 class="interference-name">Учительница без приглашения</h3>
+      <p class="interference-brief">«Делишься опытом» с теми, кто не просил. Внутри — благое намерение, снаружи — давление, и от тебя отдаляются.</p>
+    </button>
+
+    <button class="interference-card" data-target="int-6" type="button">
+            <p class="interference-source">из карты · помеха · Самость · Здоровье</p>
+      <svg class="archetype-glyph interference-glyph-arch" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 12 L12 6 L19 12"/>
+        <circle cx="12" cy="15" r="2.6"/>
+        <line x1="4" y1="20" x2="20" y2="20" class="dashed"/>
+      </svg>
+      <h3 class="interference-name">Заперлась на крыше</h3>
+      <p class="interference-brief">Уход в изоляцию, который начинается как нужный отдых, а заканчивается как замыкание: «я никому не нужна» — но и сама никого не зовёшь.</p>
+    </button>
+  </div>
+</div>
+
+<div class="map-section">
+  <h2 class="map-title">Полная карта</h2>
+  <p class="map-sub">Пять слоёв тебя × три сферы жизни. Ткни клетку — увидишь её. Ткни заголовок строки или столбца — увидишь архетип всего слоя или сектора.</p>
+
+  <div class="map-grid">
+    <div></div>
+    <div class="map-h" data-h="col-b">Близость</div>
+    <div class="map-h" data-h="col-d">Дело</div>
+    <div class="map-h" data-h="col-z">Здоровье</div>
+
+    <div class="map-row-label" data-h="row-tel">Тело</div>
+    <div class="cell" data-c="t-b"></div>
+    <div class="cell" data-c="t-d"></div>
+    <div class="cell" data-c="t-z"></div>
+
+    <div class="map-row-label" data-h="row-emo">Эмоции</div>
+    <div class="cell featured" data-c="e-b"></div>
+    <div class="cell" data-c="e-d"></div>
+    <div class="cell" data-c="e-z"></div>
+
+    <div class="map-row-label" data-h="row-um">Ум</div>
+    <div class="cell" data-c="u-b"></div>
+    <div class="cell" data-c="u-d"></div>
+    <div class="cell" data-c="u-z"></div>
+
+    <div class="map-row-label" data-h="row-sam">Самость</div>
+    <div class="cell" data-c="s-b"></div>
+    <div class="cell" data-c="s-d"></div>
+    <div class="cell" data-c="s-z"></div>
+
+    <div class="map-row-label" data-h="row-duh">Дух</div>
+    <div class="cell" data-c="d-b"></div>
+    <div class="cell featured" data-c="d-d"></div>
+    <div class="cell" data-c="d-z"></div>
+  </div>
+
+  <div class="info-block" id="info-block">
+    <p class="info-coord" id="ib-coord"></p>
+    <h3 class="info-title" id="ib-title"></h3>
+    <div class="info-resonance hidden" id="ib-resonance"></div>
+    <div class="info-light" id="ib-light-block">
+      <span class="info-side-label">Светлая сторона</span>
+      <p class="info-side" id="ib-light"></p>
+      <div class="practice-amplify hidden" id="ib-amplify-block">
+        <p class="practice-label">Практика усиления</p>
+        <p class="practice-text" id="ib-amplify"></p>
+      </div>
+      <button class="flip-btn-info" id="ib-flip">показать теневой аспект ↻</button>
+    </div>
+    <div class="info-shadow hidden" id="ib-shadow-block">
+      <span class="info-side-label">Теневой аспект</span>
+      <p class="info-side" id="ib-shadow"></p>
+      <div class="lesson hidden" id="ib-lesson-block">
+        <p class="lesson-label">Урок</p>
+        <p class="lesson-text" id="ib-lesson"></p>
+      </div>
+      <button class="flip-btn-info" id="ib-flip-back">↻ вернуться к светлой стороне</button>
+    </div>
+    <div class="info-recs hidden" id="ib-recs-block"></div>
+    <div class="info-links hidden" id="ib-links-block"></div>
+    <div class="info-actions">
+      <button class="btn" id="ib-close">закрыть</button>
+    </div>
+  </div>
+
+  <p class="map-legend">Глиф волны показывает, насколько громко звучит клетка через системы карты — <strong>ярко</strong>, <strong>ясно</strong> или просто <strong>звучит</strong>. «Волна, которая решает» и «Служение без потери себя» — самые сильные клетки твоей карты, они звучат ярко.</p>
+</div>
+
+<div class="cycles-strip">
+  <div class="cycles-strip-head">
+    <span class="cycles-strip-label">твои циклы</span>
+    <span class="cycles-strip-brief">волной и дугой, не равномерно</span>
+  </div>
+  <div class="cycles-strip-body">
+    <p><strong>Малый цикл — волна.</strong> <strong>Подъём</strong> — когда ты наполнена: прожитые чувства, контакт с телом, дело, которое греет, нужное одиночество. <strong>Спад</strong> — после долгого терпения ради других, после плотного общения без восстановления, после решений, принятых на пике эмоции. Это не поломка, это твой ритм: волне нужно выровняться, прежде чем прозвучит следующее точное «да». <strong>Как планировать</strong>: не ставь важные решения и интенсивное общение в одну неделю; «день колодца» в тишине — часть работы, не награда после неё.</p>
+    <p class="cycles-strip-aside"><strong>Большой цикл — дуга в три фазы.</strong> Твоя жизнь движется не прямой, а длинной дугой со своим, не общим, ритмом взросления: пробы и обжиги в молодости — уход в мастерство и тишину в середине (здесь ты сейчас) — выход к людям в зрелости. Самое большое случится не в 25 и не в 35, а в твоей настоящей зрелости. Это не опоздание, а устройство: ты дозреваешь, а не отстаёшь.</p>
+  </div>
+</div>
+
+<div class="path-section traits-section">
+  <h2 class="map-title">Сквозные оси</h2>
+  <p class="map-sub">Шесть характеристик, которые проходят сквозь все слои и сектора. Это не клетки карты — это то, как ты в целом устроена и звучишь. Последняя — про твой главный вектор роста.</p>
+
+  <div class="traits">
+
+    <!-- Отклик и волна -->
+    <div class="trait" data-trait="response">
+      <button class="trait-strip" data-trait="response" type="button">
+        <div class="trait-row">
+          <span class="trait-label"><svg class="archetype-glyph trait-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13 Q7 8, 11 13 T 19 13"/><path d="M5 17 Q9 13, 13 17 T 21 17" opacity="0.5"/></svg>отклик и волна</span>
+          <span class="trait-brief">энергия от отклика, решение — после волны</span>
+        </div>
+              </button>
+      <div class="trait-detail" id="d-trait-response">
+        <div class="card light">
+          <p class="side">Светлая сторона</p>
+          <p class="body">Твоя энергия неисчерпаема, когда ты движешься по отклику. Тело даёт «да» — и за этим «да» открывается выносливость и качество, которых не достать усилием воли. А решения зреют не в моменте, а во времени: чем важнее вопрос, тем больше волн ему нужно пройти. Это не нерешительность — это твой механизм точности.</p>
+          <div class="practice-amplify">
+            <p class="practice-label">Практика усиления</p>
+            <p class="practice-text">Каждое значимое «да» проверяй двумя вопросами: отзывается ли тело сейчас — и прошло ли это через ночь? Маленькое решение — день, среднее — неделя, большое — месяц.</p>
+          </div>
+          <button class="btn flip-btn-trait" data-trait="response">показать теневой аспект ↻</button>
+        </div>
+        <div class="card dark" style="display:none">
+          <p class="side">Теневой аспект</p>
+          <p class="body">Когда ты действуешь из «надо», а не из отклика — энергии нет, есть только волевое напряжение, которое тратит твоё здоровье. А под давлением — внешним или внутренним — ты можешь решить «до волны»: сказать «да» на верхнем пике или «нет» на нижнем. Цена таких решений — то, что потом приходится разгребать. Особенно острый паттерн в близости: импульс сказать всё сразу, обидеться, уйти, простить — за один вечер.</p>
+          <button class="btn flip-btn-trait" data-trait="response">↻ вернуться к светлой стороне</button>
+        </div>
+        <div class="lesson">
+          <p class="lesson-label">Урок</p>
+          <p class="lesson-text">Когда от тебя требуют ответа «прямо сейчас» по чему-то важному — научись говорить: «дай мне ночь». Без оправданий. То, что выдержало несколько волн, — твоё. То, что не выдержало, — не твоё, как бы убедительно ни звучало.</p>
+        </div>
+        <button class="btn collapse-trait" data-trait="response">← свернуть</button>
+      </div>
+    </div>
+
+    <!-- Преданность -->
+    <div class="trait" data-trait="devotion">
+      <button class="trait-strip" data-trait="devotion" type="button">
+        <div class="trait-row">
+          <span class="trait-label"><svg class="archetype-glyph trait-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12 Q 8 5, 12 12 T 20 12"/><circle cx="4" cy="12" r="1.4" class="filled"/><circle cx="20" cy="12" r="1.4" class="filled"/></svg>преданность</span>
+          <span class="trait-brief">доходишь до конца — паттерн всей жизни</span>
+        </div>
+              </button>
+      <div class="trait-detail" id="d-trait-devotion">
+        <div class="card light">
+          <p class="side">Светлая сторона</p>
+          <p class="body">Способность доходить до конца — то, что отличает тебя от большинства. Это твоя подпись на любом деле и любом человеке: где другие сходят с дистанции на середине, ты остаёшься. Ты оказываешься «в правильном месте в правильное время» не случайно — это побочный продукт того, что ты дошла туда, куда другие не дошли.</p>
+          <div class="practice-amplify">
+            <p class="practice-label">Практика усиления</p>
+            <p class="practice-text">Выбирай немногое — и вкладывайся полностью. Твоя сила не в количестве связей и дел, а в глубине доведения. Одно доведённое до конца стоит десяти начатых.</p>
+          </div>
+          <button class="btn flip-btn-trait" data-trait="devotion">показать теневой аспект ↻</button>
+        </div>
+        <div class="card dark" style="display:none">
+          <p class="side">Теневой аспект</p>
+          <p class="body">У преданности две противоположные ловушки. Первая — держать то, что давно надо было отпустить: годами не бросать связь, дело, обязательство только потому, что «я не из тех, кто бросает», не замечая, что внутреннее «да» давно ушло, а осталось упрямство. Вторая — обратная: когда становится по-настоящему тяжело, тебя зовёт дорога, и появляется соблазн уйти к новому, не доделав, прикрыв это словами «мне нужен простор» или «это уже не моё». Обе ловушки про одно — про то, что трудно остаться в живом до конца.</p>
+          <button class="btn flip-btn-trait" data-trait="devotion">↻ вернуться к светлой стороне</button>
+        </div>
+        <div class="lesson">
+          <p class="lesson-label">Урок</p>
+          <p class="lesson-text">Преданность — не «не сдамся любой ценой» и не «ушла, как только стало трудно», а «остаюсь, пока живо». Когда тянет уйти по дороге — спроси: я иду к настоящему новому или убегаю от тяжёлого? Когда держишь из принципа — спроси: внутреннее «да» ещё есть или осталось упрямство?</p>
+        </div>
+        <button class="btn collapse-trait" data-trait="devotion">← свернуть</button>
+      </div>
+    </div>
+
+    <!-- Глубина под лёгкостью -->
+    <div class="trait" data-trait="depthlight">
+      <button class="trait-strip" data-trait="depthlight" type="button">
+        <div class="trait-row">
+          <span class="trait-label"><svg class="archetype-glyph trait-glyph" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3"/><path d="M6 14 Q12 22, 18 14"/></svg>глубина под лёгкостью</span>
+          <span class="trait-brief">серьёзный человек и светлый ребёнок вместе</span>
+        </div>
+              </button>
+      <div class="trait-detail" id="d-trait-depthlight">
+        <div class="card light">
+          <p class="side">Светлая сторона</p>
+          <p class="body">В тебе одновременно живут серьёзный глубокий человек и живой светлый ребёнок. Когда они в контакте — это твоя особая нота, которую узнают: ты умеешь говорить о самом важном без тяжеловесности и быть лёгкой по-настоящему, не по-цыплячьи. Лёгкость — твоя защита от того, чтобы глубина превратилась в камень.</p>
+          <div class="practice-amplify">
+            <p class="practice-label">Практика усиления</p>
+            <p class="practice-text">Радость — не награда «когда заслужу», а топливо. Заводи в неделю время на чистое удовольствие — красоту, смех, эстетику, тело — наравне с делом, а не после него.</p>
+          </div>
+          <button class="btn flip-btn-trait" data-trait="depthlight">показать теневой аспект ↻</button>
+        </div>
+        <div class="card dark" style="display:none">
+          <p class="side">Теневой аспект</p>
+          <p class="body">Главное напряжение твоей жизни — между «надо делать важное и тяжёлое» и «хочу просто радоваться». Когда побеждает только одна сторона, ты ломаешься: слишком долго в глубине — каменеешь; слишком долго в лёгкости — становится пусто. И внутренний голос «отдыхать — это слабость или эгоизм» загоняет тебя в перекос в сторону тяжести.</p>
+          <button class="btn flip-btn-trait" data-trait="depthlight">↻ вернуться к светлой стороне</button>
+        </div>
+        <div class="lesson">
+          <p class="lesson-label">Урок</p>
+          <p class="lesson-text">Лёгкость — не легкомыслие, и глубина — не тяжесть. Они не отменяют друг друга; они две половины твоего устройства. Если внутри звучит «надо» — спроси, чьё это «надо» и что будет, если — нет.</p>
+        </div>
+        <button class="btn collapse-trait" data-trait="depthlight">← свернуть</button>
+      </div>
+    </div>
+
+    <!-- Молния и переводчик -->
+    <div class="trait" data-trait="lightning">
+      <button class="trait-strip" data-trait="lightning" type="button">
+        <div class="trait-row">
+          <span class="trait-label"><svg class="archetype-glyph trait-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3 L7 12 L11 12 L10 21 L17 10 L13 10 Z" class="filled" opacity="0.85"/></svg>молния и переводчик</span>
+          <span class="trait-brief">знаешь целиком и сразу — потом ищешь слова</span>
+        </div>
+              </button>
+      <div class="trait-detail" id="d-trait-lightning">
+        <div class="card light">
+          <p class="side">Светлая сторона</p>
+          <p class="body">Твоя мысль особого типа: знает целиком и сразу, не по шагам, а потом ищет слова. Ты часто знаешь что-то «просто так», без обоснования — и это знание оказывается точным. Если ты научилась переводить свои вспышки на понятный язык — тебя слышат как редкого ясного человека, который говорит то, что другие только смутно чувствовали.</p>
+          <div class="practice-amplify">
+            <p class="practice-label">Практика усиления</p>
+            <p class="practice-text">Записывай вспышки сразу, не дожидаясь «удобного момента». Невысказанное не пропадает — оно дозревает. А записанное ждёт правильного собеседника, не теряясь.</p>
+          </div>
+          <button class="btn flip-btn-trait" data-trait="lightning">показать теневой аспект ↻</button>
+        </div>
+        <div class="card dark" style="display:none">
+          <p class="side">Теневой аспект</p>
+          <p class="body">Если выдать вспышку раньше времени и не тому человеку — звучит «не туда». В ответ — «ты слишком сложная», «ты странная» или стеклянные глаза. И ты уходишь с ощущением, что тебя опять не поняли. Со временем начинаешь либо молчать совсем, либо говорить с напором — «ну вы же не понимаете», — и от этого ещё больше одиночества.</p>
+          <button class="btn flip-btn-trait" data-trait="lightning">↻ вернуться к светлой стороне</button>
+        </div>
+        <div class="lesson">
+          <p class="lesson-label">Урок</p>
+          <p class="lesson-text">Различай «во мне родилась мысль» и «эту мысль надо сейчас сказать». Знание — половина дела; вторая половина — найти слова, момент и адресата. Тебе нужно время на перевод, и это не слабость.</p>
+        </div>
+        <button class="btn collapse-trait" data-trait="lightning">← свернуть</button>
+      </div>
+    </div>
+
+    <!-- Между крышей и людьми -->
+    <div class="trait" data-trait="hermit">
+      <button class="trait-strip" data-trait="hermit" type="button">
+        <div class="trait-row">
+          <span class="trait-label"><svg class="archetype-glyph trait-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13 L12 6 L20 13"/><line x1="12" y1="6" x2="12" y2="3"/><circle cx="12" cy="17" r="2"/></svg>между крышей и людьми</span>
+          <span class="trait-brief">уход в себя — выход к людям — снова уход</span>
+        </div>
+              </button>
+      <div class="trait-detail" id="d-trait-hermit">
+        <div class="card light">
+          <p class="side">Светлая сторона</p>
+          <p class="body">Твоя жизнь устроена ритмом: уход в себя — выход к людям — снова уход — снова выход. Тебе по-настоящему нужно много одиночества, чтобы то, что зреет, дозрело, — и так же нужен выход к людям, чтобы это отдать. Это не сбой и не «нелюдимость» — это твой способ быть, и в нём рождается твоё мастерство.</p>
+          <div class="practice-amplify">
+            <p class="practice-label">Практика усиления</p>
+            <p class="practice-text">Планируй одиночество, а не сваливайся в него. Заведи в неделю «день колодца», когда никого нет, — и держи 2–3 человек, к которым возвращаешься даже на спаде.</p>
+          </div>
+          <button class="btn flip-btn-trait" data-trait="hermit">показать теневой аспект ↻</button>
+        </div>
+        <div class="card dark" style="display:none">
+          <p class="side">Теневой аспект</p>
+          <p class="body">Зависнуть в одной точке. Либо всё время с людьми — и выгореть, отдавая тепло без восстановления. Либо всё время одна — и закаменеть: уход, который начинался как нужный отдых, превращается в глухую капсулу. «Я никому не нужна» — но и сама никого не зовёшь. Граница между здоровой паузой и замыканием тонкая, и её легко пропустить.</p>
+          <button class="btn flip-btn-trait" data-trait="hermit">↻ вернуться к светлой стороне</button>
+        </div>
+        <div class="lesson">
+          <p class="lesson-label">Урок</p>
+          <p class="lesson-text">Уважай обе части. После плотного контакта — обязательная пауза. После долгой паузы — обязательный выход. Различай: «я устала от людей» и «я начала прятаться от себя».</p>
+        </div>
+        <button class="btn collapse-trait" data-trait="hermit">← свернуть</button>
+      </div>
+    </div>
+
+
+    <!-- Свой голос (узловая ось) -->
+    <div class="trait" data-trait="voice">
+      <button class="trait-strip" data-trait="voice" type="button">
+        <div class="trait-row">
+          <span class="trait-label"><svg class="archetype-glyph trait-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 16 Q7 6, 12 6 Q17 6, 17 16"/><circle cx="7" cy="17" r="1.5" class="filled"/><circle cx="17" cy="17" r="1.5" class="filled"/></svg>свой голос</span>
+          <span class="trait-brief">твой главный рост: от чужой мудрости — к своему слову</span>
+        </div>
+              </button>
+      <div class="trait-detail" id="d-trait-voice">
+        <div class="card light">
+          <p class="side">Светлая сторона</p>
+          <p class="body">У тебя есть настоящая глубина и чутьё на смысл: ты умеешь держать большую картину, чувствовать философию жизни, тонко настраиваться на другого человека. Это заработанный дар, не выдумка, — и он останется с тобой. Но самый большой твой рост в этой жизни — принести всё это домой, в свой собственный голос: говорить не пересказом чужих учений и не из тени мудрого партнёра, а от первого лица, то, что увидела и поняла именно ты. И заходить в это по-лёгкому, с любопытством: с вопроса, с «а мне кажется так», не дожидаясь, пока созреет готовая большая истина.</p>
+          <div class="practice-amplify">
+            <p class="practice-label">Практика усиления</p>
+            <p class="practice-text">Замени в речи «есть мнение», «как принято», «по такому-то» на простое «я думаю» хотя бы раз в день. И спрашивай чаще, чем поучаешь: твой голос крепнет в живом обмене, а не в проповеди.</p>
+          </div>
+          <button class="btn flip-btn-trait" data-trait="voice">показать теневой аспект ↻</button>
+        </div>
+        <div class="card dark" style="display:none">
+          <p class="side">Теневой аспект</p>
+          <p class="body">Старая, обжитая колея — спрятаться за чужой мудростью. Передавать учения, опираться на авторитеты, раствориться в партнёре-носителе большой картины мира. Отсюда тянет в одну из двух сторон: либо в роль вечной ученицы и помощницы при чужом смысле, либо вырваться к новому, к простору — не сказав при этом своего. Признак: ты много знаешь и тонко чувствуешь, но собственное «я думаю» почти не звучит вслух — его всё время заслоняет чьё-то «как правильно».</p>
+          <button class="btn flip-btn-trait" data-trait="voice">↻ вернуться к светлой стороне</button>
+        </div>
+        <div class="lesson">
+          <p class="lesson-label">Урок</p>
+          <p class="lesson-text">Свой голос рождается не из готовой мудрости, а из любопытства и из того, что ты осмелилась сказать маленькое своё. Раз в день — одно «мне кажется», короткое, от первого лица, без ссылки на учителя или книгу. Не «как правильно по такому-то», а «вот что вижу я».</p>
+        </div>
+        <button class="btn collapse-trait" data-trait="voice">← свернуть</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="path-section">
+  <h2 class="map-title">Путь</h2>
+  <p class="map-sub">Сквозной вектор: куда ты движешься как человек. Карта — портрет, Путь — направление.</p>
+
+  <div class="path-strip" id="path-strip">
+    <button class="path-seg past" data-stage="past" type="button">Пробы и обжиги</button>
+    <span class="path-chev">›</span>
+    <button class="path-seg current" data-stage="current" type="button">Уход в мастерство</button>
+    <span class="path-chev">›</span>
+    <button class="path-seg future" data-stage="future" type="button">Спуск к людям</button>
+  </div>
+
+  <div class="path-detail" id="path-detail">
+    <p class="path-stage-coord" id="path-coord"></p>
+    <h3 class="path-stage-title" id="path-title"></h3>
+    <div class="card light" id="path-light-card">
+      <p class="side">Светлая сторона</p>
+      <p class="body" id="path-light"></p>
+      <div class="practice-amplify hidden" id="path-amplify-block">
+        <p class="practice-label">Практика усиления</p>
+        <p class="practice-text" id="path-amplify"></p>
+      </div>
+      <button class="btn flip-btn-path">показать теневой аспект ↻</button>
+    </div>
+    <div class="card dark" id="path-dark-card" style="display:none">
+      <p class="side">Теневой аспект</p>
+      <p class="body" id="path-shadow"></p>
+      <button class="btn flip-btn-path">↻ вернуться к светлой стороне</button>
+    </div>
+    <div class="lesson">
+      <p class="lesson-label" id="path-lesson-label"></p>
+      <p class="lesson-text" id="path-lesson-text"></p>
+    </div>
+    <button class="btn" id="path-collapse">← свернуть</button>
+  </div>
+</div>
+
+<!-- ========= ГЛАВНОЕ (ФИНАЛ) ========= -->
+<div class="path-section">
+  <h2 class="map-title">Главное</h2>
+  <p class="map-sub">Если из всей карты нужно унести что-то одно — это здесь.</p>
+
+  <div class="finale-block">
+
+    <div class="finale-essence">
+      <p>Ты человек глубины, для которого близость, чувство и смысл — не украшение жизни, а сама её ткань. То, что для других «нормальные отношения», у тебя глубокая встреча. То, что для других работа, у тебя служение. Это не слишком и не дефект — это твоя архитектура, и в ней нужно жить, а не пытаться её упростить или ускорить.</p>
+      <p>В тебе одновременно живут глубокая вода и тёплый огонь: серьёзный человек, который ходит туда, куда другие не ходят, и живой ребёнок, которому много радости. И ещё одна пара тянет тебя в разные стороны: тёплая земля — дом, ремесло, забота — и зов дороги, простора, нового. Когда полюса в контакте, ты в своей силе: глубокая без тяжести, надёжная без клетки. Когда расходятся — ты либо каменеешь и выгораешь, отдавая всё другим, либо срываешься по дороге, не доделав. Вся карта про то, как держать их вместе — и про то, чтобы в этом звучал твой собственный голос, а не чужой.</p>
+    </div>
+
+    <div class="finale-watch">
+      <p class="watch-label">Три точки, которые держать в голове всегда</p>
+      <ol class="watch-list">
+        <li><strong>Никаких важных решений на волне.</strong> Твоя ясность приходит не «прямо сейчас», а когда волна выровнялась. «Дай мне ночь» — твой главный рабочий инструмент, не нерешительность. То, что выдержало несколько волн, — твоё; то, что не выдержало, — не твоё, как бы убедительно оно ни звучало на пике.</li>
+        <li><strong>Колодец — не для всех, и огонь — не только для других.</strong> Твоя глубина и тепло — настоящая ценность, и они вычерпываются, если открывать их каждому, кто подошёл. Различай, кому подать хлеб у печи, кому открыть колодец, а кого просто отпустить дальше. И оставляй огонь для себя: радость — не награда «когда заслужу», а топливо.</li>
+        <li><strong>Твой рост — найти и подать свой голос.</strong> Самое большое в твоей жизни случится в зрелости, не в молодости: ты дозреваешь, а не опаздываешь. И дозревает в тебе именно это — не остаться вечной помощницей при чужой мудрости, а сказать своё, под своим именем. Уход в себя нужен, чтобы то, что зреет, дозрело, — но держи дверь наружу и выходи на порог со своим словом. Между здоровой паузой и глухой капсулой тонкая граница; расти через людей, всегда возвращаясь к себе.</li>
+      </ol>
+    </div>
+
+    <div class="finale-note">
+      <p>Эта карта — не приговор и не предсказание. Это описание того, как ты уже устроена. То, что в ней узнаётся, узнаётся потому, что это и есть ты. То, что выглядит новым, — место, к которому ты ещё подходишь по своей дуге. Задача не «исправить» какое-то качество, а перестать тратить силы на сопротивление собственному устройству. Ты уже работающий человек — карта лишь показывает, на каких частотах ты звучишь чище всего.</p>
+      <p class="finale-signature">Solir · Карта Оксаны</p>
+    </div>
+
+    <div class="anchor-echo">
+      <svg class="anchor-echo-glyph" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 11 L12 5 L19 11 L19 20 L5 20 Z"/>
+        <path class="ray" d="M10.5 17 Q9.6 15, 11 13.6 Q10.6 15, 12 14.4 Q13.4 15.6, 12.6 17"/>
+        <line x1="9" y1="20" x2="9" y2="17"/>
+        <line x1="15" y1="20" x2="15" y2="17"/>
+        <path class="ray" d="M9 18.4 Q12 19.6, 15 18.4"/>
+        <path class="ray" d="M2 22 Q 12 19.5, 22 22"/>
+      </svg>
+      <p class="anchor-echo-mantra">Гореть. <em>Дожидаться.</em> Говорить своё.</p>
+      <p class="anchor-echo-coda">Три глагола, которые держат всю карту. Если запомнишь только три слова — пусть будут эти.</p>
+    </div>
+
+  </div>
+</div>
+
+</div>
+
+<!-- ========= МОДАЛЬНОЕ ОКНО ========= -->
+<div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-content" id="modal-content">
+    <button class="modal-close" id="modal-close" aria-label="Закрыть">×</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const cells = {
+  't-b': {coord:'Тело · Близость', cellName:'Кожа, которая помнит', title:'Кожа, которая помнит', systems:['Дизайн Человека','Астрология'], light:'Ты воспринимаешь близкого телом раньше, чем умом: запах, тембр, прикосновение, дыхание — для тебя каналы знания. Физическая близость для тебя не довесок к отношениям, а отдельный глубокий язык: через тело ты впускаешь по-настоящему и через него же понимаешь, своё ли рядом. Твоя нежность настоящая, не показная; ты умеешь согревать руками.', shadow:'Тело первой реагирует на конфликт и непонимание в паре — спазмами, бессонницей, потерей аппетита, сжатием под рёбрами. И поскольку близость идёт через тело, телесный холод или отстранённость партнёра ты чувствуешь как удар раньше, чем находишь этому слова. Если в близких отношениях фон тревожный, тело начинает сдавать раньше, чем ты это признаёшь.'},
+  't-d': {coord:'Тело · Дело', cellName:'Долгая выносливость', title:'Долгая выносливость', systems:['Дизайн Человека','Астрология'], light:'Когда ты говоришь делу настоящее «да» — телом, а не головой, — оно несёт тебя до конца. У тебя редкая способность выдерживать длинные, плотные, требовательные циклы: на отклике тело само находит силы идти дольше и тоньше, чем коллеги, не выгорая в процессе. Это «да» телом — и есть твой главный двигатель.', shadow:'Та же сила оборачивается тем, что ты говоришь «да» и тому, что телом на самом деле не отозвалось, — из чувства долга, из «надо», из «кто, если не я». Тогда тело тянет на обещании, а не на отклике, и выматывается. Ты замечаешь, что переработала, только когда оно уже просело — голос, спина, голова, цикл.'},
+  't-z': {coord:'Тело · Здоровье', cellName:'Глубокий ритм', title:'Глубокий ритм', systems:['Дизайн Человека','Астрология'], light:'Твоему телу нужна не диета, а ритуал. Простые регулярные вещи — сон, движение, вода, прикосновения, долгое время рядом с живым (вода, деревья, животные) — возвращают тебя в строй надёжнее любого лечения.', shadow:'Склонность к глубоким, долгоиграющим темам тела: то, что копится годами, проявляется сразу. Дисциплина может оборачиваться сверхконтролем над телом — а телу нужно медленное и тёплое, не жёсткое.'},
+  'e-b': {coord:'Эмоции · Близость', cellName:'Волна, которая решает', title:'Волна, которая решает', systems:['Дизайн Человека','Астрология','Нумерология'], light:'Эмоциональная глубина — твой главный инструмент в близости. Ты чувствуешь подводные течения отношений; знаешь, когда у близкого внутри что-то сдвинулось, ещё до того, как он сам это понял. Это и есть твой глубокий колодец: к нему приходят за тем, чтобы их по-настоящему увидели.', shadow:'Твоя собственная волна — резкая. За один вечер можешь пройти от «всё хорошо» до «всё кончено» и обратно. Решения, принятые на верхней или нижней точке волны, потом приходится разгребать. Острый паттерн: импульс — сказать всё сразу, обидеться, уйти, простить.', lesson:'Никаких решений о близости — на волне. Правило ночи, а лучше — нескольких. Ясность приходит не «прямо сейчас», а когда волна выровнялась. То, что выдержало несколько волн, — твоё.'},
+  'e-d': {coord:'Эмоции · Дело', cellName:'Внутренний градусник', title:'Внутренний градусник', systems:['Дизайн Человека'], light:'Ты понимаешь, в правильное ли дело вошла, через эмоциональный фон: если внутренняя наполненность растёт — это твоё. Если падает, несмотря на «должно быть моё», — нет. Это очень точный прибор.', shadow:'Ты склонна не доверять собственному «нет», если на стороне «да» есть аргументы — деньги, статус, забота о других, «я ведь могу». Берёшь проекты на подъёме, а потом тащишь их через истощение.'},
+  'e-z': {coord:'Эмоции · Здоровье', cellName:'Подавленное возвращается', title:'Подавленное возвращается', systems:['Дизайн Человека','Астрология'], light:'Когда ты честно проживаешь свои чувства — особенно злость, тоску, разочарование — здоровье возвращается само. Эмоции для тебя — гигиена, как сон.', shadow:'Если ты «терпишь ради других» — особенно в близком кругу — невыраженное идёт в тело: горло, грудь, желудок, цикл. Долгая благоразумная сдержанность для тебя — медленная травма.'},
+  'u-b': {coord:'Ум · Близость', cellName:'Мысль рождается в диалоге', title:'Мысль рождается в диалоге', systems:['Дизайн Человека','Астрология'], light:'Ты по-настоящему думаешь, когда есть живой собеседник. В разговоре с правильным человеком в тебе включается то, чего не достать в одиночестве: внезапные точные формулировки, неожиданные связи, прозрения. Собеседник для тебя — не роскошь, а инструмент мышления.', shadow:'Когда вокруг люди, которые не выдерживают твоего темпа или глубины, ум сворачивается. Ты либо умолкаешь, либо высказываешь увиденное мимо адресата — и слышишь «ты слишком сложная». В семье из-за этого можешь надолго замолчать.'},
+  'u-d': {coord:'Ум · Дело', cellName:'Видеть пробел', title:'Видеть пробел и собрать систему', systems:['Дизайн Человека','Астрология','Нумерология'], light:'Твой ум лучше всего работает там, где нужно собрать целое из разрозненного, найти изъян в системе, перевести сложное на язык обычного человека. Из тебя выходит превосходный аналитик, методолог, наставник, автор обучающих программ.', shadow:'Можешь застрять в бесконечной доработке — «ещё не готово, ещё не идеально» — и не выпускать сделанное. Внутри: «если выпущу несовершенным — осудят». Это бьёт по твоему самовыражению: творческое не доходит до людей.'},
+  'u-z': {coord:'Ум · Здоровье', cellName:'Голова не выключается', title:'Голова, которая не выключается', systems:['Дизайн Человека','Астрология'], light:'Способность к глубокой ментальной работе — твой актив. Когда голова получает правильную пищу — книги, разговоры, обучение, осмысленные тексты — ты наполняешься.', shadow:'Бесконечный внутренний анализ. Ночные прокрутки. Тревога, маскирующаяся под «думаю над задачей». Голова забирает энергию у тела; засыпать тяжело, просыпаться — тоже.'},
+  's-b': {coord:'Самость · Близость', cellName:'Я внутри и я в Другом', title:'Я внутри и я в Другом', systems:['Дизайн Человека','Астрология'], light:'Близкие отношения — поле, в котором ты узнаёшь себя. Ты вырастаешь в зеркале хорошего партнёра, друга, ученика. Твой путь — путь через людей, и ты в этом не одна — это твоя природа.', shadow:'Старый паттерн — отдать в близости столько себя, что от себя остаётся очертание. Особенно опасно, если рядом человек с готовой «большой картиной мира»: в его смыслах ты исчезаешь легче всего.', lesson:'Через других — да, но всегда возвращаясь к себе. Маленький ежедневный вопрос: «Где сегодня была я сама — отдельно от него, от детей, от работы?»'},
+  's-d': {coord:'Самость · Дело', cellName:'Своё в деле', title:'Своё в деле, а не пересказ', systems:['Дизайн Человека','Астрология','Нумерология'], light:'Дело становится по-настоящему твоим, когда в нём звучит твоя рука и твой взгляд — не пересказ чужого метода, а то, что ты сама увидела и переложила по-своему. В любом ремесле тебя тянет от безымянного исполнения к авторству. И заходить в это можно по-лёгкому: не «сначала стану большим мастером, потом скажу», а с простого, с любопытства, с «а мне кажется, можно вот так».', shadow:'Тебе проще делать по чужой форме — по методичке, по тому, «как принято», по авторитету — и считать своим то, что просто привычно. Внутри тлеет «всё не моё» и «а что я-то могу добавить», и поставить своё имя под сделанным страшнее, чем кажется со стороны.', lesson:'Раз в неделю делай или говори одну вещь по-своему — без ссылки на учителя, книгу или «как правильно». Начни с маленького и при безопасных людях. Авторство крепнет от того, что им пользуются, а не от того, что ждут, пока оно станет идеальным.'},
+  's-z': {coord:'Самость · Здоровье', cellName:'Я в своём теле', title:'Я в своём теле', systems:['Астрология'], light:'Когда ты чувствуешь контакт со своим телом — нравится ли тебе, как ты ходишь, ешь, смеёшься — твоя опора стоит ровно. В тебе есть та зрелая красота, которая не зависит от возраста.', shadow:'Тенденция мерить себя через критику тела — слишком уставшая, слишком стареющая, не такая. Это импорт чужого взгляда, не твоего собственного.'},
+  'd-b': {coord:'Дух · Близость', cellName:'Любовь как путь', title:'Любовь как путь', systems:['Астрология','Нумерология'], light:'Для тебя любовь — не украшение жизни, а сама ткань пути. Через близких ты встречаешь то, что у других называется «большими вопросами»: что такое преданность, граница, прощение. Твои отношения — твоя главная внутренняя работа.', shadow:'Идеализация любви и партнёра — «он и есть путь». А когда живой человек оказывается живым, не идеальным, — кризис: «я ошиблась во всём».'},
+  'd-d': {coord:'Дух · Дело', cellName:'Служение без потери себя', title:'Служение, в котором не теряют себя', systems:['Дизайн Человека','Астрология','Нумерология'], light:'Твоя работа — независимо от профессии — имеет привкус служения. Тебя тянет делать то, что помогает другим расти, понимать, восстанавливаться. И у тебя это получается так, как мало у кого: без позы и без слащавости. Доходить до конца там, где другие сходят с дистанции, — твоя подпись.', shadow:'Соблазн перепутать служение с самопожертвованием. Брать тех, кого не надо было брать. Работать с теми, кто берёт даром твою глубину. Тогда колодец вычерпывается, а печь гаснет.', lesson:'Служение — это направление вектора, а не отказ от платы и границ. Высокая цена за твою работу — часть честности, не жадности.'},
+  'd-z': {coord:'Дух · Здоровье', cellName:'Глубина без надрыва', title:'Глубина без надрыва', systems:['Астрология'], light:'Ты умеешь ходить туда, куда большинство не ходит, — в собственную темноту, в темы утраты, цикла, перемен. Это даёт тебе зрелую тишину, которой нельзя научиться по книжке.', shadow:'Можешь затянуться в глубину так, что перестать дышать наверху. Слишком долго в трауре, в работе с травмой, в самоанализе — и свет жизни выключается. Глубина — это вдох, а не место жительства.'}
+};
+
+const lines = {
+  'row-tel': {coord:'Слой', title:'Стойкое тело с тонким датчиком', subtitle:'тело', light:'Тело включается в ответ на отклик, не само по себе. На том, что зажигает, оно становится надёжной рабочей силой — может тянуть долго и тонко. Одновременно это очень чувствительный прибор: оно знает про близких и про дело раньше, чем ты осознаёшь.', shadow:'Та же выносливость позволяет работать после того, как пора было остановиться. И тот же датчик легко перегружается: то, что копится, тело предъявляет сразу, а не по частям.'},
+  'row-emo': {coord:'Слой', title:'Глубокая волна с резкими пиками', subtitle:'эмоции', light:'Чувства приходят волной и решают не сразу. Это не каприз, а механизм точности: чем важнее вопрос, тем больше волн ему нужно. Когда волна выровнялась — ясность приходит сама, и решение бьёт точно.', shadow:'Волна резкая: за вечер можно пройти от «всё хорошо» до «всё кончено» и обратно. Решения, принятые на верхней или нижней точке, потом приходится разгребать.'},
+  'row-um': {coord:'Слой', title:'Молниеносный знаток-переводчик', subtitle:'ум', light:'Знание приходит к тебе вспышкой, целиком, не по шагам — а потом ты ищешь, как перевести его на понятный людям язык. Ты часто знаешь что-то «просто так», и это знание оказывается точным. Думаешь не быстрее других — иначе.', shadow:'Если выдать вспышку раньше времени и не тому человеку — звучит «не туда», и ты слышишь «слишком сложная». Тогда ум сворачивается, и ты замолкаешь, забирая знание внутрь.'},
+  'row-sam': {coord:'Слой', title:'Идущая дугой', subtitle:'самость', light:'Твоя самость растёт через людей и одновременно требует одиночества, чтобы дозреть. Это ритм: уход в себя — выход к людям — снова уход. Не сбой, а твой способ быть. Твоё лицо проявляется не в подражании, а в авторстве.', shadow:'Риск раствориться в близком — особенно в том, у кого готовая большая картина мира. И риск зависнуть в одной точке: либо всё время с людьми и выгореть, либо всё время одна и закаменеть.'},
+  'row-duh': {coord:'Слой', title:'Преданность через глубину', subtitle:'дух', light:'Тебе мало просто жить и работать — нужно, чтобы это что-то значило. Твой смысл приходит через близких и через служение: помогать другим расти, понимать, восстанавливаться. И ты доходишь до конца там, где другие сходят на середине.', shadow:'Смысл может стать тяжестью: служение перепутывается с самопожертвованием, любовь — с идеализацией. Тогда ты несёшь больше, чем просили, и теряешь себя в чужой большой картине.'},
+  'col-b': {coord:'Сфера', title:'Колодец, к которому приходят', subtitle:'близость', light:'Самая глубокая твоя зона. Тело знает близкого кожей, эмоции читают его течения, ум оживает в диалоге, самость растёт в зеркале Другого, дух видит в любви свой путь. К твоему колодцу приходят за тем, чтобы быть по-настоящему увиденными.', shadow:'Каждый слой даёт свою цену: резкая волна, критика близких, растворение в Другом, идеализация. Близость — место и твоей силы, и твоих главных уроков.'},
+  'col-d': {coord:'Сфера', title:'Мастерская с лупой и долгим дыханием', subtitle:'дело', light:'Дело становится твоим, когда в нём твой голос, твоя глубина, твоё служение. Ты видишь, что не работает, собираешь целое из разрозненного, доходишь до конца и наполняешься, когда работа греет.', shadow:'Бесконечная доработка, которая не выпускает сделанное. Проекты, взятые на подъёме и дотащенные через истощение. «Всё не моё», когда долго пристраиваешься к чужим формам.'},
+  'col-z': {coord:'Сфера', title:'Глубокий ритм, который нельзя торопить', subtitle:'здоровье', light:'Твоё здоровье отвечает не на резкие интервенции, а на ритуал и медленные программы. Когда ты честно проживаешь чувства и держишь контакт с телом, оно возвращается само.', shadow:'Долгоиграющие темы, которые копятся годами. Сверхконтроль вместо тепла. Невыраженное, ушедшее в тело. И склонность затянуться в глубину так, что забываешь дышать наверху.'}
+};
+
+document.querySelectorAll('.flip-btn').forEach(b => {
+  b.onclick = () => {
+    const d = document.getElementById('d-' + b.dataset.arch);
+    if (!d) return;
+    const l = d.querySelector('.card.light');
+    const dk = d.querySelector('.card.dark');
+    if (l.style.display === 'none') { l.style.display = 'block'; dk.style.display = 'none'; }
+    else { l.style.display = 'none'; dk.style.display = 'block'; }
+  };
+});
+
+const infoBlock = document.getElementById('info-block');
+const ibCoord = document.getElementById('ib-coord');
+const ibTitle = document.getElementById('ib-title');
+const ibLight = document.getElementById('ib-light');
+const ibShadow = document.getElementById('ib-shadow');
+const ibLightBlock = document.getElementById('ib-light-block');
+const ibShadowBlock = document.getElementById('ib-shadow-block');
+const ibResonance = document.getElementById('ib-resonance');
+const ibLessonBlock = document.getElementById('ib-lesson-block');
+const ibLinksBlock = document.getElementById('ib-links-block');
+const ibAmplifyBlock = document.getElementById('ib-amplify-block');
+const ibAmplify = document.getElementById('ib-amplify');
+
+// — Практики усиления (светлая сторона). Черновики на основе светлой стороны каждой ячейки. —
+const cellAmplify = {
+  't-b': 'Перед близостью дай себе минуту телесной сверки: как дышится рядом с этим человеком? Твоё тело знает про отношения раньше ума — приучайся спрашивать его первым.',
+  't-d': 'Поставь себе «индикатор половины бака»: останавливайся, когда ещё хочется чуть-чуть продолжить. Это твой темп, не лень. Длинная дуга держится на паузах, не на рывках.',
+  't-z': 'Выбери 2–3 простых ритуала (сон, вода, движение, время у живого) и держи их как несущую конструкцию недели. Твоё тело отвечает на ритм, а не на разовые усилия.',
+  'e-b': 'Раз в неделю говори близкому вслух то, что ты в нём видишь и обычно держишь внутри. Твой дар — давать другому чувство, что его по-настоящему видят; он крепнет, когда ты его проявляешь.',
+  'e-d': 'Перед тем как взяться за новое, сверься: греет или просто «надо»? Дай эмоциональной волне право голоса в делах. Один сердечный проект даёт больше сил, чем три «полезных».',
+  'e-z': 'Когда тело подаёт сигнал — зажим, ком, усталость — спроси: «какое чувство я не назвала словами?» и назови его вслух. Так канал «тело ↔ чувства» работает напрямую, без симптома-посредника.',
+  'u-b': 'Найди и оберегай 2–3 человек, которые умеют с тобой думать. С ними твой ум раскрывается. Не пытайся упростить себя для тех, кто не на твоей частоте.',
+  'u-d': 'Выпускай в 80%. Совершенство достраивается на людях, а не в одиночестве. Раз в неделю отдавай что-то «достаточно хорошим» — твоё мастерство от этого не пострадает.',
+  'u-z': 'Тело — главный выключатель ума. Когда голова не выключается, не ищи «технику расслабления» — иди в тело: ходьба, нагрузка, руки в воде или в земле. Это гасит перегрев лучше.',
+  's-b': 'Маленький ежедневный вопрос: «Где сегодня была я сама — отдельно от него, от детей, от работы?» Через других — да, но всегда возвращаясь к себе.',
+  's-d': 'Держи хотя бы одну вещь, которая полностью твоя — под твоим именем и твоей рукой. Авторство — это не масштаб, а подпись. Страшно — поставить её под маленьким.',
+  's-z': 'Раз в неделю — встреча с телом без оценки: зеркало не для критики, а для встречи. Удовольствие телом не пошлость, а лекарство. Верни тело себе.',
+  'd-b': 'Когда видишь в близком его масштаб — скажи об этом как о нём, а не как о своём ожидании: «я вижу в тебе вот это» вместо «ты должен стать». Люби живого, а не образ.',
+  'd-d': 'Раз в неделю проговаривай, ради чего твоё дело и кому ты в нём служишь. И ставь честную цену за свою глубину: высокая цена — часть честности, не жадности.',
+  'd-z': 'После каждого погружения в глубину — обязательное возвращение наверх: к смеху, телу, еде, людям. Глубина — это вдох, а не место жительства. Выдыхай в свет.'
+};
+
+// — Усиление для осей, открываемых в модалке (архитектор/камертон — в «Ярко звучит») —
+const traitAmplify = {
+  lightning: 'Записывай вспышки сразу, не дожидаясь «удобного момента». Невысказанное не пропадает — оно дозревает. А записанное ждёт правильного собеседника, не теряясь.',
+  refiner: 'Перед замечанием близкому проверь: «меня об этом спросили?» Если нет — пауза. Направляй дар видеть «как лучше» на дело и форму, где он создаёт ценность, а не на людей рядом.',
+  warmfire: 'Радость — топливо, не награда. Оставляй огонь и для себя: заводи в неделю время на чистое удовольствие — красоту, смех, тело — наравне с делом, а не после него.',
+  arc: 'Раз в год оглядывайся на пройденную дугу и называй накопленное как актив, а не «потерянные годы». Ты дозреваешь, а не опаздываешь; уважение к своему ритму и есть твоя сила.'
+};
+function amplifyRef(ref){
+  const [t, k] = (ref || '').split(':');
+  if (t === 'cell') return cellAmplify[k] || '';
+  if (t === 'trait') return traitAmplify[k] || '';
+  return '';
+}
+
+// — Усиление этапов Пути (светлая сторона) —
+const stageAmplify = {
+  past: 'Раз в год оглядывайся на пройденную дугу и называй обжиги вслух как актив, а не «потерянные годы». То, через что ты прошла, — и есть твоя глубина; обесценивать его значит обесценивать себя сегодняшнюю.',
+  current: 'Раз в полгода проверяй: в уходе в мастерство ещё есть дверь наружу? Собирай себя в тишине — и держи 2–3 человек, к которым возвращаешься. Здоровое одиночество дозревает, нездоровое замыкается.',
+  future: 'Уже сейчас, не дожидаясь этапа, выноси своё к людям маленькими порциями — текст, разговор, дело. Так выход тренируется заранее, и спуск с крыши придёт мягко, а не из глухой капсулы сразу.'
+};
+const ibLesson = document.getElementById('ib-lesson');
+const ibRecsBlock = document.getElementById('ib-recs-block');
+const ibFlip = document.getElementById('ib-flip');
+const ibFlipBack = document.getElementById('ib-flip-back');
+
+const RES_LABELS = { 1: 'звучит', 2: 'ясно звучит', 3: 'ярко звучит' };
+
+function resonanceGlyph(level) {
+  return `<svg class="resonance r-${level}" viewBox="0 0 24 22" aria-hidden="true">
+    <line x1="12" y1="16" x2="12" y2="21"/>
+    <line x1="9" y1="16" x2="15" y2="16"/>
+    <line x1="9" y1="11" x2="9" y2="16"/>
+    <line x1="15" y1="11" x2="15" y2="16"/>
+    <path class="wave wave-1" d="M6 9 Q 12 6, 18 9"/>
+    <path class="wave wave-2" d="M4 6 Q 12 2, 20 6"/>
+    <path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"/>
+  </svg>`;
+}
+
+function showInfo(data, key) {
+  document.querySelectorAll('.cell.selected, .map-h.selected, .map-row-label.selected').forEach(x => x.classList.remove('selected'));
+  ibCoord.textContent = data.coord + (data.subtitle ? ' · ' + data.subtitle : '');
+  ibTitle.textContent = data.title;
+  ibLight.textContent = data.light;
+  ibLightBlock.classList.remove('hidden');
+  ibShadowBlock.classList.add('hidden');
+
+  // Резонанс
+  if (data.systems && data.systems.length) {
+    const lvl = data.systems.length;
+    const label = RES_LABELS[lvl] || RES_LABELS[1];
+    ibResonance.innerHTML = `${resonanceGlyph(lvl)}<span class="res-label">${label}</span>`;
+    ibResonance.classList.remove('hidden');
+  } else {
+    ibResonance.classList.add('hidden');
+  }
+
+  // Тень
+  if (data.shadow && data.shadow.length > 0) {
+    ibShadow.textContent = data.shadow;
+    ibFlip.style.display = 'inline-block';
+  } else {
+    ibFlip.style.display = 'none';
+  }
+
+  // Практика усиления (светлая сторона)
+  const amp = (data && data.amplify) || (key && cellAmplify[key]);
+  if (amp) {
+    ibAmplify.textContent = amp;
+    ibAmplifyBlock.classList.remove('hidden');
+  } else {
+    ibAmplifyBlock.classList.add('hidden');
+  }
+
+  // Урок (только если есть в данных)
+  if (data.lesson && data.lesson.length > 0) {
+    ibLesson.textContent = data.lesson;
+    ibLessonBlock.classList.remove('hidden');
+  } else {
+    ibLessonBlock.classList.add('hidden');
+  }
+
+  // Рекомендации (только для столбцов: col-b / col-d / col-z)
+  if (key && typeof columnRecs !== 'undefined' && columnRecs[key]) {
+    ibRecsBlock.innerHTML = renderColumnRecs(columnRecs[key]);
+    ibRecsBlock.classList.remove('hidden');
+  } else {
+    ibRecsBlock.classList.add('hidden');
+    ibRecsBlock.innerHTML = '';
+  }
+
+  // Связи (навигируемые) — открываются в position-preserving модалке
+  const connRef = key ? 'cell:' + key : null;
+  const conns = connRef && CONNECTIONS[connRef];
+  if (conns && conns.length) {
+    ibLinksBlock.innerHTML = `<span class="conn-label">Связано с</span>` +
+      conns.map(l => `<button class="conn-chip" data-conn="${l.to}" type="button">${l.label}</button>`).join('');
+    ibLinksBlock.classList.remove('hidden');
+    ibLinksBlock.querySelectorAll('.conn-chip').forEach(ch => {
+      ch.onclick = () => openAspectModal(ch.dataset.conn);
+    });
+  } else {
+    ibLinksBlock.classList.add('hidden');
+    ibLinksBlock.innerHTML = '';
+  }
+
+  infoBlock.classList.add('open');
+  setTimeout(() => infoBlock.scrollIntoView({behavior:'smooth', block:'nearest'}), 50);
+}
+
+function renderColumnRecs(recs) {
+  let html = `<p class="info-recs-title">${recs.title}</p>`;
+  if (recs.subtitle) html += `<p class="info-recs-sub">${recs.subtitle}</p>`;
+  if (recs.items) {
+    html += `<div class="info-recs-section">`;
+    recs.items.forEach(it => {
+      html += `<div class="info-recs-item"><p class="info-recs-item-name">${it.name}</p><p class="info-recs-item-text">${it.text}</p></div>`;
+    });
+    html += `</div>`;
+  }
+  if (recs.sections) {
+    recs.sections.forEach(sec => {
+      html += `<div class="info-recs-section"><p class="info-recs-section-label">${sec.label}</p>`;
+      if (sec.items) {
+        sec.items.forEach(it => {
+          if (typeof it === 'string') {
+            html += `<div class="info-recs-item"><p class="info-recs-item-text">${it}</p></div>`;
+          } else {
+            html += `<div class="info-recs-item"><p class="info-recs-item-name">${it.name}</p><p class="info-recs-item-text">${it.text}</p></div>`;
+          }
+        });
+      }
+      if (sec.body) {
+        const paras = sec.body.split('\n\n').map(p => `<p>${p}</p>`).join('');
+        html += `<div class="info-recs-body">${paras}</div>`;
+      }
+      html += `</div>`;
+    });
+  }
+  return html;
+}
+
+// — Рендер клеток карты (имя + глиф резонанса) —
+document.querySelectorAll('.cell').forEach(c => {
+  const data = cells[c.dataset.c];
+  if (!data) return;
+  const lvl = (data.systems && data.systems.length) || 1;
+  c.classList.add('s-' + lvl);
+  c.innerHTML = `<p class="cell-name">${data.cellName || data.title}</p>
+    <div class="cell-resonance">${resonanceGlyph(lvl)}</div>`;
+});
+
+let lastInfoKey = null;
+
+document.querySelectorAll('.cell').forEach(c => {
+  c.onclick = () => {
+    const key = 'cell:' + c.dataset.c;
+    if (lastInfoKey === key && infoBlock.classList.contains('open')) {
+      infoBlock.classList.remove('open');
+      document.querySelectorAll('.cell.selected, .map-h.selected, .map-row-label.selected').forEach(x => x.classList.remove('selected'));
+      lastInfoKey = null;
+      return;
+    }
+    showInfo(cells[c.dataset.c], c.dataset.c);
+    c.classList.add('selected');
+    lastInfoKey = key;
+  };
+});
+document.querySelectorAll('.map-h, .map-row-label').forEach(h => {
+  if (!h.dataset.h) return;
+  h.onclick = () => {
+    const key = 'line:' + h.dataset.h;
+    if (lastInfoKey === key && infoBlock.classList.contains('open')) {
+      infoBlock.classList.remove('open');
+      document.querySelectorAll('.cell.selected, .map-h.selected, .map-row-label.selected').forEach(x => x.classList.remove('selected'));
+      lastInfoKey = null;
+      return;
+    }
+    showInfo(lines[h.dataset.h], h.dataset.h);
+    h.classList.add('selected');
+    lastInfoKey = key;
+  };
+});
+
+ibFlip.onclick = () => {
+  ibLightBlock.classList.add('hidden');
+  ibShadowBlock.classList.remove('hidden');
+};
+ibFlipBack.onclick = () => {
+  ibShadowBlock.classList.add('hidden');
+  ibLightBlock.classList.remove('hidden');
+};
+
+document.getElementById('ib-close').onclick = () => {
+  infoBlock.classList.remove('open');
+  document.querySelectorAll('.cell.selected, .map-h.selected, .map-row-label.selected').forEach(x => x.classList.remove('selected'));
+  lastInfoKey = null;
+};
+
+// — Сквозные оси —
+document.querySelectorAll('.trait-strip').forEach(b => {
+  b.onclick = () => {
+    const trait = b.dataset.trait;
+    const detail = document.getElementById('d-trait-' + trait);
+    const lightCard = detail.querySelector('.card.light');
+    const darkCard = detail.querySelector('.card.dark');
+    if (detail.classList.contains('open')) {
+      detail.classList.remove('open');
+      b.classList.remove('open');
+      if (lightCard) lightCard.style.display = 'block';
+      if (darkCard) darkCard.style.display = 'none';
+    } else {
+      detail.classList.add('open');
+      b.classList.add('open');
+    }
+  };
+});
+
+document.querySelectorAll('.flip-btn-trait').forEach(b => {
+  b.onclick = () => {
+    const detail = document.getElementById('d-trait-' + b.dataset.trait);
+    const l = detail.querySelector('.card.light');
+    const d = detail.querySelector('.card.dark');
+    if (!l || !d) return;
+    if (l.style.display === 'none') { l.style.display = 'block'; d.style.display = 'none'; }
+    else { l.style.display = 'none'; d.style.display = 'block'; }
+  };
+});
+
+document.querySelectorAll('.collapse-trait').forEach(b => {
+  b.onclick = () => {
+    const detail = document.getElementById('d-trait-' + b.dataset.trait);
+    const strip = document.querySelector('.trait-strip[data-trait="' + b.dataset.trait + '"]');
+    const lightCard = detail.querySelector('.card.light');
+    const darkCard = detail.querySelector('.card.dark');
+    detail.classList.remove('open');
+    strip.classList.remove('open');
+    if (lightCard) lightCard.style.display = 'block';
+    if (darkCard) darkCard.style.display = 'none';
+  };
+});
+
+// — Сквозные оси: данные (источник истины для bright-card) —
+const traitsData = {
+  response: {
+    label: 'отклик и волна',
+    coord: 'Сквозная ось',
+    title: 'Отклик и волна',
+    systems: ['Дизайн Человека','Астрология','Нумерология'],
+    light: 'Твоя энергия неисчерпаема, когда ты движешься по отклику. Тело даёт «да» — и за этим «да» открывается выносливость и качество, которых не достать усилием воли. А решения зреют не в моменте, а во времени: чем важнее вопрос, тем больше волн ему нужно пройти. Это не нерешительность — это твой механизм точности.',
+    shadow: 'Когда ты действуешь из «надо», а не из отклика — энергии нет, есть только волевое напряжение, которое тратит твоё здоровье. А под давлением ты можешь решить «до волны»: сказать «да» на верхнем пике или «нет» на нижнем. Цена таких решений — то, что потом приходится разгребать. Особенно острый паттерн в близости: импульс сказать всё сразу, обидеться, уйти, простить — за один вечер.',
+    lesson: 'Когда от тебя требуют ответа «прямо сейчас» по чему-то важному — научись говорить: «дай мне ночь». Без оправданий. То, что выдержало несколько волн, — твоё. То, что не выдержало, — не твоё, как бы убедительно ни звучало.'
+  },
+  devotion: {
+    label: 'преданность',
+    coord: 'Сквозная ось',
+    title: 'Преданность',
+    systems: ['Дизайн Человека','Астрология','Нумерология'],
+    light: 'Способность доходить до конца — то, что отличает тебя от большинства. Это твоя подпись на любом деле и любом человеке: где другие сходят с дистанции на середине, ты остаёшься. Ты оказываешься «в правильном месте в правильное время» не случайно — это побочный продукт того, что ты дошла туда, куда другие не дошли.',
+    shadow: 'У преданности две противоположные ловушки. Первая — держать то, что давно надо было отпустить, только потому что «я не из тех, кто бросает», когда внутреннее «да» уже ушло, а осталось упрямство. Вторая, обратная — когда становится тяжело, уйти по дороге к новому, не доделав, прикрыв это словами «мне нужен простор». Обе про одно: трудно остаться в живом до конца.',
+    lesson: 'Преданность — не «не сдамся любой ценой» и не «ушла, как стало трудно», а «остаюсь, пока живо». Когда тянет уйти — спроси: иду к настоящему новому или убегаю от тяжёлого? Когда держишь из принципа — спроси: «да» ещё живо или осталось упрямство?'
+  },
+  depthlight: {
+    label: 'глубина под лёгкостью',
+    coord: 'Сквозная ось',
+    title: 'Глубина под лёгкостью',
+    systems: ['Астрология','Нумерология'],
+    light: 'В тебе одновременно живут серьёзный глубокий человек и живой светлый ребёнок. Когда они в контакте — это твоя особая нота, которую узнают: ты умеешь говорить о самом важном без тяжеловесности и быть лёгкой по-настоящему, не по-цыплячьи. Лёгкость — твоя защита от того, чтобы глубина превратилась в камень.',
+    shadow: 'Главное напряжение твоей жизни — между «надо делать важное и тяжёлое» и «хочу просто радоваться». Когда побеждает только одна сторона, ты ломаешься: слишком долго в глубине — каменеешь; слишком долго в лёгкости — становится пусто. И внутренний голос «отдыхать — это слабость» загоняет тебя в перекос в сторону тяжести.',
+    lesson: 'Лёгкость — не легкомыслие, и глубина — не тяжесть. Они не отменяют друг друга; они две половины твоего устройства. Если внутри звучит «надо» — спроси, чьё это «надо» и что будет, если — нет.'
+  },
+  lightning: {
+    label: 'молния и переводчик',
+    coord: 'Сквозная ось',
+    title: 'Молния и переводчик',
+    systems: ['Дизайн Человека','Астрология','Нумерология'],
+    light: 'Твоя мысль особого типа: знает целиком и сразу, не по шагам, а потом ищет слова. Ты часто знаешь что-то «просто так», без обоснования — и это знание оказывается точным. Если ты научилась переводить свои вспышки на понятный язык — тебя слышат как редкого ясного человека, который говорит то, что другие только смутно чувствовали.',
+    shadow: 'Если выдать вспышку раньше времени и не тому человеку — звучит «не туда». В ответ — «ты слишком сложная», «ты странная» или стеклянные глаза. И ты уходишь с ощущением, что тебя опять не поняли. Со временем начинаешь либо молчать совсем, либо говорить с напором — и от этого ещё больше одиночества.',
+    lesson: 'Различай «во мне родилась мысль» и «эту мысль надо сейчас сказать». Знание — половина дела; вторая половина — найти слова, момент и адресата. Тебе нужно время на перевод, и это не слабость.'
+  },
+  hermit: {
+    label: 'между крышей и людьми',
+    coord: 'Сквозная ось',
+    title: 'Между крышей и людьми',
+    systems: ['Дизайн Человека','Астрология'],
+    light: 'Твоя жизнь устроена ритмом: уход в себя — выход к людям — снова уход — снова выход. Тебе по-настоящему нужно много одиночества, чтобы то, что зреет, дозрело, — и так же нужен выход к людям, чтобы это отдать. Это не сбой и не «нелюдимость» — это твой способ быть, и в нём рождается твоё мастерство.',
+    shadow: 'Зависнуть в одной точке. Либо всё время с людьми — и выгореть, отдавая тепло без восстановления. Либо всё время одна — и закаменеть: уход, который начинался как нужный отдых, превращается в глухую капсулу. Граница между здоровой паузой и замыканием тонкая, и её легко пропустить.',
+    lesson: 'Уважай обе части. После плотного контакта — обязательная пауза. После долгой паузы — обязательный выход. Различай: «я устала от людей» и «я начала прятаться от себя».'
+  },
+  voice: {
+    label: 'свой голос',
+    coord: 'Сквозная ось',
+    title: 'Свой голос',
+    systems: ['Астрология','Нумерология','Дизайн Человека'],
+    light: 'У тебя есть настоящая глубина и чутьё на смысл: ты умеешь держать большую картину, чувствовать философию жизни, тонко настраиваться на другого. Это заработанный дар, и он останется с тобой. Но самый большой твой рост в этой жизни — принести всё это домой, в свой собственный голос: говорить не пересказом чужих учений и не из тени мудрого партнёра, а от первого лица, то, что увидела именно ты. И заходить по-лёгкому, с любопытством: с вопроса, с «а мне кажется так», не дожидаясь готовой большой истины.',
+    shadow: 'Старая, обжитая колея — спрятаться за чужой мудростью: передавать учения, опираться на авторитеты, раствориться в партнёре-носителе большой картины мира. Отсюда тянет либо в роль вечной ученицы при чужом смысле, либо вырваться к новому, к простору, — не сказав при этом своего. Признак: ты много знаешь и тонко чувствуешь, но собственное «я думаю» почти не звучит вслух — его заслоняет чьё-то «как правильно».',
+    lesson: 'Свой голос рождается не из готовой мудрости, а из любопытства и из того, что ты осмелилась сказать маленькое своё. Раз в день — одно «мне кажется», короткое, от первого лица, без ссылки на учителя или книгу. Не «как правильно по такому-то», а «вот что вижу я».'
+  },
+  refiner: {
+    label: 'видящая «как лучше»',
+    coord: 'Сквозная ось',
+    title: 'Видящая «как лучше»',
+    systems: ['Дизайн Человека','Астрология','Нумерология'],
+    light: 'У тебя тонкая, почти безошибочная чуйка на то, что в системе не работает. Ты замечаешь несовершенство быстрее, чем большинство замечает, что оно вообще есть. Направленная на дело, на форму, на структуру — эта способность бесценна: ты можешь улучшать всё, к чему прикасаешься, и держать высокий стандарт там, где он создаёт ценность.',
+    shadow: 'Тот же лазер, развёрнутый на ближний круг, жжёт всех — включая тебя саму. Тонкая критика близких, замечания, которые звучат как забота, а прилетают как оценка. Перфекционизм, повёрнутый внутрь семьи, тела, себя. И бесконечная доработка, которая не выпускает сделанное наружу.',
+    lesson: 'Перед замечанием близкому проверь простой вопрос: «меня об этом спросили?» Если нет — пауза. Энергию исправления направляй на дело и форму, а не на людей в радиусе двух метров.'
+  },
+  warmfire: {
+    label: 'тёплый огонь',
+    coord: 'Сквозная ось',
+    title: 'Тёплый огонь',
+    systems: ['Дизайн Человека','Нумерология','Астрология'],
+    light: 'Несмотря на глубину и серьёзность, в тебе есть живой, тёплый, иногда внезапно вспыхивающий огонь. Жизни в тебе в избытке — на радость, на красоту, на эстетику, на разговор. Ты умеешь быть лёгкой по-настоящему. Этот огонь — твоё топливо и твоя защита от того, чтобы глубина превратилась в тяжесть; это печь, у которой греются те, кто к тебе приходит.',
+    shadow: 'Когда ты слишком долго отдаёшь тепло другим — печь гаснет, и ты остаёшься выжженной, с ощущением, что «на себя уже ничего не осталось». Радость откладывается «на потом, когда заслужу», и это «потом» не наступает. Без живого огня дом остывает, и колодец становится никому не нужным.',
+    lesson: 'Радость — не награда, а топливо. Не отдавай всё тепло наружу: оставляй огонь и для себя. Если на тебя «греются» все подряд без отдачи — пора прикрыть дверцу и подкинуть дров для себя.'
+  },
+  arc: {
+    label: 'идущая дугой',
+    coord: 'Сквозная ось',
+    title: 'Идущая дугой',
+    systems: ['Дизайн Человека','Астрология','Нумерология'],
+    light: 'Твоя жизнь устроена не как прямая, а как длинная дуга в три фазы — со своим, не общим, ритмом взросления. Пробы и обжиги в молодости, уход в мастерство и тишину в середине, выход к людям в зрелости — уже в качестве той, у кого можно научиться жить. Если ты уважаешь этот ритм, твоё слово в зрелости приобретает вес, который не зарабатывается ничем другим.',
+    shadow: 'Соблазн мерить себя чужим календарём: «у всех уже всё, а у меня…». Ощущение опоздания и непринадлежности, особенно в молодости. Попытка форсировать то, что ещё не дозрело, — и обесценить собственные годы накопления как «потерянные».',
+    lesson: 'Ты здесь не для того, чтобы успеть, а для того, чтобы дозреть. Самое большое в твоей жизни случится не в 25 и не в 35, а в твоей настоящей зрелости. Это не проигрыш — это твоё устройство.'
+  }
+};
+
+// — Ярко звучит: раскрытие inline (данные тянутся из cells/traitsData) —
+
+function getItemData(target) {
+  const [type, key] = target.split(':');
+  if (type === 'cell') return cells[key];
+  if (type === 'trait') return traitsData[key];
+  if (type === 'int') return interferences[key];
+  return null;
+}
+
+// — Связи между аспектами (навигируемые). Чинит мёртвую ссылку «Тело в стороне» —
+const CONNECTIONS = {
+  'cell:u-b':       [{to:'int:int-1', label:'Судья за столом'}],
+  'int:int-1':      [{to:'cell:u-b', label:'Мысль рождается в диалоге'}],
+  'trait:lightning':[{to:'int:int-2', label:'Молния не в ту дверь'}],
+  'int:int-2':      [{to:'trait:lightning', label:'Молния и переводчик'}],
+  'cell:s-b':       [{to:'int:int-3', label:'Растворилась в Другом'}],
+  'int:int-3':      [{to:'cell:s-b', label:'Я внутри и я в Другом'}],
+  'cell:t-z':       [{to:'int:int-4', label:'Слишком тяжёлая для себя'}],
+  'int:int-4':      [{to:'cell:t-z', label:'Глубокий ритм'}],
+  'cell:d-b':       [{to:'int:int-5', label:'Учительница без приглашения'}],
+  'int:int-5':      [{to:'cell:d-b', label:'Любовь как путь'}],
+  'trait:hermit':   [{to:'int:int-6', label:'Заперлась на крыше'}],
+  'int:int-6':      [{to:'trait:hermit', label:'Между крышей и людьми'}],
+};
+
+// — Единое окно чтения: открывает любой аспект (ячейка / ось / помеха) в модалке —
+function openAspectModal(ref) {
+  const [type, key] = ref.split(':');
+  const links = CONNECTIONS[ref] || [];
+  if (type === 'int') {
+    const d = interferences[key]; if (!d) return;
+    openModal({
+      kind: 'dark', source: d.source || 'из карты · помеха', glyphHTML: '',
+      title: d.name, systems: [],
+      sections: [
+        {label: 'Как это звучит', text: d.sound, kind: 'plain'},
+        {label: 'Откуда помеха', text: d.origin, kind: 'plain'},
+        {label: 'Как убрать искажение', text: d.fix, kind: 'lesson'},
+      ], links
+    });
+  } else {
+    const d = getItemData(ref); if (!d) return;
+    const src = type === 'trait' ? 'сквозная ось' : (d.coord ? 'из карты · ' + d.coord : 'из карты');
+    openModal({
+      kind: 'light', source: src, glyphHTML: '',
+      title: d.title || d.cellName || '', systems: d.systems || [],
+      sections: [
+        {label: 'Светлая сторона', text: d.light, kind: 'light', amplify: amplifyRef(ref)},
+        ...(d.shadow ? [{label: 'Теневой аспект', text: d.shadow, kind: 'shadow'}] : []),
+        ...(d.lesson ? [{label: 'Урок', text: d.lesson, kind: 'lesson'}] : []),
+      ], links
+    });
+  }
+}
+
+document.querySelectorAll('.bright-card').forEach(card => {
+  card.onclick = () => {
+    const target = card.dataset.target;
+    const data = getItemData(target);
+    if (!data) return;
+    openModal({
+      kind: 'light',
+      source: card.querySelector('.bright-source')?.textContent || '',
+      glyphHTML: card.querySelector('.archetype-glyph')?.outerHTML || '',
+      title: data.title || data.cellName || '',
+      systems: data.systems || [],
+      sections: [
+        {label: 'Светлая сторона', text: data.light, kind: 'light', amplify: amplifyRef(target)},
+        ...(data.shadow ? [{label: 'Теневой аспект', text: data.shadow, kind: 'shadow'}] : []),
+        ...(data.lesson ? [{label: 'Урок', text: data.lesson, kind: 'lesson'}] : []),
+      ],
+      links: CONNECTIONS[target]
+    });
+  };
+});
+
+// — Путь —
+const pathStages = {
+  past: {
+    coord: 'Этап позади · примерно до 28–29 лет',
+    title: 'Пробы и обжиги',
+    light: 'Ранняя фаза, в которой ты училась через собственный опыт, а не по чужим инструкциям. Пробовала, ошибалась, обжигалась — и собирала то, что нельзя получить иначе: чувствование людей, глубину, раннее знание цены настоящего. Этот этап у тебя позади, и из него ты вышла с тем материалом, на котором стоит всё остальное.',
+    shadow: 'Если эта фаза читается как «потерянные годы» или «я столько ошибалась» — это искажение. Ты не теряла время, ты набирала глубину тем единственным способом, которым она набирается у тебя, — на собственной шкуре. Обесценивать этот этап — значит обесценивать фундамент, на котором стоишь сейчас.',
+    lessonLabel: 'Маркер прошлого',
+    lessonText: 'Признак, что этап завершён: ты перестаёшь спрашивать «почему со мной так вышло» и начинаешь видеть, что именно эти обжиги дали тебе то, чем ты сейчас ценна для других.'
+  },
+  current: {
+    coord: 'Этап сейчас · примерно 28–29 до 49–51 года',
+    title: 'Уход в мастерство',
+    light: 'Фаза углубления и сборки себя. Ты сейчас здесь. Это время, когда дуга уходит внутрь: ты собираешь своё лицо, своё дело, своё мастерство — часто в тишине, вдали от шума. Тебе по-настоящему нужно много одиночества, чтобы то, что зреет, дозрело. Это не «пауза перед жизнью» — это и есть твоя главная мастерская, в которой выплавляется то, с чем ты потом выйдешь к людям.',
+    shadow: 'Соблазн этой фазы — заперться на крыше. То, что начинается как нужный уход в себя, может превратиться в глухую изоляцию: «я никому не нужна», но и сама никого не зовёшь. Второй соблазн — мерить себя чужим календарём: «у всех уже всё, а у меня…». И третий — служение, которое перепутано с самопожертвованием: вычерпать колодец на тех, кто берёт даром.',
+    lessonLabel: 'Урок этапа',
+    lessonText: 'Раз в полгода спрашивай: «то, что я сейчас собираю в тишине, — для меня одной или однажды выйдет к людям?» Уход в мастерство здоров, пока в нём есть дверь наружу. Держи 2–3 человек, к которым возвращаешься даже на спаде.'
+  },
+  future: {
+    coord: 'Этап впереди · примерно после 49–51 года',
+    title: 'Спуск к людям',
+    light: 'Фаза выхода и отдачи. Туда ты придёшь уже как та, у кого можно научиться жить, — и обнаружишь, что самое большое в твоей жизни случается не в молодости, а именно в зрелости. Ты выйдешь из мастерской к людям, и твоё слово приобретёт вес, который не зарабатывается ничем, кроме пройденной дуги. То, что ты собирала в тишине, станет тем, ради чего собиралось, — теплом у печи и водой из колодца для тех, кто пришёл.',
+    shadow: 'Если на фазе мастерства ты слишком крепко заперлась — выход дастся со скрипом. Привычка быть одной может стать стеной, а зрелость — прочитаться как «поздно». Готовься к этому уже сейчас: тренируй выход понемногу, выноси своё к людям маленькими порциями, чтобы потом не пришлось выходить из глухой капсулы сразу и резко.',
+    lessonLabel: 'Маркер будущего',
+    lessonText: 'Признак, что этап начался: к тебе начинают приходить сами — за теплом, за словом, за глубиной. И ты отдаёшь не из жертвы, а из полноты. Это и есть та зрелость, ради которой шла вся дуга.'
+  }
+};
+
+const pathDetail = document.getElementById('path-detail');
+const pathCollapse = document.getElementById('path-collapse');
+const pathCoord = document.getElementById('path-coord');
+const pathTitle = document.getElementById('path-title');
+const pathLight = document.getElementById('path-light');
+const pathShadow = document.getElementById('path-shadow');
+const pathLightCard = document.getElementById('path-light-card');
+const pathDarkCard = document.getElementById('path-dark-card');
+const pathLessonLabel = document.getElementById('path-lesson-label');
+const pathLessonText = document.getElementById('path-lesson-text');
+
+let activePathStage = null;
+
+function showStage(stage) {
+  const data = pathStages[stage];
+  pathCoord.textContent = data.coord;
+  pathTitle.textContent = data.title;
+  pathLight.textContent = data.light;
+  pathShadow.textContent = data.shadow;
+  pathLessonLabel.textContent = data.lessonLabel;
+  pathLessonText.textContent = data.lessonText;
+  const pAmpBlock = document.getElementById('path-amplify-block');
+  const pAmp = document.getElementById('path-amplify');
+  if (stageAmplify[stage]) { pAmp.textContent = stageAmplify[stage]; pAmpBlock.classList.remove('hidden'); }
+  else { pAmpBlock.classList.add('hidden'); }
+  pathLightCard.style.display = 'block';
+  pathDarkCard.style.display = 'none';
+  pathDetail.classList.add('open');
+  document.querySelectorAll('.path-seg').forEach(s => s.classList.remove('selected'));
+  document.querySelector('.path-seg[data-stage="' + stage + '"]').classList.add('selected');
+  activePathStage = stage;
+  setTimeout(() => pathDetail.scrollIntoView({behavior:'smooth', block:'nearest'}), 50);
+}
+
+document.querySelectorAll('.path-seg').forEach(seg => {
+  seg.onclick = () => {
+    const stage = seg.dataset.stage;
+    if (activePathStage === stage && pathDetail.classList.contains('open')) {
+      pathDetail.classList.remove('open');
+      seg.classList.remove('selected');
+      activePathStage = null;
+    } else {
+      showStage(stage);
+    }
+  };
+});
+
+pathCollapse.onclick = () => {
+  pathDetail.classList.remove('open');
+  document.querySelectorAll('.path-seg').forEach(s => s.classList.remove('selected'));
+  activePathStage = null;
+  pathLightCard.style.display = 'block';
+  pathDarkCard.style.display = 'none';
+};
+
+document.querySelectorAll('.flip-btn-path').forEach(b => {
+  b.onclick = () => {
+    if (pathLightCard.style.display === 'none') {
+      pathLightCard.style.display = 'block';
+      pathDarkCard.style.display = 'none';
+    } else {
+      pathLightCard.style.display = 'none';
+      pathDarkCard.style.display = 'block';
+    }
+  };
+});
+
+// — Создаёт помехи: данные —
+const interferences = {
+  'int-1': {
+    source: 'из карты · помеха · Ум · Близость',
+    name: 'Судья за столом',
+    sound: '«Я лучше вижу, как надо». Тонкая критика близких. Замечания, которые звучат как забота, но прилетают как оценка. Перфекционизм, повёрнутый внутрь семьи, партнёра, ребёнка, себя самой — особенно в быту, в теле, во внешности.',
+    origin: 'Твой дар видеть «как сделать лучше» рассчитан на большие системы — на дело, на форму, на работу. Если этот лазер развернуть на ближний круг, он жжёт всех, включая тебя саму.',
+    fix: 'Перед замечанием близкому проверь простой вопрос: «меня об этом спросили?» Если нет — пауза. Энергию исправления направляй на дело, на текст, на пространство, а не на людей в радиусе двух метров.'
+  },
+  'int-2': {
+    source: 'из карты · помеха · Ум · Дело',
+    name: 'Молния не в ту дверь',
+    sound: 'Ты говоришь то, что увидела, до того как собеседник готов услышать. В ответ — либо «ты слишком сложная», либо «ты странная», либо стеклянные глаза. Ты уходишь с ощущением, что тебя опять не поняли, и со временем начинаешь либо молчать совсем, либо говорить с напором.',
+    origin: 'Твоё знание приходит вспышками и ждёт точного момента и точного собеседника. Если выдать его раньше времени — звучит «не туда». Это не дефект, это устройство: вспышка приходит без предупреждения, а перевод должен ждать правильную аудиторию.',
+    fix: 'Различай «во мне родилась мысль» и «эту мысль надо сейчас сказать». Записывай, жди вопрос, проверяй: спросили ли тебя. Невысказанное не пропадает — оно дозревает.'
+  },
+  'int-3': {
+    source: 'из карты · помеха · Самость · Близость',
+    name: 'Растворилась в Другом',
+    sound: 'Ты теряешь себя в близких отношениях. Сначала — глубина и захват, потом — постепенное стирание собственных желаний, желаний партнёра становится «больше». В крайней точке — «я не понимаю, чего хочу я, без него». Особенно опасно — отношения, в которые ты входишь на волне, без выдержанной паузы.',
+    origin: 'Твоя глубина делает тебя притягательной для слияния; эмоциональная природа толкает решать сразу; а старая привычка — растворяться в чужой большой картине, в чужом «как надо жить». Партнёр-носитель готовой философии — тот, в ком ты исчезаешь легче всего.',
+    fix: 'Правило ночи: никаких «да» на близость, обязательства, переезд, общее дело в день предложения. И возвращай себе вопрос: «А что я сама — без него — хотела сегодня утром?»'
+  },
+  'int-4': {
+    source: 'из карты · помеха · Тело · Здоровье',
+    name: 'Слишком тяжёлая для себя',
+    sound: 'Ты накапливаешь на себе ответственность, которой никто не просил брать. Сначала на партнёра, потом на семью, потом на работу, потом на чьё-то здоровье. Тело отвечает усталостью, спиной, иммунитетом, циклом. А отдыхать кажется слабостью или эгоизмом.',
+    origin: 'У тебя огромный ресурс долгого тяжёлого дела — но без сознательного выпуска воздуха этот ресурс ест тебя саму. Плюс внутренняя планка «я должна быть полезной», от которой трудно отступить.',
+    fix: 'Право на лёгкость — не отдых «когда заслужу», а ритм. Радость и игра — не награда, а топливо. Если внутри звучит «надо» — спроси, чьё это «надо» и что будет, если — нет.'
+  },
+  'int-5': {
+    source: 'из карты · помеха · Дух · Близость',
+    name: 'Учительница без приглашения',
+    sound: 'Ты начинаешь «делиться опытом» с теми, кто его не просил. Объясняешь жизнь близким, особенно младшим. Говоришь немного с высоты. Внутри — благое намерение, снаружи — давление и одиночество, потому что от тебя отдаляются.',
+    origin: 'У тебя действительно есть, чему учить, — но твой путь учителя устроен по принципу «приходят сами». Ты не миссионер — ты мастер, к которому идут. Когда ты несёшь колодец в гости, его перестают ценить.',
+    fix: 'Правило: первой не открывать колодец. Если в человеке нет настоящего запроса — не вкладывайся. Учи телом, делом, тем, как ты живёшь, а не объяснением.'
+  },
+  'int-6': {
+    source: 'из карты · помеха · Самость · Здоровье',
+    name: 'Заперлась на крыше',
+    sound: 'Ты периодически уходишь в долгую изоляцию, которая начинается как нужный отдых, а заканчивается как замыкание. Перестаёшь отвечать, выпадаешь из контактов, чувствуешь, что «я никому не нужна», но и сама никого не зовёшь.',
+    origin: 'Тебе действительно нужно много одиночества — твоё устройство такое, и в средней фазе жизни это особенно сильно. Но между «здоровой паузой» и «глухой капсулой» — тонкая граница, и её легко пропустить.',
+    fix: 'Одиночество планируй, а не сваливайся в него. Имей 2–3 человек, к которым возвращаешься даже на спаде. Различай: «я устала от людей» и «я начала прятаться от себя».'
+  }
+};
+
+// — Рекомендации по столбцам карты —
+const columnRecs = {
+  'col-d': {
+    title: 'Твои территории',
+    subtitle: 'Среды и роли, где ты раскрываешься',
+    items: [
+      {name: 'Помогающие профессии глубокого контакта', text: 'Психология, наставничество, телесные и восстановительные практики, сопровождение людей в трудных периодах. Ты создаёшь близость, в которой человека по-настоящему видят, — это редкий и востребованный дар.'},
+      {name: 'Методология и обучающие программы', text: 'Ты видишь, что в системе не работает, и умеешь собрать целое из разрозненного, переведя сложное на понятный язык. Из этого выходят сильные курсы, методики, программы.'},
+      {name: 'Авторское дело со своим лицом', text: 'Ты не для роли безымянного исполнителя. В любом ремесле тебя тянет к авторству — и именно там, где видна твоя рука, дело становится по-настоящему твоим.'},
+      {name: 'Мастерство, требующее долгого дыхания', text: 'Длинные, плотные, тонкие проекты — твой формат. Ты доходишь до конца там, где другие сходят с дистанции, и эта выносливость даёт качество, которого не добиться рывком.'},
+      {name: 'Эстетика, красота, живое', text: 'В тебе много жизни на красоту и форму. Работа, где есть место чувству прекрасного и теплу, питает тебя, а не только грузит.'}
+    ]
+  },
+  'col-b': {
+    title: 'Как ты устроена рядом',
+    subtitle: 'Что тебе нужно, что разрушает, и какой дом тебе подходит',
+    sections: [
+      {
+        label: 'Что тебе нужно от близкого',
+        items: [
+          'Свой ясный человек. Тот, у кого есть собственная опора и кто не растворяется в твоей глубине — иначе исчезаешь в нём ты.',
+          'Тот, кто умеет с тобой думать. Собеседник, который выдерживает твой темп и глубину; рядом с ним твой ум оживает, а не сворачивается.',
+          'Тот, кто умеет ждать твою волну. Не торопит решения и понимает, что «дай мне ночь» — это не уход, а твой ритм точности.',
+          'Тот, рядом с кем можно быть и глубокой, и лёгкой. Кто не пугается твоего колодца и не гасит твой огонь.'
+        ]
+      },
+      {
+        label: 'Что тебя разрушает в близости',
+        items: [
+          {name: 'Растворение в Другом', text: 'Особенно в том, у кого готовая «большая картина мира». Его желаний становится больше, твоих — меньше, и однажды ты не понимаешь, чего хочешь без него.'},
+          {name: 'Судья за столом', text: 'Дар видеть «как лучше», развёрнутый на близких, прилетает как оценка. Уходит тепло, и рядом становится одиноко — и тебе, и им.'},
+          {name: 'Решения на волне', text: 'Сказать всё сразу, обидеться, уйти, простить — за один вечер. Решения, принятые на пике или на дне, потом приходится разгребать.'}
+        ]
+      },
+      {
+        label: 'Твой тип дома и семьи',
+        items: [
+          'Дом-очаг с дверью, которая закрывается. Тепло и открытость для своих — и при этом место и время, где ты можешь побыть одна.',
+          'Ритм глубокий, не суетливый. Настоящие разговоры, общее дело — и зоны тишины у каждого.',
+          'Семья — союз людей, у каждого из которых есть своё лицо. Общее держится не на слиянии, а на живой связи.',
+          'Дети — собеседники, не материал для исправления. Им нужно от тебя «как ты сам это видишь», а не «как правильно».'
+        ]
+      }
+    ]
+  },
+  'col-z': {
+    title: 'Движение и восстановление',
+    subtitle: 'Что тебе подходит и как ты собираешь себя обратно',
+    sections: [
+      {
+        label: 'Твои виды движения',
+        items: [
+          {name: 'Ритмичная нагрузка средней длины', text: 'Длинная мерная ходьба, плавание, велосипед, танец. Не короткий пик до отказа, а ровная дуга — на ней раскрывается твоя выносливость и выходит накопленное напряжение.'},
+          {name: 'Тело и вода, тело и земля', text: 'Плавание, баня, работа руками, сад, прикосновения. Тебе подходит всё, что возвращает тебя в тело через тепло и контакт, а не через насилие над собой.'},
+          {name: 'Практики тонкого внимания', text: 'Йога, дыхание, мягкие телесные практики. Тело отвечает не на жёсткий контроль, а на медленное и внимательное.'}
+        ]
+      },
+      {
+        label: 'Как ты восстанавливаешься',
+        body: 'Тебе нужны и одиночество, и ритуал. Не «отдых, когда заслужу», а зоны тишины внутри недели — твой «день колодца». Тело возвращается через ритм (сон, вода, движение, время у живого) и через честно прожитые чувства; то, что ты терпишь ради других, уходит в тело.\n\nПризнак, что восстановление прошло: возвращается лёгкость и желание, а не только «надо». Если их нет — ты ещё на спаде, и форсирование выйдет дороже, чем кажется. И помни про границу: пауза лечит, замыкание истощает.'
+      }
+    ]
+  },
+
+  // — Слои (строки карты): практики на усиление —
+  'row-tel': {
+    title: 'Тело — практики на усиление',
+    subtitle: 'Что держит твоё тело в его настоящем ритме',
+    sections: [
+      {
+        label: 'Как поддерживать слой',
+        items: [
+          {name: 'Ритуал важнее диеты', text: 'Выбери 2–3 простых якоря — сон, вода, движение, время у живого — и держи их как несущую конструкцию недели. Тело отвечает на ритм, а не на разовые усилия.'},
+          {name: 'Индикатор половины бака', text: 'Останавливайся, когда ещё хочется чуть-чуть продолжить. Твоя выносливость позволяет работать после того, как пора было остановиться, — и ты замечаешь это, только когда тело уже просело.'},
+          {name: 'Тело как первый свидетель', text: 'Сверяйся: как дышится рядом с этим человеком, в этом деле, в этом дне? Тело знает раньше ума. Если дыхание неделями не выпрямляется — это уже ответ.'},
+          {name: 'Длинные программы, не рывки', text: 'То, что копится годами, проявляется сразу. Лечи корень, а не симптом, и иди медленно — твоё тело отвечает на длинное и тёплое, не на резкое.'}
+        ]
+      },
+      {
+        label: 'Признаки, что слой звучит',
+        items: [
+          'Тело быстро откликается на дело, которое греет.',
+          'Засыпание без ночного перемалывания.',
+          'Лёгкость после ритмичной нагрузки, не разбитость.',
+          'Сигналы тела ловишь, пока они шепчут, а не кричат.'
+        ]
+      },
+      {
+        label: 'Что усиливает',
+        body: 'Живое рядом — вода, деревья, животные, сад. Не как развлечение, а как место, где тело перестаёт быть «инструментом» и снова становится домом.\n\nТепло и прикосновение — баня, объятия, работа руками. Твоё тело лечится контактом, а не строгостью к себе.'
+      }
+    ]
+  },
+  'row-emo': {
+    title: 'Эмоции — практики на усиление',
+    subtitle: 'Как доверять волне, не торопить и не глушить',
+    sections: [
+      {
+        label: 'Как поддерживать слой',
+        items: [
+          {name: 'Не решать на волне', text: 'По эмоционально-важному — пауза минимум одну ночь, по большому — недели. Решения, принятые на пике или на дне, самые дорогие в последствиях.'},
+          {name: 'Три вечера перед выбором', text: 'Перед серьёзным решением — три вечера по 10 минут письма: не «за и против», а «что я сейчас чувствую про это». К третьему вечеру картина проясняется сама.'},
+          {name: 'Назвать чувство до действия', text: 'Между «почувствовала» и «сказала/сделала» — пауза, в которой ты называешь чувство словом. Названное чувство теряет половину власти над поступком.'},
+          {name: 'Проживать, а не терпеть', text: 'То, что ты терпишь ради других, уходит в тело. У тебя нет варианта «не чувствовать» — есть только прожить вовремя или заплатить телом позже.'}
+        ]
+      },
+      {
+        label: 'Признаки, что слой звучит',
+        items: [
+          'Решения «после волны» не вызывают долгого внутреннего сопротивления.',
+          'Можешь назвать чувство словом, прежде чем оно стало действием.',
+          'Эмоция приходит и проходит, не превращаясь в долгую стройку.',
+          'Близкие чувствуют твою наполненность, когда ты вкладываешься.'
+        ]
+      },
+      {
+        label: 'Что усиливает',
+        body: 'Время и тишина для волны — главное усиление. У тебя нет «быстрых эмоций»; право на ночь, неделю, месяц перед важным — это не нерешительность, это твоя точность.\n\nЧестность с собой про злость и тоску. Прожитые «трудные» чувства возвращают тебе здоровье; подавленные — забирают.'
+      }
+    ]
+  },
+  'row-um': {
+    title: 'Ум — практики на усиление',
+    subtitle: 'Как переводить вспышки и выпускать сделанное',
+    sections: [
+      {
+        label: 'Как поддерживать слой',
+        items: [
+          {name: 'Записывать вспышки', text: 'Знание приходит к тебе целиком и сразу. Записывай его, не дожидаясь «удобного момента»: невысказанное не пропадает — оно дозревает и ждёт правильного собеседника.'},
+          {name: 'Думать вслух с правильным человеком', text: 'Твой ум оживает в диалоге. Найди и оберегай 2–3 человек, которые выдерживают твой темп; с ними доступно то, чего не достать в одиночестве.'},
+          {name: 'Выпускать в 80%', text: 'Совершенство достраивается на людях, а не в одиночестве. Доводя до идеала в стол, ты не даёшь своему творческому дойти до тех, кому оно нужно.'},
+          {name: 'Тело как выключатель головы', text: 'Когда ум не выключается, не ищи «технику расслабления» — иди в тело: ходьба, нагрузка, руки в воде или в земле гасят перегрев лучше.'}
+        ]
+      },
+      {
+        label: 'Признаки, что слой звучит',
+        items: [
+          'Твои мысли доходят до людей, а не остаются внутри.',
+          'Тебя слышат как ясную, а не «слишком сложную».',
+          'Можешь выпустить несовершенное и не разрушиться.',
+          'Голова получает пищу и наполняет, а не крутит тревогу ночами.'
+        ]
+      },
+      {
+        label: 'Что усиливает',
+        body: 'Живые собеседники уровня — те, рядом с кем не нужно упрощать себя. В диалоге с ними рождается то, чего не достать одной.\n\nПеревод и преподавание. Когда ты переводишь свою вспышку на язык другого человека, она становится точнее — и ты перестаёшь быть «непонятой».'
+      }
+    ]
+  },
+  'row-sam': {
+    title: 'Самость — практики на усиление',
+    subtitle: 'Как расти через людей, не теряя себя',
+    sections: [
+      {
+        label: 'Как поддерживать слой',
+        items: [
+          {name: 'Ежедневный вопрос к себе', text: '«Где сегодня была я сама — отдельно от него, от детей, от работы?» Через других — да, но всегда возвращаясь к себе.'},
+          {name: 'Своё под своим именем', text: 'Держи хотя бы одну вещь, которая полностью твоя. Авторство — это не масштаб, а подпись; страшно — поставить её под маленьким.'},
+          {name: 'Планировать одиночество', text: 'Заведи «день колодца», когда никого нет, — и не сваливайся в изоляцию случайно. Тебе нужно одиночество, чтобы дозреть, но между паузой и замыканием тонкая граница.'},
+          {name: 'Вернуть тело себе', text: 'Зеркало — не для оценки, а для встречи. Удовольствие телом — не пошлость, а лекарство и опора самооценки.'}
+        ]
+      },
+      {
+        label: 'Признаки, что слой звучит',
+        items: [
+          'В близких отношениях ты растёшь, а не стираешься.',
+          'Есть дело, в котором видна твоя рука.',
+          'Одиночество читается как наполнение, не как бегство.',
+          'Самооценка стоит на контакте с собой, не на чужом взгляде.'
+        ]
+      },
+      {
+        label: 'Что усиливает',
+        body: 'Зеркало хороших людей — друг, наставник, партнёр того качества, рядом с кем ты узнаёшь себя, а не теряешь. Твой путь идёт через других, и это твоя природа, не слабость.\n\nСвоё пространство и своё время. Угол, мастерская, час без задачи — место, где ты остаёшься собой, прежде чем снова выйти к людям.'
+      }
+    ]
+  },
+  'row-duh': {
+    title: 'Дух — практики на усиление',
+    subtitle: 'Как служить, не теряя себя, и держать глубину как вдох',
+    sections: [
+      {
+        label: 'Как поддерживать слой',
+        items: [
+          {name: 'Служение с границами', text: 'Служение — это направление вектора, а не отказ от платы и границ. Бери тех, кто действительно лечится; высокая цена за твою глубину — часть честности.'},
+          {name: 'Любить живого, а не образ', text: 'Тот, кто рядом, — попутчик, а не маршрут. Маршрут у тебя. Когда живой человек оказывается не идеальным — это не «я ошиблась во всём», это просто живой человек.'},
+          {name: 'Глубина как вдох', text: 'Каждое погружение в тяжёлое — траур, травму, самоанализ — заканчивай возвращением наверх: к смеху, телу, еде, людям. Глубина — это вдох, а не место жительства.'},
+          {name: 'Не учить без приглашения', text: 'Твой путь учителя — «приходят сами». Если в человеке нет настоящего запроса, не открывай колодец. Учи тем, как ты живёшь, а не объяснением.'}
+        ]
+      },
+      {
+        label: 'Признаки, что слой звучит',
+        items: [
+          'Дело греет и питает, а не вычерпывает.',
+          'После глубины ты возвращаешься наверх, к свету.',
+          'Близкие приходят за теплом сами, без твоего давления.',
+          'Служение чувствуется как выбор, а не как жертва.'
+        ]
+      },
+      {
+        label: 'Что усиливает',
+        body: 'Те, кто пришёл сам. Когда ты отдаёшь глубину по настоящему запросу — она возвращается к тебе наполненной, а не вычерпанной.\n\nСвет после глубины. Радость, красота, тело, смех — не награда за тяжёлую работу души, а вторая её половина. Без них колодец становится никому не нужным, а печь гаснет.'
+      }
+    ]
+  }
+};
+
+// — Создаёт помехи: обработчики (тёмные карточки) —
+document.querySelectorAll('.interference-card').forEach(card => {
+  card.onclick = () => {
+    const key = card.dataset.target;
+    const data = interferences[key];
+    if (!data) return;
+    openModal({
+      kind: 'dark',
+      source: card.querySelector('.interference-source')?.textContent || '',
+      glyphHTML: card.querySelector('.archetype-glyph')?.outerHTML || '',
+      title: data.name,
+      systems: [],
+      sections: [
+        {label: 'Как это звучит', text: data.sound, kind: 'plain'},
+        {label: 'Откуда помеха', text: data.origin, kind: 'plain'},
+        {label: 'Как убрать искажение', text: data.fix, kind: 'lesson'},
+      ],
+      links: CONNECTIONS['int:' + key]
+    });
+  };
+});
+
+// — Раскладка карточек: при нечётном количестве растягиваем последнюю —
+function fixGridLayout() {
+  document.querySelectorAll('.bright-grid').forEach(grid => {
+    const cards = grid.querySelectorAll(':scope > .bright-card');
+    cards.forEach(c => c.classList.remove('last-stretch'));
+    if (cards.length % 2 === 1 && cards.length > 0) {
+      cards[cards.length - 1].classList.add('last-stretch');
+    }
+  });
+  document.querySelectorAll('.interferences-grid').forEach(grid => {
+    const cards = grid.querySelectorAll(':scope > .interference-card');
+    cards.forEach(c => c.classList.remove('last-stretch'));
+    if (cards.length % 2 === 1 && cards.length > 0) {
+      cards[cards.length - 1].classList.add('last-stretch');
+    }
+  });
+}
+fixGridLayout();
+
+// — Модальное окно деталей —
+const modalBackdrop = document.getElementById('modal-backdrop');
+const modalContent = document.getElementById('modal-content');
+const modalBody = document.getElementById('modal-body');
+const modalCloseBtn = document.getElementById('modal-close');
+
+function openModal({kind, source, glyphHTML, title, systems, sections, links}) {
+  modalContent.classList.toggle('dark', kind === 'dark');
+  let html = '';
+  if (source) html += `<div class="modal-source">${source}</div>`;
+  if (glyphHTML) {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = glyphHTML;
+    const svg = tmp.querySelector('svg');
+    if (svg) {
+      svg.setAttribute('class', 'archetype-glyph modal-glyph');
+      html += svg.outerHTML;
+    }
+  }
+  html += `<h2 class="modal-title" id="modal-title">${title}</h2>`;
+  if (systems && systems.length) {
+    html += `<div class="modal-systems">${systems.join(' · ')}</div>`;
+  }
+  let shadowIdx = sections.findIndex(s => s.kind === 'shadow');
+  sections.forEach((s, i) => {
+    let cls = 'modal-section';
+    if (s.kind === 'lesson') cls += ' lesson';
+    let style = '';
+    if (s.kind === 'shadow') style = ' style="display:none"';
+    html += `<div class="${cls}" data-section-kind="${s.kind}"${style}>
+      <div class="modal-section-label">${s.label}</div>
+      <div class="modal-section-text">${s.text}</div>`;
+    if (s.kind === 'light' && s.amplify) {
+      html += `<div class="practice-amplify" style="margin-top:14px">
+        <p class="practice-label">Практика усиления</p>
+        <p class="practice-text">${s.amplify}</p></div>`;
+    }
+    if (s.kind === 'light' && shadowIdx !== -1) {
+      html += `<button class="btn modal-flip" data-flip="to-shadow" style="margin-top:14px">показать теневой аспект ↻</button>`;
+    }
+    if (s.kind === 'shadow') {
+      html += `<button class="btn modal-flip" data-flip="to-light" style="margin-top:14px">↻ вернуться к светлой стороне</button>`;
+    }
+    html += `</div>`;
+  });
+  modalBody.innerHTML = html;
+
+  if (links && links.length) {
+    const wrap = document.createElement('div');
+    wrap.className = 'modal-links';
+    wrap.innerHTML = `<span class="conn-label">Связано с</span>` +
+      links.map(l => `<button class="conn-chip" data-conn="${l.to}" type="button">${l.label}</button>`).join('');
+    modalBody.appendChild(wrap);
+    wrap.querySelectorAll('.conn-chip').forEach(ch => {
+      ch.onclick = () => openAspectModal(ch.dataset.conn);
+    });
+  }
+
+  modalBody.querySelectorAll('.modal-flip').forEach(btn => {
+    btn.onclick = () => {
+      const lightSec = modalBody.querySelector('[data-section-kind="light"]');
+      const shadowSec = modalBody.querySelector('[data-section-kind="shadow"]');
+      if (btn.dataset.flip === 'to-shadow') {
+        if (lightSec) lightSec.style.display = 'none';
+        if (shadowSec) shadowSec.style.display = 'block';
+      } else {
+        if (shadowSec) shadowSec.style.display = 'none';
+        if (lightSec) lightSec.style.display = 'block';
+      }
+    };
+  });
+
+  modalBackdrop.classList.add('open');
+  document.body.classList.add('modal-open');
+  modalContent.scrollTop = 0;
+  modalBackdrop.scrollTop = 0;
+}
+
+function closeModal() {
+  modalBackdrop.classList.remove('open');
+  document.body.classList.remove('modal-open');
+  setTimeout(() => { modalBody.innerHTML = ''; }, 200);
+}
+
+modalCloseBtn.onclick = closeModal;
+modalBackdrop.onclick = (ev) => {
+  if (ev.target === modalBackdrop) closeModal();
+};
+document.addEventListener('keydown', (ev) => {
+  if (ev.key === 'Escape' && modalBackdrop.classList.contains('open')) {
+    closeModal();
+  }
+});
+</script>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="footer-brand-row">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="19" fill="url(#solSun)"/>
+      </svg>
+      <span style="font-family:'Fraunces',Georgia,serif;font-style:italic;">Solir</span>
+    </div>
+    <p class="footer-tag">Telegram-бот ежедневной саморефлексии. Синтез Дизайна Человека, астрологии и нумерологии в одну живую карту тебя.</p>
+
+    <div class="footer-cols">
+      <div class="footer-col">
+        <p>Продукт</p>
+        <span>Что это</span>
+        <span>Как устроено</span>
+        <span>Цена</span>
+        <span>Тестовая карта</span>
+      </div>
+      <div class="footer-col">
+        <p>Связаться</p>
+        <a href="https://t.me/solir" target="_blank" rel="noopener">Telegram-канал</a>
+        <a href="https://t.me/vanzhuravlev" target="_blank" rel="noopener">Написать автору</a>
+        <span>Поддержка</span>
+      </div>
+      <div class="footer-col">
+        <p>Документы</p>
+        <span>Оферта</span>
+        <span>Политика данных</span>
+        <span>Согласие</span>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Solir. Все права защищены.</span>
+      <span>
+        <span>RU</span>
+        <span>EN</span>
+      </span>
+    </div>
+  </div>
+</footer>
+
+
+
+<script>
+(function(){
+  var bar=document.createElement('div'); bar.id='solir-scroll'; document.body.appendChild(bar);
+  var titles=[].slice.call(document.querySelectorAll('h2.map-title'));
+  var siteNav=document.querySelector('.site-nav');
+  if(titles.length && siteNav){
+    siteNav.className='site-nav solir-progress';
+    var html=''; titles.forEach(function(t,i){ html+='<div class="seg" data-i="'+i+'"><span class="tk"></span><span class="nm">'+t.textContent.trim()+'</span></div>'; });
+    html+='<div class="pcount">1 / '+titles.length+'</div>';
+    siteNav.innerHTML=html;
+    var segs=[].slice.call(siteNav.querySelectorAll('.seg')), pc=siteNav.querySelector('.pcount');
+    segs.forEach(function(s,i){ s.addEventListener('click',function(){ titles[i].scrollIntoView({behavior:'smooth',block:'start'}); }); });
+    function setA(i){ segs.forEach(function(s,j){ s.classList.toggle('active', j===i); }); pc.textContent=(i+1)+' / '+titles.length+' · '+titles[i].textContent.trim(); }
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ var i=titles.indexOf(e.target); if(i>=0) setA(i); } }); },{rootMargin:'-45% 0px -50% 0px'});
+    titles.forEach(function(t){ io.observe(t); }); setA(0);
+    window.addEventListener('scroll',function(){ var h=document.documentElement; var sc=h.scrollTop/((h.scrollHeight-h.clientHeight)||1); bar.style.width=(Math.min(1,Math.max(0,sc))*100)+'%'; },{passive:true});
+  }
+  var firstCell=document.querySelector('.cell');
+  if(firstCell){
+    var anchor=firstCell.parentNode;
+    function fork(l){ return '<svg class="resonance r-'+l+'" viewBox="0 0 24 22" aria-hidden="true"><line x1="12" y1="16" x2="12" y2="21"/><line x1="9" y1="16" x2="15" y2="16"/><line x1="9" y1="11" x2="9" y2="16"/><line x1="15" y1="11" x2="15" y2="16"/><path class="wave wave-1" d="M6 9 Q 12 6, 18 9"/><path class="wave wave-2" d="M4 6 Q 12 2, 20 6"/><path class="wave wave-3" d="M2 3 Q 12 -1, 22 3"/></svg>'; }
+    /* верх: только подсказка кликабельности */
+    var g=document.createElement('div'); g.className='map-guide';
+    g.innerHTML='<span class="mg-hint"><span class="tap">\u203A</span> Нажми на ячейку, столбец или карточку — раскроется разбор</span>';
+    anchor.parentNode.insertBefore(g, anchor);
+    /* низ: глифы камертона + короткая приписка вместо громоздкой подписи */
+    var legend=document.querySelector('.map-legend');
+    if(legend){
+      legend.classList.add('map-legend-reson');
+      legend.innerHTML='<span class="glyphs">'+fork(1)+fork(2)+fork(3)+'</span>'+
+        '<span class="mlr-note">чем больше камертон — тем чаще встречается этот аспект в разных системах</span>';
+    }
+  }
+})();
+</script>
