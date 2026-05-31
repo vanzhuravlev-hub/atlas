@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solir · Конкурентный анализ рынка self-discovery</title>
+<style>
+:root{
+  --paper:#FFF1DD; --sand:#FAEAD0; --sand-warm:#F5DBB3;
+  --sun-highlight:#FFE9C2; --sun-light:#E8B47D; --sun:#DC9658; --sun-deep:#C8642E;
+  --text-accent:#A8521E;
+  --ink:#2A1810; --ink-soft:#5A4636; --ink-muted:#8A7259; --earth:#8B4513;
+  --ink-deep:#1F1610; --ink-darker:#0F0805; --glow:#FFF1DD;
+  --success:#5E6B33; --warning:#C8642E; --error:#A8321A; --info:#8B4513;
+  --line:rgba(139,69,19,0.18); --line-soft:rgba(139,69,19,0.10);
+  --sun-disc:radial-gradient(circle at 35% 30%,#FFE9C2 0%,#DC9658 65%,#C8642E 100%);
+  --sunrise:linear-gradient(90deg,#E8B47D,#DC9658,#C8642E);
+  --dark-radial:radial-gradient(ellipse at center,#2A1810 0%,#1F1610 42%,#0F0805 100%);
+  --serif:Georgia,'Times New Roman',serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.6;
+  font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:400;line-height:1.2;color:var(--ink)}
+a{color:var(--text-accent);text-decoration:none}
+/* paper grain */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.4;
+  background-image:radial-gradient(rgba(139,69,19,0.04) 1px,transparent 1px);background-size:3px 3px}
+
+/* ---------- NAV ---------- */
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,241,221,.82);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);padding:.7rem 0}
+.nav-inner{max-width:1280px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;gap:1.4rem}
+.brand{display:flex;align-items:center;flex-shrink:0}
+.brand-logo{height:30px;width:auto;display:block}
+.foot .brand-logo{height:34px}
+.nav-links{display:flex;gap:.3rem;flex-wrap:wrap;overflow-x:auto}
+.nav-links a{font-size:.78rem;color:var(--ink-soft);padding:.35rem .6rem;border-radius:7px;
+  white-space:nowrap;transition:.2s;font-weight:500;letter-spacing:.01em}
+.nav-links a:hover{background:var(--sand-warm);color:var(--ink)}
+.nav-tag{margin-left:auto;font-size:.68rem;color:var(--ink-muted);letter-spacing:.08em;
+  text-transform:uppercase;flex-shrink:0}
+@media(max-width:920px){.nav-tag{display:none}.nav-links{flex-wrap:nowrap}}
+
+/* ---------- LAYOUT ---------- */
+.wrap{max-width:1280px;margin:0 auto;padding:0 1.5rem;position:relative;z-index:2}
+section{padding:4.5rem 0;border-bottom:1px solid var(--line-soft)}
+.eyebrow{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-accent);
+  font-weight:600;margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem}
+.eyebrow::before{content:"";width:22px;height:2px;background:var(--sunrise);border-radius:2px}
+h2.sec{font-size:2.3rem;margin-bottom:.6rem;letter-spacing:-.01em}
+.sec-lead{font-size:1.08rem;color:var(--ink-soft);max-width:62ch;margin-bottom:2.4rem;font-family:var(--serif);font-style:italic}
+
+/* ---------- HERO ---------- */
+.hero{background:var(--dark-radial);color:var(--paper);padding:5.5rem 0 5rem;position:relative;overflow:hidden;border-bottom:none}
+.hero .wrap{position:relative;z-index:3}
+.hero h1{color:var(--paper);font-size:3.5rem;line-height:1.05;letter-spacing:-.02em;max-width:18ch;margin-bottom:1.4rem}
+.hero h1 em{font-style:italic;color:var(--sun-light)}
+.hero-lead{font-size:1.2rem;color:rgba(255,241,221,.82);max-width:60ch;margin-bottom:2.2rem;line-height:1.65}
+.hero-sun{position:absolute;width:520px;height:520px;border-radius:50%;background:var(--sun-disc);
+  right:-160px;top:-120px;opacity:.22;filter:blur(8px)}
+.hero-orbit{position:absolute;border:1px solid rgba(255,233,194,.13);border-radius:50%}
+.o1{width:680px;height:680px;right:-220px;top:-180px}
+.o2{width:900px;height:900px;right:-320px;top:-280px}
+.hero-stats{display:flex;gap:2.6rem;flex-wrap:wrap;margin-top:1rem}
+.hstat{}
+.hstat .n{font-family:var(--serif);font-size:2.1rem;color:var(--sun-light);line-height:1}
+.hstat .l{font-size:.82rem;color:rgba(255,241,221,.7);margin-top:.3rem;max-width:18ch}
+@media(max-width:720px){.hero h1{font-size:2.3rem}.hero-sun,.hero-orbit{display:none}}
+
+/* ---------- CARDS / GRID ---------- */
+.grid{display:grid;gap:1.1rem}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.card{background:var(--sand);border:1px solid var(--line);border-radius:14px;padding:1.5rem;transition:.25s}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(139,69,19,.10);border-color:var(--sun-light)}
+.card h3{font-size:1.18rem;margin-bottom:.5rem}
+.card h4{font-size:1rem;margin-bottom:.4rem}
+.card p{font-size:.92rem;color:var(--ink-soft)}
+.card .ic{width:38px;height:38px;border-radius:10px;background:var(--sun-disc);margin-bottom:.9rem;
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  box-shadow:0 3px 12px rgba(200,100,46,.3)}
+.tag{display:inline-block;font-size:.7rem;padding:.2rem .55rem;border-radius:20px;
+  background:var(--sand-warm);color:var(--text-accent);font-weight:600;letter-spacing:.03em;margin:.15rem .2rem .15rem 0;border:1px solid var(--line)}
+.tag.dark{background:var(--ink);color:var(--sun-light);border-color:var(--ink)}
+.tag.sun{background:var(--sunrise);color:#fff;border:none}
+
+/* segment bars */
+.seg{margin-bottom:1.1rem}
+.seg-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.35rem}
+.seg-head .name{font-weight:600;font-size:.95rem}
+.seg-head .val{font-size:.8rem;color:var(--ink-muted)}
+.seg-track{height:9px;background:var(--sand-warm);border-radius:6px;overflow:hidden}
+.seg-fill{height:100%;background:var(--sunrise);border-radius:6px;transition:width 1.1s cubic-bezier(.2,.7,.2,1)}
+
+/* positioning map */
+.posmap{position:relative;background:var(--sand);border:1px solid var(--line);border-radius:16px;
+  height:520px;margin-top:1rem;overflow:hidden}
+.axis{position:absolute;background:var(--line)}
+.axis-x{left:8%;right:8%;top:50%;height:1px}
+.axis-y{top:8%;bottom:8%;left:50%;width:1px}
+.axis-lbl{position:absolute;font-size:.72rem;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.dot{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:.25rem;cursor:default;transition:.2s}
+.dot:hover{z-index:5}
+.dot .d{width:13px;height:13px;border-radius:50%;background:var(--ink-soft);border:2px solid var(--paper);box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.dot .lbl{font-size:.72rem;color:var(--ink-soft);white-space:nowrap;font-weight:500}
+.dot.solir .d{width:20px;height:20px;background:var(--sun-disc);box-shadow:0 3px 14px rgba(200,100,46,.6);border-color:var(--paper)}
+.dot.solir .lbl{color:var(--sun-deep);font-weight:700;font-size:.82rem}
+@media(max-width:600px){.posmap{height:440px}.dot .lbl{font-size:.62rem}}
+
+/* ---------- TABLE ---------- */
+.table-controls{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;margin-bottom:1.2rem}
+.search{flex:1;min-width:220px;position:relative}
+.search input{width:100%;padding:.7rem 1rem .7rem 2.4rem;border:1px solid var(--line);border-radius:10px;
+  background:var(--sand);font-family:var(--sans);font-size:.9rem;color:var(--ink)}
+.search input:focus{outline:none;border-color:var(--sun);box-shadow:0 0 0 3px rgba(220,150,88,.15)}
+.search::before{content:"⌕";position:absolute;left:.85rem;top:50%;transform:translateY(-50%);color:var(--ink-muted);font-size:1.1rem}
+.filter-btn{padding:.6rem 1rem;border:1px solid var(--line);border-radius:10px;background:var(--sand);
+  font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--ink-soft);cursor:pointer;transition:.2s}
+.filter-btn:hover{background:var(--sand-warm)}
+.filter-btn.active{background:var(--ink);color:var(--sun-light);border-color:var(--ink)}
+.table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--sand);
+  -webkit-overflow-scrolling:touch;max-height:78vh}
+table{border-collapse:collapse;width:100%;font-size:.82rem;min-width:1400px}
+thead th{position:sticky;top:0;background:var(--ink);color:var(--paper);padding:.7rem .75rem;
+  text-align:left;font-weight:600;font-size:.74rem;letter-spacing:.02em;white-space:nowrap;cursor:pointer;
+  border-right:1px solid rgba(255,241,221,.08);z-index:2;user-select:none}
+thead th:first-child{position:sticky;left:0;z-index:3;min-width:135px}
+thead th:hover{background:var(--ink-deep)}
+thead th .arr{opacity:.4;font-size:.7rem;margin-left:.2rem}
+tbody td{padding:.6rem .75rem;border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft);
+  vertical-align:top;color:var(--ink-soft);max-width:240px}
+tbody td:first-child{position:sticky;left:0;background:var(--sand-warm);font-weight:700;color:var(--ink);
+  font-family:var(--serif);z-index:1;min-width:135px}
+tbody tr:hover td{background:rgba(245,219,179,.5)}
+tbody tr:hover td:first-child{background:var(--sun-light)}
+tbody tr.solir-row td{background:rgba(255,233,194,.45)}
+tbody tr.solir-row td:first-child{background:var(--sun-disc);color:#fff}
+.score{display:inline-block;min-width:1.4rem;text-align:center;padding:.1rem .4rem;border-radius:6px;font-weight:700;font-size:.74rem}
+.s5{background:var(--success);color:#fff}.s4{background:var(--sun);color:#fff}
+.s3{background:var(--sand-warm);color:var(--ink)}.s2{background:#E8C9A0;color:var(--ink-soft)}
+.s1{background:#EADbc4;color:var(--ink-muted)}
+.verdict{font-size:.78rem;line-height:1.4}
+.v-yes{color:var(--success);font-weight:600}.v-better{color:var(--sun-deep);font-weight:600}
+.v-no{color:var(--ink-muted)}
+.tbl-note{font-size:.78rem;color:var(--ink-muted);margin-top:.7rem;font-style:italic}
+
+/* ERRC */
+.errc{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
+@media(max-width:700px){.errc{grid-template-columns:1fr}}
+.errc-cell{border-radius:14px;padding:1.5rem;border:1px solid var(--line)}
+.errc-cell h4{display:flex;align-items:center;gap:.5rem;margin-bottom:.9rem;font-size:1.1rem}
+.errc-cell ul{list-style:none}
+.errc-cell li{font-size:.9rem;color:var(--ink-soft);padding:.4rem 0 .4rem 1.3rem;position:relative;border-bottom:1px dashed var(--line-soft)}
+.errc-cell li::before{content:"";position:absolute;left:0;top:.95rem;width:7px;height:7px;border-radius:50%;background:var(--sun)}
+.errc-elim{background:linear-gradient(180deg,rgba(168,50,26,.06),transparent)}
+.errc-elim h4{color:var(--error)}
+.errc-reduce{background:linear-gradient(180deg,rgba(200,100,46,.06),transparent)}
+.errc-reduce h4{color:var(--sun-deep)}
+.errc-raise{background:linear-gradient(180deg,rgba(94,107,51,.07),transparent)}
+.errc-raise h4{color:var(--success)}
+.errc-create{background:linear-gradient(180deg,rgba(220,150,88,.1),transparent)}
+.errc-create h4{color:var(--text-accent)}
+
+/* strategy canvas */
+.canvas-wrap{background:var(--sand);border:1px solid var(--line);border-radius:16px;padding:1.5rem 1rem;margin-top:1rem;overflow-x:auto}
+.legend{display:flex;gap:1.4rem;flex-wrap:wrap;margin-bottom:1rem;padding:0 .5rem}
+.legend span{display:flex;align-items:center;gap:.45rem;font-size:.82rem;color:var(--ink-soft);font-weight:500}
+.legend .sw{width:22px;height:3px;border-radius:2px}
+
+/* lists / findings */
+.finds{counter-reset:f}
+.find{display:flex;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line-soft)}
+.find::before{counter-increment:f;content:counter(f);flex-shrink:0;width:30px;height:30px;border-radius:8px;
+  background:var(--ink);color:var(--sun-light);display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:.95rem;font-weight:600}
+.find .ftxt h4{font-size:1rem;margin-bottom:.2rem}
+.find .ftxt p{font-size:.88rem;color:var(--ink-soft)}
+
+/* collapsible */
+.acc{border:1px solid var(--line);border-radius:12px;margin-bottom:.8rem;overflow:hidden;background:var(--sand)}
+.acc-head{padding:1.1rem 1.3rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--serif);font-size:1.1rem;color:var(--ink);transition:.2s;user-select:none}
+.acc-head:hover{background:var(--sand-warm)}
+.acc-head .chev{transition:.3s;color:var(--sun-deep);font-size:1.2rem}
+.acc.open .acc-head .chev{transform:rotate(180deg)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.acc-body-inner{padding:0 1.3rem 1.3rem}
+.acc-body-inner p{font-size:.92rem;color:var(--ink-soft);margin-bottom:.6rem}
+
+/* two-col prose */
+.cols2{column-count:2;column-gap:2.2rem}
+.cols2 p{margin-bottom:1rem;break-inside:avoid;font-size:.94rem;color:var(--ink-soft)}
+@media(max-width:700px){.cols2{column-count:1}}
+
+/* callout */
+.callout{background:var(--ink);color:var(--paper);border-radius:16px;padding:2.2rem;margin-top:1.5rem;position:relative;overflow:hidden}
+.callout::after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;background:var(--sun-disc);
+  right:-80px;bottom:-90px;opacity:.18}
+.callout h3{color:var(--sun-light);font-style:italic;margin-bottom:.7rem;position:relative;font-size:1.4rem}
+.callout p{color:rgba(255,241,221,.85);position:relative;font-size:1rem;max-width:65ch}
+
+/* footer */
+.foot{background:var(--ink-darker);color:rgba(255,241,221,.6);padding:2.5rem 0;text-align:center;font-size:.82rem;border:none}
+.foot .brand{justify-content:center;margin-bottom:.8rem}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s}
+.reveal.in{opacity:1;transform:none}
+
+mark{background:var(--sun-light);color:var(--ink);padding:.05rem .25rem;border-radius:3px}
+.pill-row{display:flex;gap:.5rem;flex-wrap:wrap;margin:.6rem 0 0}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav"><div class="nav-inner">
+  <div class="brand"><svg class="brand-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 120" role="img" aria-label="Solir"><defs><radialGradient id="sR" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="65%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient></defs><circle cx="59.40" cy="60.0" r="52.20" fill="url(#sR)"/><path transform="translate(123.6 94.82) scale(0.04928 -0.04928)" d="M545 -22Q457 -22 399.5 -5.5Q342 11 307.5 32.5Q273 54 253.5 71.0Q234 88 222 88Q211 88 197.0 72.5Q183 57 167.5 37.0Q152 17 136.0 1.5Q120 -14 105 -14Q81 -14 69.5 -1.0Q58 12 61 39L103 385Q105 413 118.5 427.5Q132 442 151 442Q171 442 183.5 428.5Q196 415 205 389L219 302Q232 183 310.5 120.5Q389 58 502 58Q577 58 634.5 85.5Q692 113 727.0 162.0Q762 211 772 277Q788 367 743.5 443.0Q699 519 565 605Q417 702 353.5 798.5Q290 895 306 1025Q318 1129 380.5 1220.0Q443 1311 555.0 1367.5Q667 1424 825 1424Q959 1424 1051.5 1381.0Q1144 1338 1190.5 1269.5Q1237 1201 1235 1125Q1233 1079 1209.5 1049.0Q1186 1019 1146 1019Q1111 1019 1090.0 1038.5Q1069 1058 1055 1099L1038 1167Q1015 1260 956.0 1305.0Q897 1350 810 1350Q724 1350 659.5 1317.0Q595 1284 556.5 1229.0Q518 1174 510 1106Q497 1008 547.0 929.0Q597 850 727 759Q840 683 901.0 616.0Q962 549 982.5 480.5Q1003 412 994 333Q984 226 924.0 146.0Q864 66 766.5 22.0Q669 -22 545 -22Z" fill="#2A1810"/><path transform="translate(180.03 94.82) scale(0.04928 -0.04928)" d="M634 936Q757 933 844.0 876.0Q931 819 968.5 715.0Q1006 611 980 466Q960 357 908.5 266.0Q857 175 781.5 109.5Q706 44 613.0 10.0Q520 -24 417 -21Q296 -17 210.5 39.5Q125 96 88.5 200.0Q52 304 77 449Q98 559 148.5 649.5Q199 740 273.5 805.5Q348 871 439.5 905.0Q531 939 634 936ZM421 62Q464 58 506.0 73.5Q548 89 586.0 122.0Q624 155 657.0 205.5Q690 256 715.5 322.0Q741 388 757 469Q783 594 774.0 677.0Q765 760 728.0 803.5Q691 847 630 853Q587 857 546.5 841.5Q506 826 468.5 793.0Q431 760 398.5 710.0Q366 660 341.0 593.5Q316 527 300 446Q274 321 282.5 238.0Q291 155 327.0 111.5Q363 68 421 62Z" fill="#2A1810"/><path transform="translate(231.97 94.82) scale(0.04928 -0.04928)" d="M735 1437Q816 1437 854.5 1404.5Q893 1372 893 1328Q893 1286 868.0 1259.0Q843 1232 793 1232Q764 1232 742.0 1242.5Q720 1253 701.5 1266.5Q683 1280 662.5 1290.5Q642 1301 614 1301Q584 1301 559.0 1284.5Q534 1268 519.0 1240.5Q504 1213 500 1179Q499 1156 504.0 1133.5Q509 1111 516.5 1088.0Q524 1065 529.5 1039.0Q535 1013 534.0 982.5Q533 952 522 915L324 279Q296 184 304.5 152.0Q313 120 348 120Q378 120 411.5 137.5Q445 155 473 189Q486 202 495.0 205.5Q504 209 513 206Q525 202 528.0 187.5Q531 173 520 150Q502 103 456.0 64.0Q410 25 348.5 2.0Q287 -21 218 -21Q153 -21 120.5 6.5Q88 34 86.5 90.0Q85 146 112 233L394 1145Q441 1296 527.5 1366.5Q614 1437 735 1437Z" fill="#2A1810"/><path transform="translate(262.82 94.82) scale(0.04928 -0.04928)" d="M346 260Q318 181 325.5 149.5Q333 118 360 118Q377 118 395.5 128.5Q414 139 441 165Q457 180 468.0 184.0Q479 188 489 183Q501 177 500.5 162.0Q500 147 488 124Q452 58 385.0 19.0Q318 -20 237 -20Q175 -20 143.5 8.0Q112 36 111.0 90.0Q110 144 138 221L299 654Q328 733 320.5 765.0Q313 797 285 797Q270 797 250.5 786.5Q231 776 204 749Q188 735 177.0 731.0Q166 727 156 731Q145 737 145.0 752.0Q145 767 157 790Q193 856 259.5 895.5Q326 935 406 935Q464 935 495.5 907.0Q527 879 530.5 824.0Q534 769 504 688ZM480 1125Q416 1125 382.0 1160.0Q348 1195 354 1245Q358 1284 383.0 1317.5Q408 1351 448.5 1371.0Q489 1391 541 1391Q608 1391 639.0 1356.0Q670 1321 664 1270Q660 1230 635.0 1197.0Q610 1164 570.0 1144.5Q530 1125 480 1125Z" fill="#2A1810"/><path transform="translate(293.87 94.82) scale(0.04928 -0.04928)" d="M145 731Q133 737 133.5 752.0Q134 767 146 790Q170 834 208.5 866.5Q247 899 295.5 917.0Q344 935 396 935Q447 935 475.5 910.0Q504 885 504 837Q504 795 486.5 740.0Q469 685 445.5 625.0Q422 565 403.0 510.5Q384 456 381 416L365 418Q397 536 446.0 631.5Q495 727 554.0 794.5Q613 862 676.0 898.5Q739 935 801 935Q876 935 914.0 892.5Q952 850 951 781Q949 728 930.0 690.5Q911 653 881.5 633.0Q852 613 817 613Q779 613 761.0 631.0Q743 649 743 672Q743 694 749.5 713.5Q756 733 756 755Q756 780 744.5 795.0Q733 810 707 810Q664 810 607.5 757.5Q551 705 493.5 602.5Q436 500 387 348Q364 279 353.5 237.5Q343 196 343 163Q343 139 352.5 125.5Q362 112 372.0 99.5Q382 87 382 64Q382 41 360.5 21.0Q339 1 298.0 -10.0Q257 -21 196 -21Q150 -21 128.0 -0.5Q106 20 107.0 62.5Q108 105 130 169L290 654Q317 733 309.0 765.0Q301 797 274 797Q258 797 239.0 786.5Q220 776 193 749Q177 735 166.0 731.0Q155 727 145 731Z" fill="#2A1810"/></svg></div>
+  <div class="nav-links">
+    <a href="#overview">Обзор</a>
+    <a href="#players">Игроки</a>
+    <a href="#table">Таблица</a>
+    <a href="#blueocean">Голубой океан</a>
+    <a href="#ux">UX</a>
+    <a href="#ai">AI</a>
+    <a href="#future">Будущее</a>
+    <a href="#position">Позиция Solir</a>
+    <a href="#verdict">Выводы</a>
+  </div>
+  <span class="nav-tag">Конкурентный анализ · 2026</span>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-orbit o1"></div><div class="hero-orbit o2"></div>
+  <div class="hero-sun"></div>
+  <div class="wrap">
+    <div class="eyebrow" style="color:var(--sun-light)">Стратегическое исследование рынка self-discovery</div>
+    <h1>Где в перегретом рынке самопознания есть <em>незанятый океан</em></h1>
+    <p class="hero-lead">Свод всех исследований и аудитов сессии: карта рынка, ~25 конкурентов, большая сравнительная таблица по 38 параметрам, анализ по «Голубому океану», UX- и AI-слои, прогноз на 3–5 лет и стратегическая позиция Solir — продукта на стыке Human Design, астрологии и нумерации, построенного как рефлексивный спутник, а не оракул.</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="n">~25</div><div class="l">конкурентов в 7 нишах</div></div>
+      <div class="hstat"><div class="n">38+</div><div class="l">параметров сравнения</div></div>
+      <div class="hstat"><div class="n">$3–5,7 млрд</div><div class="l">рынок астроприложений 2024–26</div></div>
+      <div class="hstat"><div class="n">1</div><div class="l">пустая ниша: рефлексивный спутник</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- 1. OVERVIEW -->
+<section id="overview"><div class="wrap">
+  <div class="eyebrow reveal">01 · Карта рынка</div>
+  <h2 class="sec reveal">Рынок самопознания: семь ниш, один общий перегрев</h2>
+  <p class="sec-lead reveal">Индустрия — слоёный пирог из трёх плит: возрождённая классическая астрология, психологизированный слой XX века и digital/AI-слой 2017–2026. Большинство продуктов конкурируют в двух режимах — «оракул» (предсказание) и «трекер» (геймификация). Между ними — пустота.</p>
+
+  <div class="grid g4">
+    <div class="card reveal"><div class="ic">🌍</div><h4>Западные app-гиганты</h4><p>Co–Star, The Pattern, CHANI, Sanctuary, Nebula. Астрология как identity и daily-ритуал. Венчур, миллионы загрузок.</p></div>
+    <div class="card reveal"><div class="ic">🇮🇳</div><h4>Индийский консультационный</h4><p>Astrotalk, AstroSage. Поминутные консультации с живыми астрологами. Огромная выручка (₹651 крор+ FY24).</p></div>
+    <div class="card reveal"><div class="ic">🇷🇺</div><h4>Русскоязычный</h4><p>Chronos (эксперт-процессор), Astro7 (маркетплейс), Матрица Судьбы (инфобизнес). Родной рынок Solir.</p></div>
+    <div class="card reveal"><div class="ic">🧬</div><h4>Типологии и системы</h4><p>Human Design (myBodyGraph, Humanify), Gene Keys, 16Personalities. «Узнай свой тип» как социальная валюта.</p></div>
+    <div class="card reveal"><div class="ic">🎴</div><h4>Tarot / оракулы</h4><p>Labyrinthos, Co–Star-смежные. Daily card, проективная техника. Высокая виральность, низкая глубина.</p></div>
+    <div class="card reveal"><div class="ic">🌱</div><h4>Wellness / habit</h4><p>Finch, Headspace-смежные. Геймификация заботы о себе. Petпривязанность, стрики, daily-механики.</p></div>
+    <div class="card reveal"><div class="ic">🤖</div><h4>AI-companion</h4><p>Replika и аналоги. Эмоциональная привязанность через диалог. Пересечение по engagement, не по системе.</p></div>
+    <div class="card reveal"><div class="ic">☀️</div><h4 style="color:var(--sun-deep)">Рефлексивный спутник</h4><p><strong>Пустая ниша.</strong> Карта + недирективный собеседник, который не предсказывает и не геймифицирует. Здесь — Solir.</p></div>
+  </div>
+
+  <h3 style="margin:3rem 0 .4rem;font-size:1.5rem" class="reveal">Карта позиционирования</h3>
+  <p style="font-size:.9rem;color:var(--ink-muted);margin-bottom:.4rem" class="reveal">Ось X: <strong>директивность</strong> (даёт ответы ↔ задаёт вопросы). Ось Y: <strong>глубина</strong> (развлечение ↔ трансформация). Solir занимает верхний-правый угол — глубокий и недирективный, где почти никого нет.</p>
+  <div class="posmap reveal">
+    <div class="axis axis-x"></div><div class="axis axis-y"></div>
+    <div class="axis-lbl" style="left:1.5%;top:48%">Даёт ответы</div>
+    <div class="axis-lbl" style="right:1.5%;top:48%;text-align:right">Задаёт вопросы</div>
+    <div class="axis-lbl" style="left:50%;top:1.5%;transform:translateX(-50%)">Трансформация</div>
+    <div class="axis-lbl" style="left:50%;bottom:1.5%;transform:translateX(-50%)">Развлечение</div>
+    <!-- dots: left=more directive, right=more questioning; top=deeper -->
+    <div class="dot" style="left:20%;top:78%"><div class="d"></div><div class="lbl">Co–Star</div></div>
+    <div class="dot" style="left:30%;top:34%"><div class="d"></div><div class="lbl">The Pattern</div></div>
+    <div class="dot" style="left:38%;top:24%"><div class="d"></div><div class="lbl">CHANI</div></div>
+    <div class="dot" style="left:22%;top:58%"><div class="d"></div><div class="lbl">Sanctuary</div></div>
+    <div class="dot" style="left:18%;top:70%"><div class="d"></div><div class="lbl">Nebula</div></div>
+    <div class="dot" style="left:14%;top:50%"><div class="d"></div><div class="lbl">Astrotalk</div></div>
+    <div class="dot" style="left:16%;top:30%"><div class="d"></div><div class="lbl">Chronos</div></div>
+    <div class="dot" style="left:12%;top:64%"><div class="d"></div><div class="lbl">Astro7</div></div>
+    <div class="dot" style="left:15%;top:80%"><div class="d"></div><div class="lbl">Матрица Судьбы</div></div>
+    <div class="dot" style="left:46%;top:40%"><div class="d"></div><div class="lbl">Human Design</div></div>
+    <div class="dot" style="left:52%;top:28%"><div class="d"></div><div class="lbl">Gene Keys</div></div>
+    <div class="dot" style="left:40%;top:62%"><div class="d"></div><div class="lbl">16Personalities</div></div>
+    <div class="dot" style="left:34%;top:74%"><div class="d"></div><div class="lbl">Finch</div></div>
+    <div class="dot solir" style="left:74%;top:18%"><div class="d"></div><div class="lbl">Solir</div></div>
+  </div>
+
+  <h3 style="margin:3rem 0 1rem;font-size:1.5rem" class="reveal">Ключевые тренды и силы рынка</h3>
+  <div class="grid g2">
+    <div class="reveal">
+      <div class="seg"><div class="seg-head"><span class="name">AI-персонализация интерпретаций</span><span class="val">47% → 80%+ к 2030</span></div><div class="seg-track"><div class="seg-fill" data-w="85"></div></div></div>
+      <div class="seg"><div class="seg-head"><span class="name">Сдвиг sun-sign → whole-chart</span><span class="val">растёт</span></div><div class="seg-track"><div class="seg-fill" data-w="78"></div></div></div>
+      <div class="seg"><div class="seg-head"><span class="name">Премиум-подписки (CHANI #1 в США)</span><span class="val">растёт</span></div><div class="seg-track"><div class="seg-fill" data-w="72"></div></div></div>
+      <div class="seg"><div class="seg-head"><span class="name">Конвергенция с wellness/coaching</span><span class="val">растёт</span></div><div class="seg-track"><div class="seg-fill" data-w="68"></div></div></div>
+    </div>
+    <div class="reveal">
+      <div class="seg"><div class="seg-head"><span class="name">Sun-sign гороскопы</span><span class="val">умирают</span></div><div class="seg-track"><div class="seg-fill" data-w="22" style="background:var(--ink-muted)"></div></div></div>
+      <div class="seg"><div class="seg-head"><span class="name">Жёсткий fortune-telling</span><span class="val">регуляторный риск РФ 2025</span></div><div class="seg-track"><div class="seg-fill" data-w="30" style="background:var(--error)"></div></div></div>
+      <div class="seg"><div class="seg-head"><span class="name">Импульсный эзо-спрос РФ</span><span class="val">−40% в 2025</span></div><div class="seg-track"><div class="seg-fill" data-w="35" style="background:var(--ink-muted)"></div></div></div>
+      <div class="seg"><div class="seg-head"><span class="name">Запрос на осмысленное самопонимание</span><span class="val">структурно устойчив</span></div><div class="seg-track"><div class="seg-fill" data-w="80"></div></div></div>
+    </div>
+  </div>
+  <p class="tbl-note reveal">Охлаждение рынка 2025 вымывает «попсу», а не глубинный запрос — это играет в пользу рефлексивной рамки Solir.</p>
+</div></section>
+
+<!-- 2. PLAYERS -->
+<section id="players"><div class="wrap">
+  <div class="eyebrow reveal">02 · Игроки</div>
+  <h2 class="sec reveal">Полный список конкурентов</h2>
+  <p class="sec-lead reveal">От венчурных app-гигантов до Telegram-ботов. Каждый — со своей нишей, силой и слабостью. Кликните карточку, чтобы развернуть профиль.</p>
+  <div id="players-grid" class="grid g3"></div>
+</div></section>
+
+<!-- 3. TABLE -->
+<section id="table"><div class="wrap">
+  <div class="eyebrow reveal">03 · Сравнительная таблица</div>
+  <h2 class="sec reveal">Большая интерактивная таблица сравнения</h2>
+  <p class="sec-lead reveal">38 параметров × ~25 продуктов. Оценки 1–5 для измеримых осей, текст — для качественных. Поиск, фильтр по нишам, сортировка по любому столбцу (клик по заголовку). Последняя колонка — вердикт по Solir.</p>
+  <div class="table-controls reveal">
+    <div class="search"><input type="text" id="tsearch" placeholder="Поиск по продукту, стране, позиционированию…"></div>
+    <button class="filter-btn active" data-f="all">Все</button>
+    <button class="filter-btn" data-f="РФ">🇷🇺 РФ</button>
+    <button class="filter-btn" data-f="Запад">🌍 Запад</button>
+    <button class="filter-btn" data-f="Индия">🇮🇳 Индия</button>
+    <button class="filter-btn" data-f="типология">🧬 Типологии</button>
+    <button class="filter-btn" data-f="AI">🤖 AI-first</button>
+  </div>
+  <div class="table-scroll reveal"><table id="bigtable"><thead><tr id="thead-row"></tr></thead><tbody id="tbody"></tbody></table></div>
+  <p class="tbl-note reveal">Оценки — экспертные, на основе материалов сессии (энциклопедия рынка, аудит, дополнение). Шкала: <span class="score s5">5</span> отлично · <span class="score s4">4</span> хорошо · <span class="score s3">3</span> средне · <span class="score s2">2</span> слабо · <span class="score s1">1</span> нет/минимум. Колонка Solir: <span class="v-yes">есть</span> · <span class="v-better">может превзойти</span> · <span class="v-no">нет/намеренно нет</span>.</p>
+</div></section>
+
+<!-- 4. BLUE OCEAN -->
+<section id="blueocean"><div class="wrap">
+  <div class="eyebrow reveal">04 · Стратегия голубого океана</div>
+  <h2 class="sec reveal">Где Solir создаёт неоспоренный рынок</h2>
+  <p class="sec-lead reveal">Весь рынок конкурирует по одним и тем же осям: точность предсказания, частота контента, виральность, геймификация. Solir не выигрывает в этой гонке — он меняет сами оси ценности.</p>
+
+  <h3 style="font-size:1.4rem;margin-bottom:.3rem" class="reveal">Strategy Canvas</h3>
+  <p style="font-size:.9rem;color:var(--ink-muted);margin-bottom:.5rem" class="reveal">Кривые ценности: где конкуренты вкладываются (синяя усреднённая кривая рынка) и где иначе расставляет акценты Solir (солнечная кривая).</p>
+  <div class="legend reveal">
+    <span><span class="sw" style="background:var(--ink-soft)"></span>Средний рынок</span>
+    <span><span class="sw" style="background:var(--sun)"></span>Solir</span>
+  </div>
+  <div class="canvas-wrap reveal"><div id="canvas"></div></div>
+
+  <h3 style="font-size:1.4rem;margin:2.6rem 0 .3rem" class="reveal">ERRC Grid</h3>
+  <p style="font-size:.9rem;color:var(--ink-muted);margin-bottom:.4rem" class="reveal">Что упразднить, снизить, повысить и создать относительно стандартов индустрии.</p>
+  <div class="errc">
+    <div class="errc-cell errc-elim reveal"><h4>✕ Упразднить</h4><ul>
+      <li>Предсказания и прогнозы судьбы («что с тобой будет»)</li>
+      <li>Директивные вердикты («тебе нужно», «твоё предназначение»)</li>
+      <li>Стрики, дедлайны, лидерборды, pay-to-win</li>
+      <li>Эзо-лексику и «древность» как аргумент</li>
+      <li>Перечисление «HD + астрология + нумерология» как позиционирование</li>
+    </ul></div>
+    <div class="errc-cell errc-reduce reveal"><h4>↓ Снизить</h4><ul>
+      <li>Частоту и агрессивность push-уведомлений</li>
+      <li>Объём «контента ради контента» (ежедневные гороскопы потоком)</li>
+      <li>Зависимость от соцсетевой виральности и мемов</li>
+      <li>Сложность входа в карту (двухрежимность: обзор/глубина)</li>
+      <li>Поминутную транзакционность (анти-Astro7)</li>
+    </ul></div>
+    <div class="errc-cell errc-raise reveal"><h4>↑ Повысить</h4><ul>
+      <li>Глубину и связность интерпретации (one engine для схождений и противоречий)</li>
+      <li>Эмоциональную точность («со мной всё так»)</li>
+      <li>Авторство инсайта за пользователем</li>
+      <li>Премиальность и тишину артефакта (анти-китч)</li>
+      <li>Доверие через интеллектуальную честность</li>
+    </ul></div>
+    <div class="errc-cell errc-create reveal"><h4>+ Создать</h4><ul>
+      <li><strong>Момент резонанса</strong> — схождение трёх систем как вау-событие</li>
+      <li><strong>Журнал узнаваний</strong> — биография согласия с собой</li>
+      <li><strong>Триангуляция</strong> как видимая механика (а не компиляция)</li>
+      <li><strong>Недирективный сократический спутник</strong> вместо оракула</li>
+      <li><strong>Слой разрешения противоречий</strong> между системами</li>
+    </ul></div>
+  </div>
+
+  <div class="callout reveal">
+    <h3>Голубой океан Solir в одной фразе</h3>
+    <p>Не «ещё один синтез трёх систем с гороскопом», а единственный продукт, который показывает, где три независимые системы сходятся на чём-то настоящем про тебя, — и оставляет вывод за тобой. Конкурент может добавить третью систему за месяц. Чтобы скопировать триангуляцию + недирективность + резонанс-через-узнавание, ему придётся стать другим продуктом.</p>
+  </div>
+</div></section>
+
+<!-- 5. UX -->
+<section id="ux"><div class="wrap">
+  <div class="eyebrow reveal">05 · UX и эмоциональный дизайн</div>
+  <h2 class="sec reveal">Как конкуренты держат внимание — и где их приёмы исчерпались</h2>
+  <p class="sec-lead reveal">Удержание на рынке строится на пяти механиках. Каждая работает, но каждая же стала шаблоном, от которого аудитория устаёт.</p>
+  <div class="grid g2">
+    <div class="card reveal"><h4>Daily ritual hook</h4><p>Co–Star шлёт ~140 символов в 7–9 утра. Работает на привычку, но агрессивный push выгорает и воспринимается как шум. <strong>Solir:</strong> утреннее касание по инициативе пользователя, вопрос а не вердикт.</p></div>
+    <div class="card reveal"><h4>Identity affirmation</h4><p>«Ты X, потому что Марс…» — мгновенное узнавание себя. Сильно, но скатывается в Барнум-эффект. <strong>Solir:</strong> узнавание через схождение трёх систем + авторство вывода за человеком.</p></div>
+    <div class="card reveal"><h4>Friend network effect</h4><p>Co–Star/Pattern: добавь друга → автосравнение карт. Виральный канал. <strong>Solir:</strong> парная совместимость как органический шеринг, но в тоне Мудреца, не соцсети.</p></div>
+    <div class="card reveal"><h4>Mystery + transparency</h4><p>Эзотерика + «научный wrapper» (NASA data у Co–Star). <strong>Solir:</strong> честность вместо мистики — резонанс как «сигнал смысла», не «доказательство».</p></div>
+    <div class="card reveal"><h4>Petпривязанность (Finch)</h4><p>Забота о виртуальном питомце = забота о себе. Мощно, но инфантилизирует. <strong>Solir:</strong> «внутренний сад» — прогресс без вины, присвоение вместо награды сверху.</p></div>
+    <div class="card reveal"><h4>Cliffhanger через подписку</h4><p>Глубина дозируется paywall'ом. <strong>Solir:</strong> глубина раскрывается прогрессией зрелости пользования, а не только оплатой.</p></div>
+  </div>
+  <div class="callout reveal"><h3>Эмоциональный разрыв, который никто не закрыл</h3><p>Весь рынок даёт либо «вау, как точно» (и потом пустоту), либо «заботливый трекер» (и потом скуку). Никто не даёт тихого, накопительного переживания согласия с собой — когда продукт не развлекает и не чинит, а помогает услышать себя. Это эмоциональный голубой океан.</p></div>
+</div></section>
+
+<!-- 6. AI -->
+<section id="ai"><div class="wrap">
+  <div class="eyebrow reveal">06 · AI-слой</div>
+  <h2 class="sec reveal">Где AI поверхностен, а где меняет ядро</h2>
+  <p class="sec-lead reveal">К 2024 ~47% астроприложений ввели ML-персонализацию; к 2030 ожидается 80%+. Но почти везде AI — это «генератор гороскопов покрасивее». Реальное преимущество — в другом.</p>
+  <div class="grid g3">
+    <div class="card reveal"><span class="tag">поверхностно</span><h4>AI как генератор текста</h4><p>Co–Star «The Void», большинство AI-астрологов: LLM пишет более гладкие предсказания. Усиливает Барнум-эффект, не добавляет смысла.</p></div>
+    <div class="card reveal"><span class="tag">поверхностно</span><h4>AI-чат «спроси астролога»</h4><p>Sanctuary, AstroSage AI: Q&A-бот поверх натальных данных. Удобно, но остаётся оракулом — отвечает, а не спрашивает.</p></div>
+    <div class="card reveal"><span class="tag sun">глубоко</span><h4>AI как недирективный собеседник</h4><p><strong>Solir:</strong> сократический вопрос вместо вывода, вшитый в движок (процедура «запуск исследования, не готовый синтез»). Это смена жанра, не косметика.</p></div>
+    <div class="card reveal"><span class="tag sun">глубоко</span><h4>Память и контекст личности</h4><p><strong>Solir:</strong> бот помнит карту, узнавания, состояние. Это и есть ответ на «чем ты не GPT» — у Solir есть твой контекст и методология.</p></div>
+    <div class="card reveal"><span class="tag sun">глубоко</span><h4>Триангуляция как AI-задача</h4><p><strong>Solir:</strong> AI ищет схождения и противоречия между тремя системами — то, что человек сам в голове не сводит. Уникальная вычислительная роль.</p></div>
+    <div class="card reveal"><span class="tag dark">будущее</span><h4>Слой самопонимания для всех AI</h4><p>Когда у каждого появится личный AI-агент, Solir может стать «памятью о том, кто ты», которую подключают к любому ассистенту. «Не GPT» → стратегия.</p></div>
+  </div>
+  <p class="tbl-note reveal">Граница Solir: резонанс — «детектор подлинного для пользователя», не «детектор истины». AI усиливает узнавание, но не выносит вердикт — иначе ломается недирективность, ядро дифференциации.</p>
+</div></section>
+
+<!-- 7. FUTURE -->
+<section id="future"><div class="wrap">
+  <div class="eyebrow reveal">07 · Будущее рынка</div>
+  <h2 class="sec reveal">Куда движется self-discovery за 3–5 лет</h2>
+  <p class="sec-lead reveal">Прогноз на основе энциклопедии рынка и трендовых сигналов. Что исчезнет, что станет лидером, как AI переустроит индустрию.</p>
+  <div class="grid g2">
+    <div class="reveal">
+      <h3 style="font-size:1.2rem;margin-bottom:.8rem;color:var(--error)">Что уйдёт</h3>
+      <div class="acc"><div class="acc-head">Sun-sign гороскопы потоком<span class="chev">⌄</span></div><div class="acc-body"><div class="acc-body-inner"><p>Уже умирают. Whole-chart hyper-personalization окончательно вытеснит «гороскоп для Овна» в среднем сегменте к 2028.</p></div></div></div>
+      <div class="acc"><div class="acc-head">Жёсткий fortune-telling<span class="chev">⌄</span></div><div class="acc-body"><div class="acc-body-inner"><p>Регуляторное давление (РФ-законопроекты 2025, EU AI Act) + усталость аудитории. «Предсказание» становится токсичным позиционированием.</p></div></div></div>
+      <div class="acc"><div class="acc-head">Импульсная эзо-покупка<span class="chev">⌄</span></div><div class="acc-body"><div class="acc-body-inner"><p>РФ 2025: товары −40%, импульсивный спрос −46%. Остаётся структурный запрос на самопонимание, уходит «попса».</p></div></div></div>
+    </div>
+    <div class="reveal">
+      <h3 style="font-size:1.2rem;margin-bottom:.8rem;color:var(--success)">Что станет лидером</h3>
+      <div class="acc"><div class="acc-head">AI-first интерпретаторы с долгой памятью<span class="chev">⌄</span></div><div class="acc-body"><div class="acc-body-inner"><p>RAG над корпусами + персонализация по карте + память. Снижают барьер в сложные традиции, ведут непрерывный диалог.</p></div></div></div>
+      <div class="acc"><div class="acc-head">Hybrid-системы в одной mental model<span class="chev">⌄</span></div><div class="acc-body"><div class="acc-body-inner"><p>HD + астрология + нумерология как единый язык, а не три раздела. Solir здесь — ранний и philosophically grounded игрок.</p></div></div></div>
+      <div class="acc"><div class="acc-head">Wellness-конвергенция<span class="chev">⌄</span></div><div class="acc-body"><div class="acc-body-inner"><p>Астрология + медитация + somatic (как CHANI). Самопознание встраивается в рутину заботы о себе.</p></div></div></div>
+      <div class="acc"><div class="acc-head">Премиум-комьюнити вокруг проводника<span class="chev">⌄</span></div><div class="acc-body"><div class="acc-body-inner"><p>Не масс-маркет, а глубокое сообщество. Premium растёт быстрее mass (прецедент — CHANI как #1 по доходу в США).</p></div></div></div>
+    </div>
+  </div>
+  <div class="callout reveal"><h3>Главный сдвиг запроса</h3><p>От «что со мной будет?» → к «как я устроен?» → к «как мне жить осознанно?». От fortune-telling к identity-construction и далее к inner work. Продукт, который встанет в конце этой траектории — недирективный, глубокий, помнящий — определит следующую категорию. Это позиция Solir.</p></div>
+</div></section>
+
+<!-- 8. SOLIR POSITION -->
+<section id="position"><div class="wrap">
+  <div class="eyebrow reveal">08 · Стратегическая позиция Solir</div>
+  <h2 class="sec reveal">Сильные стороны, риски, ров и ставки</h2>
+  <p class="sec-lead reveal">Свод из стратегического аудита, мета-синтеза и дополнения по русскоязычному полю.</p>
+  <div class="grid g2">
+    <div class="card reveal" style="border-left:3px solid var(--success)"><h3>Сильные стороны</h3><div class="pill-row">
+      <span class="tag">Триангуляция как детектор подлинного</span><span class="tag">Недирективность вшита в движок</span><span class="tag">Архетип Мудреца-Сократа</span><span class="tag">Нарративная связность бренда</span><span class="tag">Психолог-ICF-коуч в основе</span><span class="tag">Пустая ниша на родном рынке</span>
+    </div></div>
+    <div class="card reveal" style="border-left:3px solid var(--error)"><h3>Слабые стороны и риски</h3><div class="pill-row">
+      <span class="tag">Несущая балка одна (триангуляция)</span><span class="tag">«Знание→жизнь» пока не доказано</span><span class="tag">Telegram удешевляет премиум</span><span class="tag">Bus-factor одного автора</span><span class="tag">Коллизия «резонанса» с Chronos</span><span class="tag">Операционный риск к 22.09</span>
+    </div></div>
+    <div class="card reveal" style="border-left:3px solid var(--sun)"><h3>Скрытые возможности</h3><div class="pill-row">
+      <span class="tag sun">Момент резонанса как вау</span><span class="tag sun">Журнал узнаваний</span><span class="tag sun">Парная совместимость = вирусный канал</span><span class="tag sun">Аудио-формат (недооценён)</span><span class="tag sun">Память бота = «не GPT»</span>
+    </div></div>
+    <div class="card reveal" style="border-left:3px solid var(--ink)"><h3>Ров (moat)</h3><div class="pill-row">
+      <span class="tag dark">Триангуляция + недирективность + присвоение</span><span class="tag dark">Философия, а не фича</span><span class="tag dark">Методология основателя в движке</span><span class="tag dark">Тон, который нельзя скопировать копированием функций</span>
+    </div></div>
+  </div>
+
+  <h3 style="font-size:1.4rem;margin:2.6rem 0 1rem" class="reveal">Стратегические ставки</h3>
+  <div class="finds reveal">
+    <div class="find"><div class="ftxt"><h4>Заморозить scope запуска на ядре</h4><p>Карта + резонанс + сократический тон + журнал узнаваний + crisis off-ramp. Сад, голоса, маркетплейс — после. Главный операционный рычаг.</p></div></div>
+    <div class="find"><div class="ftxt"><h4>Сделать резонанс видимым и своим</h4><p>«Момент резонанса» как UX-событие + отстройка термина от «точки резонанса» Chronos (квалификатор «резонанс трёх систем» или своё слово — «созвучие»).</p></div></div>
+    <div class="find"><div class="ftxt"><h4>Позиционироваться как рефлексия, не эзотерика</h4><p>Категория — самопознание/психологический инструмент. Это бренд (Мудрец), отстройка (не Astro7/Матрица) и юридическая защита (вне рекламного запрета РФ 2025).</p></div></div>
+    <div class="find"><div class="ftxt"><h4>Кодифицировать методологию в движок</h4><p>Снять bus-factor одного автора: тон и метод — в промпты и гайдлайны, чтобы качество воспроизводилось без ручной выверки каждого текста.</p></div></div>
+  </div>
+</div></section>
+
+<!-- 9. VERDICT -->
+<section id="verdict"><div class="wrap">
+  <div class="eyebrow reveal">09 · Итоговые выводы</div>
+  <h2 class="sec reveal">Топы, гипотезы и дорожная карта</h2>
+
+  <div class="grid g3" style="margin-bottom:2rem">
+    <div class="card reveal"><h3 style="font-size:1.1rem">Топ-10 сильнейших конкурентов</h3><ol style="font-size:.86rem;color:var(--ink-soft);padding-left:1.2rem;line-height:1.8">
+      <li>The Pattern — психологический язык, глубина</li><li>CHANI — премиум, inclusive, #1 доход США</li><li>Co–Star — бренд, виральность, 30M загрузок</li><li>Chronos (РФ) — экспертный процессор + AI</li><li>Astrotalk — ₹651 крор, консультации</li><li>Human Design / myBodyGraph — система-якорь</li><li>Sanctuary — AI + живые астрологи</li><li>Nebula — маркетплейс + AI</li><li>Gene Keys — созерцательная глубина</li><li>16Personalities — простота, виральность</li>
+    </ol></div>
+    <div class="card reveal"><h3 style="font-size:1.1rem">Топ-10 переоценённых решений</h3><ol style="font-size:.86rem;color:var(--ink-soft);padding-left:1.2rem;line-height:1.8">
+      <li>Агрессивный daily push</li><li>Sun-sign контент потоком</li><li>Геймификация через стрики</li><li>AI как «генератор гороскопов»</li><li>Виральность ради виральности</li><li>«Древность» как аргумент</li><li>Поминутные консультации (транзакционность)</li><li>Длинные диагностические PDF</li><li>Жёсткая типизация-ярлык</li><li>Перечисление систем как позиционирование</li>
+    </ol></div>
+    <div class="card reveal"><h3 style="font-size:1.1rem">Топ-10 недооценённых возможностей</h3><ol style="font-size:.86rem;color:var(--ink-soft);padding-left:1.2rem;line-height:1.8">
+      <li>Момент резонанса как вау-событие</li><li>Журнал узнаваний (виден результат)</li><li>Недирективный сократический спутник</li><li>Аудио-формат и оффлайн</li><li>Память о человеке между сессиями</li><li>Слой разрешения противоречий</li><li>Парная совместимость как канал роста</li><li>Двухрежимная карта (обзор/глубина)</li><li>Архетипическая честность (Tarnas)</li><li>Рефлексия как регуляторно-устойчивая рамка</li>
+    </ol></div>
+  </div>
+
+  <div class="acc reveal"><div class="acc-head">Топ-20 гипотез для Solir<span class="chev">⌄</span></div><div class="acc-body"><div class="acc-body-inner cols2" style="padding-top:1rem">
+    <p>1. Момент резонанса как центральное вау-событие запуска.</p><p>2. Журнал узнаваний материализует невидимую трансформацию.</p><p>3. Сократический вопрос вместо вывода — везде в боте.</p><p>4. Карта как живой объект, не 30-страничный PDF.</p><p>5. Два режима чтения карты: обзор и глубина.</p><p>6. Онбординг как ритуал входа, не форма.</p><p>7. Защитные блоки («не наука/не GPT/не предсказание») в онбординг.</p><p>8. Вечерний резонанс-чекин одним тапом.</p><p>9. Daily ritual hook по инициативе пользователя.</p><p>10. Парная совместимость как органический вирусный канал.</p><p>11. Память бота как накопление контекста о человеке.</p><p>12. «Не GPT» как продукт (контекст+метод+память), не копи.</p><p>13. Аудио-формат карты и практик.</p><p>14. Внутренние голоса (Pro) как качественный апселл.</p><p>15. Тематические докупки под разброс WTP.</p><p>16. Сад как геймификация присвоения (после валидации ФГ).</p><p>17. Маркетплейс экспертов для «знающих себя».</p><p>18. Отстройка термина «резонанс» («созвучие») от Chronos.</p><p>19. Слой разрешения противоречий между системами.</p><p>20. Философия → публичная система (манифест → лонгриды → книга).</p>
+  </div></div></div>
+
+  <h3 style="font-size:1.4rem;margin:2.4rem 0 1rem" class="reveal">Дорожная карта стратегического усиления</h3>
+  <div class="finds reveal">
+    <div class="find"><div class="ftxt"><h4>Кв.3 2026 — Доказать ядро (до 22.09)</h4><p>Заморозить scope. Карта + резонанс + тон + журнал + crisis off-ramp + ценовая лестница. Фокус-группа: pre-order, hero-копи, числа цены, тест слова «созвучие».</p></div></div>
+    <div class="find"><div class="ftxt"><h4>Кв.4 2026 — Петля возвращения</h4><p>Daily hook + вечерний чекин + микропрактики + парная совместимость + PWA. Метрики: D7/D30, журнал-adoption, Free→Подписка.</p></div></div>
+    <div class="find"><div class="ftxt"><h4>Кв.1 2027 — Глубина и апселл</h4><p>Внутренние голоса (Pro) + память бота + «не GPT» в продукте + аудио. Цель — качественный Pro-апгрейд.</p></div></div>
+    <div class="find"><div class="ftxt"><h4>Кв.2 2027 — Привычка</h4><p>Сад (после валидации ФГ) + срез периода + тематические докупки. Долгосрочная петля привязанности.</p></div></div>
+    <div class="find"><div class="ftxt"><h4>Кв.3–4 2027 — Экосистема</h4><p>Маркетплейс + B2B-совместимость + образовательный слой + начало публичной философии (манифест, лонгриды).</p></div></div>
+  </div>
+
+  <div class="grid g2" style="margin-top:2rem">
+    <div class="errc-cell errc-elim reveal" style="border-radius:14px"><h4 style="color:var(--error)">✕ Чего нельзя копировать у конкурентов</h4><ul>
+      <li>Резонанс как оракул (убьёт недирективность)</li>
+      <li>Стрики/дедлайны/лидерборды (нарушит присвоение)</li>
+      <li>Удешевление: «бот за 299», казуальная эстетика</li>
+      <li>Директивность («тебе надо», «карта решает»)</li>
+      <li>Co–Star-social — другой архетип</li>
+    </ul></div>
+    <div class="errc-cell errc-create reveal" style="border-radius:14px"><h4 style="color:var(--text-accent)">+ Что рынок ещё не сделал</h4><ul>
+      <li>Недирективный спутник, который спрашивает, а не отвечает</li>
+      <li>Видимая триангуляция трёх независимых систем</li>
+      <li>Материализация изменения («было → стало»)</li>
+      <li>Премиальное «тихое» переживание согласия с собой</li>
+      <li>Самопознание как регуляторно-устойчивая рефлексия</li>
+    </ul></div>
+  </div>
+
+  <div class="callout reveal"><h3>Одна мысль на вынос</h3><p>Самый большой риск Solir — не конкуренты и не рынок, а соблазн построить к запуску всё сразу. Рынок перегрет в двух режимах — оракул и трекер. Solir силён ровно там, где не играет в их игру: человек видит, где три независимые системы сошлись на чём-то настоящем про него, и тихо выдыхает «со мной всё так». Если запуск докажет это одно переживание — всё остальное обретёт почву.</p></div>
+</div></section>
+
+<footer class="foot">
+  <div class="brand"><svg class="brand-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 120" role="img" aria-label="Solir"><defs><radialGradient id="sRf" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="65%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient></defs><circle cx="59.40" cy="60.0" r="52.20" fill="url(#sRf)"/><path transform="translate(123.6 94.82) scale(0.04928 -0.04928)" d="M545 -22Q457 -22 399.5 -5.5Q342 11 307.5 32.5Q273 54 253.5 71.0Q234 88 222 88Q211 88 197.0 72.5Q183 57 167.5 37.0Q152 17 136.0 1.5Q120 -14 105 -14Q81 -14 69.5 -1.0Q58 12 61 39L103 385Q105 413 118.5 427.5Q132 442 151 442Q171 442 183.5 428.5Q196 415 205 389L219 302Q232 183 310.5 120.5Q389 58 502 58Q577 58 634.5 85.5Q692 113 727.0 162.0Q762 211 772 277Q788 367 743.5 443.0Q699 519 565 605Q417 702 353.5 798.5Q290 895 306 1025Q318 1129 380.5 1220.0Q443 1311 555.0 1367.5Q667 1424 825 1424Q959 1424 1051.5 1381.0Q1144 1338 1190.5 1269.5Q1237 1201 1235 1125Q1233 1079 1209.5 1049.0Q1186 1019 1146 1019Q1111 1019 1090.0 1038.5Q1069 1058 1055 1099L1038 1167Q1015 1260 956.0 1305.0Q897 1350 810 1350Q724 1350 659.5 1317.0Q595 1284 556.5 1229.0Q518 1174 510 1106Q497 1008 547.0 929.0Q597 850 727 759Q840 683 901.0 616.0Q962 549 982.5 480.5Q1003 412 994 333Q984 226 924.0 146.0Q864 66 766.5 22.0Q669 -22 545 -22Z" fill="#FFF1DD"/><path transform="translate(180.03 94.82) scale(0.04928 -0.04928)" d="M634 936Q757 933 844.0 876.0Q931 819 968.5 715.0Q1006 611 980 466Q960 357 908.5 266.0Q857 175 781.5 109.5Q706 44 613.0 10.0Q520 -24 417 -21Q296 -17 210.5 39.5Q125 96 88.5 200.0Q52 304 77 449Q98 559 148.5 649.5Q199 740 273.5 805.5Q348 871 439.5 905.0Q531 939 634 936ZM421 62Q464 58 506.0 73.5Q548 89 586.0 122.0Q624 155 657.0 205.5Q690 256 715.5 322.0Q741 388 757 469Q783 594 774.0 677.0Q765 760 728.0 803.5Q691 847 630 853Q587 857 546.5 841.5Q506 826 468.5 793.0Q431 760 398.5 710.0Q366 660 341.0 593.5Q316 527 300 446Q274 321 282.5 238.0Q291 155 327.0 111.5Q363 68 421 62Z" fill="#FFF1DD"/><path transform="translate(231.97 94.82) scale(0.04928 -0.04928)" d="M735 1437Q816 1437 854.5 1404.5Q893 1372 893 1328Q893 1286 868.0 1259.0Q843 1232 793 1232Q764 1232 742.0 1242.5Q720 1253 701.5 1266.5Q683 1280 662.5 1290.5Q642 1301 614 1301Q584 1301 559.0 1284.5Q534 1268 519.0 1240.5Q504 1213 500 1179Q499 1156 504.0 1133.5Q509 1111 516.5 1088.0Q524 1065 529.5 1039.0Q535 1013 534.0 982.5Q533 952 522 915L324 279Q296 184 304.5 152.0Q313 120 348 120Q378 120 411.5 137.5Q445 155 473 189Q486 202 495.0 205.5Q504 209 513 206Q525 202 528.0 187.5Q531 173 520 150Q502 103 456.0 64.0Q410 25 348.5 2.0Q287 -21 218 -21Q153 -21 120.5 6.5Q88 34 86.5 90.0Q85 146 112 233L394 1145Q441 1296 527.5 1366.5Q614 1437 735 1437Z" fill="#FFF1DD"/><path transform="translate(262.82 94.82) scale(0.04928 -0.04928)" d="M346 260Q318 181 325.5 149.5Q333 118 360 118Q377 118 395.5 128.5Q414 139 441 165Q457 180 468.0 184.0Q479 188 489 183Q501 177 500.5 162.0Q500 147 488 124Q452 58 385.0 19.0Q318 -20 237 -20Q175 -20 143.5 8.0Q112 36 111.0 90.0Q110 144 138 221L299 654Q328 733 320.5 765.0Q313 797 285 797Q270 797 250.5 786.5Q231 776 204 749Q188 735 177.0 731.0Q166 727 156 731Q145 737 145.0 752.0Q145 767 157 790Q193 856 259.5 895.5Q326 935 406 935Q464 935 495.5 907.0Q527 879 530.5 824.0Q534 769 504 688ZM480 1125Q416 1125 382.0 1160.0Q348 1195 354 1245Q358 1284 383.0 1317.5Q408 1351 448.5 1371.0Q489 1391 541 1391Q608 1391 639.0 1356.0Q670 1321 664 1270Q660 1230 635.0 1197.0Q610 1164 570.0 1144.5Q530 1125 480 1125Z" fill="#FFF1DD"/><path transform="translate(293.87 94.82) scale(0.04928 -0.04928)" d="M145 731Q133 737 133.5 752.0Q134 767 146 790Q170 834 208.5 866.5Q247 899 295.5 917.0Q344 935 396 935Q447 935 475.5 910.0Q504 885 504 837Q504 795 486.5 740.0Q469 685 445.5 625.0Q422 565 403.0 510.5Q384 456 381 416L365 418Q397 536 446.0 631.5Q495 727 554.0 794.5Q613 862 676.0 898.5Q739 935 801 935Q876 935 914.0 892.5Q952 850 951 781Q949 728 930.0 690.5Q911 653 881.5 633.0Q852 613 817 613Q779 613 761.0 631.0Q743 649 743 672Q743 694 749.5 713.5Q756 733 756 755Q756 780 744.5 795.0Q733 810 707 810Q664 810 607.5 757.5Q551 705 493.5 602.5Q436 500 387 348Q364 279 353.5 237.5Q343 196 343 163Q343 139 352.5 125.5Q362 112 372.0 99.5Q382 87 382 64Q382 41 360.5 21.0Q339 1 298.0 -10.0Q257 -21 196 -21Q150 -21 128.0 -0.5Q106 20 107.0 62.5Q108 105 130 169L290 654Q317 733 309.0 765.0Q301 797 274 797Q258 797 239.0 786.5Q220 776 193 749Q177 735 166.0 731.0Q155 727 145 731Z" fill="#FFF1DD"/></svg></div>
+  <p>Конкурентный анализ рынка self-discovery · свод исследований и аудитов сессии 26 мая 2026</p>
+  <p style="margin-top:.4rem;opacity:.7">Источники: энциклопедия рынка · стратегический аудит + дополнение · мета-синтез · атлас систем. Оценки экспертные, для внутренней работы Solir.</p>
+</footer>
+
+<script>
+/* ============ DATA ============ */
+// Профили для карточек игроков
+const PLAYERS=[
+ {n:"Co–Star",geo:"🇺🇸 США",niche:"Запад",pos:"Brutalist daily-астрология, identity для Gen Z",
+  s:"~$21M венчура, 30M загрузок, сильнейший бренд, friend-сравнение",w:"Иногда «mean», глубина ограничена, выгорание push"},
+ {n:"The Pattern",geo:"🇺🇸 США",niche:"Запад",pos:"Психологический язык без жаргона, 18M+ профилей",
+  s:"Глубина текстов, Bond/Connect, +50% YoY почти без маркетинга",w:"Нет харизмы Co–Star, медленный онбординг"},
+ {n:"CHANI",geo:"🇺🇸 США",niche:"Запад",pos:"Inclusive, trauma-informed, премиум",
+  s:"Самое доходное астроприложение США (ноя 2025), медитации, тон",w:"Узкая ниша по ценностям, высокий ценовой порог"},
+ {n:"Sanctuary",geo:"🇺🇸 США",niche:"Запад",pos:"AI + живые астрологи, chat-per-session",
+  s:"~3M MAU, astro-travel (Marriott), гибрид AI/human",w:"Транзакционность, средняя глубина"},
+ {n:"Nebula",geo:"🇺🇸/EU",niche:"Запад",pos:"Маркетплейс астрологов + AI",
+  s:"12M загрузок, выручка >$7M, часть Genesis Tech",w:"Mass-market, ограниченная уникальность"},
+ {n:"Astrotalk",geo:"🇮🇳 Индия",niche:"Индия",pos:"Поминутные консультации с живыми астрологами",
+  s:"₹651 крор FY24, 40M+ юзеров, 15K астрологов",w:"Чистая транзакция, низкая daily-ценность вне consult"},
+ {n:"AstroSage",geo:"🇮🇳 Индия",niche:"Индия",pos:"Джйотиш-инструменты + AI Kundli",
+  s:"500K+ профессионалов, AI с сентября 2024",w:"Сложный UX, нишевый вне Индии"},
+ {n:"Chronos",geo:"🇷🇺 РФ",niche:"РФ",pos:"Астропроцессор + AI + маркетплейс + школа (Андреев)",
+  s:"Крупнейший русскоязычный астропродукт, «точка полного резонанса», 28K+ юзеров",w:"Экспертно-директивный, односистемный (астрология)"},
+ {n:"Astro7",geo:"🇷🇺 РФ",niche:"РФ",pos:"Маркетплейс эзотериков, поминутная оплата",
+  s:"Выручка ×13 за 2021–2024, зрелая инфраструктура",w:"Серая зона, низкое качество массовых экспертов, регуляторный риск"},
+ {n:"Матрица Судьбы",geo:"🇷🇺 РФ",niche:"РФ",pos:"Инфобизнес-индустрия (Ладини + десятки школ)",
+  s:"Огромная аудитория, сертификация консультантов",w:"Маркер «инфобиза», скомпрометированная лексика, длинные PDF"},
+ {n:"Human Design",geo:"🌍",niche:"типология",pos:"Bodygraph, 5 типов, стратегия/авторитет",
+  s:"Сильнейшая единица идентичности, IHDS, большое комьюнити",w:"Одиозный нарратив происхождения, жёсткая категоризация"},
+ {n:"Gene Keys",geo:"🌍",niche:"типология",pos:"Созерцательная Shadow→Gift→Siddhi",
+  s:"Язык трансформации, глубина, Golden Path",w:"Сложность, близость к HD, теологичность"},
+ {n:"16Personalities",geo:"🌍",niche:"типология",pos:"4-буквенный код, виральность",
+  s:"Простота, социальная валюта, огромный охват",w:"Барнум-эффект, низкая ретест-валидность"},
+ {n:"Finch",geo:"🇺🇸 США",niche:"AI",pos:"Self-care через виртуального питомца",
+  s:"~14M установок, Apple Editors' Choice, привязанность",w:"Инфантилизация, не про самопознание-глубину"},
+ {n:"Replika",geo:"🇺🇸 США",niche:"AI",pos:"AI-companion, эмоциональный диалог",
+  s:"Сильнейшая эмоциональная привязанность, долгая память",w:"Не система самопознания, риски зависимости"},
+];
+
+// Большая таблица: оценки 1–5 или текст. Колонки = параметры промпта.
+const COLS=["Продукт","Страна","Позиционирование","Аудитория","Core systems","AI","Персонализация","Emotional UX","Онбординг","Retention","Геймификация","Daily usage","Community","Social mechanics","Виральность","Mobile","Монетизация","Подписка","Identity layer","Глубина интерпретации","Практическая польза","Emotional engagement","Визуал","Premium feeling","Spiritual depth","Образовательный слой","Привычка","Push","AI-качество","Daily insights","Совместимость","Relationship layer","Coaching","Ритуалы","Контент-экосистема","Сильные стороны","Слабые стороны","Уникальность","Solir: вердикт"];
+// порядок значений в строках соответствует COLS (без первого — имя идёт ключом n)
+const ROWS=[
+ {n:"Co–Star",niche:"Запад",v:["🇺🇸","Brutalist daily, identity Gen Z","Gen Z, 18–25 ж","Астрология",4,4,3,4,3,4,4,2,4,5,5,4,4,4,3,4,2,2,5,4,2,5,5,4,4,2,2,2,2,3,"Бренд, виральность","«mean», мелко","Резкий голос-бренд","better"]},
+ {n:"The Pattern",niche:"Запад",v:["🇺🇸","Психологический язык, профили","Миллениалы, ж","Астрология",4,4,4,3,4,4,3,4,3,4,3,4,5,4,3,4,4,3,4,3,5,3,3,3,5,4,3,2,2,3,"Глубина, Bond","нет харизмы","Психо-фрейминг","better"]},
+ {n:"CHANI",niche:"Запад",v:["🇺🇸","Inclusive премиум","Квир, прогрессив ж","Астрология",4,4,4,5,4,4,3,5,4,5,3,5,5,5,4,5,5,4,5,4,4,3,5,4,5,3,3,2,4,4,"Тон, медитации","узкая ниша","Trauma-informed","better"]},
+ {n:"Sanctuary",niche:"Запад",v:["🇺🇸","AI + живые астрологи","Широкая ж","Астрология",4,3,3,3,3,3,3,3,3,4,3,4,3,3,4,4,3,3,4,3,4,4,3,3,3,4,3,4,2,3,"Гибрид AI/human","транзакц.","Live-чат","better"]},
+ {n:"Nebula",niche:"Запад",v:["🇺🇸","Маркетплейс + AI","Mass ж","Астрология",4,3,3,3,3,3,2,3,3,4,3,3,3,3,4,4,2,2,3,3,4,4,2,3,3,3,2,1,2,3,"Охват","mass, generic","—","yes"]},
+ {n:"Astrotalk",niche:"Индия",v:["🇮🇳","Поминутные консультации","Индия, широкая","Джйотиш",3,3,2,2,2,2,3,2,2,4,2,5,3,2,3,5,4,4,2,2,5,3,2,4,3,4,2,5,2,2,"Выручка, масштаб","транзакция","Live-эксперты","no"]},
+ {n:"AstroSage",niche:"Индия",v:["🇮🇳","Джйотиш + AI Kundli","Индия","Джйотиш",4,3,2,2,2,3,2,2,2,4,2,4,2,2,3,4,4,5,2,5,4,2,2,3,3,3,2,3,2,3,"Инструменты","сложно","Джйотиш-движок","no"]},
+ {n:"Chronos",niche:"РФ",v:["🇷🇺","Процессор+AI+школа (Андреев)","РФ 25–45","Астрология",4,4,3,3,3,3,3,4,2,5,3,4,5,4,4,4,5,4,4,4,4,4,4,4,4,4,4,3,3,4,"Глубина, «резонанс»","директивен, 1 система","Точка полного резонанса","better"]},
+ {n:"Astro7",niche:"РФ",v:["🇷🇺","Маркетплейс эзотериков","РФ масс","Мульти-эзо",3,2,2,2,2,2,3,2,2,3,2,5,2,2,2,4,3,3,2,2,3,3,3,4,2,3,3,4,2,2,"Инфраструктура","серая зона","Маркетплейс per-min","no"]},
+ {n:"Матрица Судьбы",niche:"РФ",v:["🇷🇺","Инфобизнес-обучение","РФ ж 30+","Нумер.+Таро",2,2,3,2,3,2,3,3,2,3,2,4,2,2,3,5,4,4,3,5,3,3,3,4,4,2,2,3,3,3,"Аудитория, обучение","инфобиз-маркер","22 кода судьбы","no"]},
+ {n:"Human Design",niche:"типология",v:["🌍","Bodygraph, типы","Глобал ж","HD",4,3,4,3,3,3,4,3,5,4,2,4,4,4,4,4,5,4,4,5,3,3,4,3,4,4,4,3,3,3,"Идентичность","категоризация","9 центров/стратегия","yes"]},
+ {n:"Gene Keys",niche:"типология",v:["🌍","Shadow→Gift→Siddhi","Глобал, духовн.","И-Цзин/HD",3,3,4,3,4,2,3,3,4,3,2,4,3,3,5,3,5,5,5,5,2,3,5,3,4,3,3,4,4,3,"Глубина","сложность","Спектр трансформации","better"]},
+ {n:"16Personalities",niche:"типология",v:["🌍","4-буквенный код","Глобал, молодёжь","MBTI/Big5",3,3,3,4,2,2,5,2,3,5,2,2,3,2,5,4,2,2,4,5,2,2,3,2,3,2,2,2,1,2,"Простота, вирус","Барнум","Тип-код","yes"]},
+ {n:"Finch",niche:"AI",v:["🇺🇸","Self-care питомец","Gen Z тревожн.","Habit/wellness",3,4,5,5,5,5,3,4,2,5,3,5,4,3,5,3,2,1,3,4,1,3,5,3,5,2,3,4,5,4,"Привязанность","инфантильно","Питомец-забота","better"]},
+ {n:"Replika",niche:"AI",v:["🇺🇸","AI-companion диалог","Одинокие, широкая","AI/LLM",5,5,5,4,4,5,3,5,3,4,3,5,3,2,5,3,2,2,4,2,4,5,5,3,4,4,4,3,3,3,"Память, диалог","зависимость","Эмоц. компаньон","better"]},
+ {n:"Solir",niche:"Solir",solir:true,v:["🇷🇺→🌍","Рефлексивный спутник, не оракул","Анна 30+, рефлексирующие","HD+астро+нумер. (триангуляция)",5,5,5,5,5,4,3,2,3,4,5,5,3,3,3,5,5,5,5,5,4,3,5,5,4,5,5,4,5,4,"Триангуляция, недирективность","ядро на 1 принципе","Резонанс трёх систем + согласие","—"]},
+];
+
+/* ============ RENDER PLAYERS ============ */
+const pg=document.getElementById('players-grid');
+PLAYERS.forEach(p=>{
+  const el=document.createElement('div');el.className='acc';
+  el.innerHTML=`<div class="acc-head"><span>${p.n} <span style="font-size:.8rem;color:var(--ink-muted);font-weight:400">${p.geo}</span></span><span class="chev">⌄</span></div>
+  <div class="acc-body"><div class="acc-body-inner" style="padding-top:1rem">
+    <p><strong>Позиционирование:</strong> ${p.pos}</p>
+    <p style="color:var(--success)"><strong>Сила:</strong> ${p.s}</p>
+    <p style="color:var(--sun-deep)"><strong>Слабость:</strong> ${p.w}</p></div></div>`;
+  pg.appendChild(el);
+});
+
+/* ============ RENDER TABLE ============ */
+const sc=v=>{const c=typeof v==='number'?`score s${v}`:'';return typeof v==='number'?`<span class="${c}">${v}</span>`:v;};
+const thead=document.getElementById('thead-row');
+COLS.forEach((c,i)=>{const th=document.createElement('th');th.innerHTML=c+'<span class="arr">⇅</span>';th.dataset.i=i;thead.appendChild(th);});
+const tbody=document.getElementById('tbody');
+function renderRows(rows){
+  tbody.innerHTML='';
+  rows.forEach(r=>{
+    const tr=document.createElement('tr');if(r.solir)tr.className='solir-row';
+    let cells=`<td>${r.n}</td>`;
+    r.v.forEach((val,idx)=>{
+      if(idx===r.v.length-1){ // Solir verdict col
+        let cls='v-no',txt=val;
+        if(val==='yes'){cls='v-yes';txt='✓ есть';}
+        else if(val==='better'){cls='v-better';txt='↑ может превзойти';}
+        else if(val==='no'){cls='v-no';txt='— нет/намеренно';}
+        else if(val==='—'){cls='v-better';txt='— это и есть Solir';}
+        cells+=`<td class="verdict ${cls}">${txt}</td>`;
+      } else cells+=`<td>${sc(val)}</td>`;
+    });
+    tr.innerHTML=cells;tbody.appendChild(tr);
+  });
+}
+renderRows(ROWS);
+
+/* search + filter */
+let curFilter='all',curSearch='';
+function applyFilter(){
+  let rows=ROWS.filter(r=>{
+    if(r.solir)return true; // always show Solir
+    const matchF=curFilter==='all'||r.niche===curFilter||(curFilter==='AI'&&r.niche==='AI');
+    const hay=(r.n+' '+r.v.join(' ')).toLowerCase();
+    const matchS=curSearch===''||hay.includes(curSearch);
+    return matchF&&matchS;
+  });
+  renderRows(rows);
+}
+document.getElementById('tsearch').addEventListener('input',e=>{curSearch=e.target.value.toLowerCase().trim();applyFilter();});
+document.querySelectorAll('.filter-btn').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');curFilter=b.dataset.f;applyFilter();
+}));
+
+/* sort */
+let sortDir={};
+thead.querySelectorAll('th').forEach(th=>th.addEventListener('click',()=>{
+  const i=+th.dataset.i;const dir=sortDir[i]=!sortDir[i];
+  const fixed=ROWS.filter(r=>r.solir);const sortable=ROWS.filter(r=>!r.solir);
+  sortable.sort((a,b)=>{
+    let av=i===0?a.n:a.v[i-1],bv=i===0?b.n:b.v[i-1];
+    if(typeof av==='number'&&typeof bv==='number')return dir?bv-av:av-bv;
+    return dir?String(bv).localeCompare(String(av),'ru'):String(av).localeCompare(String(bv),'ru');
+  });
+  renderRows([...fixed,...sortable]);
+}));
+
+/* ============ STRATEGY CANVAS (SVG) ============ */
+const factors=["Предсказание","Daily-контент","Виральность","Геймификация","Глубина","Недирективность","Триангуляция","Согласие с собой","Премиальность","Память/контекст"];
+const market=[4.5,4.5,4,4,2.5,1.5,1,1,2.5,2];
+const solir =[1,2,2.5,2,5,5,5,5,4.5,4.5];
+(function(){
+  const W=940,H=360,pl=70,pr=30,pt=30,pb=70;const iw=W-pl-pr,ih=H-pt-pb;
+  const x=i=>pl+iw*i/(factors.length-1);const y=v=>pt+ih*(1-(v-1)/4);
+  const line=(d,col,w)=>`<polyline fill="none" stroke="${col}" stroke-width="${w}" points="${d.map((v,i)=>x(i)+','+y(v)).join(' ')}" stroke-linejoin="round"/>`;
+  const dots=(d,col)=>d.map((v,i)=>`<circle cx="${x(i)}" cy="${y(v)}" r="${col==='var(--sun)'?5:3.5}" fill="${col}"/>`).join('');
+  let svg=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;min-width:760px;height:auto" font-family="Inter,sans-serif">`;
+  for(let g=1;g<=5;g++){svg+=`<line x1="${pl}" y1="${y(g)}" x2="${W-pr}" y2="${y(g)}" stroke="var(--line-soft)" stroke-width="1"/>`;}
+  svg+=`<text x="${pl-10}" y="${y(5)+4}" text-anchor="end" font-size="10" fill="var(--ink-muted)">высоко</text>`;
+  svg+=`<text x="${pl-10}" y="${y(1)+4}" text-anchor="end" font-size="10" fill="var(--ink-muted)">низко</text>`;
+  svg+=line(market,'var(--ink-soft)',2.5)+dots(market,'var(--ink-soft)');
+  svg+=line(solir,'var(--sun)',3)+dots(solir,'var(--sun)');
+  factors.forEach((f,i)=>{const words=f.split(' ');const tx=x(i);
+    svg+=`<text x="${tx}" y="${H-pb+22}" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)" font-weight="500">`+
+      words.map((w,wi)=>`<tspan x="${tx}" dy="${wi===0?0:12}">${w}</tspan>`).join('')+`</text>`;});
+  svg+=`</svg>`;
+  document.getElementById('canvas').innerHTML=svg;
+})();
+
+/* ============ ACCORDIONS ============ */
+document.addEventListener('click',e=>{
+  const h=e.target.closest('.acc-head');if(!h)return;
+  const acc=h.parentElement;const body=acc.querySelector('.acc-body');
+  const open=acc.classList.toggle('open');
+  body.style.maxHeight=open?body.querySelector('.acc-body-inner').scrollHeight+40+'px':'0';
+});
+
+/* ============ REVEAL + BARS ============ */
+const io=new IntersectionObserver(es=>es.forEach(en=>{
+  if(en.isIntersecting){en.target.classList.add('in');
+    if(en.target.classList.contains('seg')||en.target.querySelector){
+      en.target.querySelectorAll&&en.target.querySelectorAll('.seg-fill').forEach(f=>{f.style.width=f.dataset.w+'%';});
+    }
+    io.unobserve(en.target);}
+}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// fire bars on first paint too
+setTimeout(()=>document.querySelectorAll('.seg-fill').forEach(f=>{if(f.dataset.w)f.style.width=f.dataset.w+'%';}),300);
+
+/* smooth nav active state */
+const secs=[...document.querySelectorAll('section[id]')];
+const navlinks=[...document.querySelectorAll('.nav-links a')];
+window.addEventListener('scroll',()=>{
+  let cur='';secs.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id;});
+  navlinks.forEach(a=>a.style.background=a.getAttribute('href')==='#'+cur?'var(--sand-warm)':'');
+});
+</script>
+</body>
+</html>

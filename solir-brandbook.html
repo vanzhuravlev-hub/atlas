@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solir — Брендбук v2.1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,200..400,0..100&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- Токены вшиты (самодостаточный файл). Источник — solir-tokens.json, впрыск через build-tokens.mjs --inject. -->
+<style id="solir-tokens">
+/* GENERATED от solir-tokens.json · build-tokens.mjs --inject. Не редактировать. */
+:root {
+  /* paper */
+  --paper: #FFF1DD;
+
+  /* sand */
+  --sand: #FAEAD0;
+  --sand-warm: #F5DBB3;
+
+  /* sun */
+  --sun-highlight: #FFE9C2;
+  --sun-light: #E8B47D;
+  --sun: #DC9658;
+  --sun-deep: #C8642E;
+
+  /* earth */
+  --earth: #8B4513;
+
+  /* ink */
+  --ink: #2A1810;
+  --ink-deep: #1F1610;
+  --ink-darker: #0F0805;
+  --ink-soft: rgba(42,24,16,0.74);
+  --ink-muted: rgba(42,24,16,0.50);
+
+  /* glow */
+  --glow: #FFE48A;
+
+  /* text */
+  --text-accent: #A8451C;
+  --text-h1-size: 52px;
+  --text-h1-size-mobile: 36px;
+  --text-h1-family: var(--font-display);
+  --text-h1-weight: 500;
+  --text-h1-line: 1.1;
+  --text-h1-tracking: -0.01em;
+  --text-h2-size: 38px;
+  --text-h2-size-mobile: 28px;
+  --text-h2-family: var(--font-display);
+  --text-h2-weight: 500;
+  --text-h2-line: 1.15;
+  --text-h2-tracking: 0;
+  --text-h3-size: 26px;
+  --text-h3-size-mobile: 22px;
+  --text-h3-family: var(--font-display);
+  --text-h3-weight: 500;
+  --text-h3-line: 1.2;
+  --text-h3-tracking: 0;
+  --text-lead-size: 24px;
+  --text-lead-size-mobile: 20px;
+  --text-lead-family: var(--font-display);
+  --text-lead-weight: 400;
+  --text-lead-line: 1.5;
+  --text-lead-style: italic;
+  --text-body-size: 16px;
+  --text-body-family: var(--font-body);
+  --text-body-weight: 400;
+  --text-body-line: 1.7;
+  --text-small-size: 14px;
+  --text-small-family: var(--font-body);
+  --text-small-weight: 400;
+  --text-small-line: 1.6;
+  --text-eyebrow-size: 13px;
+  --text-eyebrow-family: var(--font-body);
+  --text-eyebrow-weight: 500;
+  --text-eyebrow-line: 1.2;
+  --text-eyebrow-tracking: 0.26em;
+  --text-eyebrow-transform: uppercase;
+  --text-eyebrow-color: var(--text-accent);
+  --text-data-size: 13px;
+  --text-data-family: var(--font-body);
+  --text-data-weight: 400;
+  --text-data-line: 1.4;
+  --text-data-tracking: 0.02em;
+  --text-data-feature: tabular-nums;
+
+  /* line */
+  --line: rgba(139,69,19,0.18);
+  --line-soft: rgba(139,69,19,0.10);
+
+  /* success */
+  --success: #5E6B33;
+
+  /* warning */
+  --warning: #C8642E;
+
+  /* error */
+  --error: #A8321A;
+
+  /* info */
+  --info: #8B4513;
+
+  /* grad */
+  --grad-sunrise: linear-gradient(90deg, #E8B47D, #DC9658, #C8642E);
+  --grad-sun-disc: radial-gradient(circle at 35% 30%, #FFE9C2 0%, #DC9658 65%, #C8642E 100%);
+  --grad-dark-radial: radial-gradient(ellipse at center, #2A1810 0%, #1F1610 42%, #0F0805 100%);
+
+  /* font */
+  --font-logo: 'Fraunces', Georgia, serif;
+  --font-display: Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+
+  /* space */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+  --space-4xl: 128px;
+
+  /* grid */
+  --grid-columns: 12;
+  --grid-gutter: 24px;
+  --grid-margin-desktop: 32px;
+  --grid-margin-mobile: 20px;
+
+  /* container */
+  --container-landing: 1280px;
+  --container-document: 1000px;
+  --container-reading: 720px;
+  --container-map: 580px;
+
+  /* radius */
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-pill: 999px;
+  --radius-full: 50%;
+
+  /* elevation */
+  --elevation-0: none;
+  --elevation-1: 0 2px 14px rgba(139,69,19,0.07), 0 1px 3px rgba(139,69,19,0.05);
+  --elevation-2: 0 10px 30px rgba(139,69,19,0.14), 0 3px 8px rgba(139,69,19,0.08);
+  --elevation-3: 0 24px 60px rgba(139,69,19,0.20), 0 8px 20px rgba(139,69,19,0.10);
+  --elevation-cta: 0 6px 22px rgba(220,150,88,0.28);
+
+  /* opacity */
+  --opacity-hairline: 0.18;
+  --opacity-hairline-soft: 0.1;
+  --opacity-muted: 0.5;
+  --opacity-soft: 0.74;
+  --opacity-disabled: 0.4;
+
+  /* ease */
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* duration */
+  --duration-micro: 240ms;
+  --duration-enter: 700ms;
+  --duration-scene: 2000ms;
+
+  /* pause */
+  --pause-soma: 10000ms;
+  --pause-body: 8000ms;
+
+  /* cta */
+  --cta-breath: 3200ms;
+
+  /* z */
+  --z-base: 0;
+  --z-sticky: 50;
+  --z-dropdown: 100;
+  --z-modal-overlay: 200;
+  --z-modal: 210;
+  --z-toast: 300;
+  --z-tooltip: 400;
+
+  /* bp */
+  --bp-mobile: 0px;
+  --bp-tablet: 720px;
+  --bp-desktop: 1024px;
+
+}
+</style>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--font-body);font-weight:400;line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased}
+::selection{background:var(--sun-light);color:var(--ink)}
+h2,h3,h4{font-family:var(--font-display);font-weight:500;line-height:1.15;color:var(--ink)}
+p{margin:0 0 1rem;color:var(--ink-soft)}
+strong{color:var(--ink);font-weight:500}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.85em;background:var(--sand-warm);color:var(--earth);padding:1px 6px;border-radius:var(--radius-sm)}
+em.hl{font-style:italic;color:var(--text-accent);font-family:var(--font-display);font-size:1.05em}
+.eyebrow{font-family:var(--font-body);font-size:13px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--text-accent)}
+
+.wrap{max-width:var(--container-reading);margin:0 auto;padding:0 var(--space-xl)}
+section.block{padding:var(--space-3xl) 0 var(--space-2xl);border-top:1px solid var(--line-soft)}
+
+/* hero */
+.hero{min-height:92vh;background:var(--grad-dark-radial);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:var(--space-xl)}
+.hero .glow{position:absolute;top:46%;left:50%;width:780px;height:780px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(220,150,88,.18),rgba(200,100,46,.05) 42%,transparent 70%);opacity:0;animation:gIn 2.6s var(--ease) .3s forwards}
+.hero .brand{font-family:var(--font-logo);font-style:italic;font-weight:200;font-variation-settings:"opsz" 96,"SOFT" 80;font-size:clamp(78px,16vw,156px);color:var(--glow);letter-spacing:-.02em;text-shadow:0 0 64px rgba(220,150,88,.34);opacity:0;transform:scale(.96);animation:lIn 2s var(--ease) .8s forwards;z-index:2}
+.hero .line{font-family:var(--font-display);font-style:italic;font-size:clamp(20px,3.2vw,30px);color:rgba(255,241,221,.88);max-width:540px;margin-top:22px;opacity:0;animation:tIn 1.6s var(--ease) 2.4s forwards}
+.hero .sub{font-family:var(--font-body);font-size:13px;letter-spacing:.34em;text-transform:uppercase;color:rgba(255,241,221,.5);margin-top:26px;opacity:0;animation:tIn 1.6s var(--ease) 2.8s forwards}
+@keyframes gIn{to{opacity:1}}@keyframes lIn{to{opacity:1;transform:scale(1)}}@keyframes tIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+nav.top{position:sticky;top:0;z-index:var(--z-sticky);background:rgba(255,241,221,.9);backdrop-filter:blur(14px) saturate(160%);border-bottom:1px solid var(--line)}
+nav.top .inner{max-width:var(--container-reading);margin:0 auto;padding:12px var(--space-xl);display:flex;align-items:center;justify-content:space-between;gap:16px}
+nav.top .nm{display:flex;align-items:center;gap:12px;font-family:var(--font-logo);font-style:italic;font-weight:300;font-variation-settings:"opsz" 96,"SOFT" 80;font-size:22px;color:var(--ink)}
+nav.top ul{list-style:none;display:flex;gap:16px;flex-wrap:wrap}
+nav.top a{font-family:var(--font-body);font-size:13px;font-weight:500;color:var(--ink-soft);text-decoration:none}
+nav.top a:hover{color:var(--text-accent)}
+.disc-sm{width:24px;height:24px;border-radius:var(--radius-full);background:var(--grad-sun-disc);flex-shrink:0}
+
+.bhead{display:flex;align-items:baseline;gap:16px;margin-bottom:6px}
+.bnum{font-family:var(--font-display);font-size:clamp(40px,6vw,68px);font-weight:500;color:var(--sand-warm);line-height:.8}
+.btitle{font-family:var(--font-display);font-size:clamp(26px,4vw,38px);font-weight:500}
+.lead{font-family:var(--font-display);font-size:clamp(18px,2.3vw,23px);font-weight:400;color:var(--ink);line-height:1.5;margin:14px 0 32px;font-style:italic}
+h3{font-size:23px;margin:40px 0 8px}
+h4{font-size:17px;margin:24px 0 6px;color:var(--earth)}
+.pull{font-family:var(--font-display);font-style:italic;font-size:clamp(20px,3vw,27px);line-height:1.4;color:var(--ink);border-left:2px solid var(--sun);padding:6px 0 6px 22px;margin:24px 0}
+
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}
+th{font-family:var(--font-body);font-weight:500;text-align:left;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-accent);padding:9px 12px;border-bottom:1.5px solid var(--line)}
+td{padding:9px 12px;border-bottom:1px solid var(--line-soft);color:var(--ink-soft);vertical-align:top}
+td strong{color:var(--ink)}
+tr:hover td{background:rgba(245,219,179,.3)}
+
+ul.clean{list-style:none;margin:10px 0}
+ul.clean li{padding:5px 0 5px 18px;position:relative;color:var(--ink-soft);font-size:15px}
+ul.clean li::before{content:"—";position:absolute;left:0;color:var(--sun)}
+
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.pill{font-size:13px;background:var(--sand-warm);color:var(--earth);padding:5px 13px;border-radius:var(--radius-pill);border:1px solid var(--line)}
+.pill.no{background:transparent;color:var(--sun-deep);border-color:rgba(200,100,46,.4);text-decoration:line-through}
+
+.spine{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}
+.spine .s{background:var(--sand);border:1px solid var(--line);border-radius:var(--radius-md);padding:18px;box-shadow:var(--elevation-1)}
+.spine .s .k{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-accent);margin-bottom:6px}
+.spine .s .t{font-family:var(--font-display);font-size:21px;margin-bottom:3px}
+.spine .s p{font-size:13px;margin:0}
+@media(max-width:720px){.spine{grid-template-columns:1fr}}
+
+.note{font-family:var(--font-display);font-size:15px;color:var(--ink-muted);font-style:italic;margin-top:8px}
+.xref{font-size:13px;color:var(--earth);background:rgba(139,69,19,.06);border-radius:var(--radius-sm);padding:10px 14px;margin:14px 0}
+.xref a{color:var(--text-accent);text-decoration:none}
+
+/* manifesto */
+.manifesto{background:var(--grad-dark-radial);color:var(--paper);padding:var(--space-3xl) 0}
+.manifesto .wrap{max-width:640px}
+.manifesto .eyebrow{color:var(--sun-light)}
+.manifesto p{color:rgba(255,241,221,.86);font-family:var(--font-display);font-size:19px;line-height:1.6;margin:0 0 1.1rem}
+.manifesto .big{font-family:var(--font-display);font-size:26px;color:var(--glow);margin-top:24px}
+.manifesto .it{font-style:italic;color:rgba(255,241,221,.78)}
+
+footer{background:var(--ink-darker);color:rgba(255,241,221,.5);text-align:center;padding:48px var(--space-xl)}
+footer .fb{font-family:var(--font-logo);font-style:italic;font-weight:300;font-variation-settings:"opsz" 96,"SOFT" 80;font-size:30px;color:var(--glow);margin-bottom:6px}
+footer p{color:rgba(255,241,221,.45);font-size:13px;margin:0}
+
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}.reveal{opacity:1;transform:none;transition:none}.hero *{opacity:1!important;transform:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="glow"></div>
+  <div class="brand">Solir</div>
+  <div class="line">То, что в тебе истинно, может стать видимым.</div>
+  <div class="sub">Брендбук · v2.1 · 2026</div>
+</header>
+
+<nav class="top"><div class="inner">
+  <span class="nm"><span class="disc-sm"></span>Solir</span>
+  <ul>
+    <li><a href="#core">Смысл</a></li>
+    <li><a href="#aud">Аудитория</a></li>
+    <li><a href="#voice">Голос</a></li>
+    <li><a href="#vis">Визуал</a></li>
+    <li><a href="#content">Контент</a></li>
+    <li><a href="#field">Поле</a></li>
+    <li><a href="#man">Манифест</a></li>
+  </ul>
+</div></nav>
+
+<section class="block" id="core"><div class="wrap reveal">
+  <div class="bhead"><span class="bnum">1</span><span class="btitle">Смысловое ядро</span></div>
+  <p class="lead">Разрешение спора с собой — это не вход, а результат; вход — погружение в себя; связывает их движение — путь к своему свету.</p>
+  <div class="spine">
+    <div class="s"><div class="k">Вход · механизм</div><div class="t">Портал в себя</div><p>Погружение, а не отражение.</p></div>
+    <div class="s"><div class="k">Дорога · процесс</div><div class="t">Внутренняя погода</div><p>Ежедневное узнавание. «А, ну да».</p></div>
+    <div class="s"><div class="k">Свет · результат</div><div class="t">Свой свет</div><p>Прекращение спора. Жить из себя.</p></div>
+  </div>
+  <p class="pull">Каждый день — шаг к своему свету. Бережный путь к разрешению споров с собой.</p>
+
+  <h3>Философия</h3>
+  <ul class="clean">
+    <li>Человек не сломан. Он устал спорить с собственным устройством. Работаем с непринятием, не с дефицитом.</li>
+    <li>Знание о себе без практики мертво. Прочитанная и забытая карта — красивый текст.</li>
+    <li>Ответственность за человеком. Карта — монетка: бросаешь, видишь результат, понимаешь, чего хочешь сам.</li>
+    <li>Три независимые системы говорят об одном — мы триангулируем, а не суммируем.</li>
+  </ul>
+
+  <h3>Ценности</h3>
+  <table>
+    <tr><th>Ценность</th><th>На практике</th><th>Отвергает</th></tr>
+    <tr><td><strong>Узнавание, не откровение</strong></td><td>Текст попадает в ощущение</td><td>гуру-позицию</td></tr>
+    <tr><td><strong>Недирективность</strong></td><td>Вопрос вместо вывода</td><td>«тебе надо»</td></tr>
+    <tr><td><strong>Размерность</strong></td><td>Тёплый, но не удушающий</td><td>гиперопеку, надрыв</td></tr>
+    <tr><td><strong>Честность об ограничениях</strong></td><td>«Не лечит, не предсказывает» — первыми</td><td>обещание спасения</td></tr>
+    <tr><td><strong>Опора, не зависимость</strong></td><td>Чтобы человек слышал себя</td><td>удержание через страх</td></tr>
+  </table>
+
+  <h3>Позиционирование</h3>
+  <p><strong>Для</strong> рефлексирующих женщин 30+, уставших от того, что разборы противоречат и забываются, <strong>Solir</strong> — путь к своему свету: карта на стыке Human Design, астрологии и нумерологии плюс ежедневный спутник, <strong>в отличие от</strong> разовых разборов (забываются), эзо-ботов (директивны) и ChatGPT (нет твоей карты), <strong>потому что</strong> за продуктом — методология психолога-коуча и триангуляция трёх систем, а не предсказание.</p>
+  <p class="pull">Здесь тебя не будут чинить, пугать или тащить за ручку. Здесь ты узнаешь себя — и поймёшь, как этот свет нести дальше в жизнь.</p>
+</div></section>
+
+<section class="block" id="aud"><div class="wrap reveal">
+  <div class="bhead"><span class="bnum">2</span><span class="btitle">Аудитория</span></div>
+  <p class="lead">«Анна 30+» — не сегмент, а маркер. Она между скепсисом и тоской по смыслу.</p>
+  <p class="pull">Я слишком много анализирую, чтобы в это верить — но мне нужно что-то, что соберёт меня воедино.</p>
+  <p>Намёк на магию = «меня разводят»; холодный диагноз = «меня снова чинят». Solir живёт в узком коридоре между отказами — <strong>поэтому тон критичнее фич.</strong></p>
+
+  <h3>Лестница из трёх конфликтов</h3>
+  <table>
+    <tr><th>Конфликт</th><th>Где работает</th><th>Слой</th></tr>
+    <tr><td><strong>A. Логика против тяги</strong></td><td>холодный трафик, FAQ</td><td>Вход</td></tr>
+    <tr><td><strong>B. Знаю, но не живу</strong></td><td>главный регистр, ядро</td><td>Дорога</td></tr>
+    <tr><td><strong>C. Быть собой против удобной</strong></td><td>founder voice, манифест</td><td>Свет</td></tr>
+  </table>
+
+  <h3>Язык аудитории</h3>
+  <div class="eyebrow" style="margin:10px 0 6px">Берём в копи</div>
+  <div class="pills"><span class="pill">разбор</span><span class="pill">опора</span><span class="pill">структура</span><span class="pill">послушать себя</span><span class="pill">не приговор</span><span class="pill">отправная точка</span><span class="pill">не складывается пазл</span><span class="pill">«а, ну да»</span><span class="pill">криптонит</span></div>
+  <div class="eyebrow" style="margin:14px 0 6px">Под запретом</div>
+  <div class="pills"><span class="pill no">магия</span><span class="pill no">энергии</span><span class="pill no">карма</span><span class="pill no">ванга</span><span class="pill no">трансформация</span><span class="pill no">прокачка</span><span class="pill no">новая ты</span><span class="pill no">предсказание</span></div>
+  <p class="pull">Помоги мне прожить то, что я о себе знаю, — а не прочитать и забыть.</p>
+</div></section>
+
+<section class="block" id="voice"><div class="wrap reveal">
+  <div class="bhead"><span class="bnum">3</span><span class="btitle">Голос и язык</span></div>
+  <p class="lead">Камертон: психолог-коуч, который говорит о картах — без магии и без снобизма.</p>
+  <table>
+    <tr><th>Голос Solir</th><th>Голос Solir НЕ</th></tr>
+    <tr><td><strong>Размерный</strong> — держит паузу</td><td>наставительный — «тебе надо»</td></tr>
+    <tr><td><strong>Узнающий</strong> — попадает в ощущение</td><td>магический — «энергии»</td></tr>
+    <tr><td><strong>Недирективный</strong> — вопрос, не вывод</td><td>инфо-биз — «прокачай», «успей»</td></tr>
+  </table>
+
+  <h3>Тренерская матрёшка</h3>
+  <p>Методология диалога в боте — пять шагов: <strong>Открытие → Инструкция → Практика → Шейринг → Рефлексия.</strong></p>
+  <p class="pull">Бот не подменяет вывод, а возвращает человеку его собственные слова.</p>
+  <div class="xref">Реализация UI диалога — см. <a href="solir-designsystem.html">Design System §4.2 (мокап чата)</a>.</div>
+
+  <h3>Как говорит / как НЕ говорит</h3>
+  <table>
+    <tr><th>НЕ говорит</th><th>Говорит Solir</th></tr>
+    <tr><td>«Раскрой потенциал, стань новой собой!»</td><td>«Перестань спорить с собой. Узнай, как ты устроена.»</td></tr>
+    <tr><td>«Узнай, что тебя ждёт»</td><td>«Не предскажет события. Покажет, где солнечно, где вечная мерзлота.»</td></tr>
+    <tr><td>«Тысячи довольных клиентов!»</td><td>«Не про веру. Про узнавание. Узнаёшь себя — работает.»</td></tr>
+  </table>
+</div></section>
+
+<section class="block" id="vis"><div class="wrap reveal">
+  <div class="bhead"><span class="bnum">4</span><span class="btitle">Визуальная стратегия — почему</span></div>
+  <p class="lead">Раздел о причинах визуальных решений. Палитра, типографика, компоненты, значения — в Design System и tokens.json.</p>
+  <div class="xref">Брендбук не дублирует значения, чтобы исключить дрейф. Конкретика — <a href="solir-designsystem.html">solir-designsystem.html</a> · <a href="solir-tokens.json">solir-tokens.json</a>.</div>
+
+  <p><strong>Палитра — сам по себе акт отстройки.</strong> Рынок самопознания захвачен «космосом» (фиолет, звёзды, неон). Solir идёт в противоход — тёплый утренний свет на бумаге. Это снимает три страха сразу: «магия/развод» (нет эзо-маркеров), «инфоцыгане» (точность линии), «холодная клиника/AI» (тепло).</p>
+  <p><strong>Центральная метафора — «солнце и орбиты».</strong> Человек — солнце (центр и источник света), три системы — орбиты, практика — оборот. Это же проговаривает авторство: ты в центре, карта — лишь орбита.</p>
+  <p class="pull">Тест на любой элемент: тёплое утро или sci-fi HUD? HUD → переделать.</p>
+  <p><strong>Важное различие: лендинг ≠ внутренняя карта.</strong> На публичных поверхностях избегаем эзо-маркеров (звёзды, мандалы, фиолет) — они за полсекунды решают «развод или нет» до доверия. Но внутри карты контекст обратный: человек уже внутри, доверие установлено, и если его архетип — Звезда или Глаз, показать его честно важнее «чистоты бренда». Прятать архетип — значит поставить бренд выше пользователя, против ядра «ты в центре». Граница не в сюжете, а в исполнении: линия-атлас, не неоновый сток.</p>
+  <div class="xref">Реализация образов — <a href="solir-designsystem.html">Design System §2.6</a>; промпт-контракт генерации — <code>solir-icon-prompt.md</code>.</div>
+</div></section>
+
+<section class="block" id="content"><div class="wrap reveal">
+  <div class="bhead"><span class="bnum">5</span><span class="btitle">Контент-система</span></div>
+  <p class="lead">Один нерв: бренд строится вокруг Ивана, а не вокруг «продукта».</p>
+  <table>
+    <tr><th>Доля</th><th>Тип</th><th>Задача</th></tr>
+    <tr><td><strong>40%</strong></td><td>Вопрос дня / микро-инсайт</td><td>расшариваемость</td></tr>
+    <tr><td><strong>25%</strong></td><td>Методология + founder voice</td><td>авторство голоса</td></tr>
+    <tr><td><strong>15%</strong></td><td>Инсайты пользователей</td><td>узнавание</td></tr>
+    <tr><td><strong>10%</strong></td><td>Анти-эзо контент</td><td>отстройка</td></tr>
+    <tr><td><strong>10%</strong></td><td>«Кухня» трёх систем</td><td>авторитет</td></tr>
+  </table>
+  <p class="note">Главное правило: голос Ивана из текста либо слышен, либо нет. Если нет — переписать.</p>
+
+  <h3>Виральные механики</h3>
+  <p>Расшаривается не «гороскоп», а узнавание и разговор о близких: вопрос дня как social currency · инсайт-узнавание (скриншот строки) · парная совместимость описательно, не процентами · «криптонит» — слабость как точка роста. Единица распространения — вопрос или узнавание, <strong>никогда предсказание.</strong></p>
+</div></section>
+
+<section class="block" id="field"><div class="wrap reveal">
+  <div class="bhead"><span class="bnum">6</span><span class="btitle">Поле, рост и правила</span></div>
+  <table>
+    <tr><th>Конкурент</th><th>Слабость</th><th>Наш ход</th></tr>
+    <tr><td><strong>ChatGPT / Gemini</strong></td><td>сессия тонет</td><td>«Карта остаётся целой»</td></tr>
+    <tr><td>Астро-боты</td><td>предсказание = шарлатанство</td><td>«Прогноз внутренней погоды»</td></tr>
+    <tr><td>Разовые разборы</td><td>«прочитал и забыл»</td><td>«Без практики забывается»</td></tr>
+    <tr><td>Эзо-блогеры</td><td>«магия / новая ты»</td><td>«Инструмент саморефлексии»</td></tr>
+  </table>
+  <h4>Свободны (забираем)</h4>
+  <p>разрешение спора с собой · карта-якорь vs исчезающая сессия · триангуляция как доказательство · узнавание не откровение · психолог-коуч о картах без магии и снобизма.</p>
+  <h4>Стратегия роста</h4>
+  <ul class="clean">
+    <li>Через личность Ивана — видео, подкасты, лонгриды. Не реклама в лоб.</li>
+    <li>B2B2C через психологов-коучей-блогеров (главная гипотеза канала).</li>
+    <li>Стать категорией: сместить самопознание из «события» в «ежедневную практику».</li>
+  </ul>
+</div></section>
+
+<section class="manifesto" id="man"><div class="wrap reveal">
+  <span class="eyebrow">Brand Manifesto</span>
+  <p style="margin-top:18px">Большинство инструментов хотят тебя починить. Обещают новую тебя, точную дату, готовый ответ.</p>
+  <p>Мы не про это.</p>
+  <p>Мы верим, что ты не сломана — ты просто давно споришь с собой о том, как устроена. Пытаешься быть проще, удобнее, понятнее для других. И устаёшь.</p>
+  <p>Твоя карта — не приговор и не предсказание. Это прогноз внутренней погоды: где у тебя солнечно, где дождь, где вечная мерзлота. Куда идти — решаешь ты.</p>
+  <p>Но карту мало прочитать. Прочитанная и забытая, она становится красивым текстом. Поэтому рядом — спутник, который помогает прожить.</p>
+  <p class="it">Здесь тебя не будут чинить, пугать или тащить за ручку. Здесь ты узнаёшь себя — и понимаешь, как этот свет нести дальше в жизнь.</p>
+  <p class="big">Каждый день — шаг к своему свету.</p>
+  <p class="it">То, что в тебе истинно, может стать видимым.</p>
+</div></section>
+
+<section class="block"><div class="wrap reveal">
+  <div class="bhead"><span class="bnum">7</span><span class="btitle">Быстрый справочник</span></div>
+  <table>
+    <tr><td style="width:34%"><strong>Слоган</strong></td><td>Каждый день — шаг к своему свету.</td></tr>
+    <tr><td><strong>Брендовая строка</strong></td><td>То, что в тебе истинно, может стать видимым.</td></tr>
+    <tr><td><strong>Голос</strong></td><td>размерный · узнающий · недирективный</td></tr>
+    <tr><td><strong>Палитра (роли)</strong></td><td>бумага · солнце · земля · чернила · тёплое тёмное <span style="color:var(--ink-muted)">(значения — tokens.json)</span></td></tr>
+    <tr><td><strong>Шрифты</strong></td><td>Fraunces (логотип) · Georgia (заголовки RU+EN) · Inter (текст)</td></tr>
+    <tr><td><strong>Запрет</strong></td><td>магия · энергии · трансформация · «новая ты» · предсказание</td></tr>
+  </table>
+  <h3>Воротца перед публикацией</h3>
+  <ol style="color:var(--ink-soft);padding-left:20px;line-height:2">
+    <li><strong>Голос.</strong> Звучит как Иван или как маркетинг? <span class="note" style="margin:0">(маркетинг → переписать)</span></li>
+    <li><strong>Визуал.</strong> Утро или космос? <span class="note" style="margin:0">(космос → переделать)</span></li>
+    <li><strong>Чувство.</strong> Выдох и узнавание — или ажиотаж? <span class="note" style="margin:0">(второе → промах)</span></li>
+  </ol>
+  <div class="xref">Как строить — <a href="solir-designsystem.html">solir-designsystem.html</a>. Значения — <a href="solir-tokens.json">solir-tokens.json</a>.</div>
+</div></section>
+
+<footer>
+  <div class="fb">Solir</div>
+  <p>Брендбук · v2.1 · 2026 · внутренний документ</p>
+</footer>
+
+<script>
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+</script>
+</body>
+</html>
