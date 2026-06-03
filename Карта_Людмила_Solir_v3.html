@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solir · Карта Людмилы</title>
+<style>
+  :root{
+    --paper:#FFF1DD; --sand:#FAEAD0; --sand-warm:#F5DBB3;
+    --sun-highlight:#FFE9C2; --sun-light:#E8B47D; --sun:#DC9658; --sun-deep:#C8642E;
+    --earth:#8B4513; --ink:#2A1810; --ink-deep:#1F1610; --ink-darker:#0F0805;
+    --glow:#FFE48A; --text-accent:#A8451C;
+    --ink-soft:rgba(42,24,16,0.74); --ink-muted:rgba(42,24,16,0.50);
+    --line:rgba(139,69,19,0.18); --line-soft:rgba(139,69,19,0.10);
+    --olive:#5E6B33; --air-text:#B07D3A;
+    --font-display:Georgia,'Times New Roman',serif;
+    --font-body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    --shadow-1:0 2px 14px rgba(139,69,19,0.07),0 1px 3px rgba(139,69,19,0.05);
+    --shadow-2:0 10px 30px rgba(139,69,19,0.14),0 3px 8px rgba(139,69,19,0.08);
+    --shadow-3:0 24px 60px rgba(31,22,16,0.32),0 8px 20px rgba(31,22,16,0.2);
+    --ease:cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;padding:0 20px}
+  .doc{max-width:680px;margin:0 auto;padding:56px 0 90px}
+
+  .eyebrow{font-size:13px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--text-accent);line-height:1.2}
+  h2{font-family:var(--font-display);font-weight:500;font-size:23px;line-height:1.15;margin-bottom:6px}
+  h1{font-family:var(--font-display);font-weight:500;font-size:46px;line-height:1.1;letter-spacing:-.01em}
+  .lead{font-family:var(--font-display);font-style:italic;font-weight:400;font-size:21px;line-height:1.5;color:var(--ink-soft)}
+  p{font-size:15.5px;line-height:1.68;color:var(--ink-soft)}
+
+  .logo{display:inline-flex;align-items:center;gap:10px}
+  .logo .disc{width:42px;height:42px;border-radius:50%;flex:none;background:radial-gradient(circle at 35% 30%,var(--sun-highlight) 0%,var(--sun) 65%,var(--sun-deep) 100%);box-shadow:0 4px 16px rgba(220,150,88,0.25)}
+  .logo svg{height:28px;width:auto;display:block}
+
+  header.top{margin-bottom:24px}
+  header.top .eyebrow{margin:30px 0 15px}
+  header.top h1{margin-bottom:16px}
+  header.top .lead{max-width:620px}
+  .stage-note{font-size:13px;color:var(--ink-muted);margin-top:13px;max-width:680px}
+
+  .modes{display:flex;align-items:center;gap:10px;margin:26px 0 6px;flex-wrap:wrap}
+  .modes .mlabel{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);font-weight:600}
+  .mode-switch{display:inline-flex;gap:5px;background:var(--sand-warm);border:1px solid var(--line);border-radius:999px;padding:5px}
+  .mode-switch button{font-family:var(--font-body);font-size:13.5px;font-weight:500;color:var(--ink-soft);background:transparent;border:none;border-radius:999px;padding:8px 17px;cursor:pointer;transition:all .2s var(--ease)}
+  .mode-switch button.on{background:var(--ink);color:var(--paper)}
+  .mode-intro{font-family:var(--font-display);font-style:italic;font-size:16px;color:var(--ink-soft);margin:14px 0 22px;max-width:680px;min-height:24px;padding-left:16px;border-left:2px solid var(--sun);transition:border-color .3s}
+
+  /* table */
+
+  .rh.gate .rmeta .rn{font-style:italic}
+
+  .cell{flex:1;position:relative;background:var(--sand);border:1px solid var(--line);border-radius:6px;padding:19px 9px 11px;min-height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;transition:transform .18s var(--ease),box-shadow .18s var(--ease),border-color .18s var(--ease),background .18s var(--ease),opacity .18s var(--ease)}
+  .cell .cell-name{font-family:var(--font-display);font-size:13px;line-height:1.16;color:var(--ink)}
+  .cell .cell-cam{position:absolute;top:6px;left:7px;line-height:0}
+  .cell .cell-cam svg{width:21px;height:13px;display:block}
+  .cell .cell-go{position:absolute;bottom:4px;right:8px;font-family:var(--font-body);font-size:14px;color:var(--sun-deep);opacity:0;transform:translateX(-3px);transition:opacity .18s var(--ease),transform .18s var(--ease)}
+  .cell .star{color:var(--sun-deep);font-size:10px}
+  .cell:hover{border-color:var(--sun);background:var(--sun-highlight);transform:translateY(-2px);box-shadow:var(--shadow-1)}
+  .cell:hover .cell-go{opacity:1;transform:none}
+  /* узор проявленности: ярко / ясно / тихо */
+  .cell.lv3{background:var(--sun-highlight);border-color:var(--sun)}
+  .cell.lv3 .cell-name{font-weight:600}
+  .cell.lv1{opacity:.55}
+  .cell.lv1 .cell-name{color:var(--ink-muted)}
+  .cell.lv1:hover{opacity:1}
+  .cell.feat{border-color:var(--sun-deep);box-shadow:0 0 0 1.5px rgba(200,100,46,.22)}
+  .cell.feat:hover{box-shadow:0 0 0 1.5px rgba(200,100,46,.32),var(--shadow-1)}
+  /* tooltip на наведение (десктоп) */
+  .tip{position:absolute;left:0;top:calc(100% + 8px);width:222px;background:var(--ink);color:var(--paper);font-family:var(--font-body);font-size:12px;font-weight:400;letter-spacing:normal;text-transform:none;line-height:1.5;padding:11px 13px;border-radius:4px;box-shadow:var(--shadow-2);opacity:0;pointer-events:none;transform:translateY(-5px);transition:opacity .2s var(--ease),transform .2s var(--ease);z-index:30}
+  .tip::after{content:"";position:absolute;bottom:100%;left:20px;border:6px solid transparent;border-bottom-color:var(--ink)}
+  th.col{position:relative}
+  @media (hover:none){.tip{display:none}}
+
+  .legend{margin-top:22px;background:var(--sand);border:1px solid var(--line);border-radius:3px;padding:18px 20px}
+  .legend .lhint{margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft);font-size:12.5px;color:var(--ink-muted);line-height:1.5}
+  .legend .leg-title{font-family:var(--font-display);font-size:16px;color:var(--ink);margin-bottom:12px}
+  .legend .leg-cams{display:flex;flex-wrap:wrap;gap:16px 22px;margin-bottom:4px}
+  .legend .cam-ex{display:inline-flex;align-items:center;gap:9px}
+  .legend .cam-ex svg{width:28px;height:17px;flex:none}
+  .legend .cx-t{display:flex;flex-direction:column;line-height:1.22}
+  .legend .cx-t b{font-family:var(--font-body);font-size:12.5px;font-weight:600;color:var(--ink)}
+  .legend .cx-t i{font-size:11px;color:var(--ink-muted);font-style:normal}
+  .cres{display:flex;align-items:center;gap:8px;padding:0 24px;margin:-2px 0 2px;font-size:12px;color:var(--text-accent);font-weight:600;letter-spacing:.03em}
+  .cres svg{width:25px;height:15px;flex:none}
+
+  .axis-section{margin-top:26px}
+  .axis-section .as-head{font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:6px}
+  .axis-section .as-intro{font-size:14px;color:var(--ink-soft);margin-bottom:16px}
+  .as-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .as-card{background:var(--sand);border:1px solid var(--line);border-radius:3px;padding:16px 18px}
+  .as-card .as-t{font-family:var(--font-display);font-size:16px;color:var(--ink);margin-bottom:7px}
+  .as-card p{font-size:13.5px;line-height:1.5;color:var(--ink-soft)}
+  .as-self{margin-top:14px;font-size:13px;color:var(--ink-muted);font-style:italic;line-height:1.5;border-left:2px solid var(--line);padding-left:14px}
+
+
+
+  /* ===== MODAL ===== */
+  .overlay{position:fixed;inset:0;background:rgba(31,22,16,0.5);backdrop-filter:blur(3px);display:flex;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:24px;opacity:0;pointer-events:none;transition:opacity .25s var(--ease);z-index:50}
+  .overlay.open{opacity:1;pointer-events:auto}
+  .card{width:100%;max-width:440px;margin:auto;border-radius:8px;background:var(--paper);box-shadow:var(--shadow-3);transform:translateY(12px) scale(.98);transition:transform .28s var(--ease),background .35s var(--ease);position:relative}
+  .overlay.open .card{transform:none}
+  .card.shadowed{background:var(--ink-deep)}
+
+  .card .chead{padding:22px 24px 0}
+  .card .ckicker{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-accent);font-weight:600;margin-bottom:7px;transition:color .35s}
+  .card.shadowed .ckicker{color:var(--glow)}
+  .card .ctitle{font-family:var(--font-display);font-size:24px;line-height:1.18;color:var(--ink);transition:color .35s}
+  .card.shadowed .ctitle{color:var(--paper)}
+  .card .cclose{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;border:none;background:var(--sand-warm);color:var(--ink-soft);cursor:pointer;font-size:18px;line-height:1;transition:all .2s}
+  .card .cclose:hover{background:var(--sun);color:var(--paper)}
+  .card.shadowed .cclose{background:rgba(255,241,221,.12);color:var(--paper)}
+
+  /* grade mini switch */
+  .grade{display:inline-flex;gap:4px;margin:14px 24px 0;background:var(--sand-warm);border-radius:999px;padding:4px;transition:background .35s}
+  .card.shadowed .grade{background:rgba(255,241,221,.08)}
+  .grade button{font-family:var(--font-body);font-size:11.5px;font-weight:500;color:var(--ink-soft);background:transparent;border:none;border-radius:999px;padding:5px 12px;cursor:pointer;transition:all .18s}
+  .grade button.on{background:var(--ink);color:var(--paper)}
+  .card.shadowed .grade button{color:rgba(255,241,221,.7)}
+  .card.shadowed .grade button.on{background:var(--glow);color:var(--ink)}
+
+  .card .cbody{padding:16px 24px 24px}
+  .card .modus-chip{display:inline-flex;align-items:center;gap:6px;margin-bottom:14px;padding:4px 11px;border-radius:999px;border:1px solid var(--line);font-size:11.5px;color:var(--ink-soft)}
+  .card.shadowed .modus-chip{border-color:rgba(255,241,221,.2);color:rgba(255,241,221,.75)}
+  .card .modus-chip .lc{width:8px;height:8px;border-radius:50%}
+
+  .card .seg{margin-bottom:16px}
+  .card .seg .stag{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;margin-bottom:5px;display:block}
+  .card .seg p{font-size:14.5px;line-height:1.6;color:var(--ink-soft)}
+  .card.shadowed .seg p{color:rgba(255,241,221,.84)}
+  .seg.s-concept .stag{color:var(--text-accent)}
+  .seg.s-concept{margin-bottom:16px}
+  .seg.s-concept p{font-size:13.5px;line-height:1.55;color:var(--ink-soft)}
+  .seg.s-intro{margin-bottom:14px}
+  .seg.s-light .stag{color:var(--olive)}
+  .seg.s-facet .stag{color:var(--text-accent)}
+  .seg.s-facet{margin-top:16px;padding-top:14px;border-top:1px solid var(--line-soft)}
+  .seg.s-shadow .stag{color:var(--sun-deep)}
+  .card.shadowed .seg.s-shadow .stag{color:var(--sun-light)}
+  .seg.s-hood{margin-top:16px;padding-top:14px;border-top:1px solid var(--line-soft)}
+  .seg.s-hood .stag{color:var(--ink-muted)}
+  .seg.s-hood p{font-size:12.5px;font-style:italic;color:var(--ink-muted)}
+  .card.shadowed .seg.s-hood p{color:rgba(255,241,221,.5)}
+
+  .lesson-box{margin-top:16px;background:var(--sun-highlight);border-radius:4px;padding:14px 16px}
+  .card.shadowed .lesson-box{background:rgba(255,228,138,.14)}
+  .lesson-box .stag{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--text-accent);margin-bottom:5px;display:block}
+  .card.shadowed .lesson-box .stag{color:var(--glow)}
+  .lesson-box p{font-size:14px;line-height:1.55;color:var(--ink)}
+  .card.shadowed .lesson-box p{color:var(--paper)}
+
+  .seg.s-balance{margin-top:14px;padding-top:14px;border-top:1px solid var(--line-soft)}
+  .seg.s-balance .stag{color:var(--text-accent)}
+  .grow-box{margin-top:12px;background:var(--sun-highlight);border-radius:4px;padding:13px 15px}
+  .card.shadowed .grow-box{background:rgba(255,228,138,.14)}
+  .grow-box .stag{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--text-accent);margin-bottom:5px;display:block}
+  .card.shadowed .grow-box .stag{color:var(--glow)}
+  .grow-box p{font-size:14px;line-height:1.55;color:var(--ink)}
+  .card.shadowed .grow-box p{color:var(--paper)}
+  .flip-btn{margin-top:18px;width:100%;border:1px solid var(--line);background:var(--sand);color:var(--ink);font-family:var(--font-body);font-size:13.5px;font-weight:500;border-radius:3px;padding:11px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+  .flip-btn:hover{background:var(--sun);color:var(--paper);border-color:var(--sun)}
+  .card.shadowed .flip-btn{background:rgba(255,241,221,.1);color:var(--paper);border-color:rgba(255,241,221,.2)}
+  .card.shadowed .flip-btn:hover{background:var(--glow);color:var(--ink)}
+
+  footer a{color:var(--sun-deep);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+  footer{margin-top:50px;padding-top:26px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  @media (max-width:820px){
+    .doc{padding:38px 0 60px}
+    h1{font-size:34px}.lead{font-size:19px}
+    .cell{font-size:11.5px;min-height:44px;padding:6px 5px}
+      .as-grid{grid-template-columns:1fr}
+    .overlay{padding:14px}
+  }
+
+  /* переключатель видов */
+  /* ОБЩИЙ КАРКАС: колонка этажей (фиксирована) + сменная правая панель */
+  .mx{display:grid;grid-template-columns:120px 1fr;gap:10px;align-items:start}
+  .mx-floors{display:flex;flex-direction:column;padding-top:38px}   /* 38 = высота шапки правой панели */
+  .fr{height:68px;display:flex;align-items:center;justify-content:flex-end;text-align:right;gap:6px;cursor:pointer;padding-right:12px;border-radius:7px;transition:background .14s var(--ease)}
+  .fr:hover{background:var(--sun-highlight)}
+  .fr .fr-n{font-family:var(--font-display);font-size:16px;line-height:1.1;color:var(--ink);transition:color .14s var(--ease)}
+  .fr:hover .fr-n{color:var(--sun-deep)}
+  .fr.gate .fr-n{color:var(--ink-soft)}
+  .fr .fr-chev{color:var(--sun-deep);font-size:15px;opacity:0;transition:opacity .14s var(--ease)}
+  .fr:hover .fr-chev{opacity:1}
+  .mx-right{min-width:0}
+  /* шапки правых панелей — одинаковой высоты 38px */
+  .rp-head{height:38px;display:grid;align-items:center}
+  .rp-head-3{grid-template-columns:repeat(3,1fr);gap:8px}
+  .rp-head-3 span{position:relative;font-family:var(--font-body);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-accent);font-weight:600;text-align:center;cursor:pointer;padding:4px 6px;border-radius:6px;transition:background .14s var(--ease),color .14s var(--ease)}
+  .rp-head-3 span:hover{background:var(--sun-highlight);color:var(--sun-deep)}
+  .rp-head-3 span::after{content:"\203a";margin-left:5px;color:var(--sun-deep);opacity:0;transition:opacity .14s var(--ease)}
+  .rp-head-3 span:hover::after{opacity:1}
+  .rp-head-tree{grid-template-columns:1fr 70px 1fr}
+  .rp-head-tree span{font-family:var(--font-body);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-accent);font-weight:600;line-height:1.25}
+  .rp-head-tree .axis-help:first-child{text-align:right;padding-right:8px;cursor:pointer}
+  .rp-head-tree .axis-help:last-child{text-align:left;padding-left:8px;cursor:pointer}
+  .rp-head-tree .axis-help:hover{color:var(--sun-deep)}
+  .rp-head-tree .th-mid{text-align:center}
+  .rp-head-tree i{display:block;font-style:normal;font-size:8.5px;letter-spacing:.02em;text-transform:none;color:var(--ink-muted);margin-top:2px}
+
+  /* ТАБЛИЦА: клетки сеткой 3×7, строки по 68 */
+  .rp-cells{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:68px;gap:0 8px}
+  .rp-cells .cellwrap{display:flex;padding:4px 0}
+
+  /* СХЕМА: строки по 68 */
+  .tg-row{display:grid;grid-template-columns:1fr 70px 1fr;align-items:center;height:68px}
+  .tg-mid{position:relative;display:flex;align-items:center;justify-content:center;height:100%}
+  #treeBody{position:relative}
+  .tg-axiswrap{position:absolute;top:0;bottom:0;pointer-events:none;z-index:0}
+  /* колонка осей выровнена со средним столбцом строки (1fr 70px 1fr) */
+  .tg-axiswrap{left:0;right:0}
+  .tg-axis{position:absolute;left:calc((100% - 70px)/2);width:70px;height:100%;display:block}
+  .tg-row,.tg-self{position:relative;z-index:1}
+  .tg-node{position:relative;z-index:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s var(--ease)}
+  .tg-node svg{display:block}
+  .tg-node .tg-ring{opacity:0;transition:opacity .16s var(--ease)}
+  .tg-node:hover .tg-ring{opacity:1}
+  .tg-left,.tg-right{display:flex;align-items:center;min-width:0}
+  .tg-left{justify-content:flex-end;padding-right:8px}
+  .tg-right{justify-content:flex-start;padding-left:8px}
+  /* плашка баланса: единая ширина, градиент-заливка по силе перекоса */
+  .tg-pill{position:relative;width:188px;max-width:100%;display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer;font-family:inherit;background:var(--paper);overflow:hidden;transition:transform .16s var(--ease),box-shadow .16s var(--ease),border-color .16s var(--ease)}
+  .tg-pill::before{content:"";position:absolute;inset:0;background:var(--pill-grad);opacity:.9;pointer-events:none}
+  .tg-pill > *{position:relative;z-index:1}
+  .tg-pill:hover{transform:translateY(-1px);box-shadow:var(--shadow-1);border-color:var(--sun)}
+  .tg-left .tg-pill{flex-direction:row}
+  .tg-arr{line-height:0;flex:none}
+  .tg-arr svg{width:18px;height:14px;display:block}
+  .tg-cell{display:flex;flex-direction:column;line-height:1.16;min-width:0;flex:1}
+  .tg-left .tg-cell{text-align:left}
+  .tg-right .tg-cell{text-align:left}
+  .tg-cn{font-family:var(--font-display);font-size:13.5px;color:var(--ink)}
+  .tg-cn.lv1{color:var(--ink-soft)}
+  .tg-cn.lv3{font-weight:600}
+  .tg-rl{font-size:9px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-muted);margin-top:1px}
+  .tg-rl.lv3{color:var(--text-accent)}
+  .tg-rl.z{color:var(--sun-deep);font-weight:700}
+  .tg-zicon{line-height:0;flex:none}
+  .tg-zicon svg{width:15px;height:15px;display:block}
+  .tg-pill.zator{border-color:var(--sun-deep);box-shadow:0 0 0 1px rgba(200,100,46,.18)}
+  .tg-node.dimmed svg{opacity:.5;transition:opacity .2s var(--ease)}
+  .tg-node.dimmed:hover svg{opacity:1}
+  .tg-self{display:grid;grid-template-columns:1fr 70px 1fr;align-items:center;height:46px;cursor:pointer}
+  .tg-self .tg-self-mid{grid-column:2;display:flex;justify-content:center}
+  .tg-self .tg-self-dot{width:11px;height:11px;border-radius:50%;background:#C8642E}
+  .tg-self .tg-self-lbl{grid-column:3;justify-self:start;padding-left:8px;font-family:var(--font-display);font-style:italic;font-size:12.5px;color:#C8642E}
+
+  /* легенда */
+  .vlegend{margin-top:22px;background:var(--sand);border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+  .vlegend .vl-title{font-family:var(--font-display);font-size:16px;color:var(--ink);margin-bottom:14px}
+  .vlegend .vl-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 22px}
+  .vlegend .vl-item{display:flex;align-items:center;gap:11px}
+  .vlegend .vl-x{display:flex;flex-direction:column;line-height:1.2}
+  .vlegend .vl-x b{font-family:var(--font-body);font-size:13px;font-weight:600;color:var(--ink)}
+  .vlegend .vl-x i{font-size:11px;color:var(--ink-muted);font-style:normal;margin-top:1px}
+  .vlegend .vl-cam{width:26px;height:16px;display:inline-block;flex:none}
+  .vlegend .vl-cam svg{width:26px;height:16px;display:block}
+  .vlegend .vl-node{width:36px;height:36px;display:inline-block;flex:none}
+  .vlegend .vl-node svg{width:36px;height:36px;display:block}
+  .vlegend .vl-node.dimmed svg{opacity:.5}
+  .vlegend .vl-star{color:var(--sun-deep);font-size:16px;width:26px;text-align:center;flex:none}
+  .vlegend .vl-pill-demo{width:44px;height:22px;border:1px solid var(--line);border-radius:999px;flex:none;background:linear-gradient(90deg,var(--sun-highlight),var(--glow) 70%,var(--sand))}
+  @media(max-width:560px){
+    .mx{grid-template-columns:86px 1fr;gap:6px}
+    .fr .fr-n{font-size:13px}
+    .tg-pill{width:150px}
+    .vlegend .vl-grid{grid-template-columns:1fr}
+  }
+
+  .view-switch{display:inline-flex;gap:4px;background:var(--sand);border:1px solid var(--line);border-radius:999px;padding:4px;margin:4px 0 24px}
+  .view-switch .vs{border:none;background:transparent;color:var(--ink-soft);font-family:var(--font-body);font-size:14px;font-weight:500;padding:8px 22px;border-radius:999px;cursor:pointer;transition:all .2s var(--ease)}
+  .view-switch .vs.on{background:var(--sun);color:#fff;box-shadow:0 2px 8px rgba(220,150,88,.3)}
+  .view-switch .vs:not(.on):hover{color:var(--ink)}
+  .view[hidden]{display:none}
+  /* дерево (вид схемы) */
+  .stage{display:block;margin-top:8px}
+  @media(max-width:560px){.desc-2{grid-template-columns:1fr}}
+  .ring-h{opacity:0;transition:opacity .2s}
+
+  .side h2{margin-bottom:6px}
+  .side .blk{margin-bottom:20px}
+  .side .blk:last-child{margin-bottom:0}
+  .legend-row{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:12px;font-size:12px;color:var(--ink-muted)}
+  .legend-row span{display:inline-flex;align-items:center;gap:6px}
+  .legend-row .d{width:14px;height:14px;border-radius:50%;display:inline-block}
+
+  .tie{margin-top:34px;padding-top:24px;border-top:1px solid var(--line);font-size:14px;line-height:1.6;color:var(--ink-soft);max-width:760px}
+  .tie b{color:var(--ink)}
+
+  /* MODAL (та же карточка, что в таблице) */
+
+  /* === Ярко звучит (featured, лёгкий верх) === */
+  .bright{margin:6px 0 10px}
+  .bright .eyebrow{margin-bottom:10px}
+  .bright-sub{font-size:14px;color:var(--ink-soft);margin-bottom:20px}
+  .bright-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .bf{position:relative;background:var(--sand);border:1px solid var(--line);border-radius:8px;padding:22px 22px 18px;cursor:pointer;overflow:hidden;transition:transform .26s var(--ease),box-shadow .26s var(--ease),border-color .26s var(--ease),background .26s var(--ease)}
+  .bf::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 0%,rgba(255,233,194,.5),transparent 70%);opacity:0;transition:opacity .26s var(--ease);pointer-events:none}
+  .bf:hover{transform:translateY(-5px);box-shadow:var(--shadow-2);border-color:var(--sun)}
+  .bf:hover::before{opacity:1}
+  .bf .bf-eyebrow{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--text-accent)}
+  .bf .bf-title{font-family:var(--font-display);font-size:27px;line-height:1.08;color:var(--ink);margin-top:6px}
+  .bf-hero{display:flex;justify-content:center;align-items:center;height:144px;margin:6px 0 10px}
+  .bf-hero svg{width:128px;height:128px;display:block;transition:transform .3s var(--ease)}
+  .bf:hover .bf-hero svg{transform:scale(1.06)}
+  .bf .bf-phrase{font-family:var(--font-display);font-size:15.5px;line-height:1.45;color:var(--ink-soft);min-height:44px}
+  .bf-foot{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:13px;border-top:1px solid var(--line-soft)}
+  .res-dots{display:inline-flex;gap:5px;align-items:center}
+  .res-dots i{width:7px;height:7px;border-radius:50%;background:var(--sun-deep);display:inline-block}
+  .res-dots .lbl{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);font-weight:600;margin-left:6px}
+  .open-hint{font-family:var(--font-body);font-size:12.5px;font-weight:500;color:var(--sun-deep);display:inline-flex;align-items:center;gap:5px;transition:gap .22s var(--ease)}
+  .open-hint .chev{transition:transform .22s var(--ease)}
+  .bf:hover .open-hint{gap:9px}
+  .bf:hover .open-hint .chev{transform:translateX(2px)}
+  .bf.dark{grid-column:1 / -1;background:var(--ink-deep);border-color:rgba(255,241,221,.14);display:grid;grid-template-columns:160px 1fr;gap:18px;align-items:center;padding:22px 24px}
+  .bf.dark::before{background:radial-gradient(90% 120% at 18% 50%,rgba(220,150,88,.28),transparent 65%)}
+  .bf.dark:hover{border-color:var(--sun)}
+  .bf.dark .bf-hero{height:128px;margin:0}
+  .bf.dark .bf-hero svg{width:120px;height:120px}
+  .bf.dark .bf-eyebrow{color:var(--sun-light)}
+  .bf.dark .bf-title{color:var(--paper)}
+  .bf.dark .bf-phrase{color:rgba(255,241,221,.82)}
+  .bf.dark .bf-foot{border-top-color:rgba(255,241,221,.12)}
+  .bf.dark .res-dots i{background:var(--glow)}
+  .bf.dark .res-dots .lbl{color:rgba(255,241,221,.55)}
+  .bf.dark .open-hint{color:var(--glow)}
+  .bf.dark .bf-body{min-width:0}
+  .bf.hero{grid-column:1 / -1;display:grid;grid-template-columns:160px 1fr;gap:18px;align-items:center;padding:22px 24px}
+  .bf.hero .bf-hero{height:128px;margin:0}
+  .bf.hero .bf-hero svg{width:120px;height:120px}
+  .bf.hero .bf-body{min-width:0}
+  @media(max-width:560px){
+    .bright-grid{grid-template-columns:1fr}
+    .bf.hero{grid-template-columns:1fr;text-align:center}
+    .bf.hero .bf-hero{justify-self:center}
+    .bf.dark{grid-template-columns:1fr;text-align:center}
+    .bf.dark .bf-hero{justify-self:center}
+    .bf.dark .bf-foot{justify-content:center;gap:22px}
+  }
+  /* модалка: hero-иконка + способ усиления + центр заголовка */
+  .card .chero{display:flex;justify-content:center;padding:24px 0 4px}
+  .card .chero svg{width:96px;height:96px}
+  .card .chead.center{text-align:center}
+  .amplify-box{margin-top:16px;background:var(--sun-highlight);border-radius:6px;padding:14px 16px;border-left:3px solid var(--sun)}
+  .amplify-box .stag{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--olive);margin-bottom:5px;display:block}
+  .amplify-box p{font-size:14px;line-height:1.55;color:var(--ink)}
+  .rich-sub{font-family:var(--font-display);font-style:italic;font-size:15.5px;color:var(--ink-soft);margin:-2px 0 18px}
+  .rich-sec{margin-bottom:22px}
+  .rich-label{font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-accent);margin-bottom:12px}
+  .rich-item{margin-bottom:14px}
+  .rich-item .ri-name{font-family:var(--font-display);font-size:16px;color:var(--ink);margin-bottom:3px}
+  .rich-item .ri-text{font-size:14px;line-height:1.55;color:var(--ink-soft)}
+  .rich-check{position:relative;padding-left:16px;margin-bottom:9px;font-size:14px;line-height:1.5;color:var(--ink-soft);border-left:2px solid var(--sun);padding-top:1px;padding-bottom:1px}
+  .rich-text{font-size:14px;line-height:1.6;color:var(--ink-soft)}
+  .rich-sec + .rich-sec{padding-top:18px;border-top:1px solid var(--line-soft)}
+  /* свёрнутые: ось договора + этапы пути (открывают модалку) */
+  .axis-row,.stage-row{width:100%;text-align:left;background:var(--sand);border:1px solid var(--line);border-radius:8px;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:14px;padding:16px 18px;transition:transform .2s var(--ease),box-shadow .2s var(--ease),border-color .2s var(--ease),background .2s var(--ease)}
+  .axis-row:hover,.stage-row:hover{transform:translateY(-2px);box-shadow:var(--shadow-1);border-color:var(--sun);background:var(--sun-highlight)}
+  /* яркая плашка самости — сквозная ось */
+  .self-banner{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center;width:100%;text-align:left;cursor:pointer;font-family:inherit;background:var(--ink-deep);border:1px solid rgba(255,241,221,.14);border-radius:10px;padding:18px 22px;margin-bottom:11px;position:relative;overflow:hidden;transition:transform .24s var(--ease),box-shadow .24s var(--ease),border-color .24s var(--ease)}
+  .self-banner::before{content:"";position:absolute;inset:0;background:radial-gradient(80% 130% at 16% 50%,rgba(220,150,88,.30),transparent 62%);opacity:.9;pointer-events:none}
+  .self-banner:hover{transform:translateY(-3px);box-shadow:var(--shadow-2);border-color:var(--sun)}
+  .self-banner .sb-hero{position:relative;z-index:1;display:flex;justify-content:center;align-items:center}
+  .self-banner .sb-hero svg{width:84px;height:84px}
+  .self-banner .sb-body{position:relative;z-index:1;min-width:0}
+  .self-banner .sb-eyebrow{display:block;font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--sun-light)}
+  .self-banner .sb-title{display:block;font-family:var(--font-display);font-size:26px;line-height:1.1;color:var(--paper);margin-top:3px}
+  .self-banner .sb-phrase{display:block;font-family:var(--font-display);font-size:14.5px;line-height:1.45;color:rgba(255,241,221,.82);margin-top:7px}
+  .self-banner .sb-foot{display:flex;align-items:center;justify-content:space-between;margin-top:13px;padding-top:12px;border-top:1px solid rgba(255,241,221,.12)}
+  .self-banner .sb-dots{display:inline-flex;gap:5px;align-items:center}
+  .self-banner .sb-dots i{width:7px;height:7px;border-radius:50%;background:var(--glow);display:inline-block}
+  .self-banner .sb-lbl{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,241,221,.55);font-weight:600;margin-left:6px}
+  .self-banner .sb-open{font-family:var(--font-body);font-size:12.5px;font-weight:500;color:var(--glow);display:inline-flex;align-items:center;gap:5px;transition:gap .22s var(--ease)}
+  .self-banner .sb-open .chev{transition:transform .22s var(--ease)}
+  .self-banner:hover .sb-open{gap:9px}
+  .self-banner:hover .sb-open .chev{transform:translateX(2px)}
+  @media(max-width:560px){
+    .self-banner{grid-template-columns:1fr;text-align:center;gap:8px;padding:20px}
+    .self-banner .sb-hero svg{width:76px;height:76px}
+    .self-banner .sb-foot{justify-content:center;gap:20px}
+  }
+  .axis-row{max-width:100%}
+  .axis-row .ax-ic{width:30px;height:30px;flex:none}
+  .axis-row .ax-ic svg{width:30px;height:30px;stroke:var(--sun-deep);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  .axis-row .ax-meta{flex:1;min-width:0}
+  .axis-row .ax-name{font-family:var(--font-display);font-size:17px;color:var(--ink);display:block;line-height:1.2}
+  .axis-row .ax-brief{font-size:13px;color:var(--ink-soft);display:block;margin-top:2px}
+  .axis-row .ax-chev,.stage-row .st-chev{font-size:20px;color:var(--sun-deep);flex:none;transition:transform .2s var(--ease)}
+  .axis-row:hover .ax-chev,.stage-row:hover .st-chev{transform:translateX(3px)}
+  .stages.compact{display:flex;flex-direction:column;gap:11px;margin-top:16px}
+  .stage-row .st-coord{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-accent);font-weight:600;flex:none;width:172px}
+  .stage-row .st-title{font-family:var(--font-display);font-size:18px;color:var(--ink);flex:1}
+  .stage-row .st-title em{font-style:normal;font-size:12px;color:var(--sun-deep);letter-spacing:0}
+  .stage-row.cur{border-color:var(--sun-deep);background:linear-gradient(90deg,rgba(200,100,46,.08),var(--sand))}
+  @media(max-width:560px){
+    .stage-row{flex-wrap:wrap;gap:4px 14px}
+    .stage-row .st-coord{width:auto}
+  }
+  /* === Сквозная ось: договор === */
+  .axis-one{background:var(--sand);border:1px solid var(--line);border-radius:4px;padding:18px 20px;max-width:620px}
+  .axis-one .ao-t{font-family:var(--font-display);font-size:17px;color:var(--ink);margin-bottom:12px}
+  .axis-one .ao-seg{margin-bottom:13px}
+  .axis-one .ao-lbl{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;display:block;margin-bottom:4px}
+  .axis-one .ao-lbl.lt{color:var(--olive)}
+  .axis-one .ao-lbl.sh{color:var(--sun-deep)}
+  .axis-one p{font-size:13.8px;line-height:1.6;color:var(--ink-soft)}
+
+  /* === ОБРАЗ (anchor) === */
+  .anchor-image{display:flex;gap:16px;align-items:flex-start;background:var(--sun-highlight);border-left:3px solid var(--sun-deep);border-radius:0 6px 6px 0;padding:20px 22px;margin:6px 0 4px;max-width:680px}
+  .lh-glyph{width:30px;height:30px;flex:none;stroke:var(--sun-deep);fill:none;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round;margin-top:3px}
+  .lh-glyph .ray{stroke:var(--sun-light);opacity:.85}
+  .anchor-image .eyebrow{margin-bottom:8px}
+  .anchor-text{font-family:var(--font-display);font-style:italic;font-size:17px;line-height:1.55;color:var(--ink-soft)}
+  .anchor-lead{font-style:italic;color:var(--sun-deep)}
+  /* === Путь === */
+  .path-block{margin-top:30px;max-width:680px}
+  .stages{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+  .stage-card{background:var(--sand);border:1px solid var(--line);border-radius:4px;padding:16px 18px}
+  .stage-card.cur{border-color:var(--sun-deep);background:linear-gradient(90deg,rgba(200,100,46,.08),var(--sand))}
+  .stage-coord{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-accent);font-weight:600;margin-bottom:4px}
+  .stage-card.cur .stage-coord::after{content:" · ты здесь";color:var(--sun-deep)}
+  .stage-title{font-family:var(--font-display);font-size:19px;color:var(--ink);margin-bottom:8px}
+  .stage-light{font-size:13.8px;line-height:1.6;color:var(--ink-soft)}
+  .stage-shadow{margin-top:11px;padding-top:11px;border-top:1px solid var(--line-soft)}
+  .stage-shadow .ssh-lbl,.stage-marker .sm-lbl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;display:block;margin-bottom:3px}
+  .stage-shadow .ssh-lbl{color:var(--sun-deep)}
+  .stage-shadow p,.stage-marker p{font-size:13px;line-height:1.55;color:var(--ink-soft)}
+  .stage-marker{margin-top:11px}
+  .stage-marker .sm-lbl{color:var(--ink-muted)}
+  .stage-marker p{font-style:italic;color:var(--ink-muted)}
+  /* === Главное === */
+  .main-block{margin-top:34px;max-width:680px}
+  .main-card{background:var(--sun-highlight);border-left:3px solid var(--sun-deep);border-radius:0 6px 6px 0;padding:24px 26px;margin-top:14px}
+  .main-lead{font-family:var(--font-display);font-style:italic;font-size:17.5px;line-height:1.62;color:var(--ink);margin-bottom:16px}
+  .main-points{margin-top:20px;padding-top:18px;border-top:1px solid rgba(200,100,46,.18)}
+  .mp-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-accent);font-weight:600;margin-bottom:14px}
+  .mp{display:flex;gap:12px;margin-bottom:15px;align-items:flex-start}
+  .mp .mp-n{width:22px;height:22px;flex:none;border:1.5px solid var(--sun-deep);border-radius:50%;color:var(--sun-deep);font-size:11.5px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-top:2px}
+  .mp>div{font-size:14px;line-height:1.6;color:var(--ink-soft)}
+  .mp>div b{color:var(--ink)}
+  .main-close{font-family:var(--font-display);font-style:italic;font-size:14.5px;line-height:1.6;color:var(--ink-soft);margin-top:18px;padding-top:16px;border-top:1px dashed rgba(200,100,46,.3)}
+  .main-sig{font-family:var(--font-display);font-style:italic;font-size:12.5px;letter-spacing:.08em;color:var(--ink-muted);margin-top:14px}
+  /* === Глаголы === */
+  .verbs-block{text-align:center;margin:40px auto 8px;max-width:560px}
+  .verbs-block .lh-glyph{width:34px;height:34px;margin:0 auto 14px;display:block}
+  .verbs{font-family:var(--font-display);font-size:26px;color:var(--ink)}
+  .verbs .v-accent{color:var(--sun-deep);font-style:italic}
+  .verbs-sub{font-family:var(--font-display);font-style:italic;font-size:14.5px;line-height:1.55;color:var(--ink-muted);margin:12px auto 0;max-width:440px}
+  html{scroll-behavior:smooth}
+  .toc{position:sticky;top:0;z-index:25;display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:rgba(255,241,221,.94);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:11px 0;margin:20px 0 0;border-bottom:1px solid var(--line)}
+  .toc a{font-family:var(--font-body);font-size:12.5px;font-weight:500;color:var(--ink-soft);text-decoration:none;padding:5px 12px;border-radius:999px;border:1px solid transparent;transition:all .18s var(--ease)}
+  .toc a:hover{background:var(--sand);color:var(--ink)}
+  .toc a.active{background:var(--ink);color:var(--paper)}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-top:48px;padding-top:26px;border-top:1px solid var(--line);scroll-margin-top:64px}
+  .sec-head .sec-n{font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--sun-deep)}
+  .sec-head .sec-t{font-family:var(--font-display);font-size:23px;line-height:1.1;color:var(--ink)}
+  .sec-sub{font-size:14px;color:var(--ink-soft);margin:8px 0 18px}
+  .axis-section{margin-top:0}
+  .path-block{margin-top:0}
+  .main-block{margin-top:0}
+  @media(max-width:560px){.toc{gap:4px;padding:9px 0}.toc a{padding:4px 9px;font-size:12px}.sec-head{margin-top:38px;padding-top:22px}}
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <header class="top">
+    <div class="logo">
+      <span class="disc" aria-hidden="true"></span>
+      <svg viewBox="0 0 236 120" role="img" aria-label="Solir"><path transform="translate(9.60 94.82) scale(0.04928 -0.04928)" d="M545 -22Q457 -22 399.5 -5.5Q342 11 307.5 32.5Q273 54 253.5 71.0Q234 88 222 88Q211 88 197.0 72.5Q183 57 167.5 37.0Q152 17 136.0 1.5Q120 -14 105 -14Q81 -14 69.5 -1.0Q58 12 61 39L103 385Q105 413 118.5 427.5Q132 442 151 442Q171 442 183.5 428.5Q196 415 205 389L219 302Q232 183 310.5 120.5Q389 58 502 58Q577 58 634.5 85.5Q692 113 727.0 162.0Q762 211 772 277Q788 367 743.5 443.0Q699 519 565 605Q417 702 353.5 798.5Q290 895 306 1025Q318 1129 380.5 1220.0Q443 1311 555.0 1367.5Q667 1424 825 1424Q959 1424 1051.5 1381.0Q1144 1338 1190.5 1269.5Q1237 1201 1235 1125Q1233 1079 1209.5 1049.0Q1186 1019 1146 1019Q1111 1019 1090.0 1038.5Q1069 1058 1055 1099L1038 1167Q1015 1260 956.0 1305.0Q897 1350 810 1350Q724 1350 659.5 1317.0Q595 1284 556.5 1229.0Q518 1174 510 1106Q497 1008 547.0 929.0Q597 850 727 759Q840 683 901.0 616.0Q962 549 982.5 480.5Q1003 412 994 333Q984 226 924.0 146.0Q864 66 766.5 22.0Q669 -22 545 -22Z" fill="#2A1810"/><path transform="translate(66.03 94.82) scale(0.04928 -0.04928)" d="M634 936Q757 933 844.0 876.0Q931 819 968.5 715.0Q1006 611 980 466Q960 357 908.5 266.0Q857 175 781.5 109.5Q706 44 613.0 10.0Q520 -24 417 -21Q296 -17 210.5 39.5Q125 96 88.5 200.0Q52 304 77 449Q98 559 148.5 649.5Q199 740 273.5 805.5Q348 871 439.5 905.0Q531 939 634 936ZM421 62Q464 58 506.0 73.5Q548 89 586.0 122.0Q624 155 657.0 205.5Q690 256 715.5 322.0Q741 388 757 469Q783 594 774.0 677.0Q765 760 728.0 803.5Q691 847 630 853Q587 857 546.5 841.5Q506 826 468.5 793.0Q431 760 398.5 710.0Q366 660 341.0 593.5Q316 527 300 446Q274 321 282.5 238.0Q291 155 327.0 111.5Q363 68 421 62Z" fill="#2A1810"/><path transform="translate(117.97 94.82) scale(0.04928 -0.04928)" d="M735 1437Q816 1437 854.5 1404.5Q893 1372 893 1328Q893 1286 868.0 1259.0Q843 1232 793 1232Q764 1232 742.0 1242.5Q720 1253 701.5 1266.5Q683 1280 662.5 1290.5Q642 1301 614 1301Q584 1301 559.0 1284.5Q534 1268 519.0 1240.5Q504 1213 500 1179Q499 1156 504.0 1133.5Q509 1111 516.5 1088.0Q524 1065 529.5 1039.0Q535 1013 534.0 982.5Q533 952 522 915L324 279Q296 184 304.5 152.0Q313 120 348 120Q378 120 411.5 137.5Q445 155 473 189Q486 202 495.0 205.5Q504 209 513 206Q525 202 528.0 187.5Q531 173 520 150Q502 103 456.0 64.0Q410 25 348.5 2.0Q287 -21 218 -21Q153 -21 120.5 6.5Q88 34 86.5 90.0Q85 146 112 233L394 1145Q441 1296 527.5 1366.5Q614 1437 735 1437Z" fill="#2A1810"/><path transform="translate(148.82 94.82) scale(0.04928 -0.04928)" d="M346 260Q318 181 325.5 149.5Q333 118 360 118Q377 118 395.5 128.5Q414 139 441 165Q457 180 468.0 184.0Q479 188 489 183Q501 177 500.5 162.0Q500 147 488 124Q452 58 385.0 19.0Q318 -20 237 -20Q175 -20 143.5 8.0Q112 36 111.0 90.0Q110 144 138 221L299 654Q328 733 320.5 765.0Q313 797 285 797Q270 797 250.5 786.5Q231 776 204 749Q188 735 177.0 731.0Q166 727 156 731Q145 737 145.0 752.0Q145 767 157 790Q193 856 259.5 895.5Q326 935 406 935Q464 935 495.5 907.0Q527 879 530.5 824.0Q534 769 504 688ZM480 1125Q416 1125 382.0 1160.0Q348 1195 354 1245Q358 1284 383.0 1317.5Q408 1351 448.5 1371.0Q489 1391 541 1391Q608 1391 639.0 1356.0Q670 1321 664 1270Q660 1230 635.0 1197.0Q610 1164 570.0 1144.5Q530 1125 480 1125Z" fill="#2A1810"/><path transform="translate(179.87 94.82) scale(0.04928 -0.04928)" d="M145 731Q133 737 133.5 752.0Q134 767 146 790Q170 834 208.5 866.5Q247 899 295.5 917.0Q344 935 396 935Q447 935 475.5 910.0Q504 885 504 837Q504 795 486.5 740.0Q469 685 445.5 625.0Q422 565 403.0 510.5Q384 456 381 416L365 418Q397 536 446.0 631.5Q495 727 554.0 794.5Q613 862 676.0 898.5Q739 935 801 935Q876 935 914.0 892.5Q952 850 951 781Q949 728 930.0 690.5Q911 653 881.5 633.0Q852 613 817 613Q779 613 761.0 631.0Q743 649 743 672Q743 694 749.5 713.5Q756 733 756 755Q756 780 744.5 795.0Q733 810 707 810Q664 810 607.5 757.5Q551 705 493.5 602.5Q436 500 387 348Q364 279 353.5 237.5Q343 196 343 163Q343 139 352.5 125.5Q362 112 372.0 99.5Q382 87 382 64Q382 41 360.5 21.0Q339 1 298.0 -10.0Q257 -21 196 -21Q150 -21 128.0 -0.5Q106 20 107.0 62.5Q108 105 130 169L290 654Q317 733 309.0 765.0Q301 797 274 797Q258 797 239.0 786.5Q220 776 193 749Q177 735 166.0 731.0Q155 727 145 731Z" fill="#2A1810"/></svg>
+    </div>
+    <div class="eyebrow">Твоя карта · Solir</div>
+    <h1>Людмила</h1>
+    <p class="lead">Сила, что начинает и держит. Ты идёшь первой и действуешь из воли — создаёшь, ведёшь, приземляешь своё в реальность. Твой рост — там, где сила учится отпускать: дать свободу себе и впустить другого вглубь, не сжимая. Гореть крупно, не выжигая себя, и держать своё, не запирая в этом свою волю.</p>
+    <p class="stage-note">Ниже — образ всей карты, что звучит ярче всего, полная карта в двух видах, сквозная ось, путь и главное. Вся глубина — в карточке по клику.</p>
+  </header>
+
+  <nav class="toc" aria-label="разделы">
+    <a href="#obraz">Образ</a>
+    <a href="#bright">Ярко звучит</a>
+    <a href="#karta">Карта</a>
+    <a href="#dogovor">Ось</a>
+    <a href="#put">Путь</a>
+    <a href="#glavnoe">Главное</a>
+  </nav>
+
+  <div class="sec-head" id="obraz"><span class="sec-n">01</span><span class="sec-t">Образ</span></div>
+  <div class="anchor-image">
+    <svg class="lh-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 19 C9 15 12.5 14 10.5 9.5 C13 11.5 14 14 12.8 17"/><path d="M13.2 19 C12.2 16.5 14.5 15.5 13.6 12.5 C15.4 14 15.6 16.5 14.4 18.5"/><line x1="6.5" y1="20.5" x2="15.5" y2="17.2"/><line x1="8.5" y1="17.2" x2="17.5" y2="20.5"/><line class="ray" x1="14.5" y1="11.5" x2="19.5" y2="9.5"/><line class="ray" x1="15" y1="14" x2="20.5" y2="13"/><circle class="ray" cx="20" cy="7.5" r="0.7"/><circle class="ray" cx="21.5" cy="11" r="0.6"/></svg>
+    <div class="anchor-content">
+      <p class="anchor-text"><span class="anchor-lead">Костёр на ветру.</span> Сильный огонь — твоя воля, твоя радиация, искра, что идёт первой; к нему тянутся греться. И ветер всегда рядом — твоя свобода, твоя неугомонность: он раздувает пламя и заставляет плясать, но потяни сильнее — разнесёт искры, прижми слишком плотно — задохнётся. Твоя задача жизни — гореть свободно, не разлетаясь, и держать огонь, не запирая ветер.</p>
+    </div>
+  </div>
+
+  <div class="sec-head" id="bright"><span class="sec-n">02</span><span class="sec-t">Ярко звучит</span></div>
+  <section class="bright">
+    <p class="bright-sub">Что в тебе звучит громче всего — пять верхушек карты. Нажми любую: раскроется полный разбор со светом, способом усиления, тенью и уроком.</p>
+    <div class="bright-grid">
+      <div class="bf hero" data-key="ogon"><div class="bf-hero" data-icon="ogon"></div><div class="bf-body"><div class="bf-eyebrow">Замысел · Воля</div><div class="bf-title">Первый огонь</div><div class="bf-phrase">Зажигаешь и идёшь первой — действуешь из воли.</div><div class="bf-foot"><span class="res-dots"><i></i><i></i><i></i><span class="lbl">ярко</span></span><span class="open-hint">раскрыть <span class="chev">›</span></span></div></div></div>
+      <div class="bf" data-key="serdce"><div class="bf-eyebrow">Свет · Сцена</div><div class="bf-title">Львиное сердце</div><div class="bf-hero" data-icon="serdce"></div><div class="bf-phrase">Греешь и светишь щедро — тебе идёт быть на виду.</div><div class="bf-foot"><span class="res-dots"><i></i><i></i><i></i><span class="lbl">ярко</span></span><span class="open-hint">раскрыть <span class="chev">›</span></span></div></div>
+      <div class="bf" data-key="omut"><div class="bf-eyebrow">Чувства · Близость</div><div class="bf-title">Глубокий омут</div><div class="bf-hero" data-icon="omut"></div><div class="bf-phrase">Любишь до дна — и преображаешь через близость.</div><div class="bf-foot"><span class="res-dots"><i></i><i></i><i></i><span class="lbl">ярко</span></span><span class="open-hint">раскрыть <span class="chev">›</span></span></div></div>
+      <div class="bf" data-key="znanie"><div class="bf-eyebrow">Центр · Ум</div><div class="bf-title">Своё знание</div><div class="bf-hero" data-icon="znanie"></div><div class="bf-phrase">Видишь по-своему то, что другие пропускают.</div><div class="bf-foot"><span class="res-dots"><i></i><i></i><i></i><span class="lbl">ярко</span></span><span class="open-hint">раскрыть <span class="chev">›</span></span></div></div>
+      <div class="bf" data-key="zemlya"><div class="bf-eyebrow">Опора · Дело</div><div class="bf-title">Своя земля</div><div class="bf-hero" data-icon="zemlya"></div><div class="bf-phrase">Приземляешь замысел в дело — и держишь своё.</div><div class="bf-foot"><span class="res-dots"><i></i><i></i><i></i><span class="lbl">ярко</span></span><span class="open-hint">раскрыть <span class="chev">›</span></span></div></div>
+      <div class="bf dark" data-key="veter"><div class="bf-hero" data-icon="veter"></div><div class="bf-body"><div class="bf-eyebrow">Воля · Свобода</div><div class="bf-title">Вольный ветер</div><div class="bf-phrase">Свобода — твой воздух. Гори, но не давай долгу запереть ветер.</div><div class="bf-foot"><span class="res-dots"><i></i><i></i><i></i><span class="lbl">ярко</span></span><span class="open-hint">раскрыть <span class="chev">›</span></span></div></div></div>
+    </div>
+  </section>
+
+  <div class="sec-head" id="karta"><span class="sec-n">03</span><span class="sec-t">Полная карта</span></div>
+  <p class="sec-sub">Семь этажей × три сферы в двух видах: таблица — что на пересечении, схема — как связано и где баланс. Нажми любую клетку — полный разбор.</p>
+
+  <div class="view-switch" role="tablist">
+    <button class="vs on" data-view="table" role="tab">Таблица</button>
+    <button class="vs" data-view="tree" role="tab">Схема</button>
+  </div>
+
+  <!-- ОБЩИЙ КАРКАС: колонка этажей (фиксирована) + сменная правая панель -->
+  <div class="mx">
+    <div class="mx-floors" id="floorCol"></div>
+    <div class="mx-right">
+
+      <!-- правая панель: ТАБЛИЦА -->
+      <div id="view-table" class="rp">
+        <div class="rp-head rp-head-3">
+          <span data-col="intimacy">Близость</span>
+          <span data-col="work">Дело</span>
+          <span data-col="health">Здоровье</span>
+        </div>
+        <div id="mbody" class="rp-cells"></div>
+      </div>
+
+      <!-- правая панель: СХЕМА -->
+      <div id="view-tree" class="rp" hidden>
+        <div class="rp-head rp-head-tree">
+          <span class="axis-help" data-axis-help="left">← принимающее<i>вместить · отдаться</i></span>
+          <span class="th-mid">этаж</span>
+          <span class="axis-help" data-axis-help="right">проявляющее →<i>направить · держать</i></span>
+        </div>
+        <div id="treeBody"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- легенда таблицы -->
+  <div class="vlegend" id="legendTable">
+    <div class="vl-title">Как читать таблицу</div>
+    <div class="vl-grid">
+      <div class="vl-item"><span class="vl-cam" data-cam="3"></span><span class="vl-x"><b>ярко звучит</b><i>сильно проявлено</i></span></div>
+      <div class="vl-item"><span class="vl-cam" data-cam="2"></span><span class="vl-x"><b>просто звучит</b><i>заметно</i></span></div>
+      <div class="vl-item"><span class="vl-cam" data-cam="1"></span><span class="vl-x"><b>тихо звучит</b><i>фоном</i></span></div>
+      <div class="vl-item"><span class="vl-star">★</span><span class="vl-x"><b>архетип ключа</b><i>опорная клетка</i></span></div>
+    </div>
+    <div class="vl-hint">Нажми любую клетку — полный разбор: свет, способ усиления, тень, урок.</div>
+  </div>
+
+  <!-- легенда схемы -->
+  <div class="vlegend" id="legendTree" hidden>
+    <div class="vl-title">Как читать схему</div>
+    <div class="vl-grid">
+      <div class="vl-item"><span class="vl-node" data-node="3"></span><span class="vl-x"><b>сильная зона</b><i>много силы, опора</i></span></div>
+      <div class="vl-item"><span class="vl-node" data-node="2"></span><span class="vl-x"><b>рабочая зона</b><i>в норме</i></span></div>
+      <div class="vl-item"><span class="vl-node" data-node="1"></span><span class="vl-x"><b>зона роста</b><i>есть куда расти</i></span></div>
+      <div class="vl-item"><span class="vl-node dimmed" data-node="2"></span><span class="vl-x"><b>затор</b><i>этаж выпадает из опоры</i></span></div>
+      <div class="vl-item"><span class="vl-pill-demo" data-fill="0.7"></span><span class="vl-x"><b>баланс сил</b><i>заливка = сила перекоса</i></span></div>
+    </div>
+    <div class="vl-hint">Кружок — сила этажа в сфере. Плашка — куда смещён баланс: чем глубже заливка, тем сильнее перекос. Самые налитые — то, с чем работать в первую очередь. Нажми плашку или этаж — разбор.</div>
+  </div>
+
+  <div class="axis-section">
+    <div class="sec-head" id="dogovor"><span class="sec-n">04</span><span class="sec-t">Сквозная ось</span></div>
+    <p class="as-intro">Что проходит через все этажи и держит их вместе. Самость — стержень, на котором собрана вся карта; Сказать вперёд — рычаг, превращающий твой импакт в лидерство. Оба не садятся ни на один этаж: они сквозные.</p>
+
+    <button class="self-banner" type="button" data-self="1">
+      <span class="sb-hero" data-hero="col"></span>
+      <span class="sb-body">
+        <span class="sb-eyebrow">Ось · стержень</span>
+        <span class="sb-title">Самость</span>
+        <span class="sb-phrase">Сквозная ось всей карты — суверенная воля, «Я хочу, я иду». Крепнет там, где сила уравновешена правом отпустить.</span>
+        <span class="sb-foot"><span class="sb-dots"><i></i><i></i><i></i><span class="sb-lbl">несущая ось</span></span><span class="sb-open">раскрыть <span class="chev">›</span></span></span>
+      </span>
+    </button>
+
+    <button class="axis-row" type="button" data-axis="1">
+      <span class="ax-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.5"/><path d="M9.5 12h9"/><path d="M15 8.5l4 3.5l-4 3.5"/></svg></span>
+      <span class="ax-meta"><span class="ax-name">Сказать вперёд</span><span class="ax-brief">предупредить прежде, чем двинуть — мотив всей жизни</span></span>
+      <span class="ax-chev">›</span>
+    </button>
+  </div>
+
+  <div class="path-block">
+    <div class="sec-head" id="put"><span class="sec-n">05</span><span class="sec-t">Путь</span></div>
+    <p class="as-intro">Сквозной вектор: куда ты движешься как человек. Карта — портрет, Путь — направление.</p>
+    <div class="stages compact">
+      <button class="stage-row" type="button" data-stage="past"><span class="st-coord">Этап позади · юность и двадцатые</span><span class="st-title">Разбег</span><span class="st-chev">›</span></button>
+      <button class="stage-row cur" type="button" data-stage="current"><span class="st-coord">Этап сейчас · тридцатые</span><span class="st-title">Строю своё <em>· ты здесь</em></span><span class="st-chev">›</span></button>
+      <button class="stage-row" type="button" data-stage="future"><span class="st-coord">Этап впереди · зрелость</span><span class="st-title">Зрелая сила</span><span class="st-chev">›</span></button>
+    </div>
+  </div>
+
+  <div class="main-block">
+    <div class="sec-head" id="glavnoe"><span class="sec-n">06</span><span class="sec-t">Главное</span></div>
+    <p class="as-intro">Если из всей карты нужно унести что-то одно — это здесь.</p>
+    <div class="main-card">
+      <p class="main-lead">Ты человек силы и почина, для которого начинать и держать — не выбор, а устройство. То, что для других «надо собраться», у тебя случается само: ты двигаешься первой, действуешь из воли, приземляешь задуманное в реальность. Это не дефект и не достоинство — это твоя природа, и в ней нужно жить во весь рост, а не пытаться стать тише и удобнее.</p>
+      <p class="main-lead" style="margin-bottom:0">Твоя сила — инициировать, вести и держать своё; твоя глубина — страсть, способная преображать через близость. А весь твой рост — в одном движении: научиться отпускать. Дать свободу себе (не запереть огонь долгом и контролем) и впустить другого вглубь (не держать в кулаке). Когда сила умеет отпустить — она становится крупнее. Когда только сжимает — приходит одиночество и выжженный мотор.</p>
+      <div class="main-points">
+        <div class="mp-label">Три точки, которые держать в голове всегда</div>
+        <div class="mp"><span class="mp-n">1</span><div><b>Скажи вперёд.</b> Твой импакт огромен: ты двигаешься, и мир это чувствует. Одна фраза заранее — тем, кого заденет, — превращает таран в лидерство: сила открывает двери вместо стен. Это не спрашивать разрешения (оно тебе не нужно), а дать импульсу прийти приглашением. Где сказала вперёд — за тобой идут; где двинула молча — упираются.</div></div>
+        <div class="mp"><span class="mp-n">2</span><div><b>Мотор у тебя волевой, а не вечный — и гори в одном огне.</b> Сила приходит вспышками и кончается; гнать на «надо» без перезарядки — выжечь себя. Работай заходами с реальным отдыхом. И собирай огонь в одно: твоя воля строит большое, когда идёт в один очаг, а не рассеивается десятком стартов. Свободу бери честно, но выбранное доводи.</div></div>
+        <div class="mp"><span class="mp-n">3</span><div><b>Твой рост — отпустить: впустить и довериться.</b> Глубина — твоя сила, но ты держишь близость в кулаке: контроль, ревность, страх потерять. Настоящий союз требует не силы, а капитуляции — дать другому войти и не сжать. То же с миром: держи своё, не давая ему держать тебя; отпускай там, где контроль невозможен. Сила, что умеет отпустить и впустить, крупнее силы, что держит и одна.</div></div>
+      </div>
+      <p class="main-close">Эта карта — не приговор и не предсказание. Она описание того, как ты уже устроена. То, что в ней узнаваемо — узнаваемо потому, что это и есть ты. То, что выглядит новым — место, к которому ты ещё подходишь. Главная задача не «исправить» какое-то качество, а перестать тратить силы на сопротивление собственной природе. Ты уже мощный инструмент — карта показывает, на каких частотах ты звучишь чище всего.</p>
+      <div class="main-sig">Solir · Карта Людмилы</div>
+    </div>
+  </div>
+
+  <div class="verbs-block">
+    <svg class="lh-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 19 C9 15 12.5 14 10.5 9.5 C13 11.5 14 14 12.8 17"/><path d="M13.2 19 C12.2 16.5 14.5 15.5 13.6 12.5 C15.4 14 15.6 16.5 14.4 18.5"/><line x1="6.5" y1="20.5" x2="15.5" y2="17.2"/><line x1="8.5" y1="17.2" x2="17.5" y2="20.5"/><line class="ray" x1="14.5" y1="11.5" x2="19.5" y2="9.5"/><line class="ray" x1="15" y1="14" x2="20.5" y2="13"/><circle class="ray" cx="20" cy="7.5" r="0.7"/><circle class="ray" cx="21.5" cy="11" r="0.6"/></svg>
+    <div class="verbs">Зажигать. <span class="v-accent">Гореть свободно.</span> Впускать.</div>
+    <p class="verbs-sub">Три глагола, которые держат всю карту. Если запомнишь только три слова — пусть будут эти.</p>
+  </div>
+
+  <footer>
+    <span>Solir · Карта Людмилы · карта-лестница (7 этажей × 3 сферы) · данные Людмилы</span>
+    <span><a href="https://t.me/solir">t.me/solir</a> · <a href="https://t.me/vanzhuravlev">t.me/vanzhuravlev</a></span>
+    <span>обновлено 3 июня 2026</span>
+  </footer>
+
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay">
+  <div class="card" id="card" role="dialog" aria-modal="true"></div>
+</div>
+
+<script>
+(function(){
+  var SP={intimacy:'Близость',work:'Дело',health:'Здоровье'};
+  var GRADE_NM={self:'самость',masc:'мужская',fem:'женская'};
+  var MODE_INTRO={"self": "Грань самости — стержень, что держит этажи. У тебя он — суверенная воля: «Я хочу, я иду». Крепнет, где сила уравновешена правом отпустить.", "masc": "Проявляющая грань — чем ты идёшь наружу: начинаешь, заявляешь, держишь, ведёшь. У тебя она сильная — это твой мотор.", "fem": "Принимающая грань — чем ты впускаешь и отпускаешь: сдаёшься, доверяешь, принимаешь, даёшь быть. У тебя это — край роста."};
+
+  var FLOORS=[{"id": "spirit", "name": "Смысл", "sub": "своя дорога", "kind": "gate", "color": "var(--sun-deep)", "intro": "Над тобой — не служение многим, а своя дорога: прожить её крупно, на полную, по-своему.", "light": "Смысл для тебя личный и крупный: не «раствориться в пользе для всех», а прожить свою жизнь во весь рост — создать своё, повести, оставить след. Ты чувствуешь, что пришла быть собой громко, а не тихо встроиться. И в этом есть тёплая нота заботы: ты держишь и тех, кто рядом, но из силы, а не из самостирания.", "shadow": "Тень — в двух крайностях. Либо смысл размывается чувством долга: тащишь ответственность за всех, и своя крупная дорога глохнет под «надо». Либо наоборот — крупность без оси: хватаешься за многое сразу, зажигаешься и бросаешь, и сила рассеивается, не собравшись во что-то одно.", "lesson": "Выбери, что твоё по-крупному, и вложись туда целиком — своя дорога, а не сумма чужих ожиданий. Заботу о других держи из полноты, не вместо себя. Смысл у тебя собирается, когда сила идёт в одно русло, а не растекается на всё подряд.", "hood": "своя дорога, личная крупная задача, след."}, {"id": "mind", "name": "Ум", "sub": "независимый, свой", "kind": "center", "color": "var(--air-text)", "intro": "Твой ум идёт своим путём: видит по-своему, схватывает то, что другие пропускают, и не любит чужих рельсов.", "light": "Ты думаешь самостоятельно и нестандартно: приходишь к тому, до чего другие не додумались, видишь суть под поверхностью, ловишь связи, незаметные сразу. Тебе не надо повторять за кем-то — у тебя своё знание, и оно часто верное. Это редкий независимый ум, который рождает, а не пересказывает.", "shadow": "Та же независимость двоится. Тебя могут не понимать — мысль идёт впереди или сбоку, и ты либо злишься, что не доходит, либо замолкаешь и держишь при себе. А внутри спорят две головы: одна чувствует и помнит сердцем, другая холодно строит и реформирует, — и от их разлада приходит сомнение и тревожный круг.", "lesson": "Доверяй своему углу зрения, но дай ему оформиться в слова, прежде чем выносить, — и не требуй, чтобы поняли сразу. Когда две твои головы спорят, не дави решением силой; дай знанию собраться. Твоя ценность не в том, чтобы быть понятой мгновенно, а в том, что ты видишь иначе.", "hood": "независимое мышление, своё знание, инсайт."}, {"id": "neck", "name": "Эмоции", "sub": "голос, заявление", "kind": "gate", "color": "var(--sun)", "intro": "Между умом и сердцем — голос. У тебя он сильный и прямой: ты заявляешь, а не намекаешь.", "light": "Ты говоришь с весом: можешь объявить, повести словом, назвать прямо. Твоя речь сдвигает — за ней идут, ей верят, она запускает дела. Ты не из тех, кто мнётся: сказала — и пошло. Это сила инициатора: голосом ты открываешь, а не только описываешь.", "shadow": "Та же сила сносит. Ты двигаешься и заявляешь, а тех, кого заденет, забываешь предупредить — и сила встречает стену, обиду, сопротивление: люди чувствуют, что их поставили перед фактом. А несогласие можешь выдать резко и сразу, не смягчив.", "lesson": "Перед тем как двинуть или объявить — скажи заранее тем, кого заденет: коротко, вперёд (это твоя сквозная ось «Сказать вперёд»). Не спрашивать разрешения, а дать импульсу прийти приглашением, а не вторжением. Одна фраза вперёд экономит стену.", "hood": "выражение вовне — голос, заявление, импакт."}, {"id": "soul", "name": "Чувства", "sub": "омут под рябью", "kind": "center", "color": "var(--olive)", "intro": "Здесь — глубокая вода под лёгкой рябью: снаружи подвижно и легко, внутри — омут силы и страсти.", "light": "Ты чувствуешь крупно и страстно: привязываешься всерьёз, любишь до дна, способна на близость такой силы, что она преображает — и тебя, и другого. Поверхность у тебя живая и лёгкая, но под ней глубина, которая не боится тьмы и проходит с человеком через что угодно. Это редкая способность к настоящему, преображающему союзу.", "shadow": "Глубина оборачивается властью. Ты держишь близость в кулаке: контролируешь, не отпускаешь, боишься потерять — и сжимаешь вместо того, чтобы впустить. Сдаться, отдать другому власть над собой, быть уязвимой без контроля — здесь у тебя затор. А лёгкая рябь сверху иногда уводит от глубины, глубина же тянет в одержимость.", "lesson": "Твой рост — впустить, не контролируя. Настоящая близость требует не силы, а капитуляции: дать другому войти глубоко и не держать в кулаке. Сила, что умеет отпустить и довериться, больше силы, что сжимает. Это твой узловой урок — преображаться через союз, а не править им.", "hood": "глубина чувства, страсть, преображающая близость."}, {"id": "belly", "name": "Желание", "sub": "крупный аппетит", "kind": "gate", "color": "var(--sun)", "intro": "Желание у тебя живое и крупное: ты хочешь ярко, разного, и не выносишь, когда «нельзя».", "light": "В тебе мощная тяга к жизни: к свободе, новизне, удовольствию, творчеству, к тому, чтобы пробовать и гореть. Ты знаешь свой аппетит и идёшь за ним; рядом с тобой жизнь становится вкуснее и ярче. Здоровое крупное «хочу» — твой мотор и компас.", "shadow": "Тот же аппетит мечется. «Хочу всего и сразу» рассеивает: загорелась — остыла — за новым, и за тягой к новизне теряется уже выбранное. А ещё желание спорит с долгом: между «хочу свободы» и «надо держать» ты дёргаешься и иногда путаешь «я этого хочу» с «я отсюда бегу».", "lesson": "Разводи «хочу» и «бегу»: тяга к новому — сила, но проверяй, не уносит ли она от того, что тебе на самом деле дорого. Свободу бери честно, а выбранное держи по своей воле, а не по принуждению. Зрелое желание умеет и гореть разным, и доводить одно.", "hood": "влечение, аппетит к жизни, свобода, новизна."}, {"id": "body", "name": "Тело", "sub": "волевой мотор", "kind": "center", "color": "var(--earth)", "intro": "Тело у тебя крепкое и волевое — мощный мотор, но мотор на воле, не вечный: работает рывками и требует настоящего отдыха.", "light": "У тебя есть сила: выносливость и волевой движок, на котором ты рвёшь и пробиваешь там, где другие сдаются. Когда ты в запале и делаешь своё, тело тянет много и мощно. Твоя физическая сила реальна — ты из тех, кто берёт и делает.", "shadow": "Но мотор у тебя волевой и импульсный, а не ровная батарея: сила приходит вспышками и кончается, а ты по упорству гонишь дальше на «надо» и «я смогу» — пока не выжмешь себя в ноль, до срыва или болезни. Отдых считаешь слабостью и не даёшь телу перезарядиться — вот твой затор.", "lesson": "Работай вспышками — и по-настоящему останавливайся между ними. Сила возвращается только в реальном отдыхе, а не в «ещё чуть-чуть на воле». Останавливаться вовремя — не слабость, а то, как ты вообще держишь свою мощь. Дай мотору перезарядиться, и он снова рванёт.", "hood": "телесная сила, волевой мотор, ритм вспышек."}, {"id": "legs", "name": "Опора", "sub": "твёрдая земля", "kind": "gate", "color": "var(--sun-deep)", "intro": "Под тобой — твёрдая земля: ты стоишь на материальном, держишь своё и умеешь приземлять задуманное в реальность.", "light": "Ты из тех, кто доводит до материи: замысел в твоих руках становится вещью, делом, территорией. У тебя крепкие корни в реальном — дело, дом, ресурс, своё пространство, — и ты держишь их уверенно. На тебя можно опереться: ты приземляешь и держишь там, где другие витают.", "shadow": "Та же хватка зажимает. Контроль над своим — территорией, ресурсом, делом — становится самоцелью; держишь слишком крепко, не отпускаешь, ищешь безопасность в том, чтобы всё было под рукой. А где надо довериться невидимому и отпустить — поднимается тихий страх. И долг с материей могут запереть твою же свободу.", "lesson": "Держи своё, не давая ему держать тебя. Опирайся на собственную ценность, а не только на контроль над вещами. И учись отпускать там, где контроль невозможен: довериться, отдать, не сжимать — это не потеря почвы, а опора покрупнее. Земля под тобой надёжна и без мёртвой хватки.", "hood": "корни в материальном, своё, умение приземлять и держать."}];
+
+  var CELLS={"spirit": {"intimacy": {"feat": false, "intro": "Любишь внутри своей большой жизни: партнёр — соратник по дороге, не клетка.", "light": "Близость у тебя вписана в крупную жизнь: тебе нужен не тот, в ком раствориться, а тот, кто горит рядом — с кем строить, идти, гореть вместе. Ты вносишь в союз масштаб и направление, и рядом с тобой партнёру хочется тоже жить крупнее.", "shadow": "Та же крупность давит на близость: ты можешь подчинить связь своей дороге — или, наоборот, бояться, что связь запрёт твой путь, и держать партнёра на расстоянии «чтобы не мешал». Либо ждёшь, что он будет служить твоей миссии.", "lesson": "Пусть союз будет общим огнём, а не соперником дороги и не клеткой. Выбирай того, кто горит рядом своим, — тогда близость добавляет силы пути, а не отнимает свободу.", "from": "Смысл в близости: партнёр-соратник, страх клетки, союз как общий огонь."}, "work": {"feat": true, "intro": "Главная клетка призвания — Первый огонь. Дело для тебя — начать своё и повести, а не исполнять чужое.", "light": "Твоё призвание — зажигать и вести: основать, создать, возглавить своё; идти первой и тянуть за собой. Тебе тесно исполнять чужой план — ты на месте во главе собственного огня. Признание и средства приходят к тебе через волю и лидерство: ты берёшь, делаешь и держишь территорию.", "shadow": "Без своего дела ты маешься и начинаешь продавливать — людей, обстоятельства, себя. Или распыляешься: зажглась десятком стартов и ни один не довела. А импакт без предупреждения встречает стену — двинула, не сказав вперёд, и люди сопротивляются.", "lesson": "Строй СВОЁ и вложи волю в один огонь, а не в десять искр. Веди из полноты и предупреждай тех, кого двигаешь («Сказать вперёд»). И помни: не каждый старт надо дожимать силой — выбери, что твоё по-крупному.", "from": "Смысл × Дело — ядро призвания: инициатор-лидер, воля как мотор, один огонь vs распыление."}, "health": {"feat": false, "intro": "Здоровье завязано на свободу и свой смысл: в клетке и без своего дела ты гаснешь.", "light": "Ты в форме, когда свободна и на своей дороге: автономия и крупная задача дают тебе тонус и азарт. Жизнь по своей воле — для тебя витамин.", "shadow": "Несвобода бьёт по телу: чужой контроль, тесные рамки, бессмысленное «надо» гасят тебя — и ты либо продавливаешь рамки на износ, либо тлеешь без сил. Клетка для тебя буквально вредна.", "lesson": "Возвращай тонус через автономию и свой огонь: где можешь — расширяй свободу, бери задачу, в которую веришь. Свобода и своё дело лечат тебя вернее режима.", "from": "Смысл × Здоровье: тонус от свободы и своей задачи, вред несвободы."}}, "mind": {"intimacy": {"feat": false, "intro": "В близости твой ум видит партнёра остро и по-своему.", "light": "Ты читаешь близкого глубоко и нестандартно: видишь, что он прячет, схватываешь его узоры, и тебе интересно с тем, кто может с тобой думать вровень. Это даёт союзу живость и глубину понимания.", "shadow": "Тот же острый независимый ум легко рубит: нетерпение к тому, кто «не догоняет», обесценивание, или ты замыкаешься и не выносишь настоящие мысли наружу.", "lesson": "Дари своё видение как подарок, а не приговор, и давай партнёру быть другим — мыслить иначе, медленнее. Понимание сближает, когда оно тёплое, а не когда оно сверху.", "from": "Ум × Близость: проницательность, риск рубить и обесценивать."}, "work": {"feat": true, "intro": "Своё знание — твой профессиональный резак: видишь то, что поле пропускает.", "light": "В деле ты мыслишь прорывами: приходишь к решениям, до которых другие не дошли, видишь суть и связи, не повторяешь за рынком. Твоя независимая голова — конкурентное преимущество: ты рождаешь новое, а не копируешь.", "shadow": "Цена — тебя не всегда понимают: мысль идёт впереди, и ты либо злишься, либо не объясняешь и держишь при себе («гений-чудак»). Или нетерпение к тем, кто медленнее.", "lesson": "Доверяй своему углу, но дай ему форму и время, чтобы другие могли подхватить, — и переводи, а не требуй мгновенного понимания. Твоя сила в том, что видишь иначе; задача — сделать это пригодным для дела.", "from": "Ум × Дело — ядро: прорывное независимое мышление, «гений-чудак», перевод для других."}, "health": {"feat": false, "intro": "Ум давит на тело беспокойством и спором двух голов.", "light": "Когда ум спокоен, он твой инженер: трезво выстраивает заботу о себе, видит твои паттерны, находит решение.", "shadow": "Но независимый ум легко крутит и спорит сам с собой (чувствующая голова против строящей), и это держит тело в напряжении: бессонница, тревожный круг, разгон.", "lesson": "Выводи разгон наружу действием: реши волей, сделай, подвигайся, проговори — а не перемалывай внутри. Телу нужен выход из круга, а не ещё один виток анализа.", "from": "Ум × Здоровье: тревожный разгон, спор двух голов, напряжение."}}, "neck": {"intimacy": {"feat": false, "intro": "В близости ты говоришь прямо — где стоишь и чего хочешь.", "light": "Ты называешь вещи прямо: партнёр знает, где он, чего ты хочешь, что не так. Без игр и намёков — это честно и чистит воздух; рядом с тобой не надо угадывать.", "shadow": "Та же прямота бьёт: можешь объявить решение, не предупредив, или рубануть в сердцах, не смягчив, — и близкий чувствует себя переехавшим.", "lesson": "Говори своё вперёд и с теплом: предупреди, прежде чем поставить перед фактом, и смягчи острое. Твоё слово в близости весит много — пусть открывает, а не ранит.", "from": "Эмоции × Близость: прямота, риск переехать словом."}, "work": {"feat": false, "intro": "В деле твой голос ведёт: объявляешь, убеждаешь, запускаешь.", "light": "Ты держишь комнату: объявляешь направление, заражаешь, запускаешь словом. Голосом ты инициируешь — за тобой идут, тебе верят.", "shadow": "Но можешь объявить, не предупредив тех, кого это двигает, — и встречаешь сопротивление; или продавливаешь, не оставляя места чужому голосу.", "lesson": "Предупреждай прежде, чем двинуть, и оставляй место голосам других. Твоё слово ложится лидерством, когда люди не поставлены перед фактом.", "from": "Эмоции × Дело: ведущий голос, импакт без предупреждения."}, "health": {"feat": false, "intro": "Ты выпускаешь силу легко — а вот мягкое и уставшее прячешь.", "light": "Ты не копишь: высказываешь, разряжаешь, не глотаешь обиду — это бережёт тебя от психосоматики застоя.", "shadow": "Но наружу идёт сила и воля, а уязвимое — «устала», «страшно», «не тяну» — ты прячешь и продавливаешь под «я в порядке», пока тело не сорвётся.", "lesson": "Озвучивай и слабые сигналы, не только сильные: сказать «я выдохлась» — не слабость, а то, что спасает тело. Сила, которая признаёт усталость, дольше держится.", "from": "Эмоции × Здоровье: лёгкая разрядка силы, спрятанная уязвимость."}}, "soul": {"intimacy": {"feat": true, "intro": "Глубокий омут — самая сильная клетка близости. Ты любишь до дна и преображаешь.", "light": "Здесь твоя главная глубина: ты привязываешься всем существом, любишь страстно и до конца, способна пройти с человеком через тьму и выйти преображённой. Под лёгкой поверхностью — сила, которая делает союз настоящим событием жизни, а не фоном.", "shadow": "Но глубину ты держишь властью: контролируешь, не отпускаешь, ревнуешь, боишься потерять — и сжимаешь близкого вместо того, чтобы впустить. Сдаться, стать уязвимой, отдать другому власть над собой — здесь затор; страсть легко уходит в одержимость.", "lesson": "Впусти, не контролируя. Дай другому войти глубоко и не держи в кулаке: капитуляция здесь сильнее хватки. Твой узловой рост — преображаться через союз, а не править им; довериться — не потерять себя, а найти большее.", "from": "Чувства × Близость — ядро: преображающая глубина, контроль/ревность, капитуляция как рост."}, "work": {"feat": false, "intro": "В дело ты вкладываешь страсть — всё или ничего.", "light": "Ты не работаешь вполсилы: вкладываешь страсть, и то, что делаешь, заряжено и преображает. Твоя интенсивность двигает проекты на другой уровень.", "shadow": "Но рабочее ты принимаешь как схватку: конфликт — как борьбу за власть, не отпускаешь контроль над делом и людьми, всё или ничего — и горишь дотла.", "lesson": "Вкладывай страсть, но не держи каждый винтик и каждого человека в кулаке: дели власть в деле, впускай соратников. Не каждый рабочий момент — битва.", "from": "Чувства × Дело: страсть, всё-или-ничего, контроль над процессом."}, "health": {"feat": false, "intro": "Интенсивность чувств напрямую бьёт по телу.", "light": "Глубокая вовлечённость заряжает тебя силой, когда у страсти есть русло; чувство для тебя — топливо.", "shadow": "Но накал, борьба, подавленная глубина оседают в теле: всё-или-ничего выжигает, а заглушённая страсть давит изнутри.", "lesson": "Дай интенсивности здоровые русла — движение, дело, творчество, честный разговор — и не делай из каждого чувства битву. Глубине нужен выход, а не запор.", "from": "Чувства × Здоровье: накал и тело, нужен выход интенсивности."}}, "belly": {"intimacy": {"feat": false, "intro": "В близости твой аппетит — страсть, огонь, вкус к разному.", "light": "Ты чувственная и страстная: вносишь в близость огонь, игру, телесную радость. С тобой желанно и ярко — ты знаешь, чего хочешь, и не стесняешься хотеть.", "shadow": "Тот же аппетит мечется: тяга к новизне и «а вдруг где-то ярче» тянет от выбранного; легко перепутать живое влечение с бегством от рутины близости.", "lesson": "Различай влечение и побег: неси огонь выбранному человеку, а не гонись за новой искрой. Свобода внутри близости — это глубина с одним, а не череда вспышек.", "from": "Желание × Близость: страсть и игра, новизна vs выбранное."}, "work": {"feat": false, "intro": "В деле тобой движет крупная амбиция и тяга строить большое.", "light": "Ты честолюбива в хорошем смысле: хочешь строить крупно, добиваться, получать за это — и аппетит к достижению тащит тебя вперёд. Желание большого — твой двигатель.", "shadow": "Но аппетит распыляется на «следующее», тяжело досидеть на одном; а амбиция (хочу масштаба) спорит со свободой (не хочу пут) — и ты перехватываешь или мечешься.", "lesson": "Наводи аппетит на цель: выбери одно крупное, достойное твоего огня, и доведи. И свобода, и амбиция чтятся выбором, а не разбросом.", "from": "Желание × Дело: амбиция строить крупно, распыление, амбиция vs свобода."}, "health": {"feat": false, "intro": "Удовольствие — твоё топливо; тело умеет наслаждаться.", "light": "Ты умеешь радоваться телу: еда, комфорт, чувственность восстанавливают тебя по-настоящему, когда ты себе это разрешаешь.", "shadow": "Аппетит то перехлёстывает в излишество ради сброса напряжения, то глохнет под долгом и гонкой — и ты отказываешь телу в том, что его лечит.", "lesson": "Дай здоровому удовольствию заряжать тебя — в меру и осознанно: твоё тело любит радость, и это не слабость, а топливо. Не сброс и не отказ, а вкус.", "from": "Желание × Здоровье: удовольствие как топливо, излишество vs отказ."}}, "body": {"intimacy": {"feat": false, "intro": "Рядом ты — тёплое, чувственное, устойчивое тело.", "light": "Ты даёшь телесное тепло и надёжность: чувственная, физически присутствующая, та, к кому хорошо прислониться. Твоя устойчивость рядом успокаивает.", "shadow": "Та же твёрдость может застыть в упрямство и неуступчивость; или ты и в близости продавливаешь тело через усталость, не давая себе мягкости.", "lesson": "Дай телу в близости расслабиться и принять — мягкость и гибкость вместо упрямой твёрдости. Опора рядом крепче, когда она живая, а не каменная.", "from": "Тело × Близость: чувственная устойчивость, упрямство, право на мягкость."}, "work": {"feat": false, "intro": "В деле ты пробиваешь телом и волей — и жжёшь мотор.", "light": "Ты исполняешь физически: выносливость плюс воля дают рывок, ты берёшь и делаешь там, где другие буксуют.", "shadow": "Но ты гонишь волевой мотор без перезарядки: игнорируешь усталость, «продавлю», — и выжигаешь себя до срыва.", "lesson": "Работай вспышками с реальными паузами между ними; не жги мотор в ноль. Сила возвращается в остановке, а не в очередном «ещё чуть-чуть».", "from": "Тело × Дело: рывок и воля, выжигание мотора."}, "health": {"feat": false, "intro": "Тело крепкое — но мотор волевой, и отдых ему нужен реальный, не «потом».", "light": "Тело у тебя сильное и хорошо восстанавливается — КОГДА ты даёшь ему отдых; сигналы оно подаёт ясно.", "shadow": "Но ты гонишь на воле, отдых считаешь слабостью и доводишь до срыва или болезни; крепость путаешь с неисчерпаемостью.", "lesson": "Отдыхай по раннему сигналу, а не у края: восстановление — часть цикла твоей мощи, а не поблажка. Крепкое тело — не бездонное; перезаряди мотор, и он снова рванёт.", "from": "Тело × Здоровье: волевой мотор, отдых как часть цикла, риск срыва."}}, "legs": {"intimacy": {"feat": false, "intro": "В близости ты — надёжная земля: строишь, держишь, остаёшься.", "light": "Ты та, на ком можно построить жизнь: верная, присутствующая, надёжная; создаёшь дом и держишь общее. С тобой прочно.", "shadow": "Та же надёжность переходит в контроль: держишь общую материальную жизнь крепко, можешь быть собственнической, искать безопасность в том, чтобы всё было под твоей рукой.", "lesson": "Будь землёй, не владея: держи близкого крепко, но без хватки. Прочность союза — не в контроле над общим, а во внутренней опоре каждого.", "from": "Опора × Близость: надёжность, контроль над общим, собственничество."}, "work": {"feat": true, "intro": "Своя земля — ты приземляешь замысел в материю и держишь территорию.", "light": "В деле ты доводишь до вещи: идея в твоих руках становится продуктом, деньгами, территорией. Крепкие корни в реальном и уверенная хватка делают тебя той, кто строит и держит, — фундамент, на котором стоит дело.", "shadow": "Но контроль над материальным легко становится самоцелью и мерой себя: держишь слишком крепко, не делегируешь, не отпускаешь, упрямишься; а долг и хватка запирают твою свободу.", "lesson": "Держи своё, не давая ему держать тебя: опирайся на собственную ценность, а не только на контроль над ресурсом. Отпускай и доверяй там, где хватка лишь мешает; делегировать — не потерять землю.", "from": "Опора × Дело — ядро: материальное мастерство, хватка-как-самоцель, отпускание."}, "health": {"feat": false, "intro": "Здоровье стоит на твёрдой почве и телесной устойчивости.", "light": "Ты крепка и устойчива: своё пространство, ритм, материальная надёжность держат тебя в форме; тело любит почву под ногами.", "shadow": "Но привязанность к комфорту и контролю даёт застой (тело тяжелеет в покое), а потеря контроля над своим — выбивает почву и бьёт тревогой.", "lesson": "Заземляйся в теле и собственной ценности, не только в контроле над вещами; добавляй движение в Тельцову инертность. И устойчивость, и умение отпустить держат тебя здоровой.", "from": "Опора × Здоровье: заземлённость, застой комфорта, контроль и почва."}}};
+
+  // короткие имена клеток — только они показываются в таблице, вся глубина в карточке
+  var CELL_NAMES={"spirit": {"intimacy": "Соратник по дороге", "work": "Первый огонь", "health": "Свобода лечит"}, "mind": {"intimacy": "Видит остро", "work": "Своё знание", "health": "Разгон в круге"}, "neck": {"intimacy": "Прямо в лоб", "work": "Ведёт голосом", "health": "Прячет уставшее"}, "soul": {"intimacy": "Глубокий омут", "work": "Страсть всё-или-ничего", "health": "Накал бьёт в тело"}, "belly": {"intimacy": "Огонь и игра", "work": "Крупная амбиция", "health": "Удовольствие-топливо"}, "body": {"intimacy": "Тёплая твердь", "work": "Пробивает рывком", "health": "Мотор на воле"}, "legs": {"intimacy": "Надёжная земля", "work": "Своя земля", "health": "Почва держит"}};
+
+  var SPHERE_DESC={"intimacy": {"intro": "Глубокий омут — синтез колонки Близость: страсть, глубина и её узловой урок.", "light": "Близость для тебя крупное событие: глубокое чувство, страстная вовлечённость, прямота, телесное тепло, союз-соратничество. Ты любишь до дна и преображаешь.", "shadow": "И тут же главный урок: контроль и хватка вместо капитуляции, ревность и страх потери, прямота, что переезжает, тяга к новизне против выбранного.", "lesson": "Главное здесь — впустить, не контролируя: глубина с одним вместо власти над ним; союз как общий огонь, а не клетка и не схватка.", "from": "Синтез колонки Близость, ядро — Чувства × Близость."}, "work": {"intro": "Первый огонь + Своя земля — синтез колонки Дело: инициировать, вести, приземлять.", "light": "Дело для тебя — зажечь своё, повести и довести до материи: прорывное мышление, сильный голос, страсть, материальная хватка. Ты начинаешь и держишь.", "shadow": "Цена — продавливание без предупреждения, распыление по стартам, контроль над процессом и ресурсом как самоцель, выжигание волевого мотора.", "lesson": "Вложи волю в один огонь и предупреждай тех, кого двигаешь; держи материю, не сжимая; работай вспышками с реальным отдыхом.", "from": "Синтез колонки Дело, ядро — Смысл × Дело и Опора × Дело."}, "health": {"intro": "Здоровье у тебя — про свободу, ритм вспышек и отпускание контроля.", "light": "Ты в форме на свободе и своём огне; тело крепкое и любит почву, удовольствие и движение восстанавливают щедро.", "shadow": "Бьёт несвобода, выжигание волевого мотора без отдыха, тревожный разгон ума, спрятанная усталость, застой комфорта и хватка контроля.", "lesson": "Свобода и своё дело лечат; отдыхай по сигналу вспышками; выпускай разгон и слабые сигналы; заземляйся в себе и отпускай лишний контроль.", "from": "Синтез колонки Здоровье, ядро — Тело × Здоровье."}};
+
+  var MODE_FACET={"masc": {"spirit": "Утверждаешь свою дорогу, идёшь первой.", "mind": "Рождаешь и заявляешь своё знание.", "neck": "Объявляешь, ведёшь словом, двигаешь.", "soul": "Глубину делаешь и держишь — страстью и волей.", "belly": "Хочешь крупно, тянешься, добиваешься.", "body": "Тело пробивает рывком на воле.", "legs": "Держишь, строишь, контролируешь своё."}, "fem": {"spirit": "Дать смыслу прийти, послужить большему без подмятия.", "mind": "Впустить чужую мысль, дать идее дозреть.", "neck": "Вслушаться и предупредить прежде, чем двинуть.", "soul": "Сдаться, впустить, отдать власть над собой — край роста.", "belly": "Принять удовольствие, насытиться, не гнаться за новым.", "body": "Дать телу принять отдых и перезарядиться.", "legs": "Опереться на свою ценность, довериться, отпустить."}, "self": {"spirit": "Своя крупная дорога как ось.", "mind": "Своё знание на службе сути, не спора.", "neck": "Слово, что открывает, а не таранит.", "soul": "Глубина с другим без власти над ним.", "belly": "Желание из себя, собранное в одно.", "body": "Сила вспышками, со своим ритмом отдыха.", "legs": "Опора в себе, своё — без мёртвой хватки."}};
+
+  var ROW_TIP={
+    spirit:'Самая верхняя точка — про связь с тем, что больше тебя: смысл, миссия, дальний горизонт. Названа Смыслом, потому что речь о том, что придаёт направление и масштаб всему остальному. Это не религия, а вектор, ради которого встаёшь по утрам.',
+    mind:'Про то, как ты думаешь: идеи, ясность, способность строить и видеть связи. Названа Умом, потому что речь о самом способе обрабатывать мир головой, а не о количестве знаний.',
+    neck:'Зона выражения — как внутреннее чувство выходит наружу: голосом, словом, реакцией. Названа Эмоциями, потому что эмоция это чувство в движении, проявленное вовне. В отличие от Чувств ниже, которые живут внутри, — это то, что видно другим.',
+    soul:'Самая глубокая, сердечная зона: что ты чувствуешь на самом деле, чем привязываешься, что трогает. Названа Чувствами, чтобы говорить о внутренней жизни сердца без религиозного привкуса. Это исток, а эмоции выше — его проявление.',
+    belly:'Про влечение и удовольствие: чего ты хочешь, что тянет, что даёт вкус к жизни. Названа Желанием, потому что речь о живой тяге — аппетите, влечении, «хочу», — которая идёт из тела, а не из головы.',
+    body:'Про телесность и базовые потребности: энергию, выносливость, инстинкт, сон, аппетит, движение, контакт. Названа Телом прямо — это твоя материальная основа и источник базовых нужд: то, чем ты есть физически и что тело требует, чтобы жить.',
+    legs:'Самая нижняя точка — про заземление, устойчивость, корни: на чём стоишь и что доводишь до материи. Названа Опорой, потому что это фундамент, на котором держится всё; без него даже лучшие замыслы повисают в воздухе.'
+  };
+  var SPHERE_TIP={
+    intimacy:'Сфера отношений и привязанности: как ты любишь, сближаешься, проявляешься с близкими. Здесь видно, как каждый этаж работает в контакте с другим человеком.',
+    work:'Сфера труда, призвания и реализации: как ты работаешь, ведёшь, создаёшь. Здесь видно, как каждый этаж проявляется в деле и миссии.',
+    health:'Сфера тела, энергии и самочувствия: как заботишься о себе, где уязвим, через что восстанавливаешься. Здесь видно, как каждый этаж влияет на физическое состояние.'
+  };
+
+  var bodyEl=document.getElementById('mbody');
+  var BALANCE={"spirit": {"lead": 0.6, "block": false, "balance": "Ведёт проявляющее — ты утверждаешь свою дорогу и идёшь по ней первой. Принимающего меньше: труднее дать смыслу прийти самому и послужить чему-то большему, не подминая под себя.", "recommend": "Раз в неделю спрашивай: эта задача — моя крупная дорога или чужое «надо», которое я подмяла под себя? Веди своё, а заботу отдавай из полноты."}, "mind": {"lead": 0.56, "block": false, "balance": "Слегка ведёт проявляющее — ты рождаешь и заявляешь своё знание. Принимающего чуть меньше: труднее впустить чужую мысль целиком и дать своей идее время оформиться.", "recommend": "Прежде чем вынести инсайт — дай ему форму и впусти один встречный взгляд. Это не ослабит твой угол, а сделает его пригодным для других."}, "neck": {"lead": 0.72, "block": false, "balance": "Сильно ведёт проявляющее — ты заявляешь, объявляешь, двигаешь словом. Принимающее западает: вслушаться и предупредить прежде, чем двинуть, даётся труднее (см. ось «Сказать вперёд»).", "recommend": "Перед каждым «объявляю/делаю» вставляй одну фразу вперёд тем, кого заденет. Импакт тогда открывает двери, а не бьётся о стены."}, "soul": {"lead": 0.7, "block": true, "balance": "Затор. Глубину ты делаешь и держишь (контроль, страсть, хватка) — проявляющего здесь с избытком, а принимающее западает: сдаться, впустить, отдать власть над собой, быть уязвимой без контроля.", "recommend": "В близости делай шаг капитуляции: один раз дай другому войти и не сожми. Сила, что умеет отпустить, глубже силы, что держит."}, "belly": {"lead": 0.66, "block": false, "balance": "Ведёт проявляющее — ты активно хочешь, тянешься, добиваешься. Принимающего меньше: просто принять удовольствие и насытиться, не гонясь за следующим, даётся труднее.", "recommend": "Раз в неделю доводи и насыщайся одним выбранным, не переключаясь на новое. И сверяй: это «хочу» или «бегу»?"}, "body": {"lead": 0.68, "block": true, "balance": "Затор. Гнать, пробивать, тянуть на воле (проявляющее) ты умеешь с избытком, а дать телу принять отдых и перезарядиться — принимающее — западает. Мотор волевой, не вечный.", "recommend": "Останавливайся по раннему сигналу, а не у края; планируй паузу как часть работы. Отдых возвращает тебе рывок."}, "legs": {"lead": 0.64, "block": false, "balance": "Ведёт проявляющее — ты держишь, строишь, контролируешь своё. Принимающее слегка западает: опереться на собственную ценность (а не на контроль вещей) и довериться невидимому, отпустить.", "recommend": "Раз в день отмечай свою ценность вне того, что ты держишь и контролируешь. И в одном месте намеренно ослабь хватку — делегируй, доверься."}};
+
+  // Сила этажа — конкретно, с жизненными примерами. Ключ: floor → {3:сильная, 2:рабочая, 1:зона роста}
+  // Каждый уровень: why (что значит для тебя в жизни) · how (как опереться/усилить — конкретно)
+  var STRENGTH_TXT = {
+    spirit: { // Смысл — зачем живёшь, вектор
+      3:{why:'У тебя сильное чувство «ради чего». Ты редко делаешь что-то просто так — за делами, отношениями, выбором стоит смысл, и от него ты берёшь энергию тянуть долгое и трудное. Там, где другие выгорают без мотивации, тебя держит ощущение, что это зачем-то.',
+         how:'Опирайся на смысл прямо: когда трудно — спроси себя «ради чего я это делаю», и ответ вернёт силы. Перед большим выбором сверяйся не с выгодой, а со смыслом — он у тебя надёжный компас. Риск: не требуй смысла от каждой мелочи и не суди близких за то, что они живут проще.'},
+      2:{why:'Смысл у тебя есть, но он не давит и не ведёт каждый шаг. Ты можешь и жить «ради чего-то большого», и просто делать дела — без постоянного вопроса о высшей цели. Спокойная опора, не горящая миссия.',
+         how:'Отдельно подпитывать не нужно. Если хочется больше тяги — раз в какое-то время называй вслух, ради чего твоё главное дело; названный смысл заряжает сильнее, чем тот, что остался в голове.'},
+      1:{why:'Большого «ради чего» как постоянной опоры у тебя нет — и это нормально. Ты живёшь скорее из интереса, текущей задачи, людей рядом, чем из миссии. Минус: в трудный момент бывает «а зачем всё это», и без внешней мотивации легко просесть.',
+         how:'Не ищи одну великую цель на всю жизнь — тебе ближе живые, близкие смыслы: конкретный человек, проект, ощущение «мне это интересно сейчас». Опирайся на них. Когда накрывает «зачем» — это не про смысл жизни, а сигнал, что устал или потерял ритм.'}
+    },
+    mind: { // Ум — как думаешь, решаешь
+      3:{why:'Сильная голова: ты держишь в уме сложное, видишь систему целиком там, где другие тонут в деталях. Тебе легко планировать, раскладывать хаос по полкам, объяснять запутанное. На работе это делает тебя тем, к кому идут «придумай, как».',
+         how:'Опирайся: бери на себя задачи, где надо собрать сложное в структуру — это твой капитал. Когда буксуешь в чувствах или действии — заходи через ум, разложи по шагам. Риск: не подменяй умом всё остальное (живых людей не «просчитаешь»), и не застревай в анализе вместо того, чтобы сделать.'},
+      2:{why:'Голова работает ровно: думаешь ясно, решаешь задачи, но не обязан всё держать в системе и не превращаешь мышление в главный инструмент. Здравая рабочая опора.',
+         how:'Специально качать не нужно. Если хочешь яснее думать — проговаривай или записывай мысль кому-то, кто думает иначе: упрощая для другого, ты затачиваешь собственную точность.'},
+      1:{why:'Держать сложные конструкции в голове подолгу — не твоё, и это не про «глупость». Ты скорее схватываешь живьём, интуитивно, чем выстраиваешь логические цепочки. Минус: в потоке информации или долгом планировании легко перегрузиться и потерять нить.',
+         how:'Не строй опору на «продумаю всё сам в голове» — выноси наружу: списки, схемы, разговор вслух. Сложное дроби на маленькие шаги. И опирайся на свои сильные стороны (чувство, действие), а не пытайся пересилить себя «надо собраться и просчитать».'}
+    },
+    neck: { // Эмоции — голос, выражение
+      3:{why:'У тебя сильный голос — умение выразить, донести, сказать так, что слышат. Слова находятся, ты можешь объяснить чувство, защитить позицию, передать идею. Это работает и в близости (тебя понимают), и в деле (умеешь представить, убедить).',
+         how:'Опирайся: не держи важное в себе — твоя сила именно в том, чтобы это выходило наружу словом. Говори то, что видишь и чувствуешь. Риск: следи, чтобы голос не превращался в напор или в «последнее слово всегда моё» — сила слова легко давит на тех, у кого этой силы меньше.'},
+      2:{why:'Выражаешь себя нормально: можешь сказать, можешь промолчать, голос есть, но не ведёт. Не молчун и не тот, кому обязательно высказаться.',
+         how:'Отдельно развивать не нужно. Если хочется яснее доносить — практикуй называть чувство или мысль вслух сразу, а не «потом»: невысказанное у всех копится и портит контакт.'},
+      1:{why:'Выразить словами то, что внутри, — для тебя труднее всего. Чувствуешь много, а сказать — застреваешь, или говоришь не то, или молчишь и копишь. Минус: близкие не догадываются, что с тобой, а ты обижаешься, что «не понимают» — хотя слов не прозвучало.',
+         how:'Не жди, что скажешь идеально — лучше неловко, но вслух. Помогает написать, а не сказать (сообщение, заметка), или назвать хотя бы факт: «мне сейчас тяжело». Не копи: невысказанное у тебя превращается в тяжесть. И не вини себя за «косноязычие» — это устройство, а не недостаток.'}
+    },
+    soul: { // Чувства — как любишь, связь
+      3:{why:'Твоя сердцевина — ты глубоко чувствуешь и крепко привязываешься. Там, где для других «нормальные отношения», у тебя — настоящая встреча. Люди рядом ощущают, что их по-настоящему видят, и тянутся к тебе. Это твой главный язык с миром.',
+         how:'Опирайся: доверяй своему чувству людей — оно точное. Вкладывайся в близких глубоко, это твоя сила. Риск: из-за глубины легко скатиться в контроль («хочу удержать») или принять чужую боль как свою — следи, чтобы забота не превращалась в хватку, а чувствительность не топила тебя.'},
+      2:{why:'Чувствуешь и привязываешься нормально: тепло есть, близость есть, но она не захватывает целиком и не становится главной осью жизни. Устойчивая способность любить без перегрева.',
+         how:'Специально подпитывать не нужно. Если хочешь больше глубины — раз в какое-то время говори близкому вслух то, что обычно держишь внутри: проявленное чувство крепнет, непроявленное стынет.'},
+      1:{why:'Глубоко погружаться в чувства и привязанности — не твой основной режим. Ты скорее в голове или в деле, а эмоциональная близость даётся через усилие. Минус: близкие иногда читают это как «холодный», «не вкладывается», хотя дело в устройстве, не в безразличии.',
+         how:'Не заставляй себя «чувствовать сильнее» — это не включается по приказу. Опирайся на то, что умеешь: покажи заботу делом, вниманием, надёжностью, если словами чувств трудно. И честно говори близким, что тепло у тебя выглядит иначе, — чтобы не приняли твою сдержанность за нелюбовь.'}
+    },
+    belly: { // Желание — аппетит к жизни, хочу
+      3:{why:'У тебя живой аппетит к жизни: ты знаешь, чего хочешь, умеешь желать и получать удовольствие — от еды, тела, дела, людей. Это даёт вкус к жизни и энергию: твои «хочу» ведут тебя к тому, что вправду твоё.',
+         how:'Опирайся: доверяй своему «хочу / не хочу» как навигатору — оно редко врёт. Разрешай себе удовольствие, не загоняй в один долг. Риск: следи, чтобы аппетит не сваливался в «всё и сразу» и не глушил голос тела, когда пора остановиться.'},
+      2:{why:'Желания и удовольствие у тебя в норме: хочешь, получаешь, но не одержим и не подавлен. Спокойное «хочу», которое не правит тобой и не молчит.',
+         how:'Отдельно качать не нужно. Если хочется больше вкуса к жизни — раз в неделю делай что-то просто ради удовольствия, без пользы и цели: это держит аппетит к жизни живым.'},
+      1:{why:'Понять, чего ты хочешь, — для тебя непросто. Часто живёшь из «надо» и «правильно», а собственное «хочу» молчит или теряется. Минус: можно поймать себя на том, что добиваешься цели — и не радуешься, потому что хотел не ты, а «так положено».',
+         how:'Не дави на себя «реши уже, чего хочешь» — учись замечать малое: что вкусно, к чему тянет, от чего теплее. Опирайся на тело — оно подсказывает «да/нет» раньше головы. И отделяй своё «хочу» от чужих ожиданий: чаще под «надо» прячется не твоё желание.'}
+    },
+    body: { // Тело — энергия, действие, мотор
+      3:{why:'Тело — твой надёжный мотор: есть выносливость, физическая опора, ты можешь долго тянуть нагрузку. Энергия откликается на дело, и ты буквально чувствуешь телом, что твоё, а что нет.',
+         how:'Опирайся: доверяй телесным сигналам (усталость, «не идёт», «прёт») — это точный прибор. Давай телу нагрузку, оно от неё крепнет. Риск: даже сильный мотор не бесконечен — не путай «могу долго» с «могу всегда», вовремя восстанавливайся.'},
+      2:{why:'Тело работает ровно: сил хватает, выносливость нормальная, без особых пиков и провалов. Спокойная физическая опора.',
+         how:'Специально качать не нужно. Если хочешь больше энергии — отследи, от чего она реально растёт (движение, сон, дело по душе), и давай это телу регулярно, а не от случая к случаю.'},
+      1:{why:'Стабильной физической энергии у тебя немного: силы то есть, то нет, и это зависит от того, на своём ли ты месте. Минус: легко принять «нет сил» за лень и гнать себя через силу — а на самом деле мотор просто не завёлся, потому что дело не откликается.',
+         how:'Не гони себя «соберись и сделай» через не могу — так ты ломаешь мотор. Энергия у тебя приходит от резонанса: делай через «откликается», а не через «надо». Опирайся на ритм и восстановление, а не на волю. И не суди себя за то, что выносливость нестабильна, — это устройство.'}
+    },
+    legs: { // Опора — заземление, довести до конца
+      3:{why:'У тебя сильное заземление: умеешь доводить задуманное до материи, держать, не бросать на полпути. На тебя можно положиться, и ты сам стоишь устойчиво, когда вокруг трясёт. Идеи у тебя превращаются в результат.',
+         how:'Опирайся: бери на себя то, что надо довести до конца, — это твоя сила. Будь той опорой, что держит (для близких, для дела). Риск: следи, чтобы «дотащу любой ценой» не превращалось в перегруз и в неумение вовремя бросить то, что себя исчерпало.'},
+      2:{why:'Доводишь дела до конца нормально: держишь, заземляешь, но без надрыва и без культа «обязан дотащить». Устойчивая рабочая опора.',
+         how:'Отдельно укреплять не нужно. Если хочешь больше устойчивости — доводи до конца хотя бы одно небольшое дело за раз, не распыляясь: завершённое укрепляет опору сильнее, чем десять начатых.'},
+      1:{why:'Доводить начатое до материи и держать долго — твоё слабое место. Идей и порывов много, а до результата доходит не всё; в трудный момент опора уходит из-под ног. Минус: можно винить себя за «непостоянство» и «незавершёнку».',
+         how:'Не строй всё на «я сам дотащу силой воли» — тебе нужна внешняя опора: сроки, структура, человек рядом, кто подхватит. Дроби большое до маленьких законченных шагов. И опирайся на свои сильные части (смысл, ум), чтобы они вели, когда заземления не хватает.'}
+    }
+  };
+
+
+  var overlay=document.getElementById('overlay');
+  var cardEl=document.getElementById('card');
+  var ctx={type:null,fid:null,sid:null,side:'light'};
+
+  // === hero-иконки (из утверждённой лаборатории) ===
+  var ICONS = {
+    ogon:'<svg viewBox="0 0 100 100" fill="none" aria-hidden="true">'+'<defs>'+'<radialGradient id="ogon-h" cx="50%" cy="48%" r="52%"><stop offset="0%" stop-color="#FFE9C2" stop-opacity=".72"/><stop offset="55%" stop-color="#F5DBB3" stop-opacity=".3"/><stop offset="100%" stop-color="#FFE9C2" stop-opacity="0"/></radialGradient>'+'<radialGradient id="ogon-d" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="62%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient>'+'</defs>'+'<circle cx="50" cy="50" r="46" fill="url(#ogon-h)"/>'+'<circle cx="24" cy="68" r="3" fill="#C8642E"/><circle cx="77" cy="61" r="3.4" fill="#DC9658"/><circle cx="69" cy="25" r="2.2" fill="#C8642E" opacity=".7"/>'+'<g transform="translate(50 50) scale(3) translate(-12 -12)" stroke="#C8642E" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" fill="none">'+'<path d="M12 2.5c-2.4 4-4.6 5.6-4.6 9.4a4.6 4.6 0 0 0 9.2 0c0-2.6-1.6-4.2-2-6.4c-.9 1.8-2 1.9-3 .8C10.8 6 12 4.3 12 2.5Z" fill="url(#ogon-d)" stroke="none"/><path d="M12 9c-1 1.6-2 2.4-2 4a2 2 0 0 0 4 0c0-1.2-.7-1.9-1-2.8c-.4.8-.8.8-1 .3" fill="#FFE9C2" stroke="none" opacity=".85"/>'+'</g></svg>',
+    serdce:'<svg viewBox="0 0 100 100" fill="none" aria-hidden="true">'+'<defs>'+'<radialGradient id="serdce-h" cx="50%" cy="48%" r="52%"><stop offset="0%" stop-color="#FFE9C2" stop-opacity=".72"/><stop offset="55%" stop-color="#F5DBB3" stop-opacity=".3"/><stop offset="100%" stop-color="#FFE9C2" stop-opacity="0"/></radialGradient>'+'<radialGradient id="serdce-d" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="62%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient>'+'</defs>'+'<circle cx="50" cy="50" r="46" fill="url(#serdce-h)"/>'+'<circle cx="24" cy="68" r="3" fill="#C8642E"/><circle cx="77" cy="61" r="3.4" fill="#DC9658"/><circle cx="69" cy="25" r="2.2" fill="#C8642E" opacity=".7"/>'+'<g transform="translate(50 50) scale(3) translate(-12 -12)" stroke="#C8642E" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" fill="none">'+'<path d="M12 20.5C5.5 15 4 10.8 6.6 8a3.6 3.6 0 0 1 5.4 .6a3.6 3.6 0 0 1 5.4 -.6c2.6 2.8 1.1 7-5.4 12.5Z" fill="url(#serdce-d)" stroke="none"/><path d="M12 3.2v-2M19 5.5l1.4 -1.4M5 5.5L3.6 4.1M21 12h2M1 12h2" stroke="#C8642E" opacity=".75"/>'+'</g></svg>',
+    omut:'<svg viewBox="0 0 100 100" fill="none" aria-hidden="true">'+'<defs>'+'<radialGradient id="omut-h" cx="50%" cy="48%" r="52%"><stop offset="0%" stop-color="#FFE9C2" stop-opacity=".72"/><stop offset="55%" stop-color="#F5DBB3" stop-opacity=".3"/><stop offset="100%" stop-color="#FFE9C2" stop-opacity="0"/></radialGradient>'+'<radialGradient id="omut-d" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="62%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient>'+'</defs>'+'<circle cx="50" cy="50" r="46" fill="url(#omut-h)"/>'+'<circle cx="24" cy="68" r="3" fill="#C8642E"/><circle cx="77" cy="61" r="3.4" fill="#DC9658"/><circle cx="69" cy="25" r="2.2" fill="#C8642E" opacity=".7"/>'+'<g transform="translate(50 50) scale(3) translate(-12 -12)" stroke="#C8642E" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" fill="none">'+'<path d="M12 3.5a8.3 8.3 0 1 1 -7.4 12a5.8 5.8 0 1 0 5.2 -8.2a3.3 3.3 0 1 1 -2.6 5.2"/>'+'</g></svg>',
+    znanie:'<svg viewBox="0 0 100 100" fill="none" aria-hidden="true">'+'<defs>'+'<radialGradient id="znanie-h" cx="50%" cy="48%" r="52%"><stop offset="0%" stop-color="#FFE9C2" stop-opacity=".72"/><stop offset="55%" stop-color="#F5DBB3" stop-opacity=".3"/><stop offset="100%" stop-color="#FFE9C2" stop-opacity="0"/></radialGradient>'+'<radialGradient id="znanie-d" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="62%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient>'+'</defs>'+'<circle cx="50" cy="50" r="46" fill="url(#znanie-h)"/>'+'<circle cx="24" cy="68" r="3" fill="#C8642E"/><circle cx="77" cy="61" r="3.4" fill="#DC9658"/><circle cx="69" cy="25" r="2.2" fill="#C8642E" opacity=".7"/>'+'<g transform="translate(50 50) scale(3) translate(-12 -12)" stroke="#C8642E" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" fill="none">'+'<path d="M3 12c3 -4.6 15 -4.6 18 0c-3 4.6 -15 4.6 -18 0Z"/><circle cx="12" cy="12" r="2.7" fill="url(#znanie-d)" stroke="none"/><circle cx="12" cy="12" r="4.4"/>'+'</g></svg>',
+    zemlya:'<svg viewBox="0 0 100 100" fill="none" aria-hidden="true">'+'<defs>'+'<radialGradient id="zemlya-h" cx="50%" cy="48%" r="52%"><stop offset="0%" stop-color="#FFE9C2" stop-opacity=".72"/><stop offset="55%" stop-color="#F5DBB3" stop-opacity=".3"/><stop offset="100%" stop-color="#FFE9C2" stop-opacity="0"/></radialGradient>'+'<radialGradient id="zemlya-d" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="62%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient>'+'</defs>'+'<circle cx="50" cy="50" r="46" fill="url(#zemlya-h)"/>'+'<circle cx="24" cy="68" r="3" fill="#C8642E"/><circle cx="77" cy="61" r="3.4" fill="#DC9658"/><circle cx="69" cy="25" r="2.2" fill="#C8642E" opacity=".7"/>'+'<g transform="translate(50 50) scale(3) translate(-12 -12)" stroke="#C8642E" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" fill="none">'+'<path d="M2.5 19L8 7.5l3.6 6.2L15 8.5 21.5 19Z" fill="url(#zemlya-d)" stroke="none"/><path d="M2.5 19L8 7.5l3.6 6.2L15 8.5 21.5 19"/><path d="M6.4 13.2l1.6 -1.1 1.5 1" stroke="#FFE9C2" opacity=".7"/>'+'</g></svg>',
+    veter:'<svg viewBox="0 0 100 100" fill="none" aria-hidden="true">'+'<defs>'+'<radialGradient id="veter-h" cx="50%" cy="48%" r="52%"><stop offset="0%" stop-color="#FFE9C2" stop-opacity=".72"/><stop offset="55%" stop-color="#F5DBB3" stop-opacity=".3"/><stop offset="100%" stop-color="#FFE9C2" stop-opacity="0"/></radialGradient>'+'<radialGradient id="veter-d" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="62%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient>'+'</defs>'+'<circle cx="50" cy="50" r="46" fill="url(#veter-h)"/>'+'<circle cx="24" cy="68" r="3" fill="#C8642E"/><circle cx="77" cy="61" r="3.4" fill="#DC9658"/><circle cx="69" cy="25" r="2.2" fill="#C8642E" opacity=".7"/>'+'<g transform="translate(50 50) scale(3) translate(-12 -12)" stroke="#C8642E" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" fill="none">'+'<path d="M3 8.5q5.5 -2.2 10 0t6.5 -1"/><path d="M16 7a2.1 2.1 0 1 1 -1.2 2"/><path d="M3 12.5q6 -2.2 11.5 0"/><path d="M18 12a1.8 1.8 0 1 1 -1 1.7"/><path d="M3 16.5q4.5 -2 8.5 0"/>'+'</g></svg>',
+    vpered:'<svg viewBox="0 0 100 100" fill="none" aria-hidden="true">'+'<defs>'+'<radialGradient id="vpered-h" cx="50%" cy="48%" r="52%"><stop offset="0%" stop-color="#FFE9C2" stop-opacity=".72"/><stop offset="55%" stop-color="#F5DBB3" stop-opacity=".3"/><stop offset="100%" stop-color="#FFE9C2" stop-opacity="0"/></radialGradient>'+'<radialGradient id="vpered-d" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="62%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient>'+'</defs>'+'<circle cx="50" cy="50" r="46" fill="url(#vpered-h)"/>'+'<circle cx="24" cy="68" r="3" fill="#C8642E"/><circle cx="77" cy="61" r="3.4" fill="#DC9658"/><circle cx="69" cy="25" r="2.2" fill="#C8642E" opacity=".7"/>'+'<g transform="translate(50 50) scale(3) translate(-12 -12)" stroke="#C8642E" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" fill="none">'+'<circle cx="6" cy="12" r="1.7" fill="url(#vpered-d)" stroke="none"/><path d="M9.5 12h9"/><path d="M15 8.5l4 3.5l-4 3.5"/><path d="M9.5 8.2a5 5 0 0 1 0 7.6" opacity=".55"/>'+'</g></svg>',
+    mag:
+      '<svg viewBox="0 0 100 100" fill="none" aria-hidden="true">'
+      +'<defs>'
+      +'<radialGradient id="mag-h" cx="50%" cy="48%" r="52%"><stop offset="0%" stop-color="#FFE9C2" stop-opacity=".72"/><stop offset="55%" stop-color="#F5DBB3" stop-opacity=".32"/><stop offset="100%" stop-color="#FFE9C2" stop-opacity="0"/></radialGradient>'
+      +'<radialGradient id="mag-d" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="65%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient>'
+      +'</defs>'
+      +'<circle cx="50" cy="50" r="46" fill="url(#mag-h)"/>'
+      +'<circle cx="24" cy="68" r="3" fill="#C8642E"/><circle cx="77" cy="61" r="3.4" fill="#DC9658"/><circle cx="69" cy="25" r="2.2" fill="#C8642E" opacity=".7"/>'
+      +'<g transform="translate(50 50) scale(3) translate(-12 -9.5)" stroke="#C8642E" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" fill="none">'
+      +'<path d="M7 4v6a5 5 0 0 0 10 0V4"/><path d="M5 4h4M15 4h4"/><path d="M7 8.5h3M14 8.5h3"/>'
+      +'<circle cx="7" cy="4" r="1.5" fill="url(#mag-d)" stroke="none"/><circle cx="17" cy="4" r="1.5" fill="url(#mag-d)" stroke="none"/>'
+      +'</g></svg>',
+    ban:
+      '<svg viewBox="0 0 100 100" fill="none" aria-hidden="true">'
+      +'<defs>'
+      +'<radialGradient id="ban-h" cx="50%" cy="48%" r="52%"><stop offset="0%" stop-color="#FFE9C2" stop-opacity=".72"/><stop offset="55%" stop-color="#F5DBB3" stop-opacity=".3"/><stop offset="100%" stop-color="#FFE9C2" stop-opacity="0"/></radialGradient>'
+      +'<linearGradient id="ban-d" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="55%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></linearGradient>'
+      +'</defs>'
+      +'<circle cx="50" cy="50" r="46" fill="url(#ban-h)"/>'
+      +'<circle cx="26" cy="72" r="3" fill="#C8642E"/><circle cx="75" cy="30" r="2.6" fill="#DC9658"/><circle cx="78" cy="64" r="2" fill="#C8642E" opacity=".65"/>'
+      +'<g transform="translate(50 50) scale(3) translate(-12.5 -12)" stroke="#C8642E" stroke-linecap="round" stroke-linejoin="round" fill="none">'
+      +'<path d="M7 4.5h11l-2.5 3.5L18 11.5H7z" fill="url(#ban-d)" stroke="#C8642E" stroke-width="0.7"/>'
+      +'<path d="M7 3.5v17" stroke="#C8642E" stroke-width="0.7"/>'
+      +'<circle cx="7" cy="3.7" r="1.6" fill="url(#ban-d)" stroke="none"/>'
+      +'</g></svg>',
+    arc:
+      '<svg viewBox="0 0 100 100" fill="none" aria-hidden="true">'
+      +'<defs>'
+      +'<radialGradient id="arc-h" cx="50%" cy="50%" r="52%"><stop offset="0%" stop-color="#FFE9C2" stop-opacity=".72"/><stop offset="55%" stop-color="#F5DBB3" stop-opacity=".3"/><stop offset="100%" stop-color="#FFE9C2" stop-opacity="0"/></radialGradient>'
+      +'<radialGradient id="arc-d" cx="35%" cy="30%" r="80%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="60%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient>'
+      +'</defs>'
+      +'<circle cx="50" cy="50" r="46" fill="url(#arc-h)"/>'
+      +'<circle cx="23" cy="30" r="2.6" fill="#C8642E"/><circle cx="80" cy="72" r="3.2" fill="#DC9658"/><circle cx="74" cy="22" r="2" fill="#C8642E" opacity=".6"/>'
+      +'<g transform="translate(50 50) scale(3) translate(-12 -12)" stroke="#C8642E" stroke-linecap="round" stroke-linejoin="round" fill="none">'
+      +'<rect x="9.3" y="9.3" width="5.4" height="5.4" rx="0.4" fill="url(#arc-d)" stroke="none"/>'
+      +'<rect x="4" y="4" width="16" height="16" rx="1.8" stroke="#C8642E" stroke-width="0.7"/>'
+      +'<path d="M9.3 4v16M14.7 4v16M4 9.3h16M4 14.7h16" stroke="#C8642E" stroke-width="0.7"/>'
+      +'</g></svg>',
+    sol:
+      '<svg viewBox="0 0 100 100" fill="none" aria-hidden="true">'
+      +'<defs>'
+      +'<radialGradient id="sol-h" cx="56%" cy="34%" r="54%"><stop offset="0%" stop-color="#FFE9C2" stop-opacity=".8"/><stop offset="50%" stop-color="#F5DBB3" stop-opacity=".3"/><stop offset="100%" stop-color="#FFE9C2" stop-opacity="0"/></radialGradient>'
+      +'<radialGradient id="sol-d" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="60%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient>'
+      +'</defs>'
+      +'<circle cx="54" cy="42" r="44" fill="url(#sol-h)"/>'
+      +'<circle cx="30" cy="74" r="3" fill="#C8642E"/><circle cx="73" cy="60" r="2.4" fill="#DC9658"/><circle cx="38" cy="32" r="2" fill="#C8642E" opacity=".55"/>'
+      +'<g transform="translate(50 53) scale(3) translate(-11.5 -12.3)" stroke-linecap="round" stroke-linejoin="round" fill="none">'
+      +'<path d="M9 21c1.5-4 .5-6 3-9s2.5-4 1-8" stroke="#C8642E" stroke-width="0.8" stroke-dasharray="0.1 3.4"/>'
+      +'<circle cx="14.2" cy="3.9" r="2.5" fill="url(#sol-d)" stroke="none"/>'
+      +'</g></svg>',
+    cam:
+      '<svg viewBox="0 0 100 100" fill="none" aria-hidden="true">'
+      +'<defs>'
+      +'<radialGradient id="cam-h" cx="50%" cy="48%" r="54%"><stop offset="0%" stop-color="#DC9658" stop-opacity=".5"/><stop offset="45%" stop-color="#FFE48A" stop-opacity=".2"/><stop offset="100%" stop-color="#FFE48A" stop-opacity="0"/></radialGradient>'
+      +'<radialGradient id="cam-d" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="60%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient>'
+      +'</defs>'
+      +'<circle cx="50" cy="50" r="47" fill="url(#cam-h)"/>'
+      +'<circle cx="24" cy="70" r="3" fill="#FFE48A"/><circle cx="78" cy="64" r="3.2" fill="#DC9658"/><circle cx="70" cy="24" r="2.2" fill="#FFE48A" opacity=".7"/>'
+      +'<g transform="translate(50 50) scale(3) translate(-12 -12)" stroke="#FFE48A" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" fill="none">'
+      +'<path d="M8.6 3.5v7.6a3.4 3.4 0 0 0 6.8 0V3.5"/><path d="M12 14.5v6"/><path d="M9.6 20.5h4.8"/>'
+      +'<path d="M6.6 5.4q-2 1.4-1.6 4" opacity=".7"/><path d="M4.7 4.5q-2.7 2-2.1 5.4" opacity=".38"/>'
+      +'<path d="M17.4 5.4q2 1.4 1.6 4" opacity=".7"/><path d="M19.3 4.5q2.7 2 2.1 5.4" opacity=".38"/>'
+      +'<circle cx="12" cy="20.5" r="1.4" fill="url(#cam-d)" stroke="none"/>'
+      +'</g></svg>',
+    col:'<svg viewBox="0 0 100 100" fill="none" aria-hidden="true">'+'<defs>'+'<radialGradient id="col-h" cx="50%" cy="48%" r="52%"><stop offset="0%" stop-color="#FFE9C2" stop-opacity=".7"/><stop offset="55%" stop-color="#F5DBB3" stop-opacity=".3"/><stop offset="100%" stop-color="#FFE9C2" stop-opacity="0"/></radialGradient>'+'<radialGradient id="col-d" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="60%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient>'+'</defs>'+'<circle cx="50" cy="50" r="46" fill="url(#col-h)"/>'+'<circle cx="26" cy="68" r="2.8" fill="#C8642E"/><circle cx="76" cy="60" r="3.2" fill="#DC9658"/><circle cx="70" cy="28" r="2" fill="#C8642E" opacity=".65"/>'+'<g transform="translate(50 50) scale(3) translate(-12 -12)" stroke="#C8642E" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" fill="none">'+'<path d="M8 3.5h8M8 20.5h8"/><path d="M9.5 3.5v17M14.5 3.5v17"/>'+'<circle cx="12" cy="12" r="2.2" fill="url(#col-d)" stroke="none"/>'+'</g></svg>',
+    knot:'<svg viewBox="0 0 100 100" fill="none" aria-hidden="true">'+'<defs>'+'<radialGradient id="knot-h" cx="50%" cy="48%" r="52%"><stop offset="0%" stop-color="#FFE9C2" stop-opacity=".7"/><stop offset="55%" stop-color="#F5DBB3" stop-opacity=".3"/><stop offset="100%" stop-color="#FFE9C2" stop-opacity="0"/></radialGradient>'+'<radialGradient id="knot-d" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="60%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient>'+'</defs>'+'<circle cx="50" cy="50" r="46" fill="url(#knot-h)"/>'+'<circle cx="24" cy="66" r="3" fill="#C8642E"/><circle cx="78" cy="62" r="3.2" fill="#DC9658"/><circle cx="68" cy="26" r="2.2" fill="#C8642E" opacity=".7"/>'+'<g transform="translate(50 50) scale(3) translate(-12 -12)" stroke="#C8642E" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" fill="none">'+'<path d="M7 9.5c0-2.8 10-2.8 10 0s-10 2.8-10 5.5 10 2.8 10 0"/>'+'<circle cx="7" cy="9.5" r="1.4" fill="url(#knot-d)" stroke="none"/><circle cx="17" cy="15" r="1.4" fill="url(#knot-d)" stroke="none"/>'+'</g></svg>'
+  };
+
+
+  // === развёрнутые практики этажей и сфер (стандарт А) ===
+  var RICH={"spirit": {"title": "Смысл — практики на усиление", "subtitle": "Как вложить волю в один огонь, не распыляясь и не каменея в долге", "sections": [{"label": "Как поддерживать линию", "items": [{"name": "Один огонь", "text": "Раз в месяц спрашивай: моя сила сейчас в одном крупном деле — или растеклась на десяток искр? Выбери главное и стяни волю туда. Распылённый огонь греет вхолостую; собранный — строит."}, {"name": "Сказать вперёд", "text": "Перед тем как двинуть своё — предупреди тех, кого заденет: коротко, заранее. Это превращает твой напор из тарана в лидерство, за которым идут охотно."}, {"name": "Своё, не чужое «надо»", "text": "Регулярно отделяй свою крупную дорогу от чужих ожиданий, которые ты подмяла под себя. Заботу о других держи из полноты, а не вместо собственного пути."}, {"name": "Соприкосновение с большим", "text": "Раз в неделю — время с чем-то крупнее текучки: замысел на годы, искусство, природа. Без этого дорога сужается до задач, и сила перестаёт расти."}]}, {"label": "Признаки, что линия звучит", "items": ["Сила идёт в одно русло, а не растекается по всему.", "Люди вокруг предупреждены и идут с тобой, а не упираются.", "Дорога твоя — а не сумма чужих «надо».", "Забота о близких — из полноты, не из самостирания."]}, {"label": "Что усиливает", "text": "Своё дело во главе. Ты раскрываешься не исполнителем, а основателем: когда дело твоё и ты ведёшь, воля горит ровно и мощно. Хотя бы один такой огонь должен быть всегда твоим.\n\nМасштаб. Крупный замысел питает тебя сильнее десяти мелких — тебе нужно строить большое, чтобы сила нашла свой размер.\n\nСвобода вести по-своему. Чужие рельсы гасят; пространство делать на свой лад раздувает пламя."}]}, "mind": {"title": "Ум — практики на усиление", "subtitle": "Как доверять своему углу зрения и делать его пригодным для других", "sections": [{"label": "Как поддерживать линию", "items": [{"name": "Дай знанию форму", "text": "Доводи свой инсайт до вида, которым можно пользоваться — записи, схемы, продукта. «Вижу по-своему» становится силой, когда превращается в «вот, держите»."}, {"name": "Переводи, не требуй", "text": "Когда тебя не понимают — не злись и не замолкай, а переведи на язык собеседника. Твоя мысль идёт впереди; мост строишь ты, а не ждёшь, что догонят."}, {"name": "Две головы — не дави решением", "text": "Когда чувствующая и строящая головы спорят, не руби силой. Дай им сойтись: спор внутри — не помеха, а способ, которым у тебя рождается точное."}, {"name": "Читай несогласных", "text": "Раз в месяц — длинный текст того, с кем не согласна; не для спора, для угла зрения. Без этого своё знание твердеет в правоту и слепнет к своим дырам."}]}, {"label": "Признаки, что линия звучит", "items": ["Твой угол доходит до других — им можно пользоваться.", "Тебя не понимают реже, потому что ты переводишь.", "Спор двух голов рождает решение, а не паралич.", "Видишь иначе — и это ценят, а не списывают в «чудачество»."]}, {"label": "Что усиливает", "text": "Свобода думать по-своему. Чужие рельсы душат твой ум; пространство прийти к своему раскрывает прорыв.\n\nФорма и носитель. Твоё знание крепнет, когда обретает тело — текст, метод, продукт; в воздухе оно теряется.\n\nСобеседники уровня. Те, рядом с кем не надо упрощаться до банальности, держат твою мысль острой."}]}, "neck": {"title": "Эмоции — практики на усиление", "subtitle": "Как дать сильному голосу открывать двери, а не таранить", "sections": [{"label": "Как поддерживать линию", "items": [{"name": "Фраза вперёд", "text": "Перед каждым «объявляю/делаю», что заденет других, — одна фраза заранее. Не разрешения спросить, а предупредить. Сопротивление тает, двери открываются."}, {"name": "Смягчить острое", "text": "Несогласие, сказанное в лоб и сразу, ранит. Дай себе паузу и оберни: суть та же, но человек не чувствует себя перееханным."}, {"name": "Оставить место чужому голосу", "text": "Объявив, спроси: «а ты что думаешь?» — и правда послушай. Твой вес в слове так велик, что без приглашения другие молчат, и ты теряешь их вход."}, {"name": "Назвать и слабое", "text": "Озвучивай не только силу и волю, но и «устала», «не тяну». Признанная усталость разгружает раньше срыва; голос, что прячет слабость, дорого платит телом."}]}, {"label": "Признаки, что линия звучит", "items": ["Сказала вперёд — и за тобой идут, а не упираются.", "Острое выходит смягчённым, не раня.", "Рядом с тобой говорят, а не только слушают.", "Слабые сигналы озвучены, не спрятаны под «я в порядке»."]}, {"label": "Что усиливает", "text": "Роль, где надо вести словом. Объявлять направление, заражать, запускать — твоя стихия; в ней голос-инициатор раскрывается.\n\nПривычка предупреждать. Чем рефлекторнее «фраза вперёд», тем меньше стен и больше союзников вокруг.\n\nПрямота с теплом. Твоя честность — дар, когда повёрнута на ясность и заботу, а не на то, чтобы рубить."}]}, "soul": {"title": "Чувства — практики на усиление", "subtitle": "Как впустить и довериться, не теряя себя в контроле", "sections": [{"label": "Как поддерживать линию", "items": [{"name": "Шаг капитуляции", "text": "Раз в неделю в близости делай один шаг доверия: дай другому войти и не сожми. Не «проверить, удержать», а отпустить контроль на чуть-чуть. Это и есть твой рост."}, {"name": "Разжать кулак", "text": "Когда ловишь контроль, ревность, «а вдруг потеряю» — заметь и разожми. Хватка не удерживает близость, она её душит; впускает — открытость, а не сила."}, {"name": "Дай страсти русло", "text": "Накал переводи в дело, движение, творчество, честный разговор. Глубина, запертая внутри, тянет в одержимость; текущая — заряжает."}, {"name": "Не каждая близость — битва", "text": "Замечай, где ты делаешь из чувства схватку за власть. Союз — не поле боя: можно быть глубоко и не побеждать другого."}]}, {"label": "Признаки, что чувство звучит", "items": ["Можешь впустить и не контролировать.", "Ревность и хватка замечаются и отпускаются.", "Страсть течёт в дело и тело, не выжигает.", "Близость — союз, а не борьба за власть."]}, {"label": "Что усиливает", "text": "Доверие как практика. Каждый раз, когда ты впускаешь и не сжимаешь, твоя глубина становится силой, а не капканом. Это тренируется по шагу.\n\nРусло для интенсивности. Спорт, творчество, большое дело — куда страсть течёт и оставляет след, вместо того чтобы кипеть внутри.\n\nЧеловек, который держит твою глубину. Тот, кто не пугается «всерьёз» и не борется за власть, — рядом с ним капитуляция безопасна."}]}, "belly": {"title": "Желание — практики на усиление", "subtitle": "Как навести аппетит на одно и отличать «хочу» от «бегу»", "sections": [{"label": "Как поддерживать линию", "items": [{"name": "Хочу или бегу", "text": "Перед тем как рвануть за новым — спроси: меня тянет ТУДА или гонит ОТСЮДА? Тяга к новизне — сила; бегство от выбранного — утечка. Различай телом."}, {"name": "Доведи и насладись одним", "text": "Раз в неделю доводи и проживай до конца одно выбранное, не переключаясь на следующее. Аппетит, собранный в одно, строит большое; распылённый — только дразнит."}, {"name": "Удовольствие без сброса и отказа", "text": "Дай себе радость осознанно и в меру — не запоем «снять напряжение» и не отказом «потом». Чистое удовольствие заряжает; обе крайности — нет."}, {"name": "Свобода честная", "text": "Бери свободу прямо, не через саботаж обязательств. Сказать «мне нужно пространство» — сильнее, чем тихо сбежать или всё разрушить."}]}, {"label": "Признаки, что желание звучит", "items": ["Отличаешь «хочу» от «бегу» сразу, телом.", "Доводишь выбранное, а не только зажигаешься.", "Удовольствие берёшь в меру и в радость.", "Свободу берёшь честно, не ломая своё."]}, {"label": "Что усиливает", "text": "Крупная цель для аппетита. Когда есть большое, достойное твоего голода, тяга собирается и тащит вперёд, а не мечется.\n\nЧестная свобода. Пространство, новизна, разнообразие, взятые прямо, наполняют; зажатые — толкают на саботаж.\n\nТелесная радость. Вкус, чувственность, азарт — твоё топливо: в меру они держат тебя живой и щедрой."}]}, "body": {"title": "Тело — практики на усиление", "subtitle": "Как держать волевой мотор заряженным, а не выжженным", "sections": [{"label": "Как поддерживать линию", "items": [{"name": "Работай заходами", "text": "Мощный рывок — реальная остановка — снова рывок. Твой мотор импульсный; между вспышками ему нужна не «передышка на ходу», а настоящий простой."}, {"name": "Отдых по раннему сигналу", "text": "Усталость, плохой сон, раздражение — это уже разговор, не каприз. Останавливайся тут, а не у края: цена игнора у волевого мотора выше, чем кажется."}, {"name": "Паузу — в план", "text": "Закладывай отдых заранее, как часть работы, а не в остаток. «Отдохну, когда закончу» для тебя значит «не отдохну никогда» — ты всегда найдёшь следующее."}, {"name": "Движение в ритме, не на износ", "text": "Тельцову инертность разгоняй регулярным движением, но без «до отказа». Тебе нужна не гонка на выживание, а мерная нагрузка, что держит тонус."}]}, {"label": "Признаки, что линия звучит", "items": ["Сила приходит вспышками — и ты ловишь спад, не доводя до нуля.", "Отдых берёшь по сигналу, а не по срыву.", "Засыпаешь без перемалывания дел.", "Тело крепкое и подвижное, а не загнанное и не застоявшееся."]}, {"label": "Что усиливает", "text": "Настоящий простой между вспышками. Не «полежать с телефоном», а отдых, в котором мотор перезаряжается. Тогда следующий рывок — мощный.\n\nДвижение в радость. Тело твоё любит силу и азарт — спорт, который заводит, держит и тонус, и настроение.\n\nТелесное удовольствие. Вкус, тепло, чувственность — для тебя топливо, а не баловство; в меру они возвращают силу."}]}, "legs": {"title": "Опора — практики на усиление", "subtitle": "Как держать своё, не давая ему держать тебя", "sections": [{"label": "Как поддерживать линию", "items": [{"name": "Ослабь хватку в одном месте", "text": "Раз в неделю намеренно отпусти контроль в чём-то — делегируй, доверь, не перепроверяй. Хватка съедает силы; отпускание там, где можно, освобождает их для крупного."}, {"name": "Ценность вне вещей", "text": "Раз в день отмечай, кто ты есть, вне того, что держишь и контролируешь. Когда опора только в вещах и территории, любая потеря выбивает почву."}, {"name": "Делегируй руки, не только замысел", "text": "Доверь часть исполнения другим. «Иначе не сделают как надо» — это про контроль, а платишь за него ты, временем и телом."}, {"name": "Расти своё намеренно", "text": "Раз в месяц добавляй к своей земле один камень — навык, ресурс, кусок территории. Твоя сила — растить своё, а не только сторожить имеющееся."}]}, {"label": "Признаки, что линия звучит", "items": ["Держишь своё — и при этом свободна от него.", "Опираешься на себя, не только на контроль вещей.", "Делегируешь без тревоги, что всё рухнет.", "Своя земля растёт, а не только охраняется."]}, {"label": "Что усиливает", "text": "Своё пространство и ресурс. Дом, дело, территория, которые реально твои, дают твёрдую почву, с которой ты ведёшь.\n\nДоверие и делегирование. Чем больше рук ты впускаешь, тем крупнее то, что можешь построить, — и тем меньше платит твоё тело.\n\nВнутренняя опора. Ощущение своей ценности заземляет надёжнее любого контроля над вещами; его и стоит укреплять."}]}, "self": {"title": "Самость — практики на усиление", "subtitle": "Как держать суверенную волю и впускать, не закрываясь", "sections": [{"label": "Как поддерживать линию", "items": [{"name": "Свобода как дыхание", "text": "Защищай каждый день кусок «только моего» — время, выбор, пространство — без объяснений и оправданий. Автономия не каприз, а условие силы; оправдания превращают норму в «исключение»."}, {"name": "Один шаг впустить", "text": "Чтобы суверенность не затвердела в стену — один сознательный шаг навстречу в день: впустить, спросить «как ты», довериться в малом. Сила, что никого не впускает, оборачивается одиночеством."}, {"name": "Власть — легко", "text": "Замечай, где сжимаешь — дело, людей, близость. Спроси: здесь нужен мой контроль или я держу из страха? Отпущенная власть не теряется — становится крупнее."}, {"name": "Сказать вперёд", "text": "Перед тем как двинуть своё, что заденет других, — предупреди. Так воля идёт приглашением, и суверенность не воюет с миром, а ведёт его."}]}, {"label": "Признаки, что линия звучит", "items": ["Свобода взята без оправданий.", "Впускаешь — и не растворяешься, и не закрываешься.", "Власть держишь легко, не в кулаке.", "Импульс идёт вперёд приглашением, не тараном."]}, {"label": "Что усиливает", "text": "Автономия как воздух. Своё пространство и время — то, без чего стержень твердеет; защищай их как несущее, а не как роскошь.\n\nОдин человек, впущенный вглубь. Не толпа, а тот, рядом с кем можно отпустить контроль и не потерять себя, — держит твою линию живой.\n\nСвоё дело под твоим именем. Огонь, в котором видна твоя воля и твоя дуга, всегда должен быть активен."}]}, "sph-intimacy": {"title": "Как ты устроена рядом", "subtitle": "Что нужно, что разрушает, и какой дом тебе подходит", "sections": [{"label": "Что тебе нужно от партнёра", "items": ["Сильный, отдельный человек. Тот, кто не растворяется в твоей орбите и не пугается напора, — со слабым ты теряешь интерес и начинаешь править.", "Тот, кто выдержит твою глубину и страсть. Не боится «всерьёз», не бежит от интенсивности.", "Тот, кому ты можешь довериться и при ком — отпустить контроль. Рядом с кем капитуляция безопасна.", "Тот, кто даёт тебе свободу и не запирает. Не требует выбора между «ты или твой огонь»."]}, {"label": "Что тебя разрушает в близости", "items": [{"name": "Хватка", "text": "Когда любишь всерьёз, включается контроль и ревность. Партнёр читает это как «держат, а не любят», и доверие тает."}, {"name": "Битва за власть", "text": "Превращаешь близость в поле, где надо победить. Уходит союз — остаётся борьба, и оба устают."}, {"name": "Бегство в новизну", "text": "Когда выбранное приедается, тянет за новой искрой. Это путает влечение с побегом и рушит то, что строилось."}]}, {"label": "Твой тип дома и семьи", "items": ["Дом, который ты создаёшь и держишь, — но не как крепость под контролем, а как живое пространство, где у каждого есть воздух.", "Союз двух сильных, не растворённых друг в друге. Каждый со своим огнём; общее держится на страсти и уважении, не на власти одного.", "Ритм с простором: общая глубина — и зоны свободы у каждого.", "Дети — личности, которых ты зажигаешь и которым даёшь свободу, а не материал под контроль."]}]}, "sph-work": {"title": "Твои территории", "subtitle": "Среды и роли, где ты раскрываешься", "sections": [{"label": "Среды и роли, где ты раскрываешься", "items": [{"name": "Основать и возглавить своё", "text": "Ты на месте во главе собственного дела, а не исполнителем чужого. Предпринимательство, своё направление, лидерство — твоя стихия."}, {"name": "Управлять материальным, держать территорию", "text": "Деньги, ресурс, операционка, построение с нуля — ты приземляешь и держишь там, где другие витают. Это редкий и дорогой дар."}, {"name": "Прорывные, нестандартные задачи", "text": "Там, где надо увидеть по-новому и сделать иначе, твой независимый ум — преимущество. Рутина по чужим лекалам тебя гасит."}, {"name": "Роль с автономией и импактом", "text": "Тебе нужно пространство решать по-своему и видеть, как твой ход двигает дело. Без автономии и видимого следа ты вянешь."}, {"name": "Вести и зажигать людей", "text": "Голосом и обаянием ты запускаешь и ведёшь — лидер-инициатор, за которым идут. Если помнишь предупреждать тех, кого двигаешь."}]}]}, "sph-health": {"title": "Движение и восстановление", "subtitle": "Что тебе подходит и как ты собираешь себя обратно", "sections": [{"label": "Твои виды движения", "items": [{"name": "Силовое, интенсивное", "text": "Тебе идёт нагрузка с азартом и пределом — то, что заводит и даёт почувствовать силу. Но в ритме, не на полное выжигание."}, {"name": "Соревновательное, динамичное", "text": "Игры, единоборства, всё с драйвом и вызовом держат тебя в тонусе и сбрасывают накал лучше монотонности."}, {"name": "Танец, телесное удовольствие", "text": "Движение в радость и чувственность — твой формат восстановления: тело любит наслаждаться, а не только пахать."}]}, {"label": "Как ты восстанавливаешься", "text": "Тебе нужен настоящий простой между вспышками — не «отдых на ходу», а время, когда мотор реально перезаряжается. И нужна свобода: кусок «только моего» без обязательств и контроля. Восстановление приходит через телесное удовольствие, движение в радость и тишину автономии — а не через «потерпеть и доделать».\n\nПризнак, что ты восстановилась: возвращается азарт и тяга начинать. Если их нет — ты ещё в спаде, и гнать на воле сейчас выйдет дороже срывом."}]}};
+
+  // hero-образы этажей/самости (вариант 5) — крупный примитив на солнечном диске
+  function heroFloor(prim){
+    var P={
+      'звезда':'<path d="M50 20l7 17 18.5 1.5-14 12 4.3 18L50 70l-15.8 9.5 4.3-18-14-12L43 37z"/>',
+      'сетка':'<rect x="26" y="26" width="48" height="48" rx="4"/><path d="M42 26v48M58 26v48M26 42h48M26 58h48"/>',
+      'волна':'<path d="M16 50c7 0 7-9 14-9s7 9 14 9 7-9 14-9 7 9 14 9 7-9 14-9"/><path d="M16 63c7 0 7-9 14-9s7 9 14 9 7-9 14-9 7 9 14 9 7-9 14-9" opacity=".5"/>',
+      'магнит':'<path d="M34 24v18a16 16 0 0 0 32 0V24"/><path d="M28 24h12M60 24h12"/><path d="M34 38h10M56 38h10"/>',
+      'сосуд':'<path d="M36 24h28"/><path d="M40 24l3 20a10 10 0 1 0 14 0l3-20"/><path d="M40 50h20" opacity=".55"/>',
+      'тело':'<circle cx="50" cy="28" r="7"/><path d="M50 35v22M50 43c-7 0-11 3-11 3M50 43c7 0 11 3 11 3M50 57l-8 16M50 57l8 16"/>',
+      'корни':'<path d="M50 18v18"/><path d="M50 36c0 7-5 11-8 17S37 84 33 92" /><path d="M50 36c0 7 5 11 8 17s5 16 9 23"/><path d="M50 37c0 9 0 18-1 55" opacity=".9"/>',
+      'колонна':'<path d="M32 22h36M32 78h36"/><path d="M38 22v56M62 22v56"/><circle cx="50" cy="50" r="6"/>'
+    };
+    return '<svg viewBox="0 0 100 100" fill="none" aria-hidden="true">'
+      +'<defs><radialGradient id="hf-h" cx="50%" cy="48%" r="55%"><stop offset="0%" stop-color="#FFE9C2" stop-opacity=".75"/><stop offset="55%" stop-color="#F5DBB3" stop-opacity=".32"/><stop offset="100%" stop-color="#FFE9C2" stop-opacity="0"/></radialGradient></defs>'
+      +'<circle cx="50" cy="50" r="46" fill="url(#hf-h)"/>'
+      +'<g stroke="#C8642E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">'+(P[prim]||'')+'</g>'
+      +'</svg>';
+  }
+  var FLOOR_ICON={spirit:'звезда',mind:'сетка',neck:'волна',soul:'магнит',belly:'сосуд',body:'тело',legs:'корни',self:'колонна'};
+
+
+
+  // === ВИД СХЕМА: строки грида (узел по центру, баланс по бокам) ===
+  var treeSphere='intimacy';
+  function floorLevel(fid){
+    var v=[LEVELS[fid+'.intimacy']||2, LEVELS[fid+'.work']||2, LEVELS[fid+'.health']||2];
+    var avg=(v[0]+v[1]+v[2])/3;
+    return Math.max(1, Math.min(3, Math.floor(avg+0.0001)));   // среднее с округлением вниз
+  }
+  // перевод сфер в житейское описание (НЕ называя сферу) + где этаж проявляется/растёт
+  var SPHERE_LIFE={intimacy:'в близких, личных отношениях', work:'в работе и в деле, когда нужно проявить себя вовне', health:'в контакте с телом и собственным состоянием'};
+  function spherePull(fid){
+    var arr=[['intimacy',LEVELS[fid+'.intimacy']||2],['work',LEVELS[fid+'.work']||2],['health',LEVELS[fid+'.health']||2]];
+    var srt=arr.slice().sort(function(a,b){return b[1]-a[1];});
+    var hi=srt[0], lo=srt[srt.length-1];
+    return {hiKey:hi[0], hiLv:hi[1], loKey:lo[0], loLv:lo[1], spread:hi[1]-lo[1]};
+  }
+  var STR_LBL={1:'зона роста',2:'рабочая зона',3:'сильная зона'};
+  var STR_SUB={1:'есть куда расти',2:'в норме',3:'много силы, опора'};
+  function camMini(lv){
+    function a(d,on){return '<path d="'+d+'"'+(on?'':' opacity=".18"')+'/>';}
+    return '<svg viewBox="0 0 26 16" fill="none" stroke="#C8642E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+      +'<path d="M3.2 2.5v5a2.3 2.3 0 0 0 4.6 0v-5"/><path d="M5.5 9.8v3.4M3.9 13.2h3.2"/>'
+      +a('M11 5a5 5 0 0 1 0 6',lv>=1)+a('M13.5 3.5a8 8 0 0 1 0 9',lv>=2)+a('M16 2a11 11 0 0 1 0 12',lv>=3)+'</svg>';
+  }
+  function nodeSVG(f,lv){
+    // сила = размер + насыщенность (4) + кольца-ореолы (3)
+    var feat=CELLS[f.id][treeSphere].feat;
+    var R = lv===3?20 : (lv===2?15:11);          // размер по силе
+    var pad=11, S=(20+pad)*2, c=S/2;             // холст 62px — вписывается в строку 68px
+    var fill = lv===3?'url(#tg-glow)' : (lv===2?'url(#tg-disc)':'#FAEAD0');
+    var s='<svg width="'+S+'" height="'+S+'" viewBox="0 0 '+S+' '+S+'" fill="none" aria-hidden="true">';
+    s+='<defs><radialGradient id="tg-disc" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="62%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient>'
+      +'<radialGradient id="tg-glow" cx="35%" cy="30%" r="80%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="55%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient></defs>';
+    // hover-кольцо (общее, тонкое)
+    s+='<circle class="tg-ring" cx="'+c+'" cy="'+c+'" r="'+(R+8)+'" fill="none" stroke="#C8642E" stroke-width="1.3"/>';
+    // кольца-ореолы по силе (вариант 3)
+    if(lv===3){ s+='<circle cx="'+c+'" cy="'+c+'" r="'+(R+7)+'" fill="none" stroke="#FFE48A" stroke-width="2.2" opacity=".5"/>'; }
+    if(lv>=2){ s+='<circle cx="'+c+'" cy="'+c+'" r="'+(R+4)+'" fill="none" stroke="#DC9658" stroke-width="'+(lv===3?'2':'1.8')+'" opacity="'+(lv===3?'.7':'.6')+'"/>'; }
+    // ядро (размер+насыщенность, вариант 4)
+    s+='<circle cx="'+c+'" cy="'+c+'" r="'+R+'" fill="'+fill+'"'+(lv===1?' stroke="#DC9658" stroke-width="1.6" opacity=".85"':'')+'/>';
+    // ★ архетип — пунктир вокруг
+    if(feat) s+='<circle cx="'+c+'" cy="'+c+'" r="'+(R+(lv===3?9:6))+'" fill="none" stroke="#C8642E" stroke-width="1.3" stroke-dasharray="2 3"/>';
+    s+='</svg>';
+    return s;
+  }
+  function dirArrow(dir){
+    // единый аккуратный значок: одна длина, без кольца
+    if(dir==='even') return '<svg viewBox="0 0 22 18" fill="none" stroke="#C8642E" stroke-width="1.5" aria-hidden="true"><rect x="7" y="5" width="8" height="8" rx="1.4" transform="rotate(45 11 9)"/></svg>';
+    if(dir==='right') return '<svg viewBox="0 0 22 18" fill="none" stroke="#C8642E" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="9" x2="16" y2="9"/><polyline points="12,5 17,9 12,13"/></svg>';
+    return '<svg viewBox="0 0 22 18" fill="none" stroke="#C8642E" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="19" y1="9" x2="6" y2="9"/><polyline points="10,5 5,9 10,13"/></svg>';
+  }
+  function pillGradient(dir,strength,isZator){
+    // тёмное у центра (ближний к оси край), затухает к внешнему краю; цвет — солнечный (как узлы)
+    // затор всегда насыщеннее и глубже, чем обычное смещение — читается темнее
+    var a=(isZator ? 0.92 : (0.34+strength*0.42)).toFixed(2);
+    var col='rgba(220,150,88,'+a+')';
+    var fade=Math.round((isZator?78:42) + strength*(isZator?14:40));
+    if(dir==='even') return 'linear-gradient(180deg, rgba(220,150,88,.07), rgba(220,150,88,.07))';
+    if(dir==='right') return 'linear-gradient(90deg, '+col+' 0%, transparent '+fade+'%)';
+    return 'linear-gradient(270deg, '+col+' 0%, transparent '+fade+'%)';
+  }
+  function dirArrow(dir){
+    if(dir==='even') return '<svg viewBox="0 0 22 18" fill="none" stroke="#C8642E" stroke-width="1.5" aria-hidden="true"><rect x="7" y="5" width="8" height="8" rx="1.4" transform="rotate(45 11 9)"/></svg>';
+    if(dir==='right') return '<svg viewBox="0 0 22 18" fill="none" stroke="#C8642E" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="9" x2="16" y2="9"/><polyline points="12,5 17,9 12,13"/></svg>';
+    return '<svg viewBox="0 0 22 18" fill="none" stroke="#C8642E" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="19" y1="9" x2="6" y2="9"/><polyline points="10,5 5,9 10,13"/></svg>';
+  }
+  function balCat(B){
+    if(B.block) return {key:'zator', word:'Затор', mark:true};
+    var s=Math.min(1,Math.abs(B.lead-0.5)*2);
+    if(s>=0.55) return {key:'perekos', word:'Перекос', mark:false};
+    if(s>=0.18) return {key:'smesh', word:'Смещение', mark:false};
+    return {key:'balance', word:'Баланс', mark:false};
+  }
+  function zatorIcon(){ return '<span class="tg-zicon" title="затор"><svg viewBox="0 0 16 16" fill="none" stroke="#C8642E" stroke-width="1.5"><circle cx="8" cy="8" r="5.5"/><line x1="8" y1="5" x2="8" y2="8.5" stroke-linecap="round"/><circle cx="8" cy="11" r="0.6" fill="#C8642E" stroke="none"/></svg></span>'; }
+  function buildTreeBody(){
+    var body=document.getElementById('treeBody'); if(!body) return;
+    var n=FLOORS.length;
+    var ROWH=68, TOP=0, cx=35;            // cx — центр оси внутри среднего столбца (70px → 35)
+    // геометрия смещений (для узлов и для линии)
+    var pts=FLOORS.map(function(f,i){
+      var B=BALANCE[f.id]||{lead:0.5,block:false};
+      var dir = Math.abs(B.lead-0.5)<0.02 ? 'even' : (B.lead>0.5?'right':'left');
+      var strength=Math.min(1, Math.abs(B.lead-0.5)*2);
+      var cat=balCat(B);
+      var off = dir==='even'?0 : Math.round(strength*24) * (dir==='right'?1:-1);  // коридор амплитуды (бриф)
+      return {f:f,B:B,dir:dir,strength:strength,cat:cat,off:off,y:TOP+i*ROWH+ROWH/2};
+    });
+
+    var html='';
+    pts.forEach(function(p){
+      var f=p.f, lv=floorLevel(f.id);
+      var nm=CELL_NAMES[f.id][treeSphere], feat=CELLS[f.id][treeSphere].feat;
+      var star=feat?' <span style="color:var(--sun-deep)">★</span>':'';
+      var sub = p.cat.mark ? '<span class="tg-zlbl">основной перекос</span>' : '';
+      var cellHTML='<span class="tg-cell"><span class="tg-cn lv'+lv+'">'+nm+star+'</span><span class="tg-rl'+(p.cat.mark?' z':'')+'">'+p.cat.word+(p.cat.mark?'':'')+'</span></span>';
+      var grad=pillGradient(p.dir,p.strength,p.cat.mark);
+      var arr='<span class="tg-arr">'+dirArrow(p.dir)+'</span>';
+      var zico = p.cat.mark?zatorIcon():'';
+      var cls='tg-pill'+(p.dir==='even'?' even':'')+(p.cat.mark?' zator':'');
+      var pill;
+      if(p.dir==='left')       pill='<button class="'+cls+'" data-bal="'+f.id+'" style="--pill-grad:'+grad+'">'+arr+cellHTML+zico+'</button>';
+      else if(p.dir==='right') pill='<button class="'+cls+'" data-bal="'+f.id+'" style="--pill-grad:'+grad+'">'+zico+cellHTML+arr+'</button>';
+      else                     pill='<button class="'+cls+'" data-bal="'+f.id+'" style="--pill-grad:'+grad+'">'+cellHTML+'</button>';
+      var sideLeft = (p.dir==='left')?pill:'';
+      var sideRight = (p.dir!=='left')?pill:'';
+      var nodeCls='tg-node'+(p.cat.mark?' dimmed':'');
+      html+='<div class="tg-row">'
+        +'<span class="tg-left">'+sideLeft+'</span>'
+        +'<span class="tg-mid"><span class="'+nodeCls+'" data-floor="'+f.id+'" data-sphere="'+treeSphere+'" style="transform:translateX('+p.off+'px)">'+nodeSVG(f,lv)+'</span></span>'
+        +'<span class="tg-right">'+sideRight+'</span>'
+        +'</div>';
+    });
+    html+='<div class="tg-self" data-self="1"><span class="tg-self-mid"><span class="tg-self-dot"></span></span><span class="tg-self-lbl">ось — самость</span></div>';
+
+    // SVG-слой оси: прямая-эталон (пунктир) + гладкая волна (Catmull-Rom), обрезанная у краёв узлов, пунктир у заторов
+    var H=n*ROWH;
+    var axis='<svg class="tg-axis" viewBox="0 0 70 '+H+'" preserveAspectRatio="none" aria-hidden="true">';
+    axis+='<line x1="'+cx+'" y1="6" x2="'+cx+'" y2="'+(H-6)+'" stroke="#C8642E" stroke-width="1" stroke-opacity=".22" stroke-dasharray="2 4"/>';
+    function nodeR(p){ var lv=LEVELS[p.f.id+'.'+treeSphere]||2; return lv===3?20:(lv===2?15:11); }
+    axis+='</svg>';
+
+    body.innerHTML='<div class="tg-axiswrap">'+axis+'</div>'+html;
+    body.querySelectorAll('.tg-node').forEach(function(g){ g.addEventListener('click',function(){ ctx={type:'strength',fid:g.getAttribute('data-floor'),sid:g.getAttribute('data-sphere'),side:'light'}; openModal(); }); });
+    body.querySelectorAll('.tg-pill').forEach(function(b){ b.addEventListener('click',function(e){ e.stopPropagation(); ctx={type:'balance',fid:b.getAttribute('data-bal'),sid:null,side:'light'}; openModal(); }); });
+    var sf=body.querySelector('.tg-self'); if(sf) sf.addEventListener('click',function(){ ctx={type:'self',fid:null,sid:null,side:'light'}; openModal(); });
+  }
+
+  // отрисовка развёрнутых практик
+  function renderRich(R){
+    var h='';
+    if(R.subtitle) h+='<div class="rich-sub">'+R.subtitle+'</div>';
+    R.sections.forEach(function(sec){
+      h+='<div class="rich-sec"><div class="rich-label">'+sec.label+'</div>';
+      if(sec.items){
+        sec.items.forEach(function(it){
+          if(typeof it==='string'){ h+='<div class="rich-check">'+it+'</div>'; }
+          else { h+='<div class="rich-item"><div class="ri-name">'+it.name+'</div><div class="ri-text">'+it.text+'</div></div>'; }
+        });
+      }
+      if(sec.text){ h+='<p class="rich-text">'+sec.text+'</p>'; }
+      h+='</div>';
+    });
+    return h;
+  }
+  function iconFor(key,suffix){ var s=ICONS[key]||''; if(suffix){ s=s.replace(/id="([^"]+)"/g,'id="$1'+suffix+'"').replace(/url\(#([^)]+)\)/g,'url(#$1'+suffix+')'); } return s; }
+
+  // === контент модалок: свет→усиление / тень→урок ===
+  var FEAT={"ogon": {"kicker": "Замысел · Воля", "title": "Первый огонь", "icon": "ogon", "light": "Ты из тех, кто зажигает и идёт первой. Тебе не нужно ждать команды или приглашения — ты чувствуешь импульс и действуешь, начинаешь там, где другие ещё думают, и ведёшь за собой. Под этим — настоящая воля как мотор: ты можешь захотеть, решить и сделать, и твоя энергия запускает дела и людей. Это редкая сила инициатора и лидера: с тобой что-то наконец стартует.", "amplify": "Направь весь огонь в одно своё дело и встань во главе него — там твоя воля горит ровно и мощно. Раз в неделю отмечай, что ты начала и сдвинула сама: это топливо твоей силы, и его стоит видеть, а не считать обычным.", "shadow": "Та же сила сносит и распыляется. Без своего дела ты продавливаешь — людей, обстоятельства, себя — и встречаешь сопротивление, особенно когда двинула, не предупредив. А огонь без оси разлетается искрами: десяток зажжённых стартов и ни один не доведён.", "lesson": "Когда тянет рвануть — на секунду скажи вперёд тем, кого заденет: импульс тогда придёт приглашением, а не вторжением. И собери огонь в один очаг: выбери, что твоё по-крупному, и доведи, не разбрасывая искры."}, "serdce": {"kicker": "Свет · Сцена", "title": "Львиное сердце", "icon": "serdce", "light": "В тебе много щедрого тепла и света: ты создаёшь, играешь, греешь, тебе идёт быть на виду и вести за собой обаянием, а не только волей. Ты из тех, на кого смотрят и тянутся; рядом с тобой ярче и веселее. Это царственная, дарящая радиация — ты светишь крупно и хочешь, чтобы это видели.", "amplify": "Давай себе сцену по-честному: раз в неделю делай что-то ради чистой радости и творчества — выступить, создать, блеснуть — без оправдания пользой. Твой свет крепнет, когда ты позволяешь себе сиять, а не только пахать.", "shadow": "Свет двоится. Гордость может требовать признания и обижаться, когда его мало; великодушие — переходить в «смотрите на меня» и нужду в аплодисментах. Или, не получив сцены, ты гасишь себя и тлеешь, считая, что «не до того».", "lesson": "Свети, не выпрашивая зеркала: пусть радиация идёт от радости отдавать, а не от голода по восхищению. И не туши свой свет под делами — он не роскошь, а часть твоей силы; миру он нужен горящим."}, "omut": {"kicker": "Чувства · Близость", "title": "Глубокий омут", "icon": "omut", "light": "Под твоей лёгкой живой поверхностью — глубокая вода. Ты любишь страстно и до дна: привязываешься всерьёз, входишь в близость целиком, способна пройти с человеком через тьму и выйти преображённой — и преобразить его. Это редкая глубина, которая не боится сильных чувств и делает союз настоящим событием жизни.", "amplify": "Дай этой глубине русло, а не только накал: раз в неделю проживай близость осознанно — настоящий разговор, телесная близость, совместное погружение, — отмечая момент, когда вы по-настоящему встретились. Глубина крепнет, когда ей есть куда течь.", "shadow": "Глубина оборачивается властью. Ты держишь близость в кулаке: контролируешь, ревнуешь, не отпускаешь, боишься потерять — и сжимаешь вместо того, чтобы впустить. Страсть легко уходит в одержимость, а уязвимость без контроля пугает.", "lesson": "Твой рост — впустить, не контролируя: дать другому войти глубоко и не держать его в кулаке. Капитуляция здесь сильнее хватки — довериться не значит потерять себя, значит найти большее. Преображайся через союз, а не правь им."}, "znanie": {"kicker": "Центр · Ум", "title": "Своё знание", "icon": "znanie", "light": "У тебя свой, независимый ум: ты видишь то, что другие пропускают, приходишь к тому, до чего не дошли, схватываешь суть под поверхностью. Тебе не надо повторять за кем-то — ты рождаешь, а не пересказываешь. Это прорывное знание, на которое можно опереться, и редкий дар видеть иначе.", "amplify": "Давай своему углу зрения форму, в которой им можно пользоваться: раз в неделю доводи один свой инсайт до ясного вида — записи, схемы, продукта. Знание крепнет и приносит плоды, когда из «вижу по-своему» становится «вот, держите».", "shadow": "Цена независимости — тебя не всегда понимают: мысль идёт впереди или сбоку, и ты либо злишься, что не доходит, либо замолкаешь и держишь при себе («гений-чудак»). А внутри две головы — чувствующая и строящая — спорят, рождая сомнение.", "lesson": "Доверяй своему видению, но переводи его, а не требуй мгновенного понимания, и дай ему время оформиться. Когда две головы спорят — не дави решением силой, дай знанию собраться. Твоя ценность — видеть иначе, задача — сделать это пригодным."}, "zemlya": {"kicker": "Опора · Дело", "title": "Своя земля", "icon": "zemlya", "light": "Ты приземляешь задуманное в материю: идея в твоих руках становится делом, вещью, деньгами, территорией. У тебя крепкие корни в реальном и уверенная хватка — ты та, кто строит и держит там, где другие витают. На тебя можно встать: ты даёшь делу и людям твёрдую почву.", "amplify": "Строй и расширяй своё намеренно: раз в месяц добавляй к своей земле один камень — навык, ресурс, кусок территории, который реально твой. Твоя сила приземлять крепнет, когда ты осознанно растишь своё, а не только держишь имеющееся.", "shadow": "Та же хватка зажимает. Контроль над материальным становится самоцелью и мерой себя: держишь слишком крепко, не делегируешь, упрямишься, ищешь безопасность в «всё под рукой». А долг и хватка запирают твою же свободу; отпустить — страшно.", "lesson": "Держи своё, не давая ему держать тебя: опирайся на собственную ценность, а не только на контроль над вещами. Отпускай и доверяй там, где хватка лишь мешает, — делегировать и довериться не значит потерять землю; это опора покрупнее."}, "veter": {"kicker": "Воля · Свобода", "title": "Вольный ветер", "icon": "veter", "light": "Свобода — твой воздух и твой рабочий ритм. Ты живёшь и работаешь по-своему: вспышками, по своему импульсу, без чужих рельсов и тесных рамок. Тебе нужна автономия как воздух — и в ней ты горишь ярко, начинаешь, пробуешь, идёшь широко. Независимость — не каприз, а условие твоей силы.", "amplify": "Строй жизнь вокруг своей автономии осознанно: раз в неделю защищай кусок свободы — время, выбор, пространство «только моё» — как часть работы, а не как награду. На свободе твой огонь горит ровно; в клетке гаснет.", "shadow": "Тот же ветер разносит. Тяга к свободе и новизне рассеивает: загорелась — остыла — за новым, и выбранное теряется. А столкнувшись с долгом и рамками, ты либо рвёшь их в клочья, либо задыхаешься, прижатая, — и сила уходит в борьбу с путами.", "lesson": "Бери свободу честно — и выбирай по своей воле то, что держишь, чтобы это не было клеткой. Свобода зрелая не в том, чтобы не иметь обязательств, а в том, чтобы они были выбраны тобой. Дай ветру дуть — но в одном выбранном направлении."}};
+  var STAGE={"past": {"kicker": "Этап позади · юность и двадцатые", "title": "Разбег", "shadowLabel": "Тень этапа", "lessonLabel": "Маркер прошлого", "light": "Этап пробы силы. Ты испытывала свой напор, бралась за многое, узнавала, что ты — та, кто начинает и ведёт; первые акты воли, первые «я сама». Ты собирала размах и научилась широко пробовать. Это позади — и оставило тебе диапазон, смелость инициировать и знание своей мощи.", "amplify": "Раз в год называй вслух, что ты узнала о своей силе и своём размахе. Это не «подготовка», а актив — на смелость начинать, добытую тогда, можно опираться сейчас.", "shadow": "Если этап затянулся, остаётся привычка распыляться: пробовать-бросать, рваться против рамок без построения, гореть стартами и не доводить — много искр, мало огня.", "lesson": "Признак, что этап завершён: ты перестаёшь просто пробовать всё подряд и выбираешь один огонь, чтобы строить."}, "current": {"kicker": "Этап сейчас · тридцатые · ты здесь", "title": "Строю своё", "shadowLabel": "Тень этапа", "lessonLabel": "Урок этапа", "light": "Десятилетие, когда сила строит своё по-настоящему. Ты здесь — после рубежа, когда проба сменилась стройкой: основать, повести, приземлить, занять свою территорию. Воля встречает взрослые ставки, а свобода-и-долг, сила-и-союз становятся реальными вопросами. Каждый шаг этого этапа — про то, чтобы твой огонь собрался во что-то одно и крупное.", "amplify": "Раз в полгода называй одно своё крупное дело, в которое идёт воля, и вкладывайся в него прицельно, предупреждая тех, кого двигаешь. Этап силён, когда огонь в одном очаге, а не в десяти искрах.", "shadow": "Соблазны этапа — распылиться по стартам; дать долгу и контролю запереть огонь; сжать всё в кулак и выжечь волевой мотор, доказывая силу. Тогда стройка идёт через продавливание и одиночество, а не через лидерство.", "lesson": "Раз в полгода спрашивай: мой огонь идёт в одно выбранное — или рассеян и зажат долгом? Строй из воли и свободы, а не из «надо» и хватки; и впусти рядом тех, кого ведёшь и любишь."}, "future": {"kicker": "Этап впереди · зрелость", "title": "Зрелая сила", "shadowLabel": "Тень этапа", "lessonLabel": "Маркер будущего", "light": "Фаза, когда сила становится спокойной и щедрой. Туда придёшь — и поведёшь из укоренённости, свободная без метания и глубокая без контроля: воля смягчится в суверенное великодушие, ты будешь держать своё легко и впускать другого без хватки. Тогда твоё царство — дело, дом, союз — стоит прочно и при этом дышит.", "amplify": "Уже сейчас тренируй это: раз в месяц дай себе настоящую свободу и впусти одного человека вглубь, не сжимая, — и заметь, как это иначе по вкусу, чем держать всё в кулаке. Зрелая сила тренируется заранее.", "shadow": "Если сейчас ты только сжимаешь, контролируешь и продавливаешь, в зрелости это обернётся одиночеством и выгоранием: «я всё построила сама и всех держала на расстоянии». Несвобода и хватка, не отпущенные теперь, потом возьмут своё усталостью.", "lesson": "Признак, что этап начался: ты держишь власть легко — свободная, соединённая, без кулака. Контроль перестаёт быть условием силы, сила становится спокойной."}};
+  var AXIS={"kicker": "Сквозная ось", "title": "Сказать вперёд", "icon": "vpered", "shadowLabel": "Теневой аспект", "lessonLabel": "Урок", "light": "Ты — человек импакта: ты двигаешься, и мир это чувствует. В этом твоя сила инициатора — но у неё есть один рычаг, который меняет всё: сказать вперёд. Когда ты предупреждаешь тех, кого твоё движение заденет, — называешь, что собираешься сделать, ещё до того, как сделала, — твоя сила открывает двери, собирает союзников и ложится лидерством, за которым идут охотно. Это проходит через всю твою жизнь: в деле, в близости, в семье — там, где ты сказала вперёд, тебя поддерживают; где двинула молча — сопротивляются.", "amplify": "Заведи привычку одной фразы вперёд: перед любым шагом, который коснётся других, скажи вслух, что и зачем ты собираешься сделать. Сделай это рефлексом — и смотри, как сопротивление вокруг тает, а двери открываются сами.", "shadow": "Когда ты пропускаешь этот шаг, та же сила бьётся о стены: люди оказываются перед фактом, чувствуют, что их переехали, и упираются. Жизнь начинает казаться вечной борьбой с сопротивлением — «почему всё через бой», — хотя дело не в людях, а в пропущенном предупреждении.", "lesson": "Это НЕ про спрашивать разрешения — тебе оно не нужно, ты инициатор. Это про то, чтобы дать своему импульсу прийти приглашением, а не вторжением. Одна фраза вперёд экономит стену сопротивления и превращает твой импакт из тарана в лидерство."};
+
+  var SELF={"kicker": "Ось · стержень", "title": "Самость", "icon": "col", "shadowLabel": "Теневой аспект", "lessonLabel": "Урок", "light": "Самость — не отдельный этаж, а сквозная ось, что держит остальные. Твой стержень — суверенная воля: сильное «Я», которое не ждёт разрешения, идёт из собственного хотения и держит свою территорию. Ты знаешь, чего хочешь, и двигаешься первой — это твоя природная сила. И крепче всего этот стержень там, где власть (начать, держать, контролировать) уравновешена правом отпустить: дать свободу себе и глубину другому.", "amplify": "Раз в неделю делай два жеста силы-в-отпускании: дай себе настоящую свободу (выбор, время, пространство только твоё) и впусти одного человека ближе, не сжимая. И отмечай, где ты держала власть легко. Стержень крепнет не от хватки, а от уверенной свободы.", "shadow": "Стержень твердеет с двух сторон. С одной — власть застывает в контроль и продавливание: ты правишь делом, людьми, близостью, держишь всё в кулаке. С другой — суверенность переходит в изоляцию: так сама по себе, что не впускаешь никого, и сила оборачивается одиночеством.", "lesson": "Когда ловишь себя на том, что сжимаешь или отгораживаешься, — вспомни: настоящая сила не в контроле, а в надёжности быть свободной и быть глубоко с другим, не теряя себя. Суверенность, которая умеет отпустить и впустить, крупнее той, что держит и одна."};
+
+  // === 21 способ усиления ячеек (свет → усиление); отдельно от уроков (тень) ===
+  var CELL_AMP={"spirit.intimacy": "Раз в месяц придумывай вам с близким общий замысел — поездку, проект, цель — и зажигай его вместе. Твоя любовь расцветает, когда у вас есть общий огонь, к которому идёте плечом к плечу.", "spirit.work": "Встань во главе одного своего дела и веди открыто — люди идут за тем, кто ясно горит. Раз в неделю отмечай, что сдвинулось именно потому, что начала ты: это и есть твоя сила, и её стоит видеть.", "spirit.health": "Раз в неделю расширяй свободу хотя бы на шаг — убери одно лишнее «надо», возьми кусок автономии. Тонус у тебя поднимается от воздуха и своего огня, не от режима.", "mind.intimacy": "Раз в неделю делись с близким своим необычным взглядом как подарком: «смотри, что я заметила в тебе хорошего». Твоя проницательность сближает, когда она тёплая и щедрая.", "mind.work": "Доводи один свой инсайт до вида, которым можно пользоваться — записи, схемы, продукта. Знание приносит плоды и признание, когда из «вижу по-своему» становится «вот, держите».", "mind.health": "Раз в неделю включай свой ум-инженер на себя: возьми один свой паттерн — сон, энергию, нагрузку — и собери под него простую рабочую схему. Голова, направленная на твоё же устройство, — лучший наладчик; в этом её сила.", "neck.intimacy": "Раз в день говори близкому прямо одну тёплую вещь — благодарность, желание, признание. Твоя прямота, повёрнутая на хорошее, делает рядом с тобой ясно и надёжно.", "neck.work": "Используй голос вести: раз в неделю собирай людей и ясно объявляй направление, заражая. Твоё слово — инструмент запуска; чем чаще ведёшь им вслух, тем сильнее за тобой идут.", "neck.health": "Раз в день называй вслух и слабый сигнал — «устала», «хватит на сегодня». Честность про предел разгружает тело раньше, чем оно сорвётся, и бережёт твою мощь.", "soul.intimacy": "Раз в неделю проживай близость осознанно и до глубины — настоящий разговор, телесная близость, совместное погружение — и отмечай миг настоящей встречи. Глубина крепнет, когда ей дают течь, а не только кипеть.", "soul.work": "Выбирай дело, в которое можно вложить страсть, и вкладывайся открыто — заряженность чувствуется и тянет людей. Твой накал в деле — преимущество, когда у него есть русло.", "soul.health": "Вложи глубину в одно, что дорого тебе до дрожи, и проживай это всерьёз, не размениваясь по мелочам. Направленная в один очаг, твоя страстность питает жизнью; растащенная по всему — опустошает.", "belly.intimacy": "Неси огонь выбранному: раз в неделю устраивай близость и игру с тем, кто рядом, по своему вкусу. Твоя страсть ярче всего, когда направлена вглубь одного, а не вширь за новым.", "belly.work": "Раз в полгода называй вслух, что хочешь построить по-настоящему масштабно — и ставь под это дерзкую планку. Твой голод к большому — двигатель: он разгоняется, когда замах достаточно велик, чтобы зажечь.", "belly.health": "Собери список телесных радостей, что правда наполняют — еда, тепло, прикосновение, природа, — и держи под рукой как аптечку. Когда знаешь свои источники наслаждения наперёд, восстановление приходит быстрее и глубже.", "body.intimacy": "Используй телесную надёжность как дар: стань той, к кому можно прислониться — обними, побудь телом возле близкого, когда ему тяжело. Твоё устойчивое тепло успокаивает и связывает лучше любых слов.", "body.work": "Работай заходами: мощный рывок — реальная пауза — снова рывок. Раз в неделю заранее ставь паузу в план как часть работы. Перезаряженный мотор бьёт сильнее загнанного.", "body.health": "Веди тихий счёт, что тебя реально перезаряжает — сон, движение, природа, тишина — и давай это по сигналу. Чуткость к раннему сигналу хранит твою мощь вернее, чем воля.", "legs.intimacy": "Строй с близким общее намеренно — дом, традиции, планы — вкладываясь в прочность связи. Несколько глубоких надёжных опор держат тебя крепче контроля над общим.", "legs.work": "Раз в месяц добавляй к своей земле один камень — навык, ресурс, кусок территории, реально твой. Сила приземлять крепнет, когда ты осознанно растишь своё, а не только сторожишь имеющееся.", "legs.health": "Заземляйся телом и буквально: своё пространство, ритм, движение, контакт с землёй. И раз в день отмечай свою ценность вне того, что держишь, — это укореняет не хуже почвы."};
+
+  // === уровень проявленности по данным (число сошедшихся систем в «откуда питается»); редактируемо ===
+  var LEVELS={"spirit.intimacy": 2, "spirit.work": 3, "spirit.health": 2, "mind.intimacy": 2, "mind.work": 3, "mind.health": 2, "neck.intimacy": 2, "neck.work": 3, "neck.health": 1, "soul.intimacy": 3, "soul.work": 2, "soul.health": 2, "belly.intimacy": 2, "belly.work": 3, "belly.health": 2, "body.intimacy": 2, "body.work": 3, "body.health": 1, "legs.intimacy": 2, "legs.work": 3, "legs.health": 2};
+  var RES_LBL={1:'тихо звучит',2:'просто звучит',3:'ярко звучит'};
+  function camGlyph(lv){
+    function a(d,on){return '<path d="'+d+'"'+(on?'':' opacity=".18"')+'/>';}
+    return '<svg viewBox="0 0 26 16" fill="none" stroke="#C8642E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+      +'<path d="M3.2 2.5v5a2.3 2.3 0 0 0 4.6 0v-5"/><path d="M5.5 9.8v3.4M3.9 13.2h3.2"/>'
+      +a('M11 5a5 5 0 0 1 0 6',lv>=1)+a('M13.5 3.5a8 8 0 0 1 0 9',lv>=2)+a('M16 2a11 11 0 0 1 0 12',lv>=3)
+      +'</svg>';
+  }
+
+
+  function buildFloorCol(){
+    var col=document.getElementById('floorCol'); if(!col) return;
+    var html='';
+    FLOORS.forEach(function(f){
+      html+='<div class="fr'+(f.kind==='gate'?' gate':'')+'" data-floor="'+f.id+'"><span class="fr-n">'+f.name+'</span><span class="fr-chev">\u203a</span></div>';
+    });
+    col.innerHTML=html;
+    col.querySelectorAll('.fr').forEach(function(b){ b.addEventListener('click',function(){ ctx={type:'floor',fid:b.getAttribute('data-floor'),sid:null,side:'light'}; openModal(); }); });
+  }
+  function buildRows(){
+    var html='';
+    FLOORS.forEach(function(f){
+      ['intimacy','work','health'].forEach(function(sp){
+        var c=CELLS[f.id][sp];
+        var star=c.feat?'<span class="star">★</span> ':'';
+        var lv=LEVELS[f.id+'.'+sp]||2;
+        html+='<div class="cellwrap"><div class="cell lv'+lv+(c.feat?' feat':'')+'" data-floor="'+f.id+'" data-sphere="'+sp+'" data-lv="'+lv+'">'
+            +'<span class="cell-cam">'+camGlyph(lv)+'</span>'
+            +'<span class="cell-name">'+star+CELL_NAMES[f.id][sp]+'</span>'
+            +'<span class="cell-go">\u203a</span>'
+            +'</div></div>';
+      });
+    });
+    bodyEl.innerHTML=html;
+    wire();
+  }
+
+  function renderCard(){
+    var shadowed = ctx.side==='shadow';
+    cardEl.classList.toggle('shadowed',shadowed);
+
+    if(ctx.type==='featured'||ctx.type==='stage'||ctx.type==='axis'||ctx.type==='self'){
+      var D = ctx.type==='featured'?FEAT[ctx.fid] : (ctx.type==='stage'?STAGE[ctx.fid] : (ctx.type==='self'?SELF:AXIS));
+      var hh='<button class="cclose" aria-label="закрыть">\u00d7</button>';
+      if(D.icon) hh+='<div class="chero">'+iconFor(D.icon,'-m')+'</div>';
+      hh+='<div class="chead'+(D.icon?' center':'')+'"><div class="ckicker">'+D.kicker+'</div><div class="ctitle">'+D.title+'</div></div>';
+      hh+='<div class="cbody">';
+      if(!shadowed){
+        hh+='<div class="seg s-light"><span class="stag">Свет</span><p>'+D.light+'</p></div>';
+        if(D.amplify) hh+='<div class="amplify-box"><span class="stag">Способ усиления</span><p>'+D.amplify+'</p></div>';
+        if(D.shadow) hh+='<button class="flip-btn" data-flip="shadow">Показать теневую сторону \u25be</button>';
+      } else {
+        hh+='<div class="seg s-shadow"><span class="stag">'+(D.shadowLabel||'Теневая сторона')+'</span><p>'+D.shadow+'</p></div>';
+        if(D.lesson) hh+='<div class="lesson-box"><span class="stag">'+(D.lessonLabel||'Урок')+'</span><p>'+D.lesson+'</p></div>';
+        hh+='<button class="flip-btn" data-flip="light">\u2191 Вернуть свет</button>';
+      }
+      hh+='</div>';
+      cardEl.innerHTML=hh; wireCard(); return;
+    }
+
+    var kicker='',title='',conceptTxt='',introTxt='',lightTxt='',shadowTxt='',lessonTxt='',hood='',fromTxt='',gateLike=false;
+
+    // === этажи и сферы: hero-образ + развёрнутая структура (стандарт А) ===
+    if(ctx.type==='axisinfo'){
+      var side=ctx.fid; // 'left'|'right'
+      var ttl = side==='left'?'Принимающее':'Проявляющее';
+      var sub = side==='left'?'вместить · отдаться · опереться':'направить · заявить · держать';
+      var body = side==='left'
+        ? 'Способность вместить, отдаться, опереться, впустить. Когда на этаже ведёт принимающее — стрелка смотрит влево. Если оно западает, трудно принимать помощь, отдыхать, доверять — всё тянешь сам.'
+        : 'Способность направить, заявить, держать, действовать. Когда на этаже ведёт проявляющее — стрелка смотрит вправо. Если оно западает, трудно заявить о себе, занять позицию, вывести внутреннее наружу.';
+      var hh='<button class="cclose" aria-label="закрыть">\u00d7</button>';
+      hh+='<div class="chead"><div class="ckicker">Сила этажа</div><div class="ctitle">'+ttl+'</div></div>';
+      hh+='<div class="cbody"><div class="seg s-intro"><p style="font-family:var(--font-display);font-style:italic;font-size:16px;color:var(--ink)">'+sub+'</p></div>';
+      hh+='<div class="seg s-light"><span class="stag">Что это и на что смотреть</span><p>'+body+'</p></div>';
+      hh+='<div class="seg s-light"><span class="stag">Где увидеть свой перекос</span><p>Нажми на стрелку у любого этажа в дереве — увидишь, как баланс обстоит именно там и что выровнять.</p></div></div>';
+      cardEl.innerHTML=hh; wireCard(); return;
+    }
+
+    if(ctx.type==='strength'){
+      var sf=FLOORS.find(function(x){return x.id===ctx.fid;});
+      var lv=floorLevel(ctx.fid);
+      var lblTxt={1:'зона роста',2:'рабочая зона',3:'сильная зона'}[lv];
+      var T=(STRENGTH_TXT[ctx.fid]||{})[lv]||{why:'',how:''};
+      var howLabel = lv===1?'Как усилить':(lv===3?'Как опереться и не пережать':'Как поддержать');
+      // через что проявляется / где растёт — из среза по сферам, описательно (без названий сфер)
+      var sp=spherePull(ctx.fid), pullHTML='';
+      if(sp.spread>0){
+        var hiLife=SPHERE_LIFE[sp.hiKey], loLife=SPHERE_LIFE[sp.loKey];
+        var pullTxt;
+        if(lv===1){
+          pullTxt='Легче всего этот этаж оживает '+hiLife+' — начинай оттуда, это твоя точка опоры. А подтягивать его стоит там, где сейчас тише всего: '+loLife+'. Рост заложен именно в этом — не «вообще усилить», а дать этой стороне проявиться там, где её пока мало.';
+        } else if(lv===3){
+          pullTxt='Ярче всего эта сила раскрывается '+hiLife+'. Если захочешь, чтобы она работала ровнее везде, перенеси тот же навык туда, где она пока тише: '+loLife+'.';
+        } else {
+          pullTxt='Заметнее всего этот этаж проявлен '+hiLife+', а тише — '+loLife+'. Если хочешь подтянуть, точка роста именно там, где сейчас тише.';
+        }
+        pullHTML='<div class="seg s-light"><span class="stag">Через что проявляется и где растёт</span><p>'+pullTxt+'</p></div>';
+      }
+      var hh='<button class="cclose" aria-label="закрыть">\u00d7</button>';
+      hh+='<div class="chead"><div class="ckicker">Сила этажа</div><div class="ctitle">'+sf.name+' \u00b7 '+lblTxt+'</div></div>';
+      hh+='<div class="cbody">';
+      hh+='<div class="seg s-light"><span class="stag">Что это значит в жизни</span><p>'+T.why+'</p></div>';
+      hh+=pullHTML;
+      hh+='<div class="amplify-box"><span class="stag">'+howLabel+'</span><p>'+T.how+'</p></div>';
+      hh+='</div>';
+      cardEl.innerHTML=hh; wireCard(); return;
+    }
+
+    if(ctx.type==='balance'){
+      var bf=FLOORS.find(function(x){return x.id===ctx.fid;});
+      var B=BALANCE[ctx.fid]||{};
+      var lead=B.lead!=null?B.lead:0.5;
+      var dirTxt = Math.abs(lead-0.5)<0.02 ? 'силы в равновесии' : (lead>0.5?'перекос вправо — ведёт проявляющее':'перекос влево — ведёт принимающее');
+      var hh='<button class="cclose" aria-label="закрыть">\u00d7</button>';
+      hh+='<div class="chead"><div class="ckicker">Баланс сил · '+bf.name+'</div><div class="ctitle">'+dirTxt+(B.block?' · затор':'')+'</div></div>';
+      hh+='<div class="cbody">';
+      if(B.balance) hh+='<div class="seg s-light"><span class="stag">Как перекос проявляется'+(B.block?' · здесь затор':'')+'</span><p>'+B.balance+'</p></div>';
+      if(B.recommend) hh+='<div class="amplify-box"><span class="stag">Практика — что выровнять</span><p>'+B.recommend+'</p></div>';
+      hh+='</div>';
+      cardEl.innerHTML=hh; wireCard(); return;
+    }
+
+    if(ctx.type==='floor' || ctx.type==='sphere'){
+      var isFloor = ctx.type==='floor';
+      var R, kk, tt, heroKey, concept;
+      if(isFloor){
+        var f=FLOORS.find(function(x){return x.id===ctx.fid;});
+        R=RICH[ctx.fid]; kk='Этаж'+(f.kind==='gate'?' \u00b7 переход':' \u00b7 центр'); tt=f.name;
+        heroKey=FLOOR_ICON[ctx.fid]; concept=ROW_TIP[ctx.fid];
+      } else {
+        R=RICH['sph-'+ctx.sid]; kk='Сфера \u00b7 большой пласт жизни'; tt=SP[ctx.sid];
+        heroKey=null; concept=SPHERE_TIP[ctx.sid];
+      }
+      var hh='<button class="cclose" aria-label="закрыть">\u00d7</button>';
+      if(heroKey) hh+='<div class="chero">'+heroFloor(heroKey)+'</div>';
+      hh+='<div class="chead'+(heroKey?' center':'')+'"><div class="ckicker">'+kk+'</div><div class="ctitle">'+tt+'</div></div>';
+      hh+='<div class="cbody">';
+      if(concept) hh+='<div class="seg s-concept"><span class="stag">Что это и почему так названо</span><p>'+concept+'</p></div>';
+      if(R){ hh+=renderRich(R); }
+      hh+='</div>';
+      cardEl.innerHTML=hh; wireCard(); return;
+    }
+
+    // === ячейка (канон свет/усиление/тень/урок) ===
+    var ff=FLOORS.find(function(x){return x.id===ctx.fid;});
+    var c=CELLS[ctx.fid][ctx.sid];
+    gateLike=ff.kind==='gate';
+    kicker=ff.name+' \u00d7 '+SP[ctx.sid]+(c.feat?' \u00b7 \u2605 архетип ключа':'');
+    title=CELL_NAMES[ctx.fid][ctx.sid];
+    introTxt=c.intro; lightTxt=c.light; shadowTxt=c.shadow; lessonTxt=c.lesson; fromTxt=c.from; hood=ff.hood;
+
+    var h='<button class="cclose" aria-label="закрыть">\u00d7</button>';
+    h+='<div class="chead"><div class="ckicker">'+kicker+'</div><div class="ctitle">'+title+'</div></div>';
+    var _clv=LEVELS[ctx.fid+'.'+ctx.sid]||2; h+='<div class="cres">'+camGlyph(_clv)+'<span>'+RES_LBL[_clv]+'</span></div>';
+    h+='<div class="cbody">';
+    if(!shadowed){
+      if(introTxt) h+='<div class="seg s-intro"><p style="font-family:var(--font-display);font-style:italic;font-size:16px;color:var(--ink);">'+introTxt+'</p></div>';
+      h+='<div class="seg s-light"><span class="stag">Свет</span><p>'+lightTxt+'</p></div>';
+      var _amp=CELL_AMP[ctx.fid+'.'+ctx.sid]; if(_amp) h+='<div class="amplify-box"><span class="stag">Способ усиления</span><p>'+_amp+'</p></div>';
+      h+='<button class="flip-btn" data-flip="shadow">Показать теневую сторону \u25be</button>';
+    } else {
+      h+='<div class="seg s-shadow"><span class="stag">Теневая сторона</span><p>'+shadowTxt+'</p></div>';
+      h+='<div class="lesson-box"><span class="stag">Урок</span><p>'+lessonTxt+'</p></div>';
+      h+='<button class="flip-btn" data-flip="light">\u2191 Вернуть свет</button>';
+    }
+    h+='</div>';
+    cardEl.innerHTML=h;
+    wireCard();
+  }
+
+  function openModal(){ overlay.classList.add('open'); document.body.style.overflow='hidden'; renderCard(); }
+  function closeModal(){ overlay.classList.remove('open'); document.body.style.overflow=''; }
+
+  function wireCard(){
+    var cl=cardEl.querySelector('.cclose'); if(cl)cl.addEventListener('click',closeModal);
+    cardEl.querySelectorAll('.flip-btn').forEach(function(b){
+      b.addEventListener('click',function(){ ctx.side=b.getAttribute('data-flip'); renderCard(); });
+    });
+  }
+
+  function wire(){
+    document.querySelectorAll('.cell').forEach(function(el){
+      el.addEventListener('click',function(){ ctx={type:'cell',fid:el.getAttribute('data-floor'),sid:el.getAttribute('data-sphere'),side:'light'}; openModal(); });
+    });
+  }
+  function paintVLegend(){
+    document.querySelectorAll('.vl-cam').forEach(function(el){ el.innerHTML=camGlyph(parseInt(el.getAttribute('data-cam'),10)); });
+    document.querySelectorAll('.vl-node').forEach(function(el){
+      var lv=parseInt(el.getAttribute('data-node'),10);
+      var R=lv===3?13:(lv===2?10:7), c=20;
+      var fill=lv===3?'url(#tg-glow)':(lv===2?'url(#tg-disc)':'#FAEAD0');
+      var g='<svg width="40" height="40" viewBox="0 0 40 40" fill="none">'
+        +'<defs><radialGradient id="lg-disc" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="62%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient>'
+        +'<radialGradient id="lg-glow" cx="35%" cy="30%" r="80%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="55%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient></defs>';
+      if(lv===3) g+='<circle cx="20" cy="20" r="'+(R+5)+'" fill="none" stroke="#FFE48A" stroke-width="2" opacity=".5"/>';
+      if(lv>=2) g+='<circle cx="20" cy="20" r="'+(R+3)+'" fill="none" stroke="#DC9658" stroke-width="1.6" opacity=".6"/>';
+      g+='<circle cx="20" cy="20" r="'+R+'" fill="'+fill.replace('tg-','lg-')+'"'+(lv===1?' stroke="#DC9658" stroke-width="1.4" opacity=".85"':'')+'/></svg>';
+      el.innerHTML=g;
+    });
+  }
+
+  document.querySelectorAll('.rp-head-3 span[data-col]').forEach(function(el){
+    el.addEventListener('click',function(){ ctx={type:'sphere',fid:null,sid:el.getAttribute('data-col'),side:'light'}; openModal(); });
+  });
+
+  overlay.addEventListener('click',function(e){ if(e.target===overlay)closeModal(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape')closeModal(); });
+
+  // иконки в карточки + клики featured/axis/stage (единая модалка)
+  document.querySelectorAll('[data-icon]').forEach(function(el){ el.innerHTML=ICONS[el.dataset.icon]||''; });
+  document.querySelectorAll('.bf[data-key]').forEach(function(c){ c.addEventListener('click',function(){ ctx={type:'featured',fid:c.getAttribute('data-key'),sid:null,side:'light'}; openModal(); }); });
+  var sbHero=document.querySelector('.self-banner [data-hero]'); if(sbHero) sbHero.innerHTML=iconFor(sbHero.getAttribute('data-hero'),'-sb');
+  var selfBanner=document.querySelector('.self-banner'); if(selfBanner) selfBanner.addEventListener('click',function(){ ctx={type:'self',fid:null,sid:null,side:'light'}; openModal(); });
+  var axRow=document.querySelector('.axis-row'); if(axRow) axRow.addEventListener('click',function(){ ctx={type:'axis',fid:null,sid:null,side:'light'}; openModal(); });
+  document.querySelectorAll('.stage-row').forEach(function(b){ b.addEventListener('click',function(){ ctx={type:'stage',fid:b.getAttribute('data-stage'),sid:null,side:'light'}; openModal(); }); });
+  var selfNode=document.querySelector('.self-node'); if(selfNode) selfNode.addEventListener('click',function(){ ctx={type:'self',fid:null,sid:null,side:'light'}; openModal(); });
+
+  buildFloorCol();
+  buildRows();
+  paintVLegend();
+  document.querySelectorAll('.axis-help').forEach(function(el){ el.addEventListener('click',function(){ ctx={type:'axisinfo',fid:el.getAttribute('data-axis-help'),sid:null,side:'light'}; openModal(); }); });
+
+  // переключение видов: таблица ↔ схема (в схеме слева те же этажи)
+  var views={table:document.getElementById('view-table'),tree:document.getElementById('view-tree')};
+  document.querySelectorAll('.view-switch .vs').forEach(function(b){
+    b.addEventListener('click',function(){
+      var v=b.getAttribute('data-view');
+      document.querySelectorAll('.view-switch .vs').forEach(function(x){x.classList.toggle('on',x===b);});
+      var vt=document.getElementById('view-table'), vr=document.getElementById('view-tree');
+      var lt=document.getElementById('legendTable'), lr=document.getElementById('legendTree');
+      vt.hidden=(v!=='table'); vr.hidden=(v!=='tree');
+      if(lt) lt.hidden=(v!=='table'); if(lr) lr.hidden=(v!=='tree');
+      if(v==='tree'){ buildTreeBody(); paintVLegend(); }
+    });
+  });
+
+})();
+</script>
+<script>
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.toc a'));
+  if(!links.length) return;
+  var map={}; links.forEach(function(a){ map[a.getAttribute('href').slice(1)]=a; });
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ links.forEach(function(l){l.classList.remove('active');}); var a=map[e.target.id]; if(a) a.classList.add('active'); } });
+  },{rootMargin:'-45% 0px -50% 0px'});
+  document.querySelectorAll('.sec-head[id]').forEach(function(s){ io.observe(s); });
+})();
+</script>
+</body>
+</html>
