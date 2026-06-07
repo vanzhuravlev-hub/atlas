@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solir — одна понятная карта из трёх систем</title>
+<meta name="description" content="Solir собирает астрологию, нумерологию и дизайн человека в одну понятную карту. Личный бот в Telegram помогает применять её в решениях, отношениях и обычных ситуациях каждый день.">
+<meta property="og:title" content="Solir — одна понятная карта из трёх систем">
+<meta property="og:description" content="Астрология, нумерология и дизайн человека в одной карте + личный бот в Telegram, который помогает применять её в жизни.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Cdefs%3E%3CradialGradient%20id='g'%20cx='35%25'%20cy='30%25'%20r='75%25'%3E%3Cstop%20offset='0%25'%20stop-color='%23FFE9C2'/%3E%3Cstop%20offset='65%25'%20stop-color='%23DC9658'/%3E%3Cstop%20offset='100%25'%20stop-color='%23C8642E'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle%20cx='16'%20cy='16'%20r='15'%20fill='url(%23g)'/%3E%3Ctext%20x='16'%20y='23'%20text-anchor='middle'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='20'%20fill='%232A1810'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFF1DD;--sand:#FAEAD0;--sand-warm:#F5DBB3;
+  --sun-highlight:#FFE9C2;--sun-light:#E8B47D;--sun:#DC9658;--sun-deep:#C8642E;
+  --earth:#8B4513;--ink:#2A1810;--ink-deep:#1F1610;--ink-darker:#0F0805;
+  --ink-soft:rgba(42,24,16,0.74);--ink-muted:rgba(42,24,16,0.50);
+  --paper-soft:rgba(255,241,221,0.74);--paper-muted:rgba(255,241,221,0.52);
+  --text-accent:#A8451C;--line:rgba(139,69,19,0.18);--line-soft:rgba(139,69,19,0.10);--line-light:rgba(255,241,221,0.20);
+  --font-logo:Georgia,serif;--font-display:Georgia,'Times New Roman',serif;--font-body:'Inter',-apple-system,sans-serif;
+  --grad-sunrise:linear-gradient(90deg,#E8B47D,#DC9658,#C8642E);
+  --grad-sun-disc:radial-gradient(circle at 35% 30%,#FFE9C2 0%,#DC9658 65%,#C8642E 100%);
+  --grad-dark-radial:radial-gradient(ellipse at 50% 0%,#2A1810 0%,#1F1610 50%,#0F0805 100%);
+  --radius-pill:999px;--radius-card:16px;--radius-sm:8px;
+  --elevation-2:0 10px 30px rgba(139,69,19,0.14),0 3px 8px rgba(139,69,19,0.08);
+  --elevation-3:0 24px 60px rgba(139,69,19,0.20),0 8px 20px rgba(139,69,19,0.10);
+  --elevation-cta:0 6px 22px rgba(220,150,88,0.34);
+  --ease:cubic-bezier(0.25,0.46,0.45,0.94);--container:1180px;--reading:680px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--paper);color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:var(--container);margin:0 auto;padding:0 32px}
+@media(max-width:720px){.wrap{padding:0 20px}}
+h1,h2,h3{font-family:var(--font-display);font-weight:500;letter-spacing:0;line-height:1.12}
+h1{font-size:clamp(34px,6vw,54px)}
+h2{font-size:clamp(28px,4.5vw,40px);line-height:1.15;letter-spacing:0}
+h3{font-size:clamp(20px,3vw,25px);line-height:1.2;letter-spacing:0}
+.lead{font-family:var(--font-display);font-style:italic;font-weight:400;font-size:clamp(19px,2.4vw,24px);line-height:1.5}
+.eyebrow{font-family:var(--font-body);font-size:13px;font-weight:500;letter-spacing:0.26em;text-transform:uppercase;color:var(--text-accent)}
+.muted{color:var(--ink-soft)}
+.logo{display:inline-flex;align-items:center;gap:9px;text-decoration:none}
+.logo-disc{width:32px;height:32px;border-radius:50%;background:var(--grad-sun-disc);flex-shrink:0;box-shadow:0 2px 10px rgba(200,100,46,0.3)}
+.logo-word-svg{height:23px;width:auto;display:block}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--font-body);font-size:15px;font-weight:600;padding:15px 30px;border-radius:var(--radius-pill);border:none;cursor:pointer;text-decoration:none;transition:transform .24s var(--ease),box-shadow .24s var(--ease),border-color .24s var(--ease),color .24s var(--ease);white-space:nowrap}
+.btn:active{transform:translateY(0)}
+.btn[aria-disabled="true"]{cursor:default;opacity:.92}
+.btn[aria-disabled="true"]:hover{transform:none}
+a:focus-visible,.btn:focus-visible,summary:focus-visible,.modal-close:focus-visible,.flip:focus-visible{outline:2px solid var(--sun-light);outline-offset:4px}
+.btn-primary{background:var(--grad-sunrise);color:#fff;box-shadow:var(--elevation-cta)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(220,150,88,0.42)}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn-ghost:hover{border-color:var(--sun-deep);color:var(--sun-deep)}
+.btn-ghost--light{color:var(--paper);border-color:var(--line-light)}
+.btn-ghost--light:hover{border-color:var(--sun-light);color:var(--sun-light)}
+header{position:sticky;top:0;z-index:50;background:var(--paper-soft);backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+.nav-cta{display:flex;align-items:center;gap:16px}
+.nav .btn{padding:11px 22px;font-size:14px}
+.nav-price{font-size:13px;color:var(--ink-soft)}.nav-price b{color:var(--ink);font-weight:600}
+@media(max-width:720px){.nav-price{display:none}}
+.hero{position:relative;background:var(--grad-dark-radial);color:var(--paper);padding:90px 0 80px;overflow:hidden}
+.hero-glow{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(220,150,88,0.22) 0%,transparent 60%);pointer-events:none}
+.hero .wrap{max-width:1240px}
+.hero-grid{position:relative;display:grid;grid-template-columns:0.95fr 1.05fr;gap:44px;align-items:center}
+@media(max-width:1080px){.hero-grid{grid-template-columns:1fr;gap:44px;text-align:center}.hero-text{max-width:860px;margin-inline:auto}}
+.hero h1{color:var(--paper);margin:18px 0 22px;font-size:clamp(28px,4.4vw,48px)}
+.hero h1 .h1-line{display:block}
+.hero h1 .h1-em{white-space:nowrap}
+.hero h1 em{font-style:italic;color:var(--sun-light)}
+.hero .lead{color:var(--paper-soft);margin-bottom:30px;max-width:540px}
+@media(max-width:1080px){.hero .lead{margin-inline:auto}}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+@media(max-width:900px){.hero-cta{justify-content:center}}
+.hero-price{max-width:560px;font-size:14px;line-height:1.55;color:var(--paper-muted)}.hero-price b{color:var(--paper);font-weight:600}
+@media(max-width:1080px){.hero-price{margin-inline:auto}}
+.hero-product{position:relative;display:flex;align-items:center;justify-content:flex-end}
+.product-stage{position:relative;width:min(100%,640px);display:grid;grid-template-columns:1fr;grid-template-rows:auto auto;align-items:center;isolation:isolate}
+.map-mockup,.tg-mockup{position:relative;border:1px solid var(--line-light);box-shadow:0 28px 70px rgba(15,8,5,0.34),0 8px 22px rgba(220,150,88,0.12)}
+.map-mockup{grid-column:1;grid-row:1;width:72%;max-width:450px;justify-self:start;z-index:1;background:rgba(255,241,221,0.96);color:var(--ink);border-radius:22px;padding:20px 18px 18px}
+.mockup-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;font-size:12px;color:var(--ink-muted)}
+.mockup-kicker{font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-accent)}
+.mockup-pill{border:1px solid var(--line);border-radius:var(--radius-pill);padding:3px 8px;color:var(--ink-soft);white-space:nowrap}
+.map-mockup h3{font-size:21px;line-height:1.18;margin-bottom:14px;color:var(--ink)}
+.map-mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.map-cell{min-height:68px;border:1px solid var(--line-soft);border-radius:12px;background:var(--sand);padding:9px 8px;font-size:11.5px;line-height:1.3;color:var(--ink-soft)}
+.map-cell strong{display:block;margin-bottom:5px;font-size:12px;color:var(--ink);line-height:1.15}
+.source-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.source-pill{border:1px solid var(--line);border-radius:var(--radius-pill);padding:4px 8px;font-size:11px;color:var(--ink-soft);background:rgba(250,234,208,0.65)}
+.map-note{border-left:3px solid var(--sun);padding-left:12px;font-size:13px;line-height:1.45;color:var(--ink-soft)}
+.tg-mockup{grid-column:1;grid-row:1;width:44%;max-width:300px;min-width:230px;justify-self:end;align-self:center;z-index:2;margin-top:56px;background:var(--ink);color:var(--paper);border-radius:26px;padding:12px}
+.tg-screen{border:1px solid rgba(255,241,221,0.16);border-radius:18px;overflow:hidden;background:linear-gradient(180deg,rgba(255,241,221,0.08),rgba(255,241,221,0.03))}
+.tg-head{display:flex;align-items:center;gap:9px;padding:13px 14px;border-bottom:1px solid rgba(255,241,221,0.14)}
+.tg-avatar{width:30px;height:30px;border-radius:50%;background:var(--grad-sun-disc);display:flex;align-items:center;justify-content:center;color:var(--ink);font-size:11px;font-weight:700;flex-shrink:0}
+.tg-title{font-size:13px;font-weight:600;line-height:1.15}.tg-subtitle{display:block;font-size:11px;color:var(--paper-muted);font-weight:400;margin-top:2px}
+.tg-body{padding:14px;display:flex;flex-direction:column;gap:10px}
+.tg-bubble{max-width:92%;border-radius:14px;padding:10px 12px;font-size:12.5px;line-height:1.42}
+.tg-bubble.bot{background:rgba(255,241,221,0.11);color:var(--paper-soft);border-bottom-left-radius:5px}
+.tg-bubble.me{align-self:flex-end;background:var(--grad-sunrise);color:#fff;border-bottom-right-radius:5px}
+.product-caption{grid-column:1;grid-row:2;position:relative;display:grid;grid-template-columns:1fr 1fr;gap:12px;color:var(--paper-muted);font-size:12px;padding:12px 8px 0}
+.product-caption span:first-child{justify-self:center}.product-caption span:last-child{justify-self:center}
+.product-caption span{display:inline-flex;align-items:center;gap:6px}.product-caption span::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--sun-light);display:inline-block}
+@media(max-width:1080px){.hero-product{justify-content:center}.product-stage{max-width:680px}}
+@media(max-width:640px){
+  .hero{padding:64px 0 58px}
+  .hero-grid{gap:34px}
+  .product-stage{width:100%;max-width:520px}
+  .map-mockup{width:76%;border-radius:18px;padding:15px 12px 13px}
+  .tg-mockup{width:46%;min-width:0;border-radius:20px;padding:8px;margin-top:38px}
+  .mockup-top{margin-bottom:12px}.mockup-kicker{font-size:10px}.mockup-pill{font-size:10px;padding:2px 7px}
+  .map-mockup h3{font-size:17px;margin-bottom:10px}
+  .map-mini-grid{grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+  .map-cell{min-height:50px;border-radius:11px;padding:7px 6px;font-size:10px}
+  .map-cell strong{font-size:10.5px;margin-bottom:4px}
+  .map-cell:nth-child(n+5){display:none}
+  .source-pills{gap:4px;margin-bottom:9px}.source-pill{font-size:9.5px;padding:3px 6px}
+  .map-note{font-size:11px;line-height:1.35;padding-left:9px}
+  .tg-screen{border-radius:16px}.tg-head{gap:7px;padding:10px 9px}.tg-avatar{width:24px;height:24px}
+  .tg-title{font-size:11px}.tg-subtitle{font-size:9px}
+  .tg-body{padding:10px 9px;gap:7px}.tg-bubble{padding:8px 9px;font-size:10px;line-height:1.32;border-radius:12px}
+  .tg-bubble:nth-child(n+3){display:none}
+  .product-caption{font-size:11px;padding-top:10px}
+}
+@media(max-width:420px){
+  .map-mockup{width:77%}
+  .tg-mockup{width:47%;margin-top:34px}
+  .source-pill:last-child{display:none}
+  .product-caption{font-size:10.5px;padding-inline:0}
+}
+.solar{width:100%;max-width:380px;height:auto}
+.orbit-rot{transform-origin:400px 350px;animation:spin 60s linear infinite}
+.orbit-rot.rev{animation-duration:80s;animation-direction:reverse}
+.orbit-rot.slow{animation-duration:100s}
+@keyframes spin{to{transform:rotate(360deg)}}
+section{padding:84px 0;position:relative}
+.section-head{max-width:var(--reading);margin-bottom:48px}
+.section-head.center{margin-inline:auto;text-align:center}
+.section-head .eyebrow{display:block;margin-bottom:14px}
+.section-head h2{margin-bottom:16px}
+.on-sand{background:var(--sand)}.on-paper{background:var(--paper)}.on-dark{background:var(--ink);color:var(--paper)}
+.on-dark h2{color:var(--paper)}.on-dark .lead{color:var(--paper-soft)}.on-dark .eyebrow{color:var(--sun-light)}
+.q-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:860px){.q-grid{grid-template-columns:1fr}}
+.q-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-card);padding:30px 28px;transition:transform .24s var(--ease),box-shadow .24s var(--ease)}
+.q-card:hover{transform:translateY(-3px);box-shadow:var(--elevation-2)}
+.q-card h3{font-family:var(--font-display);font-size:21px;line-height:1.2;color:var(--ink);margin-bottom:12px}
+.q-card p{font-family:var(--font-body);font-size:14.5px;line-height:1.55;color:var(--ink-soft)}
+.feat{padding:72px 0;border-bottom:1px solid var(--line-soft)}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+@media(max-width:860px){.feat-grid{grid-template-columns:1fr;gap:36px;text-align:center}}
+.feat.alt .feat-visual{order:-1}
+@media(max-width:860px){.feat.alt .feat-visual{order:0}}
+.feat h2{margin:14px 0 18px}.feat .lead{margin-bottom:14px}
+.feat-visual{display:flex;justify-content:center}
+.feat-visual svg{width:100%;max-width:320px;height:auto}
+.feat-visual .solar{max-width:380px}
+.feat-chat{background:var(--ink);border-radius:var(--radius-card);padding:22px;max-width:400px;width:100%;box-shadow:var(--elevation-2)}
+.chat-row{display:flex;margin-bottom:12px}.chat-row.me{justify-content:flex-end}
+.bubble{max-width:82%;padding:11px 15px;border-radius:16px;font-size:14px;line-height:1.5}
+.bubble.bot{background:rgba(255,241,221,0.10);color:var(--paper);border-bottom-left-radius:5px}
+.bubble.me{background:var(--grad-sunrise);color:#fff;border-bottom-right-radius:5px}
+.chat-time{font-size:11px;color:var(--paper-muted);margin-top:4px}
+.compat-list{list-style:none;margin:16px 0 6px}
+.compat-list li{font-size:14.5px;padding:7px 0 7px 26px;position:relative;color:var(--ink-soft);line-height:1.5;border-bottom:1px solid var(--line-soft)}
+.compat-list li::before{content:'✓';position:absolute;left:0;top:7px;color:var(--sun-deep);font-weight:700}
+.econ{padding:16px 20px;background:var(--sand);border-radius:var(--radius-sm);border-left:3px solid var(--sun);font-size:14.5px}
+.econ b{color:var(--sun-deep)}
+@media(max-width:860px){.econ{text-align:left}}
+.flip-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+@media(max-width:860px){.flip-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.flip-grid{grid-template-columns:1fr}}
+.flip{perspective:1000px;height:200px;cursor:pointer;border-radius:var(--radius-card)}
+.flip-inner{position:relative;width:100%;height:100%;transition:transform .6s var(--ease);transform-style:preserve-3d}
+.flip.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius-card);padding:24px;display:flex;flex-direction:column;justify-content:space-between}
+.flip-front{background:var(--paper);border:1px solid var(--line);align-items:center;justify-content:center;gap:38px;text-align:center}
+.flip-back{background:var(--ink);color:var(--paper);transform:rotateY(180deg);align-items:center;justify-content:center;text-align:center}
+.flip-front h3{font-size:20px}.flip-ico{width:38px;height:38px;color:var(--sun-deep)}.flip-ico svg{width:100%;height:100%}.flip-hint{font-size:12px;color:var(--ink-muted)}
+.flip-back p{font-size:14.5px;line-height:1.5;color:var(--paper-soft)}
+.fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:760px){.fit-grid{grid-template-columns:1fr}}
+.fit-col{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-card);padding:28px 26px}
+.fit-col.no{background:transparent;border-style:dashed}
+.fit-col h3{display:flex;align-items:center;gap:10px;margin-bottom:16px;font-size:20px}
+.fit-col ul{list-style:none}
+.fit-col li{font-size:14.5px;padding:8px 0 8px 26px;position:relative;color:var(--ink-soft);line-height:1.45}
+.fit-col li::before{position:absolute;left:0;top:8px;font-weight:700}
+.fit-col.yes li::before{content:'✓';color:var(--sun-deep)}.fit-col.no li::before{content:'—';color:var(--ink-muted)}
+.gpt-box{max-width:var(--reading);margin:0 auto;text-align:center}.gpt-box .lead{margin:18px auto 8px}
+.gpt-list{max-width:560px;margin:30px auto 0;text-align:left;list-style:none}
+.gpt-list li{position:relative;padding:14px 0 14px 30px;font-size:15px;line-height:1.5;color:var(--ink-soft);border-top:1px solid var(--line-soft)}
+.gpt-list li::before{content:'';position:absolute;left:5px;top:21px;width:9px;height:9px;border-radius:50%;background:var(--grad-sun-disc)}
+.gpt-list b{color:var(--ink);font-weight:600}
+.tiers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;align-items:stretch}
+@media(max-width:980px){.tiers{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.tiers{grid-template-columns:1fr}}
+.tier{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-card);padding:28px 24px;display:flex;flex-direction:column}
+.on-paper .tier{background:var(--sand)}
+.tier.featured{border:2px solid var(--sun);box-shadow:var(--elevation-2);position:relative}
+.tier-badge{position:absolute;top:-12px;left:24px;background:var(--grad-sunrise);color:#fff;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:4px 12px;border-radius:var(--radius-pill)}
+.tier-name{font-family:var(--font-display);font-size:22px;margin-bottom:6px}
+.tier-price{display:flex;align-items:baseline;gap:6px;font-size:15px;color:var(--ink-soft);margin-bottom:18px}
+.tier-price b{font-size:30px;color:var(--ink);font-weight:600;font-family:var(--font-display);line-height:1}
+.tier-preorder{font-size:13px;color:var(--sun-deep);font-weight:600;margin:-10px 0 18px}
+.tier-note{font-size:13px;color:var(--ink-muted);margin-top:auto;padding-top:4px}
+.tier .btn{width:100%;min-height:64px;padding-inline:18px;text-align:center;line-height:1.25;white-space:normal;align-self:stretch}
+.tier li.tier-focus{color:var(--ink)}
+
+/* modal — логика предзаказа */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,8,5,0.62);backdrop-filter:blur(4px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--paper);border-radius:var(--radius-card);max-width:500px;width:100%;max-height:calc(100vh - 40px);padding:32px 30px;position:relative;overflow-y:auto;box-shadow:var(--elevation-3);animation:modalIn .32s var(--ease)}
+@keyframes modalIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.modal-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border:none;background:var(--sand);border-radius:50%;cursor:pointer;font-size:15px;color:var(--ink-soft);transition:background .2s}
+.modal-close:hover{background:var(--sand-warm)}
+.modal h3{font-family:var(--font-display);font-size:23px;margin-bottom:6px;line-height:1.15}
+.modal .eyebrow{display:block;margin-bottom:14px}
+.modal-list{list-style:none;margin:16px 0}
+.modal-list li{position:relative;padding:9px 0 9px 28px;font-size:14px;color:var(--ink-soft);border-top:1px solid var(--line-soft);line-height:1.45}
+.modal-list li::before{content:'';position:absolute;left:4px;top:16px;width:8px;height:8px;border-radius:50%;background:var(--grad-sun-disc)}
+.modal-list b{color:var(--ink);font-weight:600}
+.modal .btn{width:100%;margin-top:4px}
+.modal .btn[aria-disabled="true"]{cursor:default}
+.modal-price{text-align:center;font-size:13.5px;color:var(--ink-soft);margin:12px 0 0}
+.modal-price b{color:var(--sun-deep);font-weight:700}
+.modal-note{font-size:13px;color:var(--ink-muted);text-align:center;margin-top:14px}
+.modal-legal{font-size:12.5px;color:var(--ink-muted);line-height:1.45;text-align:center;margin-top:10px}
+.tier ul{list-style:none;margin-bottom:22px;flex:1}
+.tier li{font-size:14px;padding:8px 0 8px 26px;position:relative;border-bottom:1px solid var(--line-soft);color:var(--ink-soft)}
+.tier li::before{content:'✓';position:absolute;left:0;color:var(--sun-deep);font-weight:700}
+.tier li.off{color:var(--ink-muted);opacity:0.55}.tier li.off::before{content:'+';color:var(--ink-muted)}
+.faq{max-width:var(--reading);margin:0 auto}
+.faq-item{border-bottom:1px solid var(--line);padding:4px 0}
+.faq-q{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 0;cursor:pointer;font-family:var(--font-display);font-size:18px;color:var(--ink);list-style:none}
+.faq-q::-webkit-details-marker{display:none}
+.faq-plus{flex-shrink:0;width:22px;height:22px;position:relative}
+.faq-plus::before,.faq-plus::after{content:'';position:absolute;background:var(--sun-deep);top:50%;left:50%;transform:translate(-50%,-50%)}
+.faq-plus::before{width:14px;height:2px}.faq-plus::after{width:2px;height:14px;transition:transform .3s var(--ease)}
+details[open] .faq-plus::after{transform:translate(-50%,-50%) rotate(90deg);opacity:0}
+.faq-a{padding:0 0 22px;color:var(--ink-soft);font-size:15px;max-width:600px}
+.final{background:var(--grad-dark-radial);color:var(--paper);text-align:center;position:relative;overflow:hidden}
+.final h2{color:var(--paper);margin-bottom:18px}.final .lead{color:var(--paper-soft);max-width:520px;margin:0 auto 32px}
+.trust{display:flex;align-items:center;justify-content:center;gap:10px;font-size:14px;color:var(--ink-soft);text-align:center}
+.tariff-trust{max-width:var(--reading);margin:30px auto 0;padding:16px 20px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--sand)}
+footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font-size:13px}
+.foot{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:24px}
+.foot a{color:var(--paper-soft);text-decoration:none}.foot a:hover{color:var(--sun-light)}
+.foot-links{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px 20px}
+.foot-docs{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px 16px;margin-top:12px}
+.foot-docs a{color:var(--paper-muted);border-bottom:1px dashed rgba(255,241,221,0.28)}
+.foot-docs a:hover{color:var(--sun-light);border-bottom-color:var(--sun-light)}
+.foot-docs a[aria-disabled="true"]{cursor:default}
+.foot-docs a[aria-disabled="true"]:hover{color:var(--paper-muted);border-bottom-color:rgba(255,241,221,0.28)}
+.foot-legal{width:100%;max-width:700px;margin-left:auto;margin-top:10px;text-align:right;color:var(--paper-muted);font-size:12px;line-height:1.55}
+@media(max-width:720px){.foot{align-items:flex-start}.foot-links,.foot-docs{justify-content:flex-start}.foot-legal{text-align:left;margin-left:0}}
+@media(max-width:520px){.hero-cta .btn{width:100%}.nav .btn{padding:10px 16px;font-size:13px}.modal{padding:28px 22px}.modal-close{top:12px;right:12px}}
+/* scroll-reveal (безопасно: без JS всё видно) */
+.js-reveal .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.js-reveal .reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.orbit-rot{animation:none}.js-reveal .reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#" aria-label="Solir"><span class="logo-disc"></span>
+      <svg class="logo-word-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 236 120" role="img" aria-label="Solir"><path transform="translate(9.60 94.82) scale(0.04928 -0.04928)" d="M545 -22Q457 -22 399.5 -5.5Q342 11 307.5 32.5Q273 54 253.5 71.0Q234 88 222 88Q211 88 197.0 72.5Q183 57 167.5 37.0Q152 17 136.0 1.5Q120 -14 105 -14Q81 -14 69.5 -1.0Q58 12 61 39L103 385Q105 413 118.5 427.5Q132 442 151 442Q171 442 183.5 428.5Q196 415 205 389L219 302Q232 183 310.5 120.5Q389 58 502 58Q577 58 634.5 85.5Q692 113 727.0 162.0Q762 211 772 277Q788 367 743.5 443.0Q699 519 565 605Q417 702 353.5 798.5Q290 895 306 1025Q318 1129 380.5 1220.0Q443 1311 555.0 1367.5Q667 1424 825 1424Q959 1424 1051.5 1381.0Q1144 1338 1190.5 1269.5Q1237 1201 1235 1125Q1233 1079 1209.5 1049.0Q1186 1019 1146 1019Q1111 1019 1090.0 1038.5Q1069 1058 1055 1099L1038 1167Q1015 1260 956.0 1305.0Q897 1350 810 1350Q724 1350 659.5 1317.0Q595 1284 556.5 1229.0Q518 1174 510 1106Q497 1008 547.0 929.0Q597 850 727 759Q840 683 901.0 616.0Q962 549 982.5 480.5Q1003 412 994 333Q984 226 924.0 146.0Q864 66 766.5 22.0Q669 -22 545 -22Z" fill="#2A1810"/><path transform="translate(66.03 94.82) scale(0.04928 -0.04928)" d="M634 936Q757 933 844.0 876.0Q931 819 968.5 715.0Q1006 611 980 466Q960 357 908.5 266.0Q857 175 781.5 109.5Q706 44 613.0 10.0Q520 -24 417 -21Q296 -17 210.5 39.5Q125 96 88.5 200.0Q52 304 77 449Q98 559 148.5 649.5Q199 740 273.5 805.5Q348 871 439.5 905.0Q531 939 634 936ZM421 62Q464 58 506.0 73.5Q548 89 586.0 122.0Q624 155 657.0 205.5Q690 256 715.5 322.0Q741 388 757 469Q783 594 774.0 677.0Q765 760 728.0 803.5Q691 847 630 853Q587 857 546.5 841.5Q506 826 468.5 793.0Q431 760 398.5 710.0Q366 660 341.0 593.5Q316 527 300 446Q274 321 282.5 238.0Q291 155 327.0 111.5Q363 68 421 62Z" fill="#2A1810"/><path transform="translate(117.97 94.82) scale(0.04928 -0.04928)" d="M735 1437Q816 1437 854.5 1404.5Q893 1372 893 1328Q893 1286 868.0 1259.0Q843 1232 793 1232Q764 1232 742.0 1242.5Q720 1253 701.5 1266.5Q683 1280 662.5 1290.5Q642 1301 614 1301Q584 1301 559.0 1284.5Q534 1268 519.0 1240.5Q504 1213 500 1179Q499 1156 504.0 1133.5Q509 1111 516.5 1088.0Q524 1065 529.5 1039.0Q535 1013 534.0 982.5Q533 952 522 915L324 279Q296 184 304.5 152.0Q313 120 348 120Q378 120 411.5 137.5Q445 155 473 189Q486 202 495.0 205.5Q504 209 513 206Q525 202 528.0 187.5Q531 173 520 150Q502 103 456.0 64.0Q410 25 348.5 2.0Q287 -21 218 -21Q153 -21 120.5 6.5Q88 34 86.5 90.0Q85 146 112 233L394 1145Q441 1296 527.5 1366.5Q614 1437 735 1437Z" fill="#2A1810"/><path transform="translate(148.82 94.82) scale(0.04928 -0.04928)" d="M346 260Q318 181 325.5 149.5Q333 118 360 118Q377 118 395.5 128.5Q414 139 441 165Q457 180 468.0 184.0Q479 188 489 183Q501 177 500.5 162.0Q500 147 488 124Q452 58 385.0 19.0Q318 -20 237 -20Q175 -20 143.5 8.0Q112 36 111.0 90.0Q110 144 138 221L299 654Q328 733 320.5 765.0Q313 797 285 797Q270 797 250.5 786.5Q231 776 204 749Q188 735 177.0 731.0Q166 727 156 731Q145 737 145.0 752.0Q145 767 157 790Q193 856 259.5 895.5Q326 935 406 935Q464 935 495.5 907.0Q527 879 530.5 824.0Q534 769 504 688ZM480 1125Q416 1125 382.0 1160.0Q348 1195 354 1245Q358 1284 383.0 1317.5Q408 1351 448.5 1371.0Q489 1391 541 1391Q608 1391 639.0 1356.0Q670 1321 664 1270Q660 1230 635.0 1197.0Q610 1164 570.0 1144.5Q530 1125 480 1125Z" fill="#2A1810"/><path transform="translate(179.87 94.82) scale(0.04928 -0.04928)" d="M145 731Q133 737 133.5 752.0Q134 767 146 790Q170 834 208.5 866.5Q247 899 295.5 917.0Q344 935 396 935Q447 935 475.5 910.0Q504 885 504 837Q504 795 486.5 740.0Q469 685 445.5 625.0Q422 565 403.0 510.5Q384 456 381 416L365 418Q397 536 446.0 631.5Q495 727 554.0 794.5Q613 862 676.0 898.5Q739 935 801 935Q876 935 914.0 892.5Q952 850 951 781Q949 728 930.0 690.5Q911 653 881.5 633.0Q852 613 817 613Q779 613 761.0 631.0Q743 649 743 672Q743 694 749.5 713.5Q756 733 756 755Q756 780 744.5 795.0Q733 810 707 810Q664 810 607.5 757.5Q551 705 493.5 602.5Q436 500 387 348Q364 279 353.5 237.5Q343 196 343 163Q343 139 352.5 125.5Q362 112 372.0 99.5Q382 87 382 64Q382 41 360.5 21.0Q339 1 298.0 -10.0Q257 -21 196 -21Q150 -21 128.0 -0.5Q106 20 107.0 62.5Q108 105 130 169L290 654Q317 733 309.0 765.0Q301 797 274 797Q258 797 239.0 786.5Q220 776 193 749Q177 735 166.0 731.0Q155 727 145 731Z" fill="#2A1810"/></svg>
+    </a>
+    <div class="nav-cta"><span class="nav-price">Предзаказ 990&nbsp;₽ · запуск 22 сентября</span><a href="#" onclick="openPreorder();return false;" class="btn btn-primary">Оформить предзаказ</a></div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-text reveal">
+      <span class="eyebrow" style="color:var(--sun-light)">Астрология · нумерология · дизайн человека</span>
+      <h1><span class="h1-line">Одна понятная карта</span><span class="h1-line h1-em"><em>из трёх систем</em></span></h1>
+      <p class="lead">Solir собирает 3&nbsp;системы самопознания в&nbsp;одну понятную карту, а&nbsp;личный бот в&nbsp;Telegram помогает применять её&nbsp;в&nbsp;решениях, отношениях и&nbsp;обычных ситуациях каждый день.</p>
+      <div class="hero-cta">
+        <a href="#" onclick="openPreorder();return false;" class="btn btn-primary">Оформить предзаказ</a>
+        <a href="#get" class="btn btn-ghost--light">Посмотреть пример</a>
+      </div>
+      <p class="hero-price">Предзаказ раннего доступа: <b>990&nbsp;₽</b> сейчас — скидка 33%, бета-доступ и&nbsp;первый месяц Подписки после старта вместо 1&nbsp;490.</p>
+    </div>
+    <div class="hero-product reveal" aria-label="Solir: карта личности и личный бот в Telegram">
+      <div class="product-stage">
+        <div class="map-mockup" aria-label="Мокап карты Solir">
+          <div class="mockup-top"><span class="mockup-kicker">Карта Solir</span><span class="mockup-pill">3 системы</span></div>
+          <h3>Портрет, где видно главное</h3>
+          <div class="map-mini-grid">
+            <div class="map-cell"><strong>Решения</strong>где твоя опора</div>
+            <div class="map-cell"><strong>Отношения</strong>как ты сближаешься</div>
+            <div class="map-cell"><strong>Дело</strong>куда уходит энергия</div>
+            <div class="map-cell"><strong>Ритм</strong>когда проще начинать</div>
+            <div class="map-cell"><strong>Сила</strong>что звучит ярко</div>
+            <div class="map-cell"><strong>Затор</strong>где нужен мягкий шаг</div>
+          </div>
+          <div class="source-pills"><span class="source-pill">астрология</span><span class="source-pill">нумерология</span><span class="source-pill">дизайн человека</span></div>
+          <p class="map-note">Карта становится контекстом для подсказок в&nbsp;боте.</p>
+        </div>
+        <div class="tg-mockup" aria-label="Мокап Telegram-бота Solir">
+          <div class="tg-screen">
+            <div class="tg-head"><span class="tg-avatar" aria-hidden="true"></span><span class="tg-title">Solir-бот<span class="tg-subtitle">Telegram · помнит твою карту</span></span></div>
+            <div class="tg-body">
+              <div class="tg-bubble me">Как применить это сегодня?</div>
+              <div class="tg-bubble bot">Сверяюсь с&nbsp;твоей картой: сегодня лучше один разговор без&nbsp;рывка. Начни с&nbsp;короткого вопроса.</div>
+              <div class="tg-bubble me">А если я снова отложу?</div>
+              <div class="tg-bubble bot">Тогда выберем шаг на&nbsp;5 минут — без&nbsp;самокритики.</div>
+            </div>
+          </div>
+        </div>
+        <div class="product-caption"><span>Карта Solir</span><span>Telegram-бот</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ВОПРОСЫ -->
+<section class="on-sand reveal">
+  <div class="wrap">
+    <div class="section-head center"><span class="eyebrow">Если хоть одно — про&nbsp;тебя</span><h2>Узнаёшь себя?</h2></div>
+    <div class="q-grid">
+      <div class="q-card"><h3>Вечно не&nbsp;хватает времени</h3><p>Двое детей, работа, дом. Единственное свободное время — пять минут в&nbsp;ванной с&nbsp;телефоном в&nbsp;руках. На&nbsp;себя не&nbsp;остаётся совсем.</p></div>
+      <div class="q-card"><h3>Снаружи всё хорошо, а&nbsp;радости нет</h3><p>Семья, стабильность, ты&nbsp;всё делаешь правильно. Но&nbsp;всё чаще ловишь себя на&nbsp;мысли: «а&nbsp;где&nbsp;во&nbsp;всём этом я&nbsp;сама?»</p></div>
+      <div class="q-card"><h3>Снова откладываю важное</h3><p>Записаться, начать, решиться — опять «потом». И&nbsp;опять грызёшь себя за&nbsp;то, что&nbsp;так&nbsp;и&nbsp;не&nbsp;сдвинулась с&nbsp;места.</p></div>
+      <div class="q-card"><h3>Не&nbsp;понимаю близкого человека</h3><p>Будто говорите на&nbsp;разных языках. То&nbsp;ли&nbsp;вы&nbsp;просто устроены по-разному, то&nbsp;ли&nbsp;ты&nbsp;слишком многого хочешь — и&nbsp;непонятно, как&nbsp;перестать гадать.</p></div>
+      <div class="q-card"><h3>Боюсь, что&nbsp;не&nbsp;потяну</h3><p>Новая роль, повышение, свой проект. Хочется — но&nbsp;внутри голос: «а&nbsp;вдруг это&nbsp;не&nbsp;моё, и&nbsp;я&nbsp;только опозорюсь?»</p></div>
+      <div class="q-card"><h3>Перепробовала всё, а&nbsp;ясности нет</h3><p>Астролог, тесты, разборы, книги. Информации гора — а&nbsp;что&nbsp;со&nbsp;всем этим делать и&nbsp;кто&nbsp;ты&nbsp;в&nbsp;итоге, так&nbsp;и&nbsp;не&nbsp;сложилось.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ПРЕИМУЩЕСТВА — серия (1 экран = 1 смысл) -->
+<!-- смысл 1: синтез -->
+<div class="feat on-paper reveal" id="get" style="padding-top:84px">
+  <div class="wrap feat-grid">
+    <div>
+      <span class="eyebrow">Качественный синтез, не&nbsp;ИИ-каша</span>
+      <h2>Solir показывает, где три системы сходятся</h2>
+      <p class="muted">Не&nbsp;три разбора, которые надо сводить самой, а&nbsp;сразу один ясный портрет: сильные стороны, опора в&nbsp;решениях, приоритетные области деятельности. На&nbsp;поверхности — человеческий язык; для&nbsp;тех, кто хочет глубже, можно раскрыть источники и&nbsp;посмотреть, откуда взялся вывод.</p>
+    </div>
+    <div class="feat-visual">
+      <svg class="solar" viewBox="0 0 800 700" xmlns="http://www.w3.org/2000/svg" aria-label="Три системы вокруг одного портрета">
+        <defs>
+          <radialGradient id="sunCore" cx="38%" cy="32%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="62%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient>
+          <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFE48A" stop-opacity="0.5"/><stop offset="100%" stop-color="#FFE48A" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle cx="400" cy="350" r="300" fill="url(#sunGlow)"/>
+        <ellipse cx="400" cy="350" rx="200" ry="195" fill="none" stroke="#E8B47D" stroke-width="1" opacity="0.4"/>
+        <ellipse cx="400" cy="350" rx="252" ry="246" fill="none" stroke="#E8B47D" stroke-width="1" opacity="0.34"/>
+        <ellipse cx="400" cy="350" rx="305" ry="298" fill="none" stroke="#E8B47D" stroke-width="1" opacity="0.28"/>
+        <text x="400" y="88" text-anchor="middle" font-family="Inter,sans-serif" font-size="18" fill="#6B4A34">астрология</text>
+        <text x="146" y="560" text-anchor="middle" font-family="Inter,sans-serif" font-size="18" fill="#6B4A34">дизайн человека</text>
+        <text x="660" y="560" text-anchor="middle" font-family="Inter,sans-serif" font-size="18" fill="#6B4A34">нумерология</text>
+        <circle cx="400" cy="350" r="88" fill="url(#sunCore)"/>
+        <text x="400" y="345" text-anchor="middle" font-family="Georgia,serif" font-size="20" fill="#FFF1DD" font-style="italic">ты</text>
+        <text x="400" y="368" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#FFF1DD" opacity="0.8" letter-spacing="2">ОДИН ПОРТРЕТ</text>
+        <g class="orbit-rot"><g transform="translate(400 155)"><circle r="26" fill="#FFF1DD" stroke="#2A1810" stroke-width="2.4"/><circle r="8" fill="none" stroke="#2A1810" stroke-width="2"/></g></g>
+        <g class="orbit-rot rev"><g transform="translate(180 470)"><path d="M0,-26 L24,16 L-24,16 Z" fill="#FFF1DD" stroke="#2A1810" stroke-width="2.4" stroke-linejoin="round"/></g></g>
+        <g class="orbit-rot slow"><g transform="translate(650 480)"><rect x="-22" y="-22" width="44" height="44" rx="4" fill="#FFF1DD" stroke="#2A1810" stroke-width="2.4"/></g></g>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- смысл 2: наставник -->
+<div class="feat on-dark alt reveal">
+  <div class="wrap feat-grid">
+    <div>
+      <span class="eyebrow">Главное УТП Solir</span>
+      <h2>Личный бот в&nbsp;Telegram, который знает твою карту</h2>
+      <p class="lead" style="color:var(--paper-soft)">Помнит контекст ваших диалогов, живёт прямо в&nbsp;Telegram и&nbsp;помогает применять карту в&nbsp;решениях, отношениях и&nbsp;обычных ситуациях.</p>
+      <p class="muted" style="color:var(--paper-soft)">Разбор у&nbsp;астролога — разовый. Solir остаётся рядом: можно написать утром, перед разговором, в&nbsp;момент сомнения или&nbsp;когда снова откладываешь важное.</p>
+    </div>
+    <div class="feat-visual">
+      <div class="feat-chat">
+        <div class="chat-row"><div><div class="bubble bot">Доброе утро. Сегодня лучше выбрать одно важное дело, а&nbsp;не&nbsp;разбрасываться на&nbsp;десять. С&nbsp;чего начнём?</div><div class="chat-time">8:02</div></div></div>
+        <div class="chat-row me"><div><div class="bubble me">я опять откладываю важное</div><div class="chat-time">8:05</div></div></div>
+        <div class="chat-row"><div><div class="bubble bot">Судя по&nbsp;твоей карте, тебе легче начинать не&nbsp;с&nbsp;плана на&nbsp;неделю, а&nbsp;с&nbsp;одного маленького шага. Давай выберем его на&nbsp;сегодня.</div><div class="chat-time">8:05</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- смысл 3: практика -->
+<div class="feat on-sand reveal">
+  <div class="wrap feat-grid">
+    <div>
+      <span class="eyebrow">Знание, которое доходит до&nbsp;жизни</span>
+      <h2>От&nbsp;«я&nbsp;знаю про&nbsp;себя» к&nbsp;«я&nbsp;живу иначе»</h2>
+      <p class="lead muted">Карта — это&nbsp;вход. Дальше — практика.</p>
+      <p class="muted">Купила новый разбор, а&nbsp;через неделю он&nbsp;просто лежит в&nbsp;папке красивым текстом. Solir вместо этого даёт маленькие действия под твою карту: по&nbsp;5–10&nbsp;минут, посильные даже в&nbsp;загруженный день. Ты&nbsp;выбираешь тему: дело, отношения, здоровье — и&nbsp;видишь свой прогресс. Что&nbsp;сдвинулось, где ты&nbsp;сейчас, что&nbsp;дальше. Спокойное движение в&nbsp;своём темпе, где маленькие шаги складываются в&nbsp;лучшее качество жизни.</p>
+    </div>
+    <div class="feat-visual">
+      <svg viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg" aria-label="Маленькие шаги к свету">
+        <defs><radialGradient id="pSun" cx="38%" cy="32%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="62%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient><radialGradient id="pGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFE48A" stop-opacity="0.4"/><stop offset="100%" stop-color="#FFE48A" stop-opacity="0"/></radialGradient></defs>
+        <circle cx="288" cy="78" r="120" fill="url(#pGlow)"/>
+        <path d="M44,278 C120,262 150,180 288,86" fill="none" stroke="#C8642E" stroke-width="2.4" stroke-dasharray="3,9" stroke-linecap="round" opacity="0.55"/>
+        <circle cx="44" cy="278" r="10" fill="#E8B47D"/>
+        <circle cx="120" cy="244" r="11" fill="#DC9658"/>
+        <circle cx="196" cy="178" r="12" fill="#DC9658"/>
+        <circle cx="288" cy="78" r="48" fill="url(#pSun)"/>
+        <text x="44" y="306" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#2A1810" opacity="0.6">сегодня</text>
+        <text x="288" y="150" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="#2A1810" opacity="0.7">в своём темпе</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- смысл 4: совместимость -->
+<div class="feat on-paper alt reveal" style="border-bottom:none">
+  <div class="wrap feat-grid">
+    <div>
+      <span class="eyebrow">Не&nbsp;только про&nbsp;тебя</span>
+      <h2>Как&nbsp;вы&nbsp;устроены вместе — с&nbsp;кем угодно</h2>
+      <p class="lead muted">Партнёр, ребёнок, родитель, коллега.</p>
+      <p class="muted">Не&nbsp;«процент совпадения», а&nbsp;живая картина того, как&nbsp;вы&nbsp;устроены вместе. В&nbsp;карте совместимости:</p>
+      <ul class="compat-list">
+        <li>где&nbsp;вы&nbsp;усиливаете друг друга — и&nbsp;как&nbsp;на&nbsp;это&nbsp;опираться</li>
+        <li>в&nbsp;чём вы&nbsp;устроены по-разному и&nbsp;почему порой не&nbsp;понимаете друг друга</li>
+        <li>зоны напряжения — где&nbsp;обычно вспыхивает и&nbsp;что&nbsp;с&nbsp;этим делать</li>
+        <li>как&nbsp;договариваться и&nbsp;поддерживать друг друга с&nbsp;учётом обеих карт</li>
+        <li>для&nbsp;пары — отдельный раздел про&nbsp;близость и&nbsp;сексуальную совместимость</li>
+      </ul>
+      <div class="econ">У&nbsp;астролога карта совместимости — <b>5 000&nbsp;–&nbsp;20 000&nbsp;₽</b> за&nbsp;разбор. В&nbsp;Solir это отдельный слой Pro: твой портрет + портрет другого человека + как&nbsp;вы&nbsp;взаимодействуете.</div>
+    </div>
+    <div class="feat-visual">
+      <svg viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg" aria-label="Совместимость двух карт">
+        <defs><radialGradient id="cSun" cx="38%" cy="32%" r="75%"><stop offset="0%" stop-color="#FFE9C2"/><stop offset="62%" stop-color="#DC9658"/><stop offset="100%" stop-color="#C8642E"/></radialGradient><radialGradient id="cInk" cx="38%" cy="32%" r="75%"><stop offset="0%" stop-color="#6B4A34"/><stop offset="100%" stop-color="#2A1810"/></radialGradient></defs>
+        <path d="M110,150 Q180,90 250,150" fill="none" stroke="#C8642E" stroke-width="2" stroke-dasharray="5,6" opacity="0.6"/>
+        <circle cx="110" cy="160" r="62" fill="url(#cSun)"/>
+        <circle cx="250" cy="160" r="62" fill="url(#cInk)"/>
+        <circle cx="180" cy="150" r="20" fill="#FFF1DD" stroke="#C8642E" stroke-width="2"/>
+        <text x="180" y="157" text-anchor="middle" font-family="Georgia,serif" font-size="20" fill="#C8642E">＋</text>
+        <text x="110" y="250" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#2A1810">ты</text>
+        <text x="250" y="250" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#2A1810">другой</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- ЧТО МЕНЯЕТСЯ -->
+<section class="on-sand reveal">
+  <div class="wrap">
+    <div class="section-head center"><span class="eyebrow">Знание встречается с&nbsp;жизнью</span><h2>Что ты&nbsp;получишь в&nbsp;результате</h2><p class="muted" style="margin-top:8px">Нажми, чтобы раскрыть карточку. На&nbsp;карте можно пойти глубже и&nbsp;посмотреть, откуда взялся вывод.</p></div>
+    <div class="flip-grid">
+      <div class="flip" role="button" tabindex="0" aria-label="Раскрыть карточку: Понимание состояния" onclick="toggleFlip(this)" onkeydown="flipOnKey(event,this)"><div class="flip-inner"><div class="flip-face flip-front"><div class="flip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 4.93-1.41 1.41"/><path d="M15.95 12.65a4 4 0 0 0-5.93-4.13"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/></svg></div><div><h3>Понимание состояния</h3><span class="flip-hint">Нажми, чтобы раскрыть →</span></div></div><div class="flip-face flip-back"><p>Знаешь свои циклы заранее. Не&nbsp;предсказание событий и&nbsp;не&nbsp;приговор — а&nbsp;понимание, на&nbsp;что&nbsp;сегодня опереться.</p></div></div></div>
+      <div class="flip" role="button" tabindex="0" aria-label="Раскрыть карточку: Лёгкость решать" onclick="toggleFlip(this)" onkeydown="flipOnKey(event,this)"><div class="flip-inner"><div class="flip-face flip-front"><div class="flip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div><div><h3>Лёгкость решать</h3><span class="flip-hint">Показать глубже →</span></div></div><div class="flip-face flip-back"><p>Перестаёшь сверять каждый шаг с&nbsp;чужими «надо». Опираешься на&nbsp;то, что&nbsp;в&nbsp;тебе уже&nbsp;есть.</p></div></div></div>
+      <div class="flip" role="button" tabindex="0" aria-label="Раскрыть карточку: Тебя слышат" onclick="toggleFlip(this)" onkeydown="flipOnKey(event,this)"><div class="flip-inner"><div class="flip-face flip-front"><div class="flip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div><div><h3>Тебя слышат</h3><span class="flip-hint">Нажми, чтобы раскрыть →</span></div></div><div class="flip-face flip-back"><p>Место, где&nbsp;можно подумать вслух и&nbsp;быть понятой бережно — без&nbsp;оценок и&nbsp;«соберись».</p></div></div></div>
+      <div class="flip" role="button" tabindex="0" aria-label="Раскрыть карточку: Один взгляд" onclick="toggleFlip(this)" onkeydown="flipOnKey(event,this)"><div class="flip-inner"><div class="flip-face flip-front"><div class="flip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div><div><h3>Один взгляд</h3><span class="flip-hint">Откуда это взялось →</span></div></div><div class="flip-face flip-back"><p>Вместо десяти вкладок и&nbsp;разрозненных разборов — одна карта и&nbsp;собеседник, который помнит контекст.</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- не GPT -->
+<section class="on-paper reveal">
+  <div class="wrap gpt-box">
+    <span class="eyebrow">Частый вопрос</span>
+    <h2 style="margin-top:12px">Почему не&nbsp;просто спросить GPT?</h2>
+    <p class="lead muted">Solir не&nbsp;заменяет универсальный чат. Он&nbsp;собирает карту на&nbsp;проверенных источниках и&nbsp;ведёт по&nbsp;ней бережно, без&nbsp;прогнозов и&nbsp;страшных предсказаний.</p>
+    <ul class="gpt-list">
+      <li><b>Проверенные источники.</b> Карта строится не&nbsp;из открытого интернета, а&nbsp;из подготовленных данных и&nbsp;методологии трёх систем.</li>
+      <li><b>Не&nbsp;нужно уметь промптить.</b> Бот сам ведёт по&nbsp;карте и&nbsp;помогает сформулировать вопрос, когда внутри пока только смутное ощущение.</li>
+      <li><b>Можно спросить про&nbsp;любое место карты.</b> Личный бот помнит контекст диалогов и&nbsp;связывает ответы с&nbsp;твоим портретом.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- кому подходит -->
+<section class="on-sand reveal">
+  <div class="wrap">
+    <div class="section-head center"><span class="eyebrow">Честно</span><h2>Кому Solir точно подойдёт — а&nbsp;кому пока нет</h2></div>
+    <div class="fit-grid">
+      <div class="fit-col yes">
+        <h3>✦ Подойдёт, если</h3>
+        <ul>
+          <li>Уже&nbsp;пробовала системы самопознания или&nbsp;психологию — и&nbsp;хочешь свести вместе</li>
+          <li>Хочешь видеть себя как&nbsp;есть, а&nbsp;не&nbsp;подгонять под&nbsp;удобную версию</li>
+          <li>Ищешь сильные стороны, дело жизни, ответы про&nbsp;отношения</li>
+          <li>Готова уделять себе хотя бы&nbsp;10 минут в&nbsp;день</li>
+        </ul>
+      </div>
+      <div class="fit-col no">
+        <h3>✧ Пока не&nbsp;твоё, если</h3>
+        <ul>
+          <li>Ждёшь, что&nbsp;сервис проживёт жизнь за&nbsp;тебя — решения остаются за&nbsp;тобой</li>
+          <li>Сейчас в&nbsp;тяжёлом состоянии: горе, утрата, серьёзный диагноз — нужен живой специалист</li>
+          <li>Покупаешь курсы и&nbsp;не&nbsp;проходишь — здесь нужно немного внимания</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ТАРИФЫ -->
+<section class="on-paper reveal" id="tariffs">
+  <div class="wrap">
+    <div class="section-head center"><span class="eyebrow">Тарифы</span><h2>Сколько это&nbsp;стоит</h2><p class="muted" style="margin-top:8px">Это тарифная сетка запуска. Сейчас открыт предзаказ: 990&nbsp;₽ со&nbsp;скидкой 33% за&nbsp;ранний доступ, бета-период и&nbsp;первый месяц Подписки после старта.</p></div>
+    <div class="tiers">
+      <div class="tier"><div class="tier-name">Бесплатно</div><div class="tier-price"><b>0&nbsp;₽</b></div><ul><li>Мини-карта: ключевые архетипы по&nbsp;твоим данным</li><li>Бот с&nbsp;ограниченным объёмом общения</li><li>Пара микропрактик, чтобы попробовать</li></ul><div class="tier-note">Доступно после старта 22 сентября</div></div>
+      <div class="tier featured"><div class="tier-badge">Популярный</div><div class="tier-name">Подписка</div><div class="tier-price"><b>1&nbsp;490</b><span>₽/мес</span></div><div class="tier-preorder">Предзаказ — <b>990&nbsp;₽ сейчас</b>, скидка 33%</div><ul><li>Всё из&nbsp;тарифа Бесплатно</li><li>Полная карта целиком</li><li>Практики под&nbsp;твою карту</li><li>Умеренный объём общения с&nbsp;ботом в&nbsp;Telegram</li><li>Волна резонансов по&nbsp;сферам</li></ul><a class="btn btn-primary" href="#" onclick="openPreorder();return false;">Оформить предзаказ</a></div>
+      <div class="tier"><div class="tier-name">Pro</div><div class="tier-price"><b>2&nbsp;500</b><span>₽/мес</span></div><ul><li>Всё из&nbsp;Подписки</li><li class="tier-focus"><b>Совместимость с&nbsp;близкими</b></li><li>Твой портрет + портрет другого</li><li>Как&nbsp;вы&nbsp;взаимодействуете</li><li>Расширенный объём общения с&nbsp;ботом</li><li>Развернутые практики и&nbsp;разборы</li></ul><a class="btn btn-ghost" href="#" onclick="openPreorder();return false;">Оформить предзаказ</a></div>
+      <div class="tier"><div class="tier-name">Team</div><div class="tier-price"><b>4&nbsp;200</b><span>₽/мес</span></div><ul><li>Всё из Pro</li><li>Вся команда через систему</li><li>Роли и&nbsp;зоны эффективности</li><li>Точки напряжения в&nbsp;команде</li><li>Для&nbsp;бизнеса и&nbsp;проектов</li></ul><div class="tier-note">Будет доступен после запуска продукта</div></div>
+    </div>
+    <p class="muted" style="text-align:center;margin-top:24px;font-size:14px">Разовый развернутый разбор (год / здоровье / отношения) — ~1&nbsp;500 ₽. Годовая подписка — со&nbsp;скидкой.</p>
+    <div class="trust tariff-trust">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8642E" stroke-width="2"><path d="M12 2L4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4z"/></svg>
+      Данные нужны для карты, бота, оплаты и поддержки. Мы не продаём их и не передаём для рекламы; рассылки — только с твоего согласия.
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="on-sand reveal">
+  <div class="wrap">
+    <div class="section-head center"><span class="eyebrow">Коротко о&nbsp;главном</span><h2>Вопросы, которые задают</h2></div>
+    <div class="faq">
+      <details class="faq-item"><summary class="faq-q">Я&nbsp;не&nbsp;верю в&nbsp;это, но&nbsp;хочу попробовать. Это&nbsp;нормально?<span class="faq-plus"></span></summary><div class="faq-a">Это&nbsp;самый частый вход. Solir не&nbsp;про&nbsp;веру, а&nbsp;про&nbsp;узнавание: узнаёшь себя — работает, нет — это&nbsp;не&nbsp;твой инструмент. Проверять — поощряется.</div></details>
+      <details class="faq-item"><summary class="faq-q">У&nbsp;меня уже&nbsp;есть разборы у&nbsp;астролога. Зачем Solir?<span class="faq-plus"></span></summary><div class="faq-a">Если открываешь старый разбор раз в&nbsp;месяц и&nbsp;применяешь — Solir не&nbsp;нужен. Если он&nbsp;лежит в&nbsp;папке год — вопрос не&nbsp;в&nbsp;содержании, а&nbsp;в&nbsp;формате. Solir — мост от&nbsp;«узнала про&nbsp;себя» к&nbsp;«живу иначе».</div></details>
+      <details class="faq-item"><summary class="faq-q">Чем&nbsp;это&nbsp;отличается от ChatGPT?<span class="faq-plus"></span></summary><div class="faq-a">GPT мощный и&nbsp;универсальный. Solir уже настроен под&nbsp;одну задачу: собрать карту из&nbsp;трёх систем на&nbsp;проверенных источниках, объяснить её человеческим языком и&nbsp;вести тебя по&nbsp;ней через личного бота.</div></details>
+      <details class="faq-item"><summary class="faq-q">Что&nbsp;я&nbsp;оплачиваю по&nbsp;предзаказу?<span class="faq-plus"></span></summary><div class="faq-a">990&nbsp;₽ сейчас — это ранний доступ и&nbsp;бета-период до&nbsp;основного запуска, а&nbsp;также первый месяц тарифа Подписка после старта 22 сентября. В&nbsp;Подписку входят полная карта, практики под&nbsp;твою карту и&nbsp;умеренный объём общения с&nbsp;ботом. Перед оплатой будут доступны оферта, политика обработки данных и&nbsp;условия отмены.</div></details>
+      <details class="faq-item"><summary class="faq-q">Что&nbsp;если мне станет тяжело от&nbsp;того, что&nbsp;узнаю?<span class="faq-plus"></span></summary><div class="faq-a">Карта показывает то, что&nbsp;в&nbsp;тебе уже&nbsp;есть, бережно и&nbsp;без&nbsp;приговоров. А&nbsp;если ты&nbsp;в&nbsp;тяжёлом состоянии — Solir честно подскажет обратиться к&nbsp;живому специалисту.</div></details>
+      <details class="faq-item"><summary class="faq-q">Это&nbsp;психологическая консультация или медицинская рекомендация?<span class="faq-plus"></span></summary><div class="faq-a">Нет. Solir — инструмент саморефлексии и&nbsp;самопознания. Он&nbsp;не&nbsp;ставит диагнозы, не&nbsp;назначает лечение, не&nbsp;заменяет психолога, врача, юриста или финансового консультанта. Если есть острое состояние или риск для&nbsp;здоровья, лучше обращаться к&nbsp;живому специалисту.</div></details>
+      <details class="faq-item"><summary class="faq-q">Я покупаю всё подряд и не пользуюсь. Тут будет так же?<span class="faq-plus"></span></summary><div class="faq-a">Возможно — поэтому Solir не&nbsp;обещает чудо за&nbsp;один вечер. Карта остаётся опорой, а&nbsp;бот напоминает о&nbsp;себе и&nbsp;помогает возвращаться маленькими шагами.</div></details>
+      <details class="faq-item"><summary class="faq-q">Это&nbsp;безопасно? Что&nbsp;с&nbsp;моими данными?<span class="faq-plus"></span></summary><div class="faq-a">Данные нужны для&nbsp;построения карты, работы бота, оплаты и&nbsp;поддержки сервиса. Мы не&nbsp;продаём их и&nbsp;не&nbsp;передаём для&nbsp;рекламы. Технические партнёры, сроки хранения, права пользователя и&nbsp;способ удалить данные будут описаны в&nbsp;политике обработки данных перед оплатой.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ФИНАЛ = единый призыв оформить предзаказ -->
+<section class="final reveal" id="preorder">
+  <div class="hero-glow"></div>
+  <div class="wrap" style="position:relative;max-width:var(--reading);margin-inline:auto">
+    <span class="eyebrow" style="color:var(--sun-light)">До&nbsp;запуска · 22 сентября</span>
+    <h2 style="margin:14px 0 16px">Стань одной из&nbsp;первых</h2>
+    <p class="lead">Оформи предзаказ раннего доступа за&nbsp;990&nbsp;₽ со&nbsp;скидкой 33% — получи бета-доступ до&nbsp;релиза и&nbsp;первый месяц Подписки после старта.</p>
+    <div style="display:flex;justify-content:center">
+      <a class="btn btn-primary" href="#" onclick="openPreorder();return false;">Оформить предзаказ</a>
+    </div>
+    <p class="hero-price" style="margin-top:20px">990&nbsp;₽ сейчас · условия отмены и&nbsp;возврата будут доступны перед оплатой</p>
+  </div>
+</section>
+
+<footer id="legal-docs">
+  <div class="wrap foot">
+    <a class="logo" href="#" aria-label="Solir"><span class="logo-disc"></span>
+      <svg class="logo-word-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 236 120" role="img" aria-label="Solir"><path transform="translate(9.60 94.82) scale(0.04928 -0.04928)" d="M545 -22Q457 -22 399.5 -5.5Q342 11 307.5 32.5Q273 54 253.5 71.0Q234 88 222 88Q211 88 197.0 72.5Q183 57 167.5 37.0Q152 17 136.0 1.5Q120 -14 105 -14Q81 -14 69.5 -1.0Q58 12 61 39L103 385Q105 413 118.5 427.5Q132 442 151 442Q171 442 183.5 428.5Q196 415 205 389L219 302Q232 183 310.5 120.5Q389 58 502 58Q577 58 634.5 85.5Q692 113 727.0 162.0Q762 211 772 277Q788 367 743.5 443.0Q699 519 565 605Q417 702 353.5 798.5Q290 895 306 1025Q318 1129 380.5 1220.0Q443 1311 555.0 1367.5Q667 1424 825 1424Q959 1424 1051.5 1381.0Q1144 1338 1190.5 1269.5Q1237 1201 1235 1125Q1233 1079 1209.5 1049.0Q1186 1019 1146 1019Q1111 1019 1090.0 1038.5Q1069 1058 1055 1099L1038 1167Q1015 1260 956.0 1305.0Q897 1350 810 1350Q724 1350 659.5 1317.0Q595 1284 556.5 1229.0Q518 1174 510 1106Q497 1008 547.0 929.0Q597 850 727 759Q840 683 901.0 616.0Q962 549 982.5 480.5Q1003 412 994 333Q984 226 924.0 146.0Q864 66 766.5 22.0Q669 -22 545 -22Z" fill="#FFF1DD"/><path transform="translate(66.03 94.82) scale(0.04928 -0.04928)" d="M634 936Q757 933 844.0 876.0Q931 819 968.5 715.0Q1006 611 980 466Q960 357 908.5 266.0Q857 175 781.5 109.5Q706 44 613.0 10.0Q520 -24 417 -21Q296 -17 210.5 39.5Q125 96 88.5 200.0Q52 304 77 449Q98 559 148.5 649.5Q199 740 273.5 805.5Q348 871 439.5 905.0Q531 939 634 936ZM421 62Q464 58 506.0 73.5Q548 89 586.0 122.0Q624 155 657.0 205.5Q690 256 715.5 322.0Q741 388 757 469Q783 594 774.0 677.0Q765 760 728.0 803.5Q691 847 630 853Q587 857 546.5 841.5Q506 826 468.5 793.0Q431 760 398.5 710.0Q366 660 341.0 593.5Q316 527 300 446Q274 321 282.5 238.0Q291 155 327.0 111.5Q363 68 421 62Z" fill="#FFF1DD"/><path transform="translate(117.97 94.82) scale(0.04928 -0.04928)" d="M735 1437Q816 1437 854.5 1404.5Q893 1372 893 1328Q893 1286 868.0 1259.0Q843 1232 793 1232Q764 1232 742.0 1242.5Q720 1253 701.5 1266.5Q683 1280 662.5 1290.5Q642 1301 614 1301Q584 1301 559.0 1284.5Q534 1268 519.0 1240.5Q504 1213 500 1179Q499 1156 504.0 1133.5Q509 1111 516.5 1088.0Q524 1065 529.5 1039.0Q535 1013 534.0 982.5Q533 952 522 915L324 279Q296 184 304.5 152.0Q313 120 348 120Q378 120 411.5 137.5Q445 155 473 189Q486 202 495.0 205.5Q504 209 513 206Q525 202 528.0 187.5Q531 173 520 150Q502 103 456.0 64.0Q410 25 348.5 2.0Q287 -21 218 -21Q153 -21 120.5 6.5Q88 34 86.5 90.0Q85 146 112 233L394 1145Q441 1296 527.5 1366.5Q614 1437 735 1437Z" fill="#FFF1DD"/><path transform="translate(148.82 94.82) scale(0.04928 -0.04928)" d="M346 260Q318 181 325.5 149.5Q333 118 360 118Q377 118 395.5 128.5Q414 139 441 165Q457 180 468.0 184.0Q479 188 489 183Q501 177 500.5 162.0Q500 147 488 124Q452 58 385.0 19.0Q318 -20 237 -20Q175 -20 143.5 8.0Q112 36 111.0 90.0Q110 144 138 221L299 654Q328 733 320.5 765.0Q313 797 285 797Q270 797 250.5 786.5Q231 776 204 749Q188 735 177.0 731.0Q166 727 156 731Q145 737 145.0 752.0Q145 767 157 790Q193 856 259.5 895.5Q326 935 406 935Q464 935 495.5 907.0Q527 879 530.5 824.0Q534 769 504 688ZM480 1125Q416 1125 382.0 1160.0Q348 1195 354 1245Q358 1284 383.0 1317.5Q408 1351 448.5 1371.0Q489 1391 541 1391Q608 1391 639.0 1356.0Q670 1321 664 1270Q660 1230 635.0 1197.0Q610 1164 570.0 1144.5Q530 1125 480 1125Z" fill="#FFF1DD"/><path transform="translate(179.87 94.82) scale(0.04928 -0.04928)" d="M145 731Q133 737 133.5 752.0Q134 767 146 790Q170 834 208.5 866.5Q247 899 295.5 917.0Q344 935 396 935Q447 935 475.5 910.0Q504 885 504 837Q504 795 486.5 740.0Q469 685 445.5 625.0Q422 565 403.0 510.5Q384 456 381 416L365 418Q397 536 446.0 631.5Q495 727 554.0 794.5Q613 862 676.0 898.5Q739 935 801 935Q876 935 914.0 892.5Q952 850 951 781Q949 728 930.0 690.5Q911 653 881.5 633.0Q852 613 817 613Q779 613 761.0 631.0Q743 649 743 672Q743 694 749.5 713.5Q756 733 756 755Q756 780 744.5 795.0Q733 810 707 810Q664 810 607.5 757.5Q551 705 493.5 602.5Q436 500 387 348Q364 279 353.5 237.5Q343 196 343 163Q343 139 352.5 125.5Q362 112 372.0 99.5Q382 87 382 64Q382 41 360.5 21.0Q339 1 298.0 -10.0Q257 -21 196 -21Q150 -21 128.0 -0.5Q106 20 107.0 62.5Q108 105 130 169L290 654Q317 733 309.0 765.0Q301 797 274 797Q258 797 239.0 786.5Q220 776 193 749Q177 735 166.0 731.0Q155 727 145 731Z" fill="#FFF1DD"/></svg>
+    </a>
+    <div>
+      <div class="foot-links"><a href="https://t.me/solir">t.me/solir</a><a href="https://t.me/vanzhuravlev">t.me/vanzhuravlev</a></div>
+      <nav class="foot-docs" aria-label="Юридические документы">
+        <a href="#" aria-disabled="true" title="Документ будет добавлен перед подключением оплаты" onclick="return false;">Оферта</a>
+        <a href="#" aria-disabled="true" title="Документ будет добавлен перед подключением оплаты" onclick="return false;">Политика данных</a>
+        <a href="#" aria-disabled="true" title="Документ будет добавлен перед подключением оплаты" onclick="return false;">Согласие на&nbsp;обработку данных</a>
+        <a href="#" aria-disabled="true" title="Документ будет добавлен перед подключением оплаты" onclick="return false;">Условия подписки и&nbsp;возврата</a>
+        <a href="#" aria-disabled="true" title="Реквизиты будут добавлены перед подключением оплаты" onclick="return false;">Реквизиты</a>
+      </nav>
+      <div class="foot-legal">Юридические документы и реквизиты самозанятого появятся перед подключением оплаты. Сейчас кнопки ведут в&nbsp;модалку предзаказа без списания средств.</div>
+    </div>
+  </div>
+</footer>
+
+<!-- POPUP: логика предзаказа -->
+<div class="modal-overlay" id="preorder-modal" onclick="if(event.target===this)closePreorder()">
+  <div class="modal" role="dialog" aria-modal="true" aria-label="Предзаказ раннего доступа">
+    <button class="modal-close" onclick="closePreorder()" aria-label="Закрыть">✕</button>
+    <span class="eyebrow">Предзаказ · запуск 22 сентября</span>
+    <h3>Оформить предзаказ раннего доступа</h3>
+    <p class="muted" style="font-size:14px">Solir стартует 22 сентября. Предзаказ за&nbsp;990&nbsp;₽ даёт ранний доступ и&nbsp;первый месяц Подписки после запуска:</p>
+    <ul class="modal-list">
+      <li><b>990&nbsp;₽ сейчас вместо 1&nbsp;490 за&nbsp;первый месяц</b> — скидка 33% на&nbsp;первый месяц тарифа Подписка.</li>
+      <li><b>Функционал Подписки на&nbsp;старте</b> — полная карта, практики под&nbsp;твою карту и&nbsp;умеренный объём общения с&nbsp;ботом после запуска.</li>
+      <li><b>Доступ раньше основного релиза</b> — бета-период и&nbsp;вход до&nbsp;общего запуска 22 сентября.</li>
+      <li><b>Тестирование новых функций</b> — будем приглашать тебя пробовать новые возможности до&nbsp;публичного запуска.</li>
+    </ul>
+    <p class="muted" style="font-size:13.5px">Как&nbsp;это&nbsp;работает: оформляешь предзаказ → мы&nbsp;закрепляем ранний доступ → открываем бета-тестирование до&nbsp;релиза → после старта включаем первый месяц Подписки.</p>
+    <a class="btn btn-primary" href="#" aria-disabled="true" onclick="return false;">Оформить предзаказ</a>
+    <p class="modal-price">Предзаказная цена: <b>990&nbsp;₽ сейчас</b> вместо 1&nbsp;490 за&nbsp;первый месяц</p>
+    <p class="modal-legal">Перед оплатой будут доступны оферта, политика обработки данных, согласие на&nbsp;обработку данных и&nbsp;условия отмены. Рассылки — только с&nbsp;отдельного согласия.</p>
+  </div>
+</div>
+
+<script>
+function openPreorder(){var m=document.getElementById('preorder-modal');m.classList.add('open');document.body.style.overflow='hidden';}
+function closePreorder(){var m=document.getElementById('preorder-modal');m.classList.remove('open');document.body.style.overflow='';}
+function toggleFlip(el){el.classList.toggle('flipped');}
+function flipOnKey(e,el){if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleFlip(el);}}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePreorder();});
+(function(){
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.body.classList.add('js-reveal');
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
+  },{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>
