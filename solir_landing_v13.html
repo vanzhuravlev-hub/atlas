@@ -144,10 +144,12 @@ section{padding:84px 0;position:relative}
 .on-dark h2{color:var(--paper)}.on-dark .lead{color:var(--paper-soft)}.on-dark .eyebrow{color:var(--sun-light)}
 .q-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 @media(max-width:860px){.q-grid{grid-template-columns:1fr}}
-.q-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-card);padding:30px 28px;transition:transform .24s var(--ease),box-shadow .24s var(--ease)}
+.q-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-card);padding:26px 24px;min-height:170px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:22px;transition:transform .24s var(--ease),box-shadow .24s var(--ease)}
 .q-card:hover{transform:translateY(-3px);box-shadow:var(--elevation-2)}
-.q-card h3{font-family:var(--font-display);font-size:21px;line-height:1.2;color:var(--ink);margin-bottom:12px}
+.q-card h3{font-family:var(--font-display);font-size:21px;line-height:1.2;color:var(--ink)}
 .q-card p{font-family:var(--font-body);font-size:14.5px;line-height:1.55;color:var(--ink-soft)}
+.q-ico{width:38px;height:38px;color:var(--sun-deep);flex-shrink:0}
+.q-ico svg{width:100%;height:100%;display:block}
 .feat{padding:72px 0;border-bottom:1px solid var(--line-soft)}
 .feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
 @media(max-width:860px){.feat-grid{grid-template-columns:1fr;gap:36px;text-align:center}}
@@ -197,7 +199,7 @@ section{padding:84px 0;position:relative}
 .tiers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;align-items:stretch}
 @media(max-width:980px){.tiers{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.tiers{grid-template-columns:1fr}}
-.tier{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-card);padding:28px 24px;display:flex;flex-direction:column}
+.tier{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-card);padding:24px 20px;display:flex;flex-direction:column}
 .on-paper .tier{background:var(--sand)}
 .tier.featured{border:2px solid var(--sun);box-shadow:var(--elevation-2);position:relative}
 .tier-badge{position:absolute;top:-12px;left:24px;background:var(--grad-sunrise);color:#fff;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:4px 12px;border-radius:var(--radius-pill)}
@@ -229,8 +231,8 @@ section{padding:84px 0;position:relative}
 .modal-note{font-size:13px;color:var(--ink-muted);text-align:center;margin-top:14px}
 .modal-legal{font-size:12.5px;color:var(--ink-muted);line-height:1.45;text-align:center;margin-top:10px}
 .tier ul{list-style:none;margin-bottom:22px;flex:1}
-.tier li{font-size:14px;padding:8px 0 8px 26px;position:relative;border-bottom:1px solid var(--line-soft);color:var(--ink-soft)}
-.tier li::before{content:'✓';position:absolute;left:0;color:var(--sun-deep);font-weight:700}
+.tier li{font-size:14.5px;line-height:1.45;padding:9px 0 9px 24px;position:relative;border-bottom:1px solid var(--line-soft);color:var(--ink-soft)}
+.tier li::before{content:'✓';position:absolute;left:0;top:9px;color:var(--sun-deep);font-weight:700}
 .tier li.off{color:var(--ink-muted);opacity:0.55}.tier li.off::before{content:'+';color:var(--ink-muted)}
 .faq{max-width:var(--reading);margin:0 auto}
 .faq-item{border-bottom:1px solid var(--line);padding:4px 0}
@@ -282,11 +284,11 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
       <span class="eyebrow" style="color:var(--sun-light)">Астрология · нумерология · дизайн человека</span>
       <h1><span class="h1-line">Одна понятная карта</span><span class="h1-line h1-em"><em>из трёх систем</em></span></h1>
       <p class="lead">Solir собирает 3&nbsp;системы самопознания в&nbsp;одну понятную карту, а&nbsp;личный бот в&nbsp;Telegram помогает применять её&nbsp;в&nbsp;решениях, отношениях и&nbsp;обычных ситуациях каждый день.</p>
-      <div class="hero-cta">
+    <div class="hero-cta">
         <a href="#" onclick="openPreorder();return false;" class="btn btn-primary">Оформить предзаказ</a>
-        <a href="#get" class="btn btn-ghost--light">Посмотреть пример</a>
+        <a href="#get" class="btn btn-ghost btn-ghost--light">Посмотреть пример</a>
       </div>
-      <p class="hero-price">Предзаказ раннего доступа: <b>990&nbsp;₽</b> сейчас — скидка 33%, бета-доступ и&nbsp;первый месяц Подписки после старта вместо 1&nbsp;490.</p>
+      <p class="hero-price">Предзаказ Solir: <b>990&nbsp;₽</b> сейчас — веб-карта, Telegram-бот, бета-доступ и&nbsp;первый месяц Подписки после старта вместо 1&nbsp;490.</p>
     </div>
     <div class="hero-product reveal" aria-label="Solir: карта личности и личный бот в Telegram">
       <div class="product-stage">
@@ -324,14 +326,14 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
 <!-- ВОПРОСЫ -->
 <section class="on-sand reveal">
   <div class="wrap">
-    <div class="section-head center"><span class="eyebrow">Если хоть одно — про&nbsp;тебя</span><h2>Узнаёшь себя?</h2></div>
+    <div class="section-head center"><span class="eyebrow">Solir — для&nbsp;тебя, если</span><h2>Узнаёшь себя?</h2></div>
     <div class="q-grid">
-      <div class="q-card"><h3>Вечно не&nbsp;хватает времени</h3><p>Двое детей, работа, дом. Единственное свободное время — пять минут в&nbsp;ванной с&nbsp;телефоном в&nbsp;руках. На&nbsp;себя не&nbsp;остаётся совсем.</p></div>
-      <div class="q-card"><h3>Снаружи всё хорошо, а&nbsp;радости нет</h3><p>Семья, стабильность, ты&nbsp;всё делаешь правильно. Но&nbsp;всё чаще ловишь себя на&nbsp;мысли: «а&nbsp;где&nbsp;во&nbsp;всём этом я&nbsp;сама?»</p></div>
-      <div class="q-card"><h3>Снова откладываю важное</h3><p>Записаться, начать, решиться — опять «потом». И&nbsp;опять грызёшь себя за&nbsp;то, что&nbsp;так&nbsp;и&nbsp;не&nbsp;сдвинулась с&nbsp;места.</p></div>
-      <div class="q-card"><h3>Не&nbsp;понимаю близкого человека</h3><p>Будто говорите на&nbsp;разных языках. То&nbsp;ли&nbsp;вы&nbsp;просто устроены по-разному, то&nbsp;ли&nbsp;ты&nbsp;слишком многого хочешь — и&nbsp;непонятно, как&nbsp;перестать гадать.</p></div>
-      <div class="q-card"><h3>Боюсь, что&nbsp;не&nbsp;потяну</h3><p>Новая роль, повышение, свой проект. Хочется — но&nbsp;внутри голос: «а&nbsp;вдруг это&nbsp;не&nbsp;моё, и&nbsp;я&nbsp;только опозорюсь?»</p></div>
-      <div class="q-card"><h3>Перепробовала всё, а&nbsp;ясности нет</h3><p>Астролог, тесты, разборы, книги. Информации гора — а&nbsp;что&nbsp;со&nbsp;всем этим делать и&nbsp;кто&nbsp;ты&nbsp;в&nbsp;итоге, так&nbsp;и&nbsp;не&nbsp;сложилось.</p></div>
+      <div class="q-card"><div class="q-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v5l3 2"/><path d="M4 4l2 2"/><path d="M20 4l-2 2"/></svg></div><h3>Не&nbsp;хватает времени на&nbsp;себя</h3></div>
+      <div class="q-card"><div class="q-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17a5 5 0 0 1 8.8-3.2"/><path d="M12 17a5 5 0 0 1 8-4"/><path d="M4 19h16"/><path d="M7 8a3 3 0 0 1 5.5 1.7"/><path d="M9 4v1"/><path d="M3 10h1"/><path d="m5 6 1 1"/></svg></div><h3>Снаружи всё хорошо, а&nbsp;радости нет</h3></div>
+      <div class="q-card"><div class="q-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4Z"/><path d="M8 4v13a3 3 0 0 0 3 3"/><path d="M9 8h5"/></svg></div><h3>Откладываю важное на&nbsp;потом</h3></div>
+      <div class="q-card"><div class="q-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 10-13h-7l1-7Z"/></svg></div><h3>Не&nbsp;понимаю близкого человека</h3></div>
+      <div class="q-card"><div class="q-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"/><path d="M8 20V9a4 4 0 0 1 8 0v11"/><path d="M5 12h14"/><path d="M9 5 7 3"/><path d="m15 5 2-2"/></svg></div><h3>Боюсь, что&nbsp;не&nbsp;потяну</h3></div>
+      <div class="q-card"><div class="q-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V7l8-4 8 4v12l-8 4-8-4Z"/><path d="m4 7 8 4 8-4"/><path d="M12 11v12"/><path d="m8 9 8 4"/></svg></div><h3>Много знаю о&nbsp;себе, но&nbsp;всё разрозненно</h3></div>
     </div>
   </div>
 </section>
@@ -341,9 +343,9 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
 <div class="feat on-paper reveal" id="get" style="padding-top:84px">
   <div class="wrap feat-grid">
     <div>
-      <span class="eyebrow">Качественный синтез, не&nbsp;ИИ-каша</span>
-      <h2>Solir показывает, где три системы сходятся</h2>
-      <p class="muted">Не&nbsp;три разбора, которые надо сводить самой, а&nbsp;сразу один ясный портрет: сильные стороны, опора в&nbsp;решениях, приоритетные области деятельности. На&nbsp;поверхности — человеческий язык; для&nbsp;тех, кто хочет глубже, можно раскрыть источники и&nbsp;посмотреть, откуда взялся вывод.</p>
+      <span class="eyebrow">Качественный синтез знаний</span>
+      <h2>Solir собирает три системы в&nbsp;один ясный портрет</h2>
+      <p class="muted">Не&nbsp;три разбора, которые надо сводить самой, а&nbsp;персональная веб-карта: сильные стороны, опора в&nbsp;решениях и&nbsp;приоритетные области деятельности. Solir не&nbsp;заменяет универсальный чат GPT, а&nbsp;собирает карту на&nbsp;проверенных источниках и&nbsp;ведёт по&nbsp;ней бережно, без&nbsp;прогнозов и&nbsp;страшных предсказаний.</p>
     </div>
     <div class="feat-visual">
       <svg class="solar" viewBox="0 0 800 700" xmlns="http://www.w3.org/2000/svg" aria-label="Три системы вокруг одного портрета">
@@ -373,9 +375,9 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
 <div class="feat on-dark alt reveal">
   <div class="wrap feat-grid">
     <div>
-      <span class="eyebrow">Главное УТП Solir</span>
+      <span class="eyebrow">Главное преимущество Solir</span>
       <h2>Личный бот в&nbsp;Telegram, который знает твою карту</h2>
-      <p class="lead" style="color:var(--paper-soft)">Помнит контекст ваших диалогов, живёт прямо в&nbsp;Telegram и&nbsp;помогает применять карту в&nbsp;решениях, отношениях и&nbsp;обычных ситуациях.</p>
+      <p class="lead" style="color:var(--paper-soft)">Знает твою карту, отвечает с&nbsp;учётом предыдущих вопросов и&nbsp;помогает применять её&nbsp;в&nbsp;решениях, отношениях и&nbsp;обычных ситуациях.</p>
       <p class="muted" style="color:var(--paper-soft)">Разбор у&nbsp;астролога — разовый. Solir остаётся рядом: можно написать утром, перед разговором, в&nbsp;момент сомнения или&nbsp;когда снова откладываешь важное.</p>
     </div>
     <div class="feat-visual">
@@ -392,10 +394,10 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
 <div class="feat on-sand reveal">
   <div class="wrap feat-grid">
     <div>
-      <span class="eyebrow">Знание, которое доходит до&nbsp;жизни</span>
-      <h2>От&nbsp;«я&nbsp;знаю про&nbsp;себя» к&nbsp;«я&nbsp;живу иначе»</h2>
-      <p class="lead muted">Карта — это&nbsp;вход. Дальше — практика.</p>
-      <p class="muted">Купила новый разбор, а&nbsp;через неделю он&nbsp;просто лежит в&nbsp;папке красивым текстом. Solir вместо этого даёт маленькие действия под твою карту: по&nbsp;5–10&nbsp;минут, посильные даже в&nbsp;загруженный день. Ты&nbsp;выбираешь тему: дело, отношения, здоровье — и&nbsp;видишь свой прогресс. Что&nbsp;сдвинулось, где ты&nbsp;сейчас, что&nbsp;дальше. Спокойное движение в&nbsp;своём темпе, где маленькие шаги складываются в&nbsp;лучшее качество жизни.</p>
+      <span class="eyebrow">Знание, которое применяется в&nbsp;жизни</span>
+      <h2>Solir помогает делать маленькие шаги</h2>
+      <p class="lead muted">Карта показывает опоры, а&nbsp;бот помогает применить их&nbsp;в&nbsp;дне.</p>
+      <p class="muted">Ты&nbsp;выбираешь тему: дело, отношения, здоровье. Solir предлагает посильные действия на&nbsp;5–10 минут, помогает возвращаться без&nbsp;самокритики и&nbsp;видеть прогресс: что&nbsp;сдвинулось, где ты&nbsp;сейчас и&nbsp;какой шаг дальше.</p>
     </div>
     <div class="feat-visual">
       <svg viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg" aria-label="Маленькие шаги к свету">
@@ -428,7 +430,7 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
         <li>как&nbsp;договариваться и&nbsp;поддерживать друг друга с&nbsp;учётом обеих карт</li>
         <li>для&nbsp;пары — отдельный раздел про&nbsp;близость и&nbsp;сексуальную совместимость</li>
       </ul>
-      <div class="econ">У&nbsp;астролога карта совместимости — <b>5 000&nbsp;–&nbsp;20 000&nbsp;₽</b> за&nbsp;разбор. В&nbsp;Solir это отдельный слой Pro: твой портрет + портрет другого человека + как&nbsp;вы&nbsp;взаимодействуете.</div>
+      <div class="econ">У&nbsp;астролога карта совместимости — <b>5 000&nbsp;–&nbsp;20 000&nbsp;₽</b> за&nbsp;разбор. В&nbsp;Solir это отдельный тариф Pro за&nbsp;2&nbsp;500&nbsp;₽/мес: твой портрет + портрет другого человека + как&nbsp;вы&nbsp;взаимодействуете.</div>
     </div>
     <div class="feat-visual">
       <svg viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg" aria-label="Совместимость двух карт">
@@ -450,25 +452,14 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
   <div class="wrap">
     <div class="section-head center"><span class="eyebrow">Знание встречается с&nbsp;жизнью</span><h2>Что ты&nbsp;получишь в&nbsp;результате</h2><p class="muted" style="margin-top:8px">Нажми, чтобы раскрыть карточку. На&nbsp;карте можно пойти глубже и&nbsp;посмотреть, откуда взялся вывод.</p></div>
     <div class="flip-grid">
-      <div class="flip" role="button" tabindex="0" aria-label="Раскрыть карточку: Понимание состояния" onclick="toggleFlip(this)" onkeydown="flipOnKey(event,this)"><div class="flip-inner"><div class="flip-face flip-front"><div class="flip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 4.93-1.41 1.41"/><path d="M15.95 12.65a4 4 0 0 0-5.93-4.13"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/></svg></div><div><h3>Понимание состояния</h3><span class="flip-hint">Нажми, чтобы раскрыть →</span></div></div><div class="flip-face flip-back"><p>Знаешь свои циклы заранее. Не&nbsp;предсказание событий и&nbsp;не&nbsp;приговор — а&nbsp;понимание, на&nbsp;что&nbsp;сегодня опереться.</p></div></div></div>
+      <div class="flip" role="button" tabindex="0" aria-label="Раскрыть карточку: Понимание состояния" onclick="toggleFlip(this)" onkeydown="flipOnKey(event,this)"><div class="flip-inner"><div class="flip-face flip-front"><div class="flip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 4.93-1.41 1.41"/><path d="M15.95 12.65a4 4 0 0 0-5.93-4.13"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/></svg></div><div><h3>Понимание состояния</h3><span class="flip-hint">Нажми, чтобы раскрыть →</span></div></div><div class="flip-face flip-back"><p>Понимаешь свои ритмы заранее. Не&nbsp;предсказание событий и&nbsp;не&nbsp;приговор — а&nbsp;понимание, на&nbsp;что&nbsp;сегодня опереться.</p></div></div></div>
       <div class="flip" role="button" tabindex="0" aria-label="Раскрыть карточку: Лёгкость решать" onclick="toggleFlip(this)" onkeydown="flipOnKey(event,this)"><div class="flip-inner"><div class="flip-face flip-front"><div class="flip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div><div><h3>Лёгкость решать</h3><span class="flip-hint">Показать глубже →</span></div></div><div class="flip-face flip-back"><p>Перестаёшь сверять каждый шаг с&nbsp;чужими «надо». Опираешься на&nbsp;то, что&nbsp;в&nbsp;тебе уже&nbsp;есть.</p></div></div></div>
-      <div class="flip" role="button" tabindex="0" aria-label="Раскрыть карточку: Тебя слышат" onclick="toggleFlip(this)" onkeydown="flipOnKey(event,this)"><div class="flip-inner"><div class="flip-face flip-front"><div class="flip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div><div><h3>Тебя слышат</h3><span class="flip-hint">Нажми, чтобы раскрыть →</span></div></div><div class="flip-face flip-back"><p>Место, где&nbsp;можно подумать вслух и&nbsp;быть понятой бережно — без&nbsp;оценок и&nbsp;«соберись».</p></div></div></div>
-      <div class="flip" role="button" tabindex="0" aria-label="Раскрыть карточку: Один взгляд" onclick="toggleFlip(this)" onkeydown="flipOnKey(event,this)"><div class="flip-inner"><div class="flip-face flip-front"><div class="flip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div><div><h3>Один взгляд</h3><span class="flip-hint">Откуда это взялось →</span></div></div><div class="flip-face flip-back"><p>Вместо десяти вкладок и&nbsp;разрозненных разборов — одна карта и&nbsp;собеседник, который помнит контекст.</p></div></div></div>
+      <div class="flip" role="button" tabindex="0" aria-label="Раскрыть карточку: Тебя слышат" onclick="toggleFlip(this)" onkeydown="flipOnKey(event,this)"><div class="flip-inner"><div class="flip-face flip-front"><div class="flip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div><div><h3>Тебя слышат</h3><span class="flip-hint">Нажми, чтобы раскрыть →</span></div></div><div class="flip-face flip-back"><p>Бот помогает подумать вслух и&nbsp;возвращает к&nbsp;твоей карте бережно — без&nbsp;оценок и&nbsp;«соберись».</p></div></div></div>
+      <div class="flip" role="button" tabindex="0" aria-label="Раскрыть карточку: Один взгляд" onclick="toggleFlip(this)" onkeydown="flipOnKey(event,this)"><div class="flip-inner"><div class="flip-face flip-front"><div class="flip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div><div><h3>Один взгляд</h3><span class="flip-hint">Откуда это взялось →</span></div></div><div class="flip-face flip-back"><p>Вместо десяти вкладок и&nbsp;разрозненных разборов — одна карта и&nbsp;бот, который отвечает с&nbsp;учётом твоего портрета.</p></div></div></div>
     </div>
-  </div>
-</section>
-
-<!-- не GPT -->
-<section class="on-paper reveal">
-  <div class="wrap gpt-box">
-    <span class="eyebrow">Частый вопрос</span>
-    <h2 style="margin-top:12px">Почему не&nbsp;просто спросить GPT?</h2>
-    <p class="lead muted">Solir не&nbsp;заменяет универсальный чат. Он&nbsp;собирает карту на&nbsp;проверенных источниках и&nbsp;ведёт по&nbsp;ней бережно, без&nbsp;прогнозов и&nbsp;страшных предсказаний.</p>
-    <ul class="gpt-list">
-      <li><b>Проверенные источники.</b> Карта строится не&nbsp;из открытого интернета, а&nbsp;из подготовленных данных и&nbsp;методологии трёх систем.</li>
-      <li><b>Не&nbsp;нужно уметь промптить.</b> Бот сам ведёт по&nbsp;карте и&nbsp;помогает сформулировать вопрос, когда внутри пока только смутное ощущение.</li>
-      <li><b>Можно спросить про&nbsp;любое место карты.</b> Личный бот помнит контекст диалогов и&nbsp;связывает ответы с&nbsp;твоим портретом.</li>
-    </ul>
+    <div style="display:flex;justify-content:center;margin-top:32px">
+      <a class="btn btn-primary" href="#" onclick="openPreorder();return false;">Оформить предзаказ</a>
+    </div>
   </div>
 </section>
 
@@ -501,7 +492,7 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
 <!-- ТАРИФЫ -->
 <section class="on-paper reveal" id="tariffs">
   <div class="wrap">
-    <div class="section-head center"><span class="eyebrow">Тарифы</span><h2>Сколько это&nbsp;стоит</h2><p class="muted" style="margin-top:8px">Это тарифная сетка запуска. Сейчас открыт предзаказ: 990&nbsp;₽ со&nbsp;скидкой 33% за&nbsp;ранний доступ, бета-период и&nbsp;первый месяц Подписки после старта.</p></div>
+    <div class="section-head center"><span class="eyebrow">Тарифы</span><h2>Сколько это&nbsp;стоит</h2><p class="muted" style="margin-top:8px">Это тарифная сетка запуска. Сейчас открыт предзаказ Solir: 990&nbsp;₽ со&nbsp;скидкой 33% за&nbsp;веб-карту, Telegram-бот, бета-доступ и&nbsp;первый месяц Подписки после старта.</p></div>
     <div class="tiers">
       <div class="tier"><div class="tier-name">Бесплатно</div><div class="tier-price"><b>0&nbsp;₽</b></div><ul><li>Мини-карта: ключевые архетипы по&nbsp;твоим данным</li><li>Бот с&nbsp;ограниченным объёмом общения</li><li>Пара микропрактик, чтобы попробовать</li></ul><div class="tier-note">Доступно после старта 22 сентября</div></div>
       <div class="tier featured"><div class="tier-badge">Популярный</div><div class="tier-name">Подписка</div><div class="tier-price"><b>1&nbsp;490</b><span>₽/мес</span></div><div class="tier-preorder">Предзаказ — <b>990&nbsp;₽ сейчас</b>, скидка 33%</div><ul><li>Всё из&nbsp;тарифа Бесплатно</li><li>Полная карта целиком</li><li>Практики под&nbsp;твою карту</li><li>Умеренный объём общения с&nbsp;ботом в&nbsp;Telegram</li><li>Волна резонансов по&nbsp;сферам</li></ul><a class="btn btn-primary" href="#" onclick="openPreorder();return false;">Оформить предзаказ</a></div>
@@ -513,6 +504,20 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8642E" stroke-width="2"><path d="M12 2L4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4z"/></svg>
       Данные нужны для карты, бота, оплаты и поддержки. Мы не продаём их и не передаём для рекламы; рассылки — только с твоего согласия.
     </div>
+  </div>
+</section>
+
+<!-- ФИНАЛ = единый призыв оформить предзаказ -->
+<section class="final reveal" id="preorder">
+  <div class="hero-glow"></div>
+  <div class="wrap" style="position:relative;max-width:var(--reading);margin-inline:auto">
+    <span class="eyebrow" style="color:var(--sun-light)">До&nbsp;запуска · 22 сентября</span>
+    <h2 style="margin:14px 0 16px">Стань одной из&nbsp;первых</h2>
+    <p class="lead">Оформи предзаказ Solir за&nbsp;990&nbsp;₽ со&nbsp;скидкой 33% — получи веб-карту, Telegram-бот, бета-доступ до&nbsp;релиза и&nbsp;первый месяц Подписки после старта.</p>
+    <div style="display:flex;justify-content:center">
+      <a class="btn btn-primary" href="#" onclick="openPreorder();return false;">Оформить предзаказ</a>
+    </div>
+    <p class="hero-price" style="margin-top:20px">990&nbsp;₽ сейчас · условия отмены и&nbsp;возврата будут доступны перед оплатой</p>
   </div>
 </section>
 
@@ -530,20 +535,6 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
       <details class="faq-item"><summary class="faq-q">Я покупаю всё подряд и не пользуюсь. Тут будет так же?<span class="faq-plus"></span></summary><div class="faq-a">Возможно — поэтому Solir не&nbsp;обещает чудо за&nbsp;один вечер. Карта остаётся опорой, а&nbsp;бот напоминает о&nbsp;себе и&nbsp;помогает возвращаться маленькими шагами.</div></details>
       <details class="faq-item"><summary class="faq-q">Это&nbsp;безопасно? Что&nbsp;с&nbsp;моими данными?<span class="faq-plus"></span></summary><div class="faq-a">Данные нужны для&nbsp;построения карты, работы бота, оплаты и&nbsp;поддержки сервиса. Мы не&nbsp;продаём их и&nbsp;не&nbsp;передаём для&nbsp;рекламы. Технические партнёры, сроки хранения, права пользователя и&nbsp;способ удалить данные будут описаны в&nbsp;политике обработки данных перед оплатой.</div></details>
     </div>
-  </div>
-</section>
-
-<!-- ФИНАЛ = единый призыв оформить предзаказ -->
-<section class="final reveal" id="preorder">
-  <div class="hero-glow"></div>
-  <div class="wrap" style="position:relative;max-width:var(--reading);margin-inline:auto">
-    <span class="eyebrow" style="color:var(--sun-light)">До&nbsp;запуска · 22 сентября</span>
-    <h2 style="margin:14px 0 16px">Стань одной из&nbsp;первых</h2>
-    <p class="lead">Оформи предзаказ раннего доступа за&nbsp;990&nbsp;₽ со&nbsp;скидкой 33% — получи бета-доступ до&nbsp;релиза и&nbsp;первый месяц Подписки после старта.</p>
-    <div style="display:flex;justify-content:center">
-      <a class="btn btn-primary" href="#" onclick="openPreorder();return false;">Оформить предзаказ</a>
-    </div>
-    <p class="hero-price" style="margin-top:20px">990&nbsp;₽ сейчас · условия отмены и&nbsp;возврата будут доступны перед оплатой</p>
   </div>
 </section>
 
@@ -568,21 +559,17 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
 
 <!-- POPUP: логика предзаказа -->
 <div class="modal-overlay" id="preorder-modal" onclick="if(event.target===this)closePreorder()">
-  <div class="modal" role="dialog" aria-modal="true" aria-label="Предзаказ раннего доступа">
+  <div class="modal" role="dialog" aria-modal="true" aria-label="Предзаказ Solir">
     <button class="modal-close" onclick="closePreorder()" aria-label="Закрыть">✕</button>
     <span class="eyebrow">Предзаказ · запуск 22 сентября</span>
-    <h3>Оформить предзаказ раннего доступа</h3>
-    <p class="muted" style="font-size:14px">Solir стартует 22 сентября. Предзаказ за&nbsp;990&nbsp;₽ даёт ранний доступ и&nbsp;первый месяц Подписки после запуска:</p>
+    <h3>Предзаказ Solir</h3>
+    <p class="muted" style="font-size:14px"><b style="color:var(--ink)">990&nbsp;₽ сейчас вместо 1&nbsp;490&nbsp;₽</b> — ранний доступ, бета-период и&nbsp;первый месяц тарифа Подписка после запуска.</p>
     <ul class="modal-list">
-      <li><b>990&nbsp;₽ сейчас вместо 1&nbsp;490 за&nbsp;первый месяц</b> — скидка 33% на&nbsp;первый месяц тарифа Подписка.</li>
-      <li><b>Функционал Подписки на&nbsp;старте</b> — полная карта, практики под&nbsp;твою карту и&nbsp;умеренный объём общения с&nbsp;ботом после запуска.</li>
-      <li><b>Доступ раньше основного релиза</b> — бета-период и&nbsp;вход до&nbsp;общего запуска 22 сентября.</li>
-      <li><b>Тестирование новых функций</b> — будем приглашать тебя пробовать новые возможности до&nbsp;публичного запуска.</li>
+      <li><b>Что входит:</b> персональная веб-карта, Telegram-бот, практики под&nbsp;карту и&nbsp;умеренный объём общения после запуска.</li>
+      <li><b>Когда:</b> основной старт 22 сентября, ранние участники получают доступ к&nbsp;бета-периоду до&nbsp;релиза.</li>
+      <li><b>Оплата:</b> кнопка пока заглушка; YooKassa, оферта и&nbsp;документы появятся перед списанием средств.</li>
     </ul>
-    <p class="muted" style="font-size:13.5px">Как&nbsp;это&nbsp;работает: оформляешь предзаказ → мы&nbsp;закрепляем ранний доступ → открываем бета-тестирование до&nbsp;релиза → после старта включаем первый месяц Подписки.</p>
     <a class="btn btn-primary" href="#" aria-disabled="true" onclick="return false;">Оформить предзаказ</a>
-    <p class="modal-price">Предзаказная цена: <b>990&nbsp;₽ сейчас</b> вместо 1&nbsp;490 за&nbsp;первый месяц</p>
-    <p class="modal-legal">Перед оплатой будут доступны оферта, политика обработки данных, согласие на&nbsp;обработку данных и&nbsp;условия отмены. Рассылки — только с&nbsp;отдельного согласия.</p>
   </div>
 </div>
 
