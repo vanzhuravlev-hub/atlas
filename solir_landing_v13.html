@@ -41,6 +41,7 @@ h2{font-size:clamp(28px,4.5vw,40px);line-height:1.15;letter-spacing:0}
 h3{font-size:clamp(20px,3vw,25px);line-height:1.2;letter-spacing:0}
 .lead{font-family:var(--font-display);font-style:italic;font-weight:400;font-size:clamp(19px,2.4vw,24px);line-height:1.5}
 .eyebrow{font-family:var(--font-body);font-size:13px;font-weight:500;letter-spacing:0.26em;text-transform:uppercase;color:var(--text-accent)}
+.hero-system-line{display:inline-block;font-family:var(--font-body);font-size:14px;font-weight:500;letter-spacing:.02em;color:var(--paper-muted);margin-bottom:16px}
 .muted{color:var(--ink-soft)}
 .logo{display:inline-flex;align-items:center;gap:9px;text-decoration:none}
 .logo-disc{width:32px;height:32px;border-radius:50%;background:var(--grad-sun-disc);flex-shrink:0;box-shadow:0 2px 10px rgba(200,100,46,0.3)}
@@ -73,26 +74,27 @@ header{position:sticky;top:0;z-index:50;background:var(--paper-soft);backdrop-fi
 .hero h1 em{font-style:italic;color:var(--sun-light)}
 	.hero .lead{color:var(--paper-soft);margin-bottom:30px;max-width:540px}
 @media(max-width:1080px){.hero .lead{margin-inline:auto}}
-.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:18px}
-@media(max-width:900px){.hero-cta{justify-content:center}}
-	.hero-proof{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
-	.hero-proof span{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line-light);border-radius:var(--radius-pill);padding:7px 12px;color:var(--paper-muted);font-size:12.5px;line-height:1.2}
-	.hero-proof span::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--sun-light);flex-shrink:0}
-	@media(max-width:1080px){.hero-proof{justify-content:center}}
-.hero-product{position:relative;display:flex;align-items:center;justify-content:flex-end}
-.product-stage{position:relative;width:min(100%,640px);display:grid;grid-template-columns:1fr;grid-template-rows:auto auto;align-items:center;isolation:isolate}
+	.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:0}
+	@media(max-width:900px){.hero-cta{justify-content:center}}
+	.hero-product{position:relative;display:flex;align-items:center;justify-content:flex-end}
+.product-stage{position:relative;width:min(100%,640px);display:grid;grid-template-columns:1fr;grid-template-rows:auto;align-items:center;isolation:isolate}
 .map-mockup,.tg-mockup{position:relative;border:1px solid var(--line-light);box-shadow:0 28px 70px rgba(15,8,5,0.34),0 8px 22px rgba(220,150,88,0.12)}
-.map-mockup{grid-column:1;grid-row:1;width:72%;max-width:450px;justify-self:start;z-index:1;background:rgba(255,241,221,0.96);color:var(--ink);border-radius:22px;padding:20px 18px 18px}
-.mockup-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;font-size:12px;color:var(--ink-muted)}
-.mockup-kicker{font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-accent)}
-.mockup-pill{border:1px solid var(--line);border-radius:var(--radius-pill);padding:3px 8px;color:var(--ink-soft);white-space:nowrap}
-.map-mockup h3{font-size:21px;line-height:1.18;margin-bottom:14px;color:var(--ink)}
-.map-mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
-.map-cell{min-height:68px;border:1px solid var(--line-soft);border-radius:12px;background:var(--sand);padding:9px 8px;font-size:11.5px;line-height:1.3;color:var(--ink-soft)}
-.map-cell strong{display:block;margin-bottom:5px;font-size:12px;color:var(--ink);line-height:1.15}
-.source-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
-.source-pill{border:1px solid var(--line);border-radius:var(--radius-pill);padding:4px 8px;font-size:11px;color:var(--ink-soft);background:rgba(250,234,208,0.65)}
-.map-note{border-left:3px solid var(--sun);padding-left:12px;font-size:13px;line-height:1.45;color:var(--ink-soft)}
+	.map-mockup{grid-column:1;grid-row:1;width:72%;max-width:450px;justify-self:start;z-index:1;background:rgba(255,241,221,0.96);color:var(--ink);border-radius:22px;padding:20px 116px 18px 18px;overflow:hidden}
+	.map-mockup::after{content:'';position:absolute;right:18px;top:72px;width:78px;height:160px;border:1px solid var(--line-soft);border-radius:18px;background:radial-gradient(circle at 50% 35%,rgba(220,150,88,.16),transparent 42%),linear-gradient(180deg,rgba(250,234,208,.46),rgba(255,241,221,.26));opacity:.74}
+	.mockup-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;font-size:12px;color:var(--ink-muted)}
+	.mockup-kicker{font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-accent)}
+		.map-mockup h3{font-size:21px;line-height:1.18;margin-bottom:12px;color:var(--ink)}
+		.map-insight{border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,var(--sand),rgba(250,234,208,.58));padding:10px 11px;margin-bottom:11px}
+		.insight-label{display:block;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text-accent);margin-bottom:5px}
+		.insight-text{font-size:12px;line-height:1.35;color:var(--ink-soft)}
+		.map-mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:11px}
+		.map-cell{min-height:46px;border:1px solid var(--line-soft);border-radius:12px;background:rgba(255,241,221,.74);padding:8px 7px;font-size:10.5px;line-height:1.25;color:var(--ink-soft)}
+		.map-cell strong{display:block;margin-bottom:2px;font-size:11.5px;color:var(--ink);line-height:1.15}
+		.map-skeleton{display:grid;gap:6px;margin-bottom:11px}
+		.map-skeleton span{display:block;height:8px;border-radius:var(--radius-pill);background:rgba(139,69,19,.12)}
+		.map-skeleton span:nth-child(2){width:78%}
+		.map-skeleton span:nth-child(3){width:58%}
+			.map-note{border-left:3px solid var(--sun);padding-left:10px;font-size:11.5px;line-height:1.35;color:var(--ink-soft)}
 .tg-mockup{grid-column:1;grid-row:1;width:44%;max-width:300px;min-width:230px;justify-self:end;align-self:center;z-index:2;margin-top:56px;background:var(--ink);color:var(--paper);border-radius:26px;padding:12px}
 .tg-screen{border:1px solid rgba(255,241,221,0.16);border-radius:18px;overflow:hidden;background:linear-gradient(180deg,rgba(255,241,221,0.08),rgba(255,241,221,0.03))}
 .tg-head{display:flex;align-items:center;gap:9px;padding:13px 14px;border-bottom:1px solid rgba(255,241,221,0.14)}
@@ -102,35 +104,31 @@ header{position:sticky;top:0;z-index:50;background:var(--paper-soft);backdrop-fi
 .tg-bubble{max-width:92%;border-radius:14px;padding:10px 12px;font-size:12.5px;line-height:1.42}
 .tg-bubble.bot{background:rgba(255,241,221,0.11);color:var(--paper-soft);border-bottom-left-radius:5px}
 .tg-bubble.me{align-self:flex-end;background:var(--grad-sunrise);color:#fff;border-bottom-right-radius:5px}
-.product-caption{grid-column:1;grid-row:2;position:relative;display:grid;grid-template-columns:1fr 1fr;gap:12px;color:var(--paper-muted);font-size:12px;padding:12px 8px 0}
-.product-caption span:first-child{justify-self:center}.product-caption span:last-child{justify-self:center}
-.product-caption span{display:inline-flex;align-items:center;gap:6px}.product-caption span::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--sun-light);display:inline-block}
 @media(max-width:1080px){.hero-product{justify-content:center}.product-stage{max-width:680px}}
 @media(max-width:640px){
   .hero{padding:64px 0 58px}
   .hero-grid{gap:34px}
   .product-stage{width:100%;max-width:520px}
-  .map-mockup{width:76%;border-radius:18px;padding:15px 12px 13px}
+	  .map-mockup{width:76%;border-radius:18px;padding:15px 74px 13px 12px}
+	  .map-mockup::after{right:12px;top:58px;width:48px;height:116px;border-radius:14px}
   .tg-mockup{width:46%;min-width:0;border-radius:20px;padding:8px;margin-top:38px}
-  .mockup-top{margin-bottom:12px}.mockup-kicker{font-size:10px}.mockup-pill{font-size:10px;padding:2px 7px}
-  .map-mockup h3{font-size:17px;margin-bottom:10px}
-  .map-mini-grid{grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
-  .map-cell{min-height:50px;border-radius:11px;padding:7px 6px;font-size:10px}
-  .map-cell strong{font-size:10.5px;margin-bottom:4px}
-  .map-cell:nth-child(n+5){display:none}
-  .source-pills{gap:4px;margin-bottom:9px}.source-pill{font-size:9.5px;padding:3px 6px}
-  .map-note{font-size:11px;line-height:1.35;padding-left:9px}
+	  .mockup-top{margin-bottom:12px}.mockup-kicker{font-size:10px}
+	  .map-mockup h3{font-size:17px;margin-bottom:9px}
+		  .map-insight{padding:8px;margin-bottom:8px}.insight-label{font-size:9px}.insight-text{font-size:10px;line-height:1.3}
+		  .map-mini-grid{grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+	  .map-cell{min-height:50px;border-radius:11px;padding:7px 6px;font-size:10px}
+	  .map-cell strong{font-size:10.5px;margin-bottom:4px}
+	  .map-cell:nth-child(n+3){display:none}
+	  .map-skeleton{display:none}
+	  .map-note{font-size:11px;line-height:1.35;padding-left:9px}
   .tg-screen{border-radius:16px}.tg-head{gap:7px;padding:10px 9px}.tg-avatar{width:24px;height:24px}
   .tg-title{font-size:11px}.tg-subtitle{font-size:9px}
   .tg-body{padding:10px 9px;gap:7px}.tg-bubble{padding:8px 9px;font-size:10px;line-height:1.32;border-radius:12px}
   .tg-bubble:nth-child(n+3){display:none}
-  .product-caption{font-size:11px;padding-top:10px}
 }
 @media(max-width:420px){
   .map-mockup{width:77%}
   .tg-mockup{width:47%;margin-top:34px}
-  .source-pill:last-child{display:none}
-  .product-caption{font-size:10.5px;padding-inline:0}
 }
 .solar{width:100%;max-width:380px;height:auto}
 .orbit-rot{transform-origin:400px 350px;animation:spin 60s linear infinite}
@@ -160,21 +158,23 @@ section{padding:84px 0;position:relative}
 	.outcome-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 	.outcome-chip{border-top:2px solid var(--sun);padding-top:12px;font-size:13.5px;line-height:1.4;color:var(--ink-soft)}
 	.outcome-chip b{display:block;color:var(--ink);font-weight:600;margin-bottom:3px}
-	.solution-visual{position:relative;min-height:360px;border-radius:28px;background:linear-gradient(135deg,var(--sand) 0%,var(--paper) 72%);border:1px solid var(--line);box-shadow:var(--elevation-2);overflow:hidden}
+		.solution-visual{position:relative;min-height:360px;border-radius:28px;background:linear-gradient(135deg,var(--sand) 0%,var(--paper) 72%);border:1px solid var(--line);box-shadow:var(--elevation-2);overflow:hidden}
 	.solution-visual::before{content:'';position:absolute;inset:38px;border:1px solid var(--line-soft);border-radius:50%;opacity:.7}
 	.solution-visual::after{content:'';position:absolute;right:-70px;top:-70px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(220,150,88,.18),transparent 68%)}
-	.solution-map{position:absolute;left:34px;top:44px;width:62%;background:rgba(255,241,221,.94);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 16px 42px rgba(139,69,19,.12)}
-	.solution-map h3{font-size:22px;margin:10px 0 14px}
-	.solution-lines{display:grid;gap:8px}.solution-line{height:38px;border-radius:12px;background:rgba(250,234,208,.78);border:1px solid var(--line-soft)}
-	.solution-line:nth-child(2){width:86%}.solution-line:nth-child(3){width:68%}
-	.solution-bot{position:absolute;right:32px;bottom:32px;width:44%;min-width:220px;background:var(--ink);color:var(--paper);border-radius:24px;padding:16px;border:1px solid var(--line-light);box-shadow:0 22px 48px rgba(15,8,5,.28)}
+		.solution-map{position:absolute;left:34px;top:44px;width:52%;background:rgba(255,241,221,.94);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 16px 42px rgba(139,69,19,.12)}
+			.solution-map h3{font-size:21px;margin:10px 0 14px}
+		.solution-proof{display:grid;gap:8px}
+		.proof-row{border-radius:12px;background:rgba(250,234,208,.78);border:1px solid var(--line-soft);padding:10px 11px;font-size:12.5px;line-height:1.38;color:var(--ink-soft)}
+		.proof-row b{display:block;color:var(--ink);font-weight:600;margin-bottom:2px}
+		.solution-bot{position:absolute;right:32px;bottom:32px;width:38%;min-width:210px;background:var(--ink);color:var(--paper);border-radius:24px;padding:16px;border:1px solid var(--line-light);box-shadow:0 22px 48px rgba(15,8,5,.28)}
 	.solution-bot-top{display:flex;align-items:center;gap:9px;font-weight:600;font-size:14px;margin-bottom:12px}
 	.solution-bot-top::before{content:'';width:28px;height:28px;border-radius:50%;background:var(--grad-sun-disc);flex-shrink:0}
-	.solution-bot p{font-size:13px;line-height:1.45;color:var(--paper-soft);padding:11px 12px;border-radius:14px;background:rgba(255,241,221,.1)}
-	.solution-link{position:absolute;left:51%;top:50%;width:84px;height:1px;background:var(--sun);transform:rotate(18deg);transform-origin:left center}
+		.solution-bot p{font-size:13px;line-height:1.45;color:var(--paper-soft);padding:11px 12px;border-radius:14px;background:rgba(255,241,221,.1)}
+		.solution-bot small{display:block;margin-top:8px;color:var(--paper-muted);font-size:11px;line-height:1.35}
+		.solution-link{position:absolute;left:52%;top:52%;width:82px;height:1px;background:var(--sun);transform:rotate(12deg);transform-origin:left center}
 	.solution-link::after{content:'';position:absolute;right:-4px;top:-4px;width:9px;height:9px;border-radius:50%;background:var(--sun)}
 	@media(max-width:920px){.solution-showcase{grid-template-columns:1fr;gap:34px}.solution-copy{max-width:var(--reading);text-align:center;margin-inline:auto}.outcome-strip{text-align:left}.solution-visual{max-width:680px;width:100%;margin-inline:auto}}
-	@media(max-width:620px){.outcome-strip{grid-template-columns:1fr}.solution-visual{min-height:330px}.solution-map{left:18px;top:26px;width:72%;padding:14px}.solution-map h3{font-size:18px}.solution-bot{right:16px;bottom:18px;width:48%;min-width:0;padding:12px;border-radius:18px}.solution-bot-top{font-size:12px}.solution-bot p{font-size:11px}.solution-link{display:none}}
+			@media(max-width:620px){.outcome-strip{grid-template-columns:1fr}.solution-visual{min-height:350px}.solution-map{left:18px;top:24px;width:58%;padding:14px}.solution-map h3{font-size:17px}.proof-row{font-size:10.5px;padding:8px}.proof-row:nth-child(2){display:none}.solution-bot{right:16px;bottom:18px;width:38%;min-width:0;padding:11px;border-radius:18px}.solution-bot-top{font-size:11px;margin-bottom:8px}.solution-bot p{font-size:10.5px;padding:9px 10px}.solution-bot small{display:none}.solution-link{display:none}}
 	.dialogue-grid{display:grid;grid-template-columns:1.12fr .94fr .94fr;gap:18px;align-items:stretch}
 	@media(max-width:980px){.dialogue-grid{grid-template-columns:1fr}}
 	.dialogue-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-card);padding:24px;box-shadow:0 8px 24px rgba(139,69,19,.06)}
@@ -225,10 +225,11 @@ section{padding:84px 0;position:relative}
 .feat-visual .solar{max-width:380px}
 .feat-chat{background:var(--ink);border-radius:var(--radius-card);padding:22px;max-width:400px;width:100%;box-shadow:var(--elevation-2)}
 .chat-row{display:flex;margin-bottom:12px}.chat-row.me{justify-content:flex-end}
-.bubble{max-width:82%;padding:11px 15px;border-radius:16px;font-size:14px;line-height:1.5}
-.bubble.bot{background:rgba(255,241,221,0.10);color:var(--paper);border-bottom-left-radius:5px}
-.bubble.me{background:var(--grad-sunrise);color:#fff;border-bottom-right-radius:5px}
-.chat-time{font-size:11px;color:var(--paper-muted);margin-top:4px}
+	.bubble{max-width:82%;padding:11px 15px;border-radius:16px;font-size:14px;line-height:1.5}
+	.bubble.bot{background:rgba(255,241,221,0.10);color:var(--paper);border-bottom-left-radius:5px}
+	.bubble.me{background:var(--grad-sunrise);color:#fff;border-bottom-right-radius:5px}
+	.bubble-note{display:block;margin-top:7px;color:var(--paper-muted);font-size:11px;line-height:1.35}
+	.chat-time{font-size:11px;color:var(--paper-muted);margin-top:4px}
 .compat-list{list-style:none;margin:16px 0 6px}
 .compat-list li{font-size:14.5px;padding:7px 0 7px 26px;position:relative;color:var(--ink-soft);line-height:1.5;border-bottom:1px solid var(--line-soft)}
 .compat-list li::before{content:'✓';position:absolute;left:0;top:7px;color:var(--sun-deep);font-weight:700}
@@ -345,46 +346,41 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
   <div class="hero-glow"></div>
   <div class="wrap hero-grid">
 	    <div class="hero-text reveal">
-	      <span class="eyebrow" style="color:var(--sun-light)">Астрология · нумерология · дизайн человека</span>
+		      <span class="hero-system-line">Астрология · нумерология · дизайн человека</span>
 	      <h1>Карта личности, которая отвечает в&nbsp;Telegram</h1>
 	      <p class="lead">Solir собирает три системы самопознания в&nbsp;одну понятную веб-карту, а&nbsp;личный бот знает твой портрет и&nbsp;помогает применять его в&nbsp;решениях, отношениях и&nbsp;обычных ситуациях.</p>
 	      <div class="hero-cta">
 	        <a href="#" onclick="openPreorder();return false;" class="btn btn-primary">Оформить предзаказ</a>
 	      </div>
-	      <div class="hero-proof" aria-label="Что входит в Solir">
-	        <span>веб-карта</span>
-	        <span>личный бот</span>
-	        <span>подсказки в&nbsp;жизни</span>
-	      </div>
-	    </div>
+		    </div>
     <div class="hero-product reveal" aria-label="Solir: карта личности и личный бот в Telegram">
       <div class="product-stage">
-        <div class="map-mockup" aria-label="Мокап карты Solir">
-          <div class="mockup-top"><span class="mockup-kicker">Карта Solir</span><span class="mockup-pill">3 системы</span></div>
-          <h3>Портрет, где видно главное</h3>
-          <div class="map-mini-grid">
-            <div class="map-cell"><strong>Решения</strong>где твоя опора</div>
-            <div class="map-cell"><strong>Отношения</strong>как ты сближаешься</div>
-            <div class="map-cell"><strong>Дело</strong>куда уходит энергия</div>
-            <div class="map-cell"><strong>Ритм</strong>когда проще начинать</div>
-            <div class="map-cell"><strong>Сила</strong>что звучит ярко</div>
-            <div class="map-cell"><strong>Затор</strong>где нужен мягкий шаг</div>
-          </div>
-          <div class="source-pills"><span class="source-pill">астрология</span><span class="source-pill">нумерология</span><span class="source-pill">дизайн человека</span></div>
-          <p class="map-note">Карта становится основой для подсказок в&nbsp;боте.</p>
-        </div>
+	        <div class="map-mockup" aria-label="Мокап карты Solir">
+		          <div class="mockup-top"><span class="mockup-kicker">Карта Solir</span></div>
+		          <h3>Твой портрет</h3>
+		          <div class="map-insight">
+		            <span class="insight-label">опора дня</span>
+		            <p class="insight-text">короткий разговор вместо большого плана</p>
+		          </div>
+		          <div class="map-mini-grid">
+		            <div class="map-cell"><strong>Ритм</strong>10 минут</div>
+		            <div class="map-cell"><strong>Опора</strong>вопрос</div>
+		            <div class="map-cell"><strong>Риск</strong>самокритика</div>
+		          </div>
+		          <div class="map-skeleton" aria-hidden="true"><span></span><span></span><span></span></div>
+			          <p class="map-note">Карта → подсказка в&nbsp;Telegram</p>
+	        </div>
         <div class="tg-mockup" aria-label="Мокап Telegram-бота Solir">
           <div class="tg-screen">
-            <div class="tg-head"><span class="tg-avatar" aria-hidden="true"></span><span class="tg-title">Solir-бот<span class="tg-subtitle">Telegram · знает твою карту</span></span></div>
-            <div class="tg-body">
-              <div class="tg-bubble me">Как применить это сегодня?</div>
-              <div class="tg-bubble bot">Сверяюсь с&nbsp;твоей картой: сегодня лучше один разговор без&nbsp;рывка. Начни с&nbsp;короткого вопроса.</div>
-              <div class="tg-bubble me">А если я снова отложу?</div>
-              <div class="tg-bubble bot">Тогда выберем шаг на&nbsp;5 минут — без&nbsp;самокритики.</div>
-            </div>
+		            <div class="tg-head"><span class="tg-avatar" aria-hidden="true"></span><span class="tg-title">Solir-бот<span class="tg-subtitle">Telegram · знает твою карту</span></span></div>
+		            <div class="tg-body">
+			              <div class="tg-bubble me">Созвон через час. Я&nbsp;нервничаю.</div>
+			              <div class="tg-bubble bot">Не готовь идеальную речь. Выпиши: чего хочешь, где сомневаешься и&nbsp;что предложишь дальше.</div>
+			              <div class="tg-bubble me">А если начну мяться?</div>
+			              <div class="tg-bubble bot">Начни с&nbsp;фразы: “хочу сверить ожидания”. Дальше можно говорить короче.</div>
+		            </div>
           </div>
         </div>
-        <div class="product-caption"><span>Карта Solir</span><span>Telegram-бот</span></div>
       </div>
     </div>
   </div>
@@ -420,18 +416,22 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
           <div class="outcome-chip"><b>Практика</b>переводит выводы в&nbsp;маленький шаг</div>
         </div>
       </div>
-      <div class="solution-visual" aria-label="Карта становится основой для подсказок в Telegram">
-        <div class="solution-map">
-          <span class="mockup-kicker">Карта Solir</span>
-          <h3>Твои опоры, ритм и&nbsp;точки напряжения</h3>
-          <div class="solution-lines"><span class="solution-line"></span><span class="solution-line"></span><span class="solution-line"></span></div>
-        </div>
-        <span class="solution-link" aria-hidden="true"></span>
-        <div class="solution-bot">
-          <div class="solution-bot-top">Telegram-бот</div>
-          <p>Сверяюсь с&nbsp;картой и&nbsp;помогаю выбрать один спокойный шаг.</p>
-        </div>
-      </div>
+	      <div class="solution-visual" aria-label="Карта становится основой для подсказок в Telegram">
+		        <div class="solution-map">
+		          <span class="mockup-kicker">Карта Solir</span>
+		          <h3>Паттерн: откладываю и&nbsp;ругаю себя</h3>
+		          <div class="solution-proof">
+		            <div class="proof-row"><b>Что видно</b>маленький вход лучше рывка</div>
+		            <div class="proof-row"><b>Что спросить</b>что реально сделать за&nbsp;10 минут?</div>
+		          </div>
+	        </div>
+	        <span class="solution-link" aria-hidden="true"></span>
+		        <div class="solution-bot">
+		          <div class="solution-bot-top">Telegram-бот</div>
+		          <p>Сегодня: открыть документ, написать один абзац и&nbsp;закрыть без&nbsp;оценки.</p>
+		          <small>Карта остаётся фоном. Действие — одно.</small>
+		        </div>
+	      </div>
     </div>
   </div>
 </section>
@@ -445,13 +445,13 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
       <p class="lead" style="color:var(--paper-soft)">Он знает твою карту и&nbsp;отвечает с&nbsp;учётом твоего портрета, вопросов и&nbsp;ситуации.</p>
       <p class="muted" style="color:var(--paper-soft)">Это не&nbsp;отдельное приложение и&nbsp;не&nbsp;вкладка на&nbsp;компьютере. Бот рядом там, где&nbsp;ты уже&nbsp;общаешься каждый день: утром, перед разговором, в&nbsp;момент сомнения или&nbsp;когда снова откладываешь важное.</p>
     </div>
-    <div class="feat-visual">
-      <div class="feat-chat">
-        <div class="chat-row"><div><div class="bubble bot">Доброе утро. Сегодня лучше выбрать одно важное дело, а&nbsp;не&nbsp;разбрасываться на&nbsp;десять. С&nbsp;чего начнём?</div><div class="chat-time">8:02</div></div></div>
-        <div class="chat-row me"><div><div class="bubble me">я опять откладываю важное</div><div class="chat-time">8:05</div></div></div>
-        <div class="chat-row"><div><div class="bubble bot">Судя по&nbsp;твоей карте, тебе легче начинать не&nbsp;с&nbsp;плана на&nbsp;неделю, а&nbsp;с&nbsp;одного маленького шага. Давай выберем его на&nbsp;сегодня.</div><div class="chat-time">8:05</div></div></div>
-      </div>
-    </div>
+	    <div class="feat-visual">
+	      <div class="feat-chat">
+	        <div class="chat-row"><div><div class="bubble bot">Я&nbsp;здесь. Если вопрос появился между делами, можно не&nbsp;искать файл с&nbsp;разбором — просто напиши сюда.</div><div class="chat-time">8:02</div></div></div>
+	        <div class="chat-row me"><div><div class="bubble me">я всё понимаю, но опять слилась и откладываю важное</div><div class="chat-time">8:05</div></div></div>
+	        <div class="chat-row"><div><div class="bubble bot">Ок, без самонаезда. По&nbsp;твоей карте у&nbsp;тебя часто включается режим “сначала всё просчитать”. Давай не&nbsp;решать жизнь целиком: напиши один вопрос, который страшно задать на&nbsp;встрече.<span class="bubble-note">Опора из карты: короткий вопрос вместо большого плана.</span></div><div class="chat-time">8:05</div></div></div>
+	      </div>
+	    </div>
   </div>
 </div>
 
@@ -460,30 +460,30 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
   <div class="wrap">
     <div class="section-head center"><span class="eyebrow">Как это помогает в&nbsp;жизни</span><h2>Не&nbsp;абстрактный разбор, а&nbsp;вопрос и&nbsp;следующий шаг</h2></div>
     <div class="dialogue-grid">
-      <article class="dialogue-card featured">
-        <span class="scenario-label">Перед важной встречей</span>
-        <h3>На&nbsp;что мне сегодня опереться?</h3>
-        <div class="dialogue-window">
-          <div class="dialogue-bubble user">Перед встречей я&nbsp;нервничаю. Какой тон выбрать?</div>
-          <div class="dialogue-bubble bot">Сверяюсь с&nbsp;картой: лучше говорить коротко и&nbsp;заранее выбрать один главный тезис.</div>
-        </div>
-      </article>
+	      <article class="dialogue-card featured">
+	        <span class="scenario-label">Перед важной встречей</span>
+	        <h3>На&nbsp;что мне сегодня опереться?</h3>
+	        <div class="dialogue-window">
+	          <div class="dialogue-bubble user">Через час созвон. Боюсь начать мяться, оправдываться и&nbsp;в&nbsp;итоге ничего не&nbsp;сказать.</div>
+	          <div class="dialogue-bubble bot">Опора сегодня — структура. Запиши три пункта: что&nbsp;хочу, где&nbsp;сомневаюсь и&nbsp;какой следующий шаг предлагаю. Этого достаточно для&nbsp;первого разговора.</div>
+	        </div>
+	      </article>
       <article class="dialogue-card">
-        <span class="scenario-label">Ссора с&nbsp;партнёром</span>
-        <h3>Что во&nbsp;мне сейчас задело?</h3>
-        <div class="dialogue-window">
-          <div class="dialogue-bubble user">Я&nbsp;снова резко отвечаю. Что со&nbsp;мной?</div>
-          <div class="dialogue-bubble bot">Похоже, включился привычный паттерн защиты. Сначала назови чувство, потом возвращайся к&nbsp;фактам.</div>
-        </div>
-      </article>
+	        <span class="scenario-label">Ссора с&nbsp;партнёром</span>
+	        <h3>Что во&nbsp;мне сейчас задело?</h3>
+	        <div class="dialogue-window">
+	          <div class="dialogue-bubble user">Мы опять поссорились. Я&nbsp;закрылась и&nbsp;делаю вид, что всё нормально.</div>
+	          <div class="dialogue-bubble bot">Не дави на&nbsp;себя. Карта показывает: сначала тебе важно назвать, что задело, без&nbsp;обвинений. Начни с&nbsp;фразы: “я&nbsp;не&nbsp;злюсь, я&nbsp;растерялась”.</div>
+	        </div>
+	      </article>
       <article class="dialogue-card">
-        <span class="scenario-label">Новая работа или проект</span>
-        <h3>Что важно уточнить заранее?</h3>
-        <div class="dialogue-window">
-          <div class="dialogue-bubble user">Стоит ли&nbsp;соглашаться на&nbsp;этот проект?</div>
-          <div class="dialogue-bubble bot">Проверь три вещи: ритм, свободу решений и&nbsp;совпадение с&nbsp;твоими ценностями.</div>
-        </div>
-      </article>
+	        <span class="scenario-label">Новая работа или проект</span>
+	        <h3>Что важно уточнить заранее?</h3>
+	        <div class="dialogue-window">
+	          <div class="dialogue-bubble user">Мне предложили проект. Боюсь согласиться и&nbsp;через полгода ненавидеть всё.</div>
+	          <div class="dialogue-bubble bot">Сверь не&nbsp;только деньги. Уточни ритм, свободу решений и&nbsp;с&nbsp;кем будешь каждый день взаимодействовать. Это твои ранние маркеры.</div>
+	        </div>
+	      </article>
     </div>
   </div>
 </section>
@@ -509,19 +509,19 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
 <!-- ДОВЕРИЕ -->
 <section class="on-paper reveal">
   <div class="wrap">
-    <div class="section-head"><span class="eyebrow">Почему Solir можно доверять</span><h2>ИИ работает внутри методологии, а&nbsp;не&nbsp;вместо неё</h2></div>
+    <div class="section-head"><span class="eyebrow">Почему Solir можно доверять</span><h2>ИИ не&nbsp;придумывает с&nbsp;нуля — он&nbsp;опирается на&nbsp;карту и&nbsp;правила Solir</h2></div>
     <div class="trust-editorial">
       <article class="founder-panel">
         <div>
           <div class="founder-mark" aria-hidden="true"></div>
           <h3>За продуктом есть человек</h3>
-          <p>Методология Solir собирается под&nbsp;руководством Ивана — психолога и&nbsp;ICF-коуча. ИИ здесь не&nbsp;заменяет эксперта, а&nbsp;работает внутри заданной структуры.</p>
+          <p>Solir собирается под&nbsp;руководством Ивана Журавлева — психотерапевта, ICF-коуча и&nbsp;методолога с&nbsp;опытом свыше 13 лет. ИИ здесь не&nbsp;заменяет эксперта, а&nbsp;работает внутри заданной структуры.</p>
         </div>
-        <p>Поэтому Solir прямо показывает рамку: бережный язык, проверяемая методология и&nbsp;никаких страшных прогнозов вместо человеческого разговора.</p>
+        <p>Поэтому Solir прямо показывает рамку: бережный язык, понятная логика разбора и&nbsp;никаких страшных прогнозов вместо человеческого разговора.</p>
       </article>
       <article class="method-panel">
         <h3>Не&nbsp;просто общий GPT</h3>
-        <p>Обычный GPT не&nbsp;знает твою карту и&nbsp;методологию, пока ты&nbsp;сама не&nbsp;соберёшь контекст. Solir уже&nbsp;собирает карту, держит её&nbsp;как основу и&nbsp;отвечает в&nbsp;Telegram с&nbsp;учётом твоего портрета.</p>
+        <p>Обычный GPT не&nbsp;знает твою карту и&nbsp;правила разбора, пока ты&nbsp;сама не&nbsp;соберёшь данные и&nbsp;не&nbsp;объяснишь, как с&nbsp;ними работать. Solir сам собирает карту, держит её&nbsp;как основу, помогает во&nbsp;всем разобраться и&nbsp;отвечает на&nbsp;любые вопросы в&nbsp;Telegram с&nbsp;учётом карты и&nbsp;контекста общения.</p>
         <div class="trust-points">
           <div class="trust-point"><b>Проверенные источники</b>астрология, нумерология и&nbsp;дизайн человека сводятся в&nbsp;одну структуру</div>
           <div class="trust-point"><b>Бережный язык</b>без страшных прогнозов, диагнозов и&nbsp;давления</div>
@@ -582,7 +582,7 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
     <div class="faq">
       <details class="faq-item"><summary class="faq-q">Я&nbsp;не&nbsp;верю в&nbsp;это, но&nbsp;хочу попробовать. Это&nbsp;нормально?<span class="faq-plus"></span></summary><div class="faq-a">Это&nbsp;самый частый вход. Solir не&nbsp;про&nbsp;веру, а&nbsp;про&nbsp;узнавание: узнаёшь себя — работает, нет — это&nbsp;не&nbsp;твой инструмент. Проверять — поощряется.</div></details>
       <details class="faq-item"><summary class="faq-q">У&nbsp;меня уже&nbsp;есть разборы у&nbsp;астролога. Зачем Solir?<span class="faq-plus"></span></summary><div class="faq-a">Если открываешь старый разбор раз в&nbsp;месяц и&nbsp;применяешь — Solir не&nbsp;нужен. Если он&nbsp;лежит в&nbsp;папке год — вопрос не&nbsp;в&nbsp;содержании, а&nbsp;в&nbsp;формате. Solir — мост от&nbsp;«узнала про&nbsp;себя» к&nbsp;«живу иначе».</div></details>
-      <details class="faq-item"><summary class="faq-q">Чем&nbsp;это&nbsp;отличается от ChatGPT?<span class="faq-plus"></span></summary><div class="faq-a">GPT мощный и&nbsp;универсальный. Но&nbsp;обычный GPT не&nbsp;знает твою карту и&nbsp;методологию, пока ты&nbsp;сама не&nbsp;соберёшь контекст. Solir уже&nbsp;собирает карту, держит её&nbsp;как основу и&nbsp;ведёт тебя по&nbsp;ней через личного бота в&nbsp;Telegram.</div></details>
+      <details class="faq-item"><summary class="faq-q">Чем&nbsp;это&nbsp;отличается от ChatGPT?<span class="faq-plus"></span></summary><div class="faq-a">GPT мощный и&nbsp;универсальный. Но&nbsp;обычный GPT не&nbsp;знает твою карту и&nbsp;правила разбора, пока ты&nbsp;сама не&nbsp;соберёшь данные и&nbsp;не&nbsp;объяснишь, как с&nbsp;ними работать. Solir сам собирает карту, держит её&nbsp;как основу, помогает во&nbsp;всем разобраться и&nbsp;отвечает на&nbsp;любые вопросы в&nbsp;Telegram с&nbsp;учётом карты и&nbsp;контекста общения.</div></details>
       <details class="faq-item"><summary class="faq-q">Что&nbsp;я&nbsp;оплачиваю по&nbsp;предзаказу?<span class="faq-plus"></span></summary><div class="faq-a">990&nbsp;₽ сейчас — это ранний доступ и&nbsp;бета-период до&nbsp;основного запуска, а&nbsp;также первый месяц тарифа Подписка после старта 22 сентября. В&nbsp;Подписку входят полная карта, практики под&nbsp;твою карту и&nbsp;умеренный объём общения с&nbsp;ботом. Перед оплатой будут доступны оферта, политика обработки данных и&nbsp;условия отмены.</div></details>
       <details class="faq-item"><summary class="faq-q">Что&nbsp;если мне станет тяжело от&nbsp;того, что&nbsp;узнаю?<span class="faq-plus"></span></summary><div class="faq-a">Карта показывает то, что&nbsp;в&nbsp;тебе уже&nbsp;есть, бережно и&nbsp;без&nbsp;приговоров. А&nbsp;если ты&nbsp;в&nbsp;тяжёлом состоянии — Solir честно подскажет обратиться к&nbsp;живому специалисту.</div></details>
       <details class="faq-item"><summary class="faq-q">Это&nbsp;психологическая консультация или медицинская рекомендация?<span class="faq-plus"></span></summary><div class="faq-a">Нет. Solir — инструмент саморефлексии и&nbsp;самопознания. Он&nbsp;не&nbsp;ставит диагнозы, не&nbsp;назначает лечение, не&nbsp;заменяет психолога, врача, юриста или финансового консультанта. Если есть острое состояние или риск для&nbsp;здоровья, лучше обращаться к&nbsp;живому специалисту.</div></details>
