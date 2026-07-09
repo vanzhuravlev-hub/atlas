@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solir — предзаказ оформлен</title>
+<meta name="description" content="Спасибо за предзаказ Solir. Основной запуск запланирован на 22 сентября 2026 года.">
+<style>
+:root{--paper:#FFF1DD;--sand:#FAEAD0;--sun:#DC9658;--sun-deep:#C8642E;--ink:#2A1810;--ink-soft:rgba(42,24,16,.72);--line:rgba(139,69,19,.18);--grad:linear-gradient(90deg,#E8B47D,#DC9658,#C8642E)}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--paper);color:var(--ink);line-height:1.65}
+main{min-height:100vh;display:grid;place-items:center;padding:40px 20px}
+.card{max-width:720px;width:100%;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,var(--paper),var(--sand));padding:38px 34px;box-shadow:0 20px 60px rgba(139,69,19,.14)}
+.disc{width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFE9C2 0%,#DC9658 65%,#C8642E 100%);margin-bottom:24px}
+h1{font-family:Georgia,serif;font-weight:500;font-size:clamp(32px,6vw,48px);line-height:1.12;margin:0 0 16px}
+p{margin:0 0 16px;color:var(--ink-soft)}
+ul{margin:22px 0;padding-left:22px;color:var(--ink-soft)}
+a{color:var(--sun-deep)}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;background:var(--grad);color:#fff;text-decoration:none;font-weight:700;padding:13px 22px;margin-top:8px}
+.meta{border-top:1px solid var(--line);margin-top:28px;padding-top:18px;font-size:13px;color:rgba(42,24,16,.58)}
+</style>
+</head>
+<body>
+<main>
+  <section class="card">
+    <div class="disc" aria-hidden="true"></div>
+    <h1>Предзаказ Solir оформлен</h1>
+    <p>Спасибо. Мы сохранили твой предзаказ и свяжемся ближе к раннему доступу. Основной запуск продукта запланирован на <b>22 сентября 2026 года</b>.</p>
+    <ul>
+      <li>Проверь письмо или уведомление от платежного сервиса.</li>
+      <li>Если нужно уточнить контакт или запросить возврат до запуска, напиши на <a href="mailto:support@solir.app">support@solir.app</a>.</li>
+      <li>Новости запуска будут появляться в Telegram-канале <a href="https://t.me/solir_ru">@solir_ru</a>.</li>
+    </ul>
+    <a class="btn" href="solir_landing_v13.html">Вернуться на лендинг</a>
+    <p class="meta">Solir — инструмент саморефлексии и самопознания. Он не заменяет врача, психолога, юриста или финансового консультанта.</p>
+  </section>
+</main>
+<script>
+function trackSolirEvent(name,params){
+  var payload=params||{};
+  if(window.ym&&window.SOLIR_YM_COUNTER_ID){window.ym(window.SOLIR_YM_COUNTER_ID,'reachGoal',name,payload);}
+  window.dataLayer=window.dataLayer||[];
+  window.dataLayer.push(Object.assign({event:name},payload));
+}
+trackSolirEvent('payment_success',{source:'thank_you_page'});
+</script>
+</body>
+</html>
