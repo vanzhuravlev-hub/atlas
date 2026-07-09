@@ -304,19 +304,6 @@ section{padding:84px 0;position:relative}
 .legal-modal .modal-close{top:18px;right:18px}
 .legal-frame{width:100%;height:100%;border:0;background:#fff;flex:1}
 @media(max-width:640px){.legal-frame-head{padding:18px 20px}.legal-direct{display:none}.legal-frame-head h3{font-size:19px}.legal-modal{height:88vh}}
-.preorder-form{display:grid;gap:12px;margin-top:18px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.field{display:grid;gap:6px;font-size:12px;font-weight:600;color:var(--ink-soft)}
-.field.full{grid-column:1/-1}
-.field input{width:100%;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font:inherit;font-size:14px;padding:12px 13px}
-.field input:focus{outline:2px solid rgba(220,150,88,.38);border-color:var(--sun)}
-.check{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.42;color:var(--ink-soft)}
-.check input{margin-top:3px;accent-color:var(--sun-deep);flex-shrink:0}
-.check a{color:var(--sun-deep)}
-.form-status{min-height:18px;font-size:12.5px;line-height:1.4;color:var(--sun-deep);text-align:center}
-.payment-note{font-size:12.5px;line-height:1.45;color:var(--ink-muted);text-align:center}
-.release-warning{border:1px dashed rgba(200,100,46,.45);background:rgba(250,234,208,.74);border-radius:12px;padding:10px 12px;font-size:12.5px;line-height:1.45;color:var(--ink-soft)}
-.tilda-order-fallback{display:none!important}
 .tier ul{list-style:none;margin-bottom:22px;flex:1}
 .tier li{font-size:14.5px;line-height:1.45;padding:9px 0 9px 24px;position:relative;border-bottom:1px solid var(--line-soft);color:var(--ink-soft)}
 .tier li::before{content:'✓';position:absolute;left:0;top:9px;color:var(--sun-deep);font-weight:700}
@@ -342,7 +329,7 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
 .foot-docs a{color:var(--paper-muted);border-bottom:1px dashed rgba(255,241,221,0.28)}
 .foot-docs a:hover{color:var(--sun-light);border-bottom-color:var(--sun-light)}
 .foot-legal{width:100%;max-width:700px;margin-left:auto;margin-top:10px;text-align:right;color:var(--paper-muted);font-size:12px;line-height:1.55}
-@media(max-width:720px){.foot{align-items:flex-start}.foot-links,.foot-docs{justify-content:flex-start}.foot-legal{text-align:left;margin-left:0}.form-grid{grid-template-columns:1fr}}
+@media(max-width:720px){.foot{align-items:flex-start}.foot-links,.foot-docs{justify-content:flex-start}.foot-legal{text-align:left;margin-left:0}}
 @media(max-width:520px){.hero-cta .btn{width:100%}.nav .btn{padding:10px 16px;font-size:13px}.modal{padding:28px 22px}.modal-close{top:12px;right:12px}}
 /* scroll-reveal (безопасно: без JS всё видно) */
 .js-reveal .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
@@ -357,7 +344,7 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
     <a class="logo" href="#" aria-label="Solir"><span class="logo-disc"></span>
       <svg class="logo-word-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 236 120" role="img" aria-label="Solir"><path transform="translate(9.60 94.82) scale(0.04928 -0.04928)" d="M545 -22Q457 -22 399.5 -5.5Q342 11 307.5 32.5Q273 54 253.5 71.0Q234 88 222 88Q211 88 197.0 72.5Q183 57 167.5 37.0Q152 17 136.0 1.5Q120 -14 105 -14Q81 -14 69.5 -1.0Q58 12 61 39L103 385Q105 413 118.5 427.5Q132 442 151 442Q171 442 183.5 428.5Q196 415 205 389L219 302Q232 183 310.5 120.5Q389 58 502 58Q577 58 634.5 85.5Q692 113 727.0 162.0Q762 211 772 277Q788 367 743.5 443.0Q699 519 565 605Q417 702 353.5 798.5Q290 895 306 1025Q318 1129 380.5 1220.0Q443 1311 555.0 1367.5Q667 1424 825 1424Q959 1424 1051.5 1381.0Q1144 1338 1190.5 1269.5Q1237 1201 1235 1125Q1233 1079 1209.5 1049.0Q1186 1019 1146 1019Q1111 1019 1090.0 1038.5Q1069 1058 1055 1099L1038 1167Q1015 1260 956.0 1305.0Q897 1350 810 1350Q724 1350 659.5 1317.0Q595 1284 556.5 1229.0Q518 1174 510 1106Q497 1008 547.0 929.0Q597 850 727 759Q840 683 901.0 616.0Q962 549 982.5 480.5Q1003 412 994 333Q984 226 924.0 146.0Q864 66 766.5 22.0Q669 -22 545 -22Z" fill="#2A1810"/><path transform="translate(66.03 94.82) scale(0.04928 -0.04928)" d="M634 936Q757 933 844.0 876.0Q931 819 968.5 715.0Q1006 611 980 466Q960 357 908.5 266.0Q857 175 781.5 109.5Q706 44 613.0 10.0Q520 -24 417 -21Q296 -17 210.5 39.5Q125 96 88.5 200.0Q52 304 77 449Q98 559 148.5 649.5Q199 740 273.5 805.5Q348 871 439.5 905.0Q531 939 634 936ZM421 62Q464 58 506.0 73.5Q548 89 586.0 122.0Q624 155 657.0 205.5Q690 256 715.5 322.0Q741 388 757 469Q783 594 774.0 677.0Q765 760 728.0 803.5Q691 847 630 853Q587 857 546.5 841.5Q506 826 468.5 793.0Q431 760 398.5 710.0Q366 660 341.0 593.5Q316 527 300 446Q274 321 282.5 238.0Q291 155 327.0 111.5Q363 68 421 62Z" fill="#2A1810"/><path transform="translate(117.97 94.82) scale(0.04928 -0.04928)" d="M735 1437Q816 1437 854.5 1404.5Q893 1372 893 1328Q893 1286 868.0 1259.0Q843 1232 793 1232Q764 1232 742.0 1242.5Q720 1253 701.5 1266.5Q683 1280 662.5 1290.5Q642 1301 614 1301Q584 1301 559.0 1284.5Q534 1268 519.0 1240.5Q504 1213 500 1179Q499 1156 504.0 1133.5Q509 1111 516.5 1088.0Q524 1065 529.5 1039.0Q535 1013 534.0 982.5Q533 952 522 915L324 279Q296 184 304.5 152.0Q313 120 348 120Q378 120 411.5 137.5Q445 155 473 189Q486 202 495.0 205.5Q504 209 513 206Q525 202 528.0 187.5Q531 173 520 150Q502 103 456.0 64.0Q410 25 348.5 2.0Q287 -21 218 -21Q153 -21 120.5 6.5Q88 34 86.5 90.0Q85 146 112 233L394 1145Q441 1296 527.5 1366.5Q614 1437 735 1437Z" fill="#2A1810"/><path transform="translate(148.82 94.82) scale(0.04928 -0.04928)" d="M346 260Q318 181 325.5 149.5Q333 118 360 118Q377 118 395.5 128.5Q414 139 441 165Q457 180 468.0 184.0Q479 188 489 183Q501 177 500.5 162.0Q500 147 488 124Q452 58 385.0 19.0Q318 -20 237 -20Q175 -20 143.5 8.0Q112 36 111.0 90.0Q110 144 138 221L299 654Q328 733 320.5 765.0Q313 797 285 797Q270 797 250.5 786.5Q231 776 204 749Q188 735 177.0 731.0Q166 727 156 731Q145 737 145.0 752.0Q145 767 157 790Q193 856 259.5 895.5Q326 935 406 935Q464 935 495.5 907.0Q527 879 530.5 824.0Q534 769 504 688ZM480 1125Q416 1125 382.0 1160.0Q348 1195 354 1245Q358 1284 383.0 1317.5Q408 1351 448.5 1371.0Q489 1391 541 1391Q608 1391 639.0 1356.0Q670 1321 664 1270Q660 1230 635.0 1197.0Q610 1164 570.0 1144.5Q530 1125 480 1125Z" fill="#2A1810"/><path transform="translate(179.87 94.82) scale(0.04928 -0.04928)" d="M145 731Q133 737 133.5 752.0Q134 767 146 790Q170 834 208.5 866.5Q247 899 295.5 917.0Q344 935 396 935Q447 935 475.5 910.0Q504 885 504 837Q504 795 486.5 740.0Q469 685 445.5 625.0Q422 565 403.0 510.5Q384 456 381 416L365 418Q397 536 446.0 631.5Q495 727 554.0 794.5Q613 862 676.0 898.5Q739 935 801 935Q876 935 914.0 892.5Q952 850 951 781Q949 728 930.0 690.5Q911 653 881.5 633.0Q852 613 817 613Q779 613 761.0 631.0Q743 649 743 672Q743 694 749.5 713.5Q756 733 756 755Q756 780 744.5 795.0Q733 810 707 810Q664 810 607.5 757.5Q551 705 493.5 602.5Q436 500 387 348Q364 279 353.5 237.5Q343 196 343 163Q343 139 352.5 125.5Q362 112 372.0 99.5Q382 87 382 64Q382 41 360.5 21.0Q339 1 298.0 -10.0Q257 -21 196 -21Q150 -21 128.0 -0.5Q106 20 107.0 62.5Q108 105 130 169L290 654Q317 733 309.0 765.0Q301 797 274 797Q258 797 239.0 786.5Q220 776 193 749Q177 735 166.0 731.0Q155 727 145 731Z" fill="#2A1810"/></svg>
     </a>
-    <div class="nav-cta"><span class="nav-price">Предзаказ от&nbsp;990&nbsp;₽ · запуск 22 сентября 2026</span><a href="#" onclick="openPreorder('nav');return false;" class="btn btn-primary">Забронировать за&nbsp;990&nbsp;₽</a></div>
+    <div class="nav-cta"><span class="nav-price">Предзаказ от&nbsp;990&nbsp;₽ · запуск 22 сентября 2026</span><a href="#order:Подписка=990" onclick="return openTildaOrder('subscription','nav');" class="btn btn-primary">Забронировать за&nbsp;990&nbsp;₽</a></div>
   </div>
 </header>
 
@@ -370,7 +357,7 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
 	      <h1>Solir — карта себя, которая отвечает в&nbsp;Telegram</h1>
 	      <p class="lead">Solir собирает астрологию, нумерологию и&nbsp;дизайн человека в&nbsp;одну карту, а&nbsp;бот помогает применять её&nbsp;в&nbsp;отношениях, работе и&nbsp;решениях каждый день.</p>
 	      <div class="hero-cta">
-	        <a href="#" onclick="openPreorder('hero');return false;" class="btn btn-primary">Забронировать ранний доступ за&nbsp;990&nbsp;₽</a>
+	        <a href="#order:Подписка=990" onclick="return openTildaOrder('subscription','hero');" class="btn btn-primary">Забронировать ранний доступ за&nbsp;990&nbsp;₽</a>
 	        <a href="#solution" class="btn btn-ghost--light">Посмотреть как работает</a>
 	      </div>
 	      <div class="hero-proof" aria-label="Условия предзаказа">
@@ -517,7 +504,7 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
       <span class="eyebrow">Что меняется после карты</span>
       <h2>Знание о&nbsp;себе становится ближе к&nbsp;жизни</h2>
       <p class="lead">Solir не&nbsp;обещает решить всё за&nbsp;тебя. Он помогает чаще возвращаться к&nbsp;своим опорам и&nbsp;делать следующий шаг спокойнее.</p>
-      <div class="result-cta"><a href="#" onclick="openPreorder('result_band');return false;" class="btn btn-primary">Забронировать ранний доступ</a></div>
+      <div class="result-cta"><a href="#order:Подписка=990" onclick="return openTildaOrder('subscription','result_band');" class="btn btn-primary">Забронировать ранний доступ</a></div>
     </div>
     <div class="result-grid">
       <div class="result-item"><b>Больше ясности</b><span>не&nbsp;десять разрозненных разборов, а&nbsp;одна карта</span></div>
@@ -585,8 +572,8 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
     <div class="section-head center"><span class="eyebrow">Предзаказ</span><h2>Выбери ранний доступ</h2><p class="muted" style="margin-top:8px">Основной вход — «Подписка» за&nbsp;990&nbsp;₽ вместо 1&nbsp;490&nbsp;₽. «Про» нужен, если хочешь добавить совместимость и&nbsp;расширенный объём после запуска.</p></div>
     <div class="tiers">
       <div class="tier"><div class="tier-name">Бесплатно</div><div class="tier-price"><b>0&nbsp;₽</b></div><ul><li>Мини-карта: ключевые архетипы по&nbsp;твоим данным</li><li>Бот с&nbsp;небольшим лимитом сообщений</li><li>Пара микропрактик, чтобы попробовать</li></ul><div class="tier-note">Доступно после старта 22 сентября 2026</div></div>
-      <div class="tier featured"><div class="tier-badge">Лучший вход</div><div class="tier-name">Подписка</div><div class="tier-price"><b>1&nbsp;490</b><span>₽/мес</span></div><div class="tier-preorder">Предзаказ — <b>990&nbsp;₽ сейчас</b>, скидка 33%</div><ul><li>Ранний доступ и&nbsp;бета-период</li><li>Полная карта целиком</li><li>Telegram-бот с&nbsp;учётом карты</li><li>Короткие практики под&nbsp;твой портрет</li><li>Первый месяц после запуска 22 сентября 2026</li></ul><a class="btn btn-primary" href="#" onclick="openPreorder('tariff_subscription');return false;">Забронировать за&nbsp;990&nbsp;₽</a></div>
-      <div class="tier"><div class="tier-badge">Для отношений</div><div class="tier-name">Про</div><div class="tier-price"><b>2&nbsp;500</b><span>₽/мес</span></div><div class="tier-preorder">Предзаказ — <b>2&nbsp;000&nbsp;₽ сейчас</b>, скидка 20%</div><ul><li>Всё из&nbsp;Подписки</li><li class="tier-focus"><b>Совместимость с&nbsp;близкими</b></li><li>Твой портрет + портрет другого</li><li>Как&nbsp;вы&nbsp;взаимодействуете</li><li>Больше сообщений с&nbsp;ботом</li><li>Развернутые практики и&nbsp;разборы</li></ul><a class="btn btn-ghost" href="#" onclick="openProPreorder('tariff_pro');return false;">Выбрать Про за&nbsp;2&nbsp;000&nbsp;₽</a></div>
+      <div class="tier featured"><div class="tier-badge">Лучший вход</div><div class="tier-name">Подписка</div><div class="tier-price"><b>1&nbsp;490</b><span>₽/мес</span></div><div class="tier-preorder">Предзаказ — <b>990&nbsp;₽ сейчас</b>, скидка 33%</div><ul><li>Ранний доступ и&nbsp;бета-период</li><li>Полная карта целиком</li><li>Telegram-бот с&nbsp;учётом карты</li><li>Короткие практики под&nbsp;твой портрет</li><li>Первый месяц после запуска 22 сентября 2026</li></ul><a class="btn btn-primary" href="#order:Подписка=990" onclick="return openTildaOrder('subscription','tariff_subscription');">Забронировать за&nbsp;990&nbsp;₽</a></div>
+      <div class="tier"><div class="tier-badge">Для отношений</div><div class="tier-name">Про</div><div class="tier-price"><b>2&nbsp;500</b><span>₽/мес</span></div><div class="tier-preorder">Предзаказ — <b>2&nbsp;000&nbsp;₽ сейчас</b>, скидка 20%</div><ul><li>Всё из&nbsp;Подписки</li><li class="tier-focus"><b>Совместимость с&nbsp;близкими</b></li><li>Твой портрет + портрет другого</li><li>Как&nbsp;вы&nbsp;взаимодействуете</li><li>Больше сообщений с&nbsp;ботом</li><li>Развернутые практики и&nbsp;разборы</li></ul><a class="btn btn-ghost" href="#order:Про=2000" onclick="return openTildaOrder('pro','tariff_pro');">Выбрать Про за&nbsp;2&nbsp;000&nbsp;₽</a></div>
       <div class="tier"><div class="tier-name">Команда</div><div class="tier-price"><b>4&nbsp;200</b><span>₽/мес</span></div><ul><li>Всё из&nbsp;Про</li><li>Вся команда через систему</li><li>Роли и&nbsp;зоны эффективности</li><li>Точки напряжения в&nbsp;команде</li><li>Для&nbsp;бизнеса и&nbsp;проектов</li></ul><div class="tier-note">Будет доступен после запуска продукта</div></div>
     </div>
     <p class="muted" style="text-align:center;margin-top:24px;font-size:14px">Разовый развернутый разбор (год / здоровье / отношения) — ~1&nbsp;500 ₽. Годовая подписка — со&nbsp;скидкой.</p>
@@ -635,72 +622,6 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
   </div>
 </footer>
 
-<!-- POPUP: логика предзаказа -->
-<div class="modal-overlay" id="preorder-modal" onclick="if(event.target===this)closePreorder()">
-  <div class="modal" role="dialog" aria-modal="true" aria-label="Предзаказ Solir">
-    <button class="modal-close" onclick="closePreorder()" aria-label="Закрыть">✕</button>
-    <span class="eyebrow">Предзаказ · запуск 22 сентября 2026</span>
-    <h3>Предзаказ Solir</h3>
-    <p class="muted" style="font-size:14px"><b style="color:var(--ink)">990&nbsp;₽ сейчас вместо 1&nbsp;490&nbsp;₽</b> — ранний доступ, бета-период и&nbsp;первый месяц тарифа Подписка после запуска.</p>
-    <ul class="modal-list">
-      <li><b>Что входит:</b> персональная веб-карта, Telegram-бот, короткие практики под&nbsp;твой портрет и&nbsp;лимит общения после запуска.</li>
-      <li><b>Когда:</b> основной старт 22 сентября 2026, ранние участники получают доступ к&nbsp;бета-периоду до&nbsp;релиза.</li>
-      <li><b>Оплата:</b> разовый платеж через Tilda + YooKassa. Автосписания в&nbsp;первом релизе не&nbsp;подключаются.</li>
-    </ul>
-    <form class="preorder-form" data-tariff="subscription" data-product-code="solir_subscription_preorder_990" data-amount="990" data-tilda-order="#order:Подписка=990" onsubmit="submitPreorder(event,'subscription')">
-      <input type="hidden" name="tariff" value="Подписка">
-      <input type="hidden" name="amount" value="990">
-      <input type="hidden" name="product_code" value="solir_subscription_preorder_990">
-      <input type="hidden" name="launch_date" value="2026-09-22">
-      <input type="hidden" name="source_page" value="solir_landing_v13_test">
-      <div class="form-grid">
-        <label class="field">Имя<input name="name" type="text" autocomplete="name" required></label>
-        <label class="field">Email<input name="email" type="email" autocomplete="email" required></label>
-        <label class="field full">Telegram<input name="telegram" type="text" autocomplete="off" placeholder="@username" required></label>
-      </div>
-      <label class="check"><input name="accepted_offer" type="checkbox" required><span>Я принимаю <a class="js-legal-link" href="legal/offer.html" target="_blank" rel="noopener">оферту</a> и условия предзаказа.</span></label>
-      <label class="check"><input name="accepted_personal_data" type="checkbox" required><span>Я согласен(на) на <a class="js-legal-link" href="legal/personal-data-consent.html" target="_blank" rel="noopener">обработку персональных данных</a>.</span></label>
-      <label class="check"><input name="accepted_marketing" type="checkbox"><span>Хочу получать новости продукта и приглашения к тестированию.</span></label>
-      <button class="btn btn-primary" type="submit">Перейти к заказу 990&nbsp;₽</button>
-      <p class="payment-note">Дальше откроется оформление заказа Tilda и оплата YooKassa. Если понадобится отмена, напиши на support@solir.app.</p>
-      <p class="form-status" role="status" aria-live="polite"></p>
-    </form>
-  </div>
-</div>
-
-<!-- POPUP: предзаказ тарифа Про -->
-<div class="modal-overlay" id="pro-preorder-modal" onclick="if(event.target===this)closeProPreorder()">
-  <div class="modal" role="dialog" aria-modal="true" aria-label="Предзаказ Про">
-    <button class="modal-close" onclick="closeProPreorder()" aria-label="Закрыть">✕</button>
-    <span class="eyebrow">Предзаказ Про · запуск 22 сентября 2026</span>
-    <h3>Предзаказ Про</h3>
-    <p class="muted" style="font-size:14px"><b style="color:var(--ink)">2&nbsp;000&nbsp;₽ сейчас вместо 2&nbsp;500&nbsp;₽</b> — ранний доступ, бета-период и&nbsp;первый месяц тарифа Про после запуска.</p>
-    <ul class="modal-list">
-      <li><b>Что входит:</b> всё из&nbsp;Подписки, совместимость с&nbsp;близкими, портрет другого человека и&nbsp;больше сообщений с&nbsp;ботом.</li>
-      <li><b>Когда:</b> основной старт 22 сентября 2026, ранние участники получают доступ к&nbsp;бета-периоду до&nbsp;релиза.</li>
-      <li><b>Оплата:</b> разовый платеж через Tilda + YooKassa. Автосписания в&nbsp;первом релизе не&nbsp;подключаются.</li>
-    </ul>
-    <form class="preorder-form" data-tariff="pro" data-product-code="solir_pro_preorder_2000" data-amount="2000" data-tilda-order="#order:Про=2000" onsubmit="submitPreorder(event,'pro')">
-      <input type="hidden" name="tariff" value="Про">
-      <input type="hidden" name="amount" value="2000">
-      <input type="hidden" name="product_code" value="solir_pro_preorder_2000">
-      <input type="hidden" name="launch_date" value="2026-09-22">
-      <input type="hidden" name="source_page" value="solir_landing_v13_test">
-      <div class="form-grid">
-        <label class="field">Имя<input name="name" type="text" autocomplete="name" required></label>
-        <label class="field">Email<input name="email" type="email" autocomplete="email" required></label>
-        <label class="field full">Telegram<input name="telegram" type="text" autocomplete="off" placeholder="@username" required></label>
-      </div>
-      <label class="check"><input name="accepted_offer" type="checkbox" required><span>Я принимаю <a class="js-legal-link" href="legal/offer.html" target="_blank" rel="noopener">оферту</a> и условия предзаказа.</span></label>
-      <label class="check"><input name="accepted_personal_data" type="checkbox" required><span>Я согласен(на) на <a class="js-legal-link" href="legal/personal-data-consent.html" target="_blank" rel="noopener">обработку персональных данных</a>.</span></label>
-      <label class="check"><input name="accepted_marketing" type="checkbox"><span>Хочу получать новости продукта и приглашения к тестированию.</span></label>
-      <button class="btn btn-primary" type="submit">Перейти к заказу 2&nbsp;000&nbsp;₽</button>
-      <p class="payment-note">Дальше откроется оформление заказа Tilda и оплата YooKassa. Если понадобится отмена, напиши на support@solir.app.</p>
-      <p class="form-status" role="status" aria-live="polite"></p>
-    </form>
-  </div>
-</div>
-
 <!-- POPUP: юридические документы -->
 <div class="modal-overlay" id="legal-modal" onclick="if(event.target===this)closeLegalDoc()">
   <div class="modal legal-modal" role="dialog" aria-modal="true" aria-labelledby="legal-modal-title">
@@ -717,9 +638,6 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
     <iframe id="legal-modal-frame" class="legal-frame" title="Юридический документ Solir"></iframe>
   </div>
 </div>
-
-<a class="tilda-order-fallback" data-tilda-order-link="subscription" href="#order:Подписка=990" aria-hidden="true" tabindex="-1">Подписка</a>
-<a class="tilda-order-fallback" data-tilda-order-link="pro" href="#order:Про=2000" aria-hidden="true" tabindex="-1">Про</a>
 
 <script>
 var TILDA_ORDER_LINKS={
@@ -741,10 +659,19 @@ function trackSolirEvent(name,params){
 }
 function openModal(id,params){var m=document.getElementById(id);m.classList.add('open');document.body.style.overflow='hidden';trackSolirEvent('modal_open',params||{modal:id});}
 function closeModal(id){var m=document.getElementById(id);m.classList.remove('open');if(!document.querySelector('.modal-overlay.open'))document.body.style.overflow='';}
-function openPreorder(source){trackSolirEvent('cta_click',{tariff:'subscription',source:source||'unknown'});openModal('preorder-modal',{modal:'preorder-modal',tariff:'subscription',source:source||'unknown'});}
-function closePreorder(){closeModal('preorder-modal');}
-function openProPreorder(source){trackSolirEvent('cta_click',{tariff:'pro',source:source||'unknown'});openModal('pro-preorder-modal',{modal:'pro-preorder-modal',tariff:'pro',source:source||'unknown'});}
-function closeProPreorder(){closeModal('pro-preorder-modal');}
+function openTildaOrder(tariff,source){
+  var orderLink=TILDA_ORDER_LINKS[tariff];
+  if(!orderLink) return true;
+  trackSolirEvent('cta_click',{tariff:tariff,source:source||'unknown',checkout:'tilda_order'});
+  trackSolirEvent('payment_start',{tariff:tariff,source:source||'unknown',checkout:'tilda_order',order_link:orderLink});
+  if(window.parent&&window.parent!==window){
+    window.parent.postMessage({type:'solir:tilda-order',tariff:tariff,source:source||'unknown',orderLink:orderLink},'*');
+    try{window.top.location.href=orderLink;}catch(e){}
+    return false;
+  }
+  window.location.href=orderLink;
+  return false;
+}
 function openLegalDoc(link){
   var href=link.getAttribute('href');
   if(!href||href.indexOf('legal/')!==0) return false;
@@ -766,58 +693,9 @@ function closeLegalDoc(){
     if(frame&&!document.getElementById('legal-modal').classList.contains('open')) frame.removeAttribute('src');
   },220);
 }
-function formToObject(form){
-  var data={};
-  Array.prototype.forEach.call(form.elements,function(el){
-    if(!el.name) return;
-    if(el.type==='checkbox'){data[el.name]=!!el.checked;return;}
-    data[el.name]=el.value;
-  });
-  return data;
-}
-function triggerLocalTildaOrder(tariff){
-  var link=document.querySelector('[data-tilda-order-link="'+tariff+'"]');
-  if(!link) return false;
-  link.click();
-  return true;
-}
-function startTildaOrder(tariff,payload){
-  var orderLink=TILDA_ORDER_LINKS[tariff];
-  if(!orderLink) return false;
-  if(window.parent&&window.parent!==window){
-    window.parent.postMessage(Object.assign({type:'solir:tilda-order',orderLink:orderLink},payload),'*');
-    window.setTimeout(function(){
-      try{window.top.location.href=orderLink;}catch(e){}
-    },450);
-    return true;
-  }
-  if(triggerLocalTildaOrder(tariff)) return true;
-  try{window.location.href=orderLink;return true;}catch(e){return false;}
-}
-function submitPreorder(event,tariff){
-  event.preventDefault();
-  var form=event.currentTarget;
-  if(!form.reportValidity()) return;
-  var status=form.querySelector('.form-status');
-  var productCode=form.dataset.productCode;
-  var amount=form.dataset.amount;
-  var orderLink=form.dataset.tildaOrder||TILDA_ORDER_LINKS[tariff];
-  var payload={tariff:tariff,product_code:productCode,amount:amount,orderLink:orderLink,form:formToObject(form)};
-  trackSolirEvent('form_submit',{tariff:tariff,product_code:productCode,amount:amount,checkout:'tilda_order'});
-  if(!orderLink){
-    status.textContent='Не найдена ссылка Tilda-заказа для этого тарифа.';
-    return;
-  }
-  trackSolirEvent('payment_start',{tariff:tariff,product_code:productCode,amount:amount,checkout:'tilda_order',order_link:orderLink});
-  status.textContent='Открываем оформление заказа Tilda...';
-  if(tariff==='pro'){closeProPreorder();}else{closePreorder();}
-  if(!startTildaOrder(tariff,payload)){
-    status.textContent='Не удалось открыть заказ Tilda. Проверь T123-оболочку на странице Tilda.';
-  }
-}
 function toggleFlip(el){el.classList.toggle('flipped');}
 function flipOnKey(e,el){if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleFlip(el);}}
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePreorder();closeProPreorder();closeLegalDoc();}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeLegalDoc();}});
 document.addEventListener('click',function(e){
   var link=e.target.closest&&e.target.closest('.js-legal-link');
   if(link&&!(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)){
