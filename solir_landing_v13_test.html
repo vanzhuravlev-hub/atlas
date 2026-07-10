@@ -666,7 +666,6 @@ function openTildaOrder(tariff,source){
   trackSolirEvent('payment_start',{tariff:tariff,source:source||'unknown',checkout:'tilda_order',order_link:orderLink});
   if(window.parent&&window.parent!==window){
     window.parent.postMessage({type:'solir:tilda-order',tariff:tariff,source:source||'unknown',orderLink:orderLink},'*');
-    try{window.top.location.href=orderLink;}catch(e){}
     return false;
   }
   window.location.href=orderLink;
