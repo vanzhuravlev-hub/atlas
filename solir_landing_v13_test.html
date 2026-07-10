@@ -74,11 +74,6 @@ header{position:sticky;top:0;z-index:50;background:var(--paper-soft);backdrop-fi
 @media(max-width:1080px){.hero .lead{margin-inline:auto}}
 	.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:0}
 	@media(max-width:900px){.hero-cta{justify-content:center}}
-	.hero-proof{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;max-width:650px;margin-top:22px}
-	.hero-proof-item{border:1px solid rgba(255,241,221,.16);border-radius:14px;padding:11px 12px;background:rgba(255,241,221,.07);font-size:12px;line-height:1.35;color:var(--paper-muted)}
-	.hero-proof-item b{display:block;color:var(--paper);font-size:12.5px;margin-bottom:2px}
-	@media(max-width:1080px){.hero-proof{margin-inline:auto;text-align:left}}
-	@media(max-width:680px){.hero-proof{grid-template-columns:1fr 1fr}.hero-proof-item{padding:10px}}
 	.hero-product{position:relative;display:flex;align-items:center;justify-content:flex-end}
 .product-stage{position:relative;width:min(100%,640px);display:grid;grid-template-columns:1fr;grid-template-rows:auto;align-items:center;isolation:isolate}
 .map-mockup,.tg-mockup{position:relative;border:1px solid var(--line-light);box-shadow:0 28px 70px rgba(15,8,5,0.34),0 8px 22px rgba(220,150,88,0.12)}
@@ -199,14 +194,22 @@ section{padding:84px 0;position:relative}
 	@media(max-width:560px){.result-grid{grid-template-columns:1fr}}
 	.trust-editorial{display:grid;grid-template-columns:.9fr 1.1fr;gap:24px;align-items:stretch}
 	.founder-panel,.method-panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-card);padding:30px}
-	.founder-panel{display:flex;flex-direction:column;justify-content:space-between;min-height:330px;background:linear-gradient(180deg,var(--paper),rgba(255,241,221,.72))}
-	.founder-mark{width:62px;height:62px;border-radius:50%;background:var(--grad-sun-disc);box-shadow:0 8px 24px rgba(200,100,46,.18);margin-bottom:24px}
+	.founder-panel{display:flex;flex-direction:column;min-height:330px;background:linear-gradient(180deg,var(--paper),rgba(255,241,221,.72))}
+	.founder-intro{display:flex;align-items:center;gap:18px;margin-bottom:22px}
+	.founder-photo-wrap{width:96px;height:96px;flex:0 0 96px;margin:0;overflow:hidden;border:3px solid var(--paper);border-radius:50%;background:var(--sand);box-shadow:0 8px 24px rgba(139,69,19,.18)}
+	.founder-photo{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 34%}
+	.founder-role{margin:0;color:var(--ink-soft)}
+	.founder-role strong{display:block;margin-bottom:5px;color:var(--ink);font-family:var(--font-display);font-size:24px;font-weight:500;line-height:1.15}
+	.founder-role span{display:block;font-size:14px;line-height:1.45}
+	.founder-copy{display:block;padding:0}
+	.founder-copy p+p{margin-top:20px}
 	.founder-panel h3,.method-panel h3{font-size:24px;margin-bottom:14px}
 	.founder-panel p,.method-panel p{font-size:15px;line-height:1.65;color:var(--ink-soft)}
 	.trust-points{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
 	.trust-point{border-top:1px solid var(--line);padding-top:12px;font-size:14px;line-height:1.45;color:var(--ink-soft)}
 	.trust-point b{display:block;color:var(--ink);font-weight:600;margin-bottom:3px}
-	@media(max-width:860px){.trust-editorial{grid-template-columns:1fr}.founder-panel{min-height:auto}.trust-points{grid-template-columns:1fr}}
+	@media(max-width:860px){.trust-editorial{grid-template-columns:1fr}.founder-panel{min-height:0}.trust-points{grid-template-columns:1fr}}
+	@media(max-width:620px){.founder-panel{padding:24px 22px 26px}.founder-intro{gap:15px;margin-bottom:20px}.founder-photo-wrap{width:80px;height:80px;flex-basis:80px}.founder-role strong{font-size:21px}}
 	.flow{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:start}
 	.flow::before{content:'';position:absolute;left:13%;right:13%;top:34px;height:1px;background:linear-gradient(90deg,transparent,var(--sun),transparent)}
 	.flow-step{position:relative;text-align:center;padding:0 12px}
@@ -299,11 +302,9 @@ section{padding:84px 0;position:relative}
 .legal-frame-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:22px 26px;border-bottom:1px solid var(--line);background:var(--paper)}
 .legal-frame-head h3{font-size:22px;margin-top:7px}
 .legal-actions{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.legal-direct{font-size:12.5px;color:var(--sun-deep);text-decoration:none;border-bottom:1px dashed rgba(200,100,46,.35);margin-right:42px}
-.legal-direct:hover{border-bottom-color:var(--sun-deep)}
 .legal-modal .modal-close{top:18px;right:18px}
 .legal-frame{width:100%;height:100%;border:0;background:#fff;flex:1}
-@media(max-width:640px){.legal-frame-head{padding:18px 20px}.legal-direct{display:none}.legal-frame-head h3{font-size:19px}.legal-modal{height:88vh}}
+@media(max-width:640px){.legal-frame-head{padding:18px 20px}.legal-frame-head h3{font-size:19px}.legal-modal{height:88vh}}
 .tier ul{list-style:none;margin-bottom:22px;flex:1}
 .tier li{font-size:14.5px;line-height:1.45;padding:9px 0 9px 24px;position:relative;border-bottom:1px solid var(--line-soft);color:var(--ink-soft)}
 .tier li::before{content:'✓';position:absolute;left:0;top:9px;color:var(--sun-deep);font-weight:700}
@@ -354,17 +355,10 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
   <div class="wrap hero-grid">
 	    <div class="hero-text reveal">
 		      <span class="hero-system-line">Астрология. Нумерология. Дизайн человека.</span>
-	      <h1>Solir — карта себя, которая отвечает в&nbsp;Telegram</h1>
+	      <h1>Solir — карта твоей личности, которая отвечает в&nbsp;Telegram</h1>
 	      <p class="lead">Solir собирает астрологию, нумерологию и&nbsp;дизайн человека в&nbsp;одну карту, а&nbsp;бот помогает применять её&nbsp;в&nbsp;отношениях, работе и&nbsp;решениях каждый день.</p>
 	      <div class="hero-cta">
 	        <a href="#order:Подписка=990" onclick="return openTildaOrder('subscription','hero');" class="btn btn-primary">Забронировать ранний доступ за&nbsp;990&nbsp;₽</a>
-	        <a href="#solution" class="btn btn-ghost--light">Посмотреть как работает</a>
-	      </div>
-	      <div class="hero-proof" aria-label="Условия предзаказа">
-	        <div class="hero-proof-item"><b>Разовый платёж</b>без автопродления</div>
-	        <div class="hero-proof-item"><b>Старт 22.09.2026</b>бета и первый месяц</div>
-	        <div class="hero-proof-item"><b>Возврат до старта</b>через поддержку</div>
-	        <div class="hero-proof-item"><b>Данные не для рекламы</b>только сервис и оплата</div>
 	      </div>
 		    </div>
     <div class="hero-product reveal" aria-label="Solir: карта личности и личный бот в Telegram">
@@ -518,21 +512,25 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
 <!-- ДОВЕРИЕ -->
 <section class="on-paper reveal">
   <div class="wrap">
-    <div class="section-head"><span class="eyebrow">Почему Solir можно доверять</span><h2>Solir разработан профессионалом</h2></div>
+    <div class="section-head"><span class="eyebrow">Почему Solir можно доверять</span><h2>Методика, за&nbsp;которой стоят специалисты</h2></div>
     <div class="trust-editorial">
       <article class="founder-panel">
-        <div>
-          <div class="founder-mark" aria-hidden="true"></div>
-          <h3>За продуктом есть человек</h3>
-          <p>Solir собирается под&nbsp;руководством Ивана Журавлева — психотерапевта, ICF-коуча и&nbsp;методолога с&nbsp;опытом свыше 13 лет. Иван отвечает за&nbsp;логику разбора: чтобы карта не&nbsp;звучала как гадание и&nbsp;не&nbsp;давила на&nbsp;человека.</p>
+        <div class="founder-intro">
+          <figure class="founder-photo-wrap">
+            <img class="founder-photo" src="ivan-zhuravlev-founder.jpg" alt="Иван Журавлев, психолог и автор методики Solir" decoding="async">
+          </figure>
+          <p class="founder-role"><strong>Иван Журавлев</strong><span>Психолог, ICF-коуч и&nbsp;методолог Solir</span></p>
         </div>
-        <p>ИИ здесь не&nbsp;заменяет эксперта: он работает внутри заданной структуры, с&nbsp;бережным языком, понятной логикой и&nbsp;без страшных прогнозов, диагнозов и&nbsp;давления.</p>
+        <div class="founder-copy">
+          <p>Иван развивает методику Solir, опираясь на&nbsp;более чем 13 лет практики. Он отвечает за&nbsp;логику разбора и&nbsp;язык продукта: чтобы карта помогала размышлять, не&nbsp;звучала как приговор и&nbsp;не&nbsp;давила на&nbsp;человека.</p>
+          <p>ИИ здесь не&nbsp;заменяет эксперта: он работает внутри заданной структуры, с&nbsp;бережным языком, понятной логикой и&nbsp;без страшных прогнозов, диагнозов и&nbsp;давления.</p>
+        </div>
       </article>
       <article class="method-panel">
         <h3>Карта как основа ответов</h3>
-        <p>Solir сам собирает карту, держит её&nbsp;как основу, помогает во&nbsp;всем разобраться и&nbsp;отвечает на&nbsp;любые вопросы в&nbsp;Telegram с&nbsp;учётом карты и&nbsp;контекста общения.</p>
+        <p>Solir собирает карту по&nbsp;заданным правилам и&nbsp;использует её&nbsp;как основу для ответов в&nbsp;Telegram. Источники и&nbsp;интерпретации проходят профильную проверку, а&nbsp;бот учитывает карту и&nbsp;контекст разговора.</p>
         <div class="trust-points">
-          <div class="trust-point"><b>Проверенные источники</b>астрология, нумерология и&nbsp;дизайн человека сводятся в&nbsp;одну структуру</div>
+          <div class="trust-point"><b>Профильная проверка</b>астрологи, нумерологи и&nbsp;специалисты по&nbsp;дизайну человека проверяют источники и&nbsp;правила интерпретации</div>
           <div class="trust-point"><b>Бережный язык</b>без страшных прогнозов, диагнозов и&nbsp;давления</div>
           <div class="trust-point"><b>Карта как основа</b>бот отвечает не&nbsp;с&nbsp;нуля, а&nbsp;с&nbsp;учётом портрета</div>
           <div class="trust-point"><b>Честные границы</b>Solir не&nbsp;заменяет врача, психолога или&nbsp;другого живого специалиста</div>
@@ -569,13 +567,13 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
 <!-- ТАРИФЫ -->
 <section class="on-paper reveal" id="tariffs">
   <div class="wrap">
-    <div class="section-head center"><span class="eyebrow">Предзаказ</span><h2>Выбери ранний доступ</h2><p class="muted" style="margin-top:8px">Основной вход — «Подписка» за&nbsp;990&nbsp;₽ вместо 1&nbsp;490&nbsp;₽. «Про» нужен, если хочешь добавить совместимость и&nbsp;расширенный объём после запуска.</p></div>
+    <div class="section-head center"><span class="eyebrow">Предзаказ</span><h2>Выбери ранний доступ</h2><p class="muted" style="margin-top:8px">«Подписка» — основной вход за&nbsp;990&nbsp;₽. «Про» за&nbsp;2&nbsp;000&nbsp;₽ добавляет совместимость и&nbsp;расширенный объём после запуска.</p></div>
     <div class="tiers">
-      <div class="tier featured"><div class="tier-badge">Лучший вход</div><div class="tier-name">Подписка</div><div class="tier-price"><b>1&nbsp;490</b><span>₽/мес</span></div><div class="tier-preorder">Предзаказ — <b>990&nbsp;₽ сейчас</b>, скидка 33%</div><ul><li>Ранний доступ и&nbsp;бета-период</li><li>Полная карта целиком</li><li>Telegram-бот с&nbsp;учётом карты</li><li>Короткие практики под&nbsp;твой портрет</li><li>Первый месяц после запуска 22 сентября 2026</li></ul><a class="btn btn-primary" href="#order:Подписка=990" onclick="return openTildaOrder('subscription','tariff_subscription');">Забронировать за&nbsp;990&nbsp;₽</a></div>
-      <div class="tier"><div class="tier-badge">Для отношений</div><div class="tier-name">Про</div><div class="tier-price"><b>2&nbsp;500</b><span>₽/мес</span></div><div class="tier-preorder">Предзаказ — <b>2&nbsp;000&nbsp;₽ сейчас</b>, скидка 20%</div><ul><li>Всё из&nbsp;Подписки</li><li class="tier-focus"><b>Совместимость с&nbsp;близкими</b></li><li>Твой портрет + портрет другого</li><li>Как&nbsp;вы&nbsp;взаимодействуете</li><li>Больше сообщений с&nbsp;ботом</li><li>Развернутые практики и&nbsp;разборы</li></ul><a class="btn btn-ghost" href="#order:Про=2000" onclick="return openTildaOrder('pro','tariff_pro');">Выбрать Про за&nbsp;2&nbsp;000&nbsp;₽</a></div>
+      <div class="tier featured"><div class="tier-badge">Лучший вход</div><div class="tier-name">Подписка</div><div class="tier-price"><b>990</b><span>₽ сейчас</span></div><div class="tier-preorder">После первых 30 дней — <b>планово 1&nbsp;490&nbsp;₽/мес</b> при отдельном подключении</div><ul><li>Ранний доступ и&nbsp;бета-период</li><li>Полная карта целиком</li><li>Telegram-бот с&nbsp;учётом карты</li><li>Короткие практики под&nbsp;твой портрет</li><li>30 дней после запуска 22 сентября 2026</li></ul><a class="btn btn-primary" href="#order:Подписка=990" onclick="return openTildaOrder('subscription','tariff_subscription');">Забронировать за&nbsp;990&nbsp;₽</a></div>
+      <div class="tier"><div class="tier-badge">Для отношений</div><div class="tier-name">Про</div><div class="tier-price"><b>2&nbsp;000</b><span>₽ сейчас</span></div><div class="tier-preorder">После первых 30 дней — <b>планово 2&nbsp;500&nbsp;₽/мес</b> при отдельном подключении</div><ul><li>Всё из&nbsp;Подписки</li><li class="tier-focus"><b>Совместимость с&nbsp;близкими</b></li><li>Твой портрет + портрет другого</li><li>Как&nbsp;вы&nbsp;взаимодействуете</li><li>Больше сообщений с&nbsp;ботом</li><li>Развернутые практики и&nbsp;разборы</li></ul><a class="btn btn-ghost" href="#order:Про=2000" onclick="return openTildaOrder('pro','tariff_pro');">Выбрать Про за&nbsp;2&nbsp;000&nbsp;₽</a></div>
       <div class="tier"><div class="tier-name">Команда</div><div class="tier-price"><b>4&nbsp;200</b><span>₽/мес</span></div><ul><li>Всё из&nbsp;Про</li><li>Вся команда через систему</li><li>Роли и&nbsp;зоны эффективности</li><li>Точки напряжения в&nbsp;команде</li><li>Для&nbsp;бизнеса и&nbsp;проектов</li></ul><div class="tier-note">Будет доступен после запуска продукта</div></div>
     </div>
-    <p class="muted" style="text-align:center;margin-top:24px;font-size:14px">Разовый развернутый разбор (год / здоровье / отношения) — ~1&nbsp;500 ₽. Годовая подписка — со&nbsp;скидкой.</p>
+    <p class="muted" style="text-align:center;margin-top:24px;font-size:14px">Разовые тематические разборы и&nbsp;годовые планы появятся после запуска с&nbsp;отдельными условиями.</p>
     <div class="trust tariff-trust">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8642E" stroke-width="2"><path d="M12 2L4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4z"/></svg>
       Данные необходимы для оплаты и службы поддержки. Мы не продаём их и не передаём для рекламы; технические партнёры перечислены в политике данных.
@@ -590,14 +588,14 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
     <div class="faq">
       <details class="faq-item"><summary class="faq-q">Я&nbsp;не&nbsp;верю в&nbsp;это, но&nbsp;хочу попробовать. Это&nbsp;нормально?<span class="faq-plus"></span></summary><div class="faq-a">Это&nbsp;самый частый вход. Solir не&nbsp;про&nbsp;веру, а&nbsp;про&nbsp;узнавание: узнаёшь себя — работает, нет — это&nbsp;не&nbsp;твой инструмент. Проверять — поощряется.</div></details>
       <details class="faq-item"><summary class="faq-q">У&nbsp;меня уже&nbsp;есть разборы у&nbsp;астролога. Зачем Solir?<span class="faq-plus"></span></summary><div class="faq-a">Если открываешь старый разбор раз в&nbsp;месяц и&nbsp;применяешь — Solir не&nbsp;нужен. Если он&nbsp;лежит в&nbsp;папке год — вопрос не&nbsp;в&nbsp;содержании, а&nbsp;в&nbsp;формате. Solir — мост от&nbsp;«узнала про&nbsp;себя» к&nbsp;«живу иначе».</div></details>
-      <details class="faq-item"><summary class="faq-q">Чем&nbsp;это&nbsp;отличается от ChatGPT?<span class="faq-plus"></span></summary><div class="faq-a">GPT мощный и&nbsp;универсальный. Но&nbsp;обычный GPT не&nbsp;знает твою карту и&nbsp;правила разбора, пока ты&nbsp;сама не&nbsp;соберёшь данные и&nbsp;не&nbsp;объяснишь, как с&nbsp;ними работать. Solir сам собирает карту, держит её&nbsp;как основу, помогает во&nbsp;всем разобраться и&nbsp;отвечает на&nbsp;любые вопросы в&nbsp;Telegram с&nbsp;учётом карты и&nbsp;контекста общения.</div></details>
-      <details class="faq-item"><summary class="faq-q">Что&nbsp;я&nbsp;оплачиваю по&nbsp;предзаказу?<span class="faq-plus"></span></summary><div class="faq-a">Можно выбрать предзаказ Подписки за&nbsp;990&nbsp;₽ вместо 1&nbsp;490&nbsp;₽ или&nbsp;тарифа Про за&nbsp;2&nbsp;000&nbsp;₽ вместо 2&nbsp;500&nbsp;₽. Это разовый платеж: ранний доступ, бета-период до&nbsp;основного запуска и&nbsp;первый месяц выбранного тарифа после старта 22 сентября 2026. Автосписания в&nbsp;первом релизе не&nbsp;подключаются.</div></details>
-      <details class="faq-item"><summary class="faq-q">Как отменить предзаказ или запросить возврат?<span class="faq-plus"></span></summary><div class="faq-a">До&nbsp;22 сентября 2026 можно написать в&nbsp;поддержку в&nbsp;Telegram: <a href="https://t.me/solir_ru">@solir_ru</a> и&nbsp;запросить возврат. Если запуск переносится, можно дождаться новой даты или оформить возврат. Подробные условия описаны в&nbsp;оферте и&nbsp;условиях подписки и&nbsp;возврата.</div></details>
+      <details class="faq-item"><summary class="faq-q">Чем&nbsp;это&nbsp;отличается от ChatGPT?<span class="faq-plus"></span></summary><div class="faq-a">GPT мощный и&nbsp;универсальный. Но&nbsp;обычный GPT не&nbsp;знает твою карту и&nbsp;правила разбора, пока ты&nbsp;сама не&nbsp;соберёшь данные и&nbsp;не&nbsp;объяснишь, как с&nbsp;ними работать. Solir сам собирает карту и&nbsp;использует её&nbsp;как основу для ответов в&nbsp;Telegram с&nbsp;учётом контекста общения.</div></details>
+      <details class="faq-item"><summary class="faq-q">Что&nbsp;я&nbsp;оплачиваю по&nbsp;предзаказу?<span class="faq-plus"></span></summary><div class="faq-a">Можно выбрать Подписку за&nbsp;990&nbsp;₽ или&nbsp;Про за&nbsp;2&nbsp;000&nbsp;₽. Это разовый платёж за&nbsp;ранний доступ, бета-период и&nbsp;первые 30 дней выбранного тарифа после запуска 22 сентября 2026. Продолжение подключается только отдельно; автосписания в&nbsp;первом релизе не&nbsp;используются.</div></details>
+      <details class="faq-item"><summary class="faq-q">Как отменить предзаказ или запросить возврат?<span class="faq-plus"></span></summary><div class="faq-a">До&nbsp;предоставления доступа к&nbsp;основной версии можно написать в&nbsp;поддержку в&nbsp;Telegram: <a href="https://t.me/solir_ru">@solir_ru</a> и&nbsp;запросить полный возврат. Если запуск переносится, можно согласиться с&nbsp;новой датой или оформить возврат. Подробный порядок описан в&nbsp;оферте и&nbsp;условиях подписки и&nbsp;возврата.</div></details>
       <details class="faq-item"><summary class="faq-q">Что будет после оплаты?<span class="faq-plus"></span></summary><div class="faq-a">После успешной оплаты ты&nbsp;попадёшь на&nbsp;страницу подтверждения. Мы сохраним выбранный тариф, контактные данные и&nbsp;статус оплаты, а&nbsp;ближе к&nbsp;бете пришлём инструкции по&nbsp;раннему доступу.</div></details>
       <details class="faq-item"><summary class="faq-q">Что&nbsp;если мне станет тяжело от&nbsp;того, что&nbsp;узнаю?<span class="faq-plus"></span></summary><div class="faq-a">Карта показывает то, что&nbsp;в&nbsp;тебе уже&nbsp;есть, бережно и&nbsp;без&nbsp;приговоров. А&nbsp;если ты&nbsp;в&nbsp;тяжёлом состоянии — Solir честно подскажет обратиться к&nbsp;живому специалисту.</div></details>
       <details class="faq-item"><summary class="faq-q">Это&nbsp;психологическая консультация или медицинская рекомендация?<span class="faq-plus"></span></summary><div class="faq-a">Нет. Solir — инструмент саморефлексии и&nbsp;самопознания. Он&nbsp;не&nbsp;ставит диагнозы, не&nbsp;назначает лечение, не&nbsp;заменяет психолога, врача, юриста или финансового консультанта. Если есть острое состояние или риск для&nbsp;здоровья, лучше обращаться к&nbsp;живому специалисту.</div></details>
       <details class="faq-item"><summary class="faq-q">Я покупаю всё подряд и не пользуюсь. Тут будет так же?<span class="faq-plus"></span></summary><div class="faq-a">Возможно — поэтому Solir не&nbsp;обещает чудо за&nbsp;один вечер. Карта остаётся опорой, а&nbsp;к&nbsp;боту можно вернуться в&nbsp;любой момент, чтобы сделать маленький следующий шаг.</div></details>
-      <details class="faq-item"><summary class="faq-q">Это&nbsp;безопасно? Что&nbsp;с&nbsp;моими данными?<span class="faq-plus"></span></summary><div class="faq-a">Данные нужны для&nbsp;построения карты, работы бота, оплаты и&nbsp;поддержки сервиса. Мы не&nbsp;продаём их и&nbsp;не&nbsp;передаём для&nbsp;рекламы. Технические партнёры, сроки хранения, права пользователя и&nbsp;способ удалить данные описаны в&nbsp;политике обработки данных перед оплатой.</div></details>
+      <details class="faq-item"><summary class="faq-q">Это&nbsp;безопасно? Что&nbsp;с&nbsp;моими данными?<span class="faq-plus"></span></summary><div class="faq-a">Для предзаказа нужны имя, email, телефон, Telegram, тариф и&nbsp;статус оплаты. Данные рождения и&nbsp;переписка с&nbsp;ботом будут запрошены позже по&nbsp;отдельному согласию. Мы не&nbsp;продаём данные и&nbsp;не&nbsp;передаём их для&nbsp;рекламы; технические партнёры и&nbsp;порядок удаления перечислены в&nbsp;политике обработки данных.</div></details>
     </div>
   </div>
 </section>
@@ -616,7 +614,7 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
         <a class="js-legal-link" href="legal/subscription-refund.html">Условия подписки и&nbsp;возврата</a>
         <a class="js-legal-link" href="legal/requisites.html">Реквизиты</a>
       </nav>
-      <div class="foot-legal">Предзаказ оформляется как разовый платеж без автопродления. Перед оплатой нужно принять оферту и согласие на обработку персональных данных.</div>
+      <div class="foot-legal">18+ · Предзаказ оформляется как разовый платёж без автопродления. Перед оплатой нужно принять оферту и согласие на обработку персональных данных.</div>
     </div>
   </div>
 </footer>
@@ -630,7 +628,6 @@ footer{background:var(--ink-darker);color:var(--paper-muted);padding:40px 0;font
         <h3 id="legal-modal-title">Документ Solir</h3>
       </div>
       <div class="legal-actions">
-        <a id="legal-modal-direct" class="legal-direct" href="#" target="_blank" rel="noopener">Открыть отдельно</a>
         <button class="modal-close" onclick="closeLegalDoc()" aria-label="Закрыть">✕</button>
       </div>
     </div>
@@ -675,10 +672,8 @@ function openLegalDoc(link){
   if(!href||href.indexOf('legal/')!==0) return false;
   var label=(link.textContent||LEGAL_DOC_TITLES[href]||'Юридический документ').trim();
   var title=document.getElementById('legal-modal-title');
-  var direct=document.getElementById('legal-modal-direct');
   var frame=document.getElementById('legal-modal-frame');
   title.textContent=LEGAL_DOC_TITLES[href]||label;
-  direct.href=href;
   frame.src=href;
   trackSolirEvent('legal_doc_click',{label:label,href:href,mode:'popup'});
   openModal('legal-modal',{modal:'legal-modal',document:label,href:href});
